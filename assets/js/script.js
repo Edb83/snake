@@ -22,27 +22,56 @@ let currentHeadY = snake[0].y;
     * removes last object in array
     * creates new object based on currentHeadX and Y coordinates (this is the new snake head)
 */
-let snakeUp = function() {
 
+
+let check = function() {
+    console.log(`Length: ${snake.length}`)
+    let i;
+    for (i = 0; i < snake.length; i++) {
+        console.log(`x: ${snake[i].x} y: ${snake[i].y}`);
+    }
+}
+
+let snakeUp = function() {
     snake.pop();
     snake.unshift({x: currentHeadX, y: --currentHeadY});
-    console.log(snake);
-}
+    check();
+    }
 
 let snakeDown = function() {
     snake.pop();
     snake.unshift({x: currentHeadX, y: ++currentHeadY});
-    console.log(snake);
+    check();
 }
 
 let snakeLeft = function() {
     snake.pop();
     snake.unshift({x: --currentHeadX, y: currentHeadY});
-    console.log(snake);
+    check();
 }
 
 let snakeRight = function() {
     snake.pop();
     snake.unshift({x: ++currentHeadX, y: currentHeadY});
-    console.log(snake);
+    check();
+}
+
+let snakeUpEat = function() {
+    snake.unshift({x: currentHeadX, y: --currentHeadY});
+    check();
+}
+
+let snakeDownEat = function() {
+    snake.unshift({x: currentHeadX, y: ++currentHeadY});
+    check();
+}
+
+let snakeLeftEat = function() {
+    snake.unshift({x: --currentHeadX, y: currentHeadY});
+    check();
+}
+
+let snakeRightEat = function() {
+    snake.unshift({x: ++currentHeadX, y: currentHeadY});
+    check();
 }
