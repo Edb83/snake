@@ -1,3 +1,13 @@
+const gameBoard = document.getElementById("gameBoard");
+const ctx = gameBoard.getContext("2d");
+const tile = 10;
+
+function draw() {
+
+};
+
+setInterval(draw, 10);
+
 // Initial snake array
 let snake = [];
 snake[0] = {
@@ -14,9 +24,9 @@ snake[2] = {
 };
 
 // Current snake head coordinates
+
 let currentHeadX = snake[0].x;
 let currentHeadY = snake[0].y;
-
 
 /* Movement
     * removes last object in array
