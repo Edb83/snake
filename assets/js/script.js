@@ -3,13 +3,18 @@ const ctx = gameBoard.getContext("2d");
 const tile = 10;
 
 function draw() {
+    ctx.clearRect(0,0,gameBoard.clientWidth, gameBoard.height)
     ctx.fillStyle = "red";
     for (let i = 0; i < snake.length; i++) {
     ctx.fillRect(snake[i].x, snake[i].y, tile, tile);
-    }
+    };
+    let currentHeadX = snake[0].x;
+    let currentHeadY = snake[0].y;
+    snake.pop();
+    snake.unshift({x: currentHeadX, y: currentHeadY - tile})
 };
 
-setInterval(draw, 1);
+setInterval(draw, 1000);
 
 // Initial snake array
 let snake = [];
@@ -28,8 +33,8 @@ snake[2] = {
 
 // Current snake head coordinates
 
-let currentHeadX = snake[0].x;
-let currentHeadY = snake[0].y;
+// let currentHeadX = snake[0].x;
+// let currentHeadY = snake[0].y;
 
 /* Movement
     * removes last object in array
@@ -37,58 +42,58 @@ let currentHeadY = snake[0].y;
 */
 
 
-let check = function() {
-    console.log(`Length: ${snake.length}`)
-    let i;
-    for (i = 0; i < snake.length; i++) {
-        console.log(`x: ${snake[i].x} y: ${snake[i].y}`);
-    };
-};
+// let check = function() {
+//     console.log(`Length: ${snake.length}`)
+//     let i;
+//     for (i = 0; i < snake.length; i++) {
+//         console.log(`x: ${snake[i].x} y: ${snake[i].y}`);
+//     };
+// };
 
-let direction;
+// let direction;
 
-let snakeUp = function() {
-    direction = "up";
-    snake.pop();
-    snake.unshift({x: currentHeadX, y: currentHeadY - tile});
-    }
+// let snakeUp = function() {
+//     direction = "up";
+//     snake.pop();
+//     snake.unshift({x: currentHeadX, y: currentHeadY - tile});
+//     }
 
-let snakeDown = function() {
-    direction = "down";
-    snake.pop();
-    snake.unshift({x: currentHeadX, y: currentHeadY + tile});
+// let snakeDown = function() {
+//     direction = "down";
+//     snake.pop();
+//     snake.unshift({x: currentHeadX, y: currentHeadY + tile});
     
-};
+// };
 
-let snakeLeft = function() {
-    direction = "left";
-    snake.pop();
-    snake.unshift({x: currentHeadX - tile, y: currentHeadY});
+// let snakeLeft = function() {
+//     direction = "left";
+//     snake.pop();
+//     snake.unshift({x: currentHeadX - tile, y: currentHeadY});
     
-};
+// };
 
-let snakeRight = function() {
-    direction = "right";
-    snake.pop();
-    snake.unshift({x: currentHeadX + tile, y: currentHeadY});
+// let snakeRight = function() {
+//     direction = "right";
+//     snake.pop();
+//     snake.unshift({x: currentHeadX + tile, y: currentHeadY});
     
-};
+// };
 
-let advanceSnake = function() {
-    if (direction==="up") {
-        snakeUp();
+// let advanceSnake = function() {
+//     if (direction==="up") {
+//         snakeUp();
        
-    } else if (direction==="down") {
-        snakeDown();
+//     } else if (direction==="down") {
+//         snakeDown();
         
-    } else if (direction==="left") {
-        snakeLeft();
+//     } else if (direction==="left") {
+//         snakeLeft();
         
-    } else if(direction==="right") {
-        snakeRight();
-        };
-    check();
-};
+//     } else if(direction==="right") {
+//         snakeRight();
+//         };
+//     check();
+// };
 
 
 
