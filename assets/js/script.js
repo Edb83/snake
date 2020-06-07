@@ -33,9 +33,14 @@ function draw() {
 
     for (let i = 1; i < snake.length; i++) {
         if (currentHeadX === snake[i].x && currentHeadY === snake[i].y) {
-            console.log("DEAD")
+            console.log("ATE SELF");
         }; // Detects whether currentHead has same coordinates as existing objects in snake array
-}
+    };
+    if (currentHeadX > gameBoard.width || currentHeadX < tile) {
+        console.log("HIT X WALL");
+    } else if (currentHeadY > gameBoard.height || currentHeadY < tile) {
+        console.log("HIT Y WALL");
+    }
 };
 
 setInterval(draw, 1000); // time between each draw, effectively the speed of the snake
