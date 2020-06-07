@@ -1,20 +1,37 @@
 const gameBoard = document.getElementById("gameBoard");
 const ctx = gameBoard.getContext("2d");
 const tile = 10;
+let direction = "left";
 
 function draw() {
-    ctx.clearRect(0,0,gameBoard.clientWidth, gameBoard.height)
+    ctx.clearRect(0,0,gameBoard.clientWidth, gameBoard.height) // Clears any tiles filled on each draw to prevent trail
     ctx.fillStyle = "red";
     for (let i = 0; i < snake.length; i++) {
-    ctx.fillRect(snake[i].x, snake[i].y, tile, tile);
+        ctx.fillRect(snake[i].x, snake[i].y, tile, tile); // Fills tiles occupied by snake array's coordinates
     };
-    let currentHeadX = snake[0].x;
+    let currentHeadX = snake[0].x; // current position of snake head coordinates. Will supply new coordinate on each draw or change in direction
     let currentHeadY = snake[0].y;
-    snake.pop();
-    snake.unshift({x: currentHeadX, y: currentHeadY - tile})
+
+    if (direction === "up") {
+        currentHeadY = currentHeadY - tile;
+    } else if (direction === "down") {
+        currentHeadY = currentHeadY + tile;
+    } else if (direction === "left") {
+        currentHeadX = currentHeadX - tile;
+    } else if (direction === "right") {
+        currentHeadX = currentHeadX + tile;
+    }
+
+    snake.pop(); // removes last object (tail end) in snake array
+    
+    let newHead = {
+        x: currentHeadX,
+        y: currentHeadY
+    };
+    snake.unshift(newHead);
 };
 
-setInterval(draw, 1000);
+setInterval(draw, 1000); // time between each draw, effectively the speed of the snake
 
 // Initial snake array
 let snake = [];
@@ -31,69 +48,7 @@ snake[2] = {
     y: 19 * tile
 };
 
-// Current snake head coordinates
 
-// let currentHeadX = snake[0].x;
-// let currentHeadY = snake[0].y;
-
-/* Movement
-    * removes last object in array
-    * creates new object based on currentHeadX and Y coordinates (this is the new snake head)
-*/
-
-
-// let check = function() {
-//     console.log(`Length: ${snake.length}`)
-//     let i;
-//     for (i = 0; i < snake.length; i++) {
-//         console.log(`x: ${snake[i].x} y: ${snake[i].y}`);
-//     };
-// };
-
-// let direction;
-
-// let snakeUp = function() {
-//     direction = "up";
-//     snake.pop();
-//     snake.unshift({x: currentHeadX, y: currentHeadY - tile});
-//     }
-
-// let snakeDown = function() {
-//     direction = "down";
-//     snake.pop();
-//     snake.unshift({x: currentHeadX, y: currentHeadY + tile});
-    
-// };
-
-// let snakeLeft = function() {
-//     direction = "left";
-//     snake.pop();
-//     snake.unshift({x: currentHeadX - tile, y: currentHeadY});
-    
-// };
-
-// let snakeRight = function() {
-//     direction = "right";
-//     snake.pop();
-//     snake.unshift({x: currentHeadX + tile, y: currentHeadY});
-    
-// };
-
-// let advanceSnake = function() {
-//     if (direction==="up") {
-//         snakeUp();
-       
-//     } else if (direction==="down") {
-//         snakeDown();
-        
-//     } else if (direction==="left") {
-//         snakeLeft();
-        
-//     } else if(direction==="right") {
-//         snakeRight();
-//         };
-//     check();
-// };
 
 
 
