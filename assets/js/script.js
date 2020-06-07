@@ -3,24 +3,25 @@ const ctx = gameBoard.getContext("2d");
 const tile = 10;
 
 function draw() {
-
+    ctx.fillStyle = "red";
+    ctx.fillRect(snake[0].x, snake[0].y, tile, tile);
 };
 
-setInterval(draw, 10);
+setInterval(draw, 1);
 
 // Initial snake array
 let snake = [];
 snake[0] = {
-    x: 0,
-    y: 0
+    x: 19 * tile,
+    y: 19 * tile
 };
 snake[1] = {
-    x: 1,
-    y: 0
+    x: 20 * tile,
+    y: 19 * tile
 };
 snake[2] = {
-    x: 2,
-    y: 0
+    x: 21 * tile,
+    y: 19 * tile
 };
 
 // Current snake head coordinates
