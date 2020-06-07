@@ -4,6 +4,7 @@ const tile = 10;
 let direction = "left";
 
 function draw() {
+
     ctx.clearRect(0,0,gameBoard.clientWidth, gameBoard.height) // Clears any tiles filled on each draw to prevent trail
     ctx.fillStyle = "red";
     for (let i = 0; i < snake.length; i++) {
@@ -20,8 +21,8 @@ function draw() {
         currentHeadX = currentHeadX - tile;
     } else if (direction === "right") {
         currentHeadX = currentHeadX + tile;
-    }
-
+    };
+    
     snake.pop(); // removes last object (tail end) in snake array
     
     let newHead = {
@@ -29,6 +30,12 @@ function draw() {
         y: currentHeadY
     };
     snake.unshift(newHead);
+
+    for (let i = 1; i < snake.length; i++) {
+        if (currentHeadX === snake[i].x && currentHeadY === snake[i].y) {
+            console.log("DEAD")
+        }; // Detects whether currentHead has same coordinates as existing objects in snake array
+}
 };
 
 setInterval(draw, 1000); // time between each draw, effectively the speed of the snake
@@ -47,28 +54,3 @@ snake[2] = {
     x: 21 * tile,
     y: 19 * tile
 };
-
-
-
-
-
-
-// let snakeUpEat = function() {
-//     snake.unshift({x: currentHeadX, y: --currentHeadY});
-//     check();
-// }
-
-// let snakeDownEat = function() {
-//     snake.unshift({x: currentHeadX, y: ++currentHeadY});
-//     check();
-// }
-
-// let snakeLeftEat = function() {
-//     snake.unshift({x: --currentHeadX, y: currentHeadY});
-//     check();
-// }
-
-// let snakeRightEat = function() {
-//     snake.unshift({x: ++currentHeadX, y: currentHeadY});
-//     check();
-// }
