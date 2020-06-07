@@ -1,17 +1,17 @@
 // Initial snake array
-let snake = []
+let snake = [];
 snake[0] = {
     x: 0,
     y: 0
-}
+};
 snake[1] = {
     x: 1,
     y: 0
-}
+};
 snake[2] = {
     x: 2,
     y: 0
-}
+};
 
 // Current snake head coordinates
 let currentHeadX = snake[0].x;
@@ -29,49 +29,73 @@ let check = function() {
     let i;
     for (i = 0; i < snake.length; i++) {
         console.log(`x: ${snake[i].x} y: ${snake[i].y}`);
-    }
-}
+    };
+};
+
+let direction;
 
 let snakeUp = function() {
+    direction = "up";
     snake.pop();
     snake.unshift({x: currentHeadX, y: --currentHeadY});
-    check();
     }
 
 let snakeDown = function() {
+    direction = "down";
     snake.pop();
     snake.unshift({x: currentHeadX, y: ++currentHeadY});
-    check();
-}
+    
+};
 
 let snakeLeft = function() {
+    direction = "left";
     snake.pop();
     snake.unshift({x: --currentHeadX, y: currentHeadY});
-    check();
-}
+    
+};
 
 let snakeRight = function() {
+    direction = "right";
     snake.pop();
     snake.unshift({x: ++currentHeadX, y: currentHeadY});
-    check();
-}
+    
+};
 
-let snakeUpEat = function() {
-    snake.unshift({x: currentHeadX, y: --currentHeadY});
+let advanceSnake = function() {
+    if (direction==="up") {
+        snakeUp();
+       
+    } else if (direction==="down") {
+        snakeDown();
+        
+    } else if (direction==="left") {
+        snakeLeft();
+        
+    } else if(direction==="right") {
+        snakeRight();
+        };
     check();
-}
+};
 
-let snakeDownEat = function() {
-    snake.unshift({x: currentHeadX, y: ++currentHeadY});
-    check();
-}
 
-let snakeLeftEat = function() {
-    snake.unshift({x: --currentHeadX, y: currentHeadY});
-    check();
-}
 
-let snakeRightEat = function() {
-    snake.unshift({x: ++currentHeadX, y: currentHeadY});
-    check();
-}
+
+// let snakeUpEat = function() {
+//     snake.unshift({x: currentHeadX, y: --currentHeadY});
+//     check();
+// }
+
+// let snakeDownEat = function() {
+//     snake.unshift({x: currentHeadX, y: ++currentHeadY});
+//     check();
+// }
+
+// let snakeLeftEat = function() {
+//     snake.unshift({x: --currentHeadX, y: currentHeadY});
+//     check();
+// }
+
+// let snakeRightEat = function() {
+//     snake.unshift({x: ++currentHeadX, y: currentHeadY});
+//     check();
+// }
