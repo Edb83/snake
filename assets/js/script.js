@@ -4,7 +4,9 @@ const tile = 10;
 
 function draw() {
     ctx.fillStyle = "red";
-    ctx.fillRect(snake[0].x, snake[0].y, tile, tile);
+    for (let i = 0; i < snake.length; i++) {
+    ctx.fillRect(snake[i].x, snake[i].y, tile, tile);
+    }
 };
 
 setInterval(draw, 1);
@@ -48,27 +50,27 @@ let direction;
 let snakeUp = function() {
     direction = "up";
     snake.pop();
-    snake.unshift({x: currentHeadX, y: --currentHeadY});
+    snake.unshift({x: currentHeadX, y: currentHeadY - tile});
     }
 
 let snakeDown = function() {
     direction = "down";
     snake.pop();
-    snake.unshift({x: currentHeadX, y: ++currentHeadY});
+    snake.unshift({x: currentHeadX, y: currentHeadY + tile});
     
 };
 
 let snakeLeft = function() {
     direction = "left";
     snake.pop();
-    snake.unshift({x: --currentHeadX, y: currentHeadY});
+    snake.unshift({x: currentHeadX - tile, y: currentHeadY});
     
 };
 
 let snakeRight = function() {
     direction = "right";
     snake.pop();
-    snake.unshift({x: ++currentHeadX, y: currentHeadY});
+    snake.unshift({x: currentHeadX + tile, y: currentHeadY});
     
 };
 
