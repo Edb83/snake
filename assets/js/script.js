@@ -7,7 +7,7 @@ let direction = "left";
 let food = {
     x: 15 * tile,
     y: 19 * tile
-}
+};
 
 // Initial snake array
 let snake = [];
@@ -34,6 +34,10 @@ function draw() {
     let currentHeadX = snake[0].x; // current position of snake head coordinates. Will supply new coordinate on each draw or change in direction
     let currentHeadY = snake[0].y;
 
+    ctx.fillStyle = "green";
+    ctx.fillRect(food.x, food.y, tile, tile);
+
+
     if (direction === "up") {
         currentHeadY = currentHeadY - tile;
     } else if (direction === "down") {
@@ -43,14 +47,22 @@ function draw() {
     } else if (direction === "right") {
         currentHeadX = currentHeadX + tile;
     };
-    
-    snake.pop(); // removes last object (tail end) in snake array
-    
+       
     let newHead = {
         x: currentHeadX,
         y: currentHeadY
     };
+
+    // if snake currentHead has same coordinates as food, then clear food and add newHead WITHOUT removing last object in snake array
+    if (currentHeadX === food.x && currentHeadY === food.y) {
     snake.unshift(newHead);
+    console.log("ATE FOOD");
+    food = "";
+    // else remove last object in snake array (snake does not grow)
+    } else {
+        snake.unshift(newHead);
+        snake.pop(); // removes last object (tail end) in snake array
+    };
 
     for (let i = 1; i < snake.length; i++) {
         if (currentHeadX === snake[i].x && currentHeadY === snake[i].y) {
