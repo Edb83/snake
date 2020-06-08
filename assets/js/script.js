@@ -3,7 +3,7 @@ const ctx = gameBoard.getContext("2d");
 const tile = 10;
 
 // Initial gamestate
-let direction = "left";
+
 let food = {
     x: 15 * tile,
     y: 19 * tile
@@ -24,19 +24,36 @@ snake[2] = {
     y: 19 * tile
 };
 
+let direction = "left";
+
+document.addEventListener("keydown", keyDownHandler);
+
+function keyDownHandler(event) {
+    if(event.keyCode == 38) {
+        direction = "up"
+    } else if (event.keyCode == 40) {
+        direction = "down"
+    } else if (event.keyCode == 37) {
+        direction = "left"
+    } else if (event.keyCode == 39) {
+        direction = "right"
+    };
+}
+
 // Active gamestate
 function draw() {
     ctx.clearRect(0,0,gameBoard.clientWidth, gameBoard.height) // Clears any tiles filled on each draw to prevent trail
-    ctx.fillStyle = "red";
-    for (let i = 0; i < snake.length; i++) {
-        ctx.fillRect(snake[i].x, snake[i].y, tile, tile); // Fills tiles occupied by snake array's coordinates
-    };
-    let currentHeadX = snake[0].x; // current position of snake head coordinates. Will supply new coordinate on each draw or change in direction
-    let currentHeadY = snake[0].y;
 
     ctx.fillStyle = "green";
     ctx.fillRect(food.x, food.y, tile, tile);
 
+    ctx.fillStyle = "red";
+    for (let i = 0; i < snake.length; i++) {
+        ctx.fillRect(snake[i].x, snake[i].y, tile, tile); // Fills tiles occupied by snake array's coordinates
+    };
+
+    let currentHeadX = snake[0].x; // current position of snake head coordinates. Will supply new coordinate on each draw or change in direction
+    let currentHeadY = snake[0].y;
 
     if (direction === "up") {
         currentHeadY = currentHeadY - tile;
@@ -77,16 +94,16 @@ function draw() {
     };
     // Detects whether currentHeadX has coordinates outside of gameBoard. Stops game if true
     // See above issue
-    if (snake[0].x > gameBoard.width || snake[0].x < -10) {
-        console.log("HIT X WALL"); 
+    if (snake[0].x > gameBoard.width || snake[0].x < -tile) {
+        console.log("HIT X WALL");
         clearInterval(game);
     // Detects whether currentHeadY has coordinates outside of gameBoard. Stops game if true
     // See above issue
-    } else if (snake[0].y > gameBoard.height || snake[0].y < 0) {
-        console.log("HIT Y WALL"); 
+    } else if (snake[0].y > gameBoard.height || snake[0].y < -tile) {
+        console.log("HIT Y WALL");
         clearInterval(game);
     };
 };
 
-let game = setInterval(draw, 1000); // time between each draw, effectively the speed of the snake
+let game = setInterval(draw, 200); // time between each draw, effectively the speed of the snake
 
