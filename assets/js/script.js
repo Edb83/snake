@@ -22,21 +22,13 @@ snake[2] = {
 // returns random integer for either x or y coordinate. Works for square gameBoard and currently set to 40 * tile(10) = 400.
 // if gameBoard is not square then separate functions would be needed for x and y
 function Random() {
-    let choice = {x: Math.floor(Math.random() * 40) * tile, y: Math.floor(Math.random() * 40) * tile};
-        for (i = 0; i < snake.length; i++) {
-            if (choice == snake[i]) {
-                Random();
-                console.log("REPLACEMENT FRUIT");
-                return choice;
-            } else {
-                return choice
-            };
-        };
-    };
+    return Math.floor(Math.random() * 40) * tile
+}
 
-let food = 
-    Random()
-;
+let food = {
+    x: Random(),
+    y: Random()
+};
 
 let score = 0;
 
@@ -89,8 +81,11 @@ function draw() {
     };
 
     // if snake newHead has same coordinates as food, then clear food and add newHead WITHOUT removing last object in snake array
-    if (snake[0].x === food.x && snake[0].y === food.y) {
-        food = Random();
+    if (newHead.x === food.x && newHead.y === food.y) {
+        food = {
+            x: Random(),
+            y: Random()
+        };
         snake.unshift(newHead);
         score ++;
         console.log(`Score: ${score}`);
@@ -98,6 +93,16 @@ function draw() {
     } else {
         snake.unshift(newHead);
         // snake.pop(); // removes last object (tail end) in snake array
+    };
+    // if food spawns inside snake array, spawns new food
+    for (let i = 1; i < snake.length; i++) {
+        if (snake[i].x === food.x && snake[i].y === food.y) {
+            console.log("GET NEW FOOD");
+            food = {
+            x: Random(),
+            y: Random()
+        };
+        }; 
     };
 
     // Detects whether newHead has same coordinates as existing objects in snake array. Stops game if true
@@ -118,4 +123,4 @@ function draw() {
     };
 };
 
-let game = setInterval(draw, 200); // time between each draw, effectively the speed of the snake
+let game = setInterval(draw, 100); // time between each draw, effectively the speed of the snake
