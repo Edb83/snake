@@ -54,13 +54,19 @@ function keyDownHandler(event) {
 function draw() {
     ctx.clearRect(0,0,gameBoard.clientWidth, gameBoard.height) // Clears any tiles filled on each draw to prevent trail
 
+    // Draw the food
     ctx.fillStyle = "green";
     ctx.fillRect(food.x, food.y, tile, tile);
-
+    // Draw the snake
     ctx.fillStyle = "red";
     for (let i = 0; i < snake.length; i++) {
         ctx.fillRect(snake[i].x, snake[i].y, tile, tile); // Fills tiles occupied by snake array's coordinates
     };
+    // Draw the score
+    ctx.fillStyle = "grey";
+    ctx.font = ("50px Verdana");
+    ctx.fillText(score,2* tile,5* tile);
+
 
     let currentHeadX = snake[0].x; // current position of snake head coordinates. Will supply newHead coordinates on each draw
     let currentHeadY = snake[0].y;
@@ -92,7 +98,7 @@ function draw() {
     // else remove last object in snake array (snake does not grow)
     } else {
         snake.unshift(newHead);
-        // snake.pop(); // removes last object (tail end) in snake array
+        snake.pop(); // removes last object (tail end) in snake array
     };
     // if food spawns inside snake array, spawns new food
     for (let i = 1; i < snake.length; i++) {
@@ -101,7 +107,7 @@ function draw() {
             food = {
             x: Random(),
             y: Random()
-        };
+            };
         }; 
     };
 
