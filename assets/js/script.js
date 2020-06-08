@@ -4,17 +4,6 @@ const tile = 10; // the tile represents the smallest unit of measurement for the
 
 // Initial gamestate
 
-// returns random integer for either x or y coordinate. Works for square gameBoard and currently set to 40 * tile(10) = 400.
-// if gameBoard is not square then separate functions would be needed for x and y
-function Random() {
-    return Math.floor(Math.random() * 40) * tile;
-};
-
-let food = {
-    x: Random(),
-    y: Random()
-};
-
 // Initial snake array
 let snake = [];
 snake[0] = {
@@ -29,6 +18,27 @@ snake[2] = {
     x: 21 * tile,
     y: 19 * tile
 };
+
+// returns random integer for either x or y coordinate. Works for square gameBoard and currently set to 40 * tile(10) = 400.
+// if gameBoard is not square then separate functions would be needed for x and y
+function Random() {
+    let choice = {x: Math.floor(Math.random() * 40) * tile, y: Math.floor(Math.random() * 40) * tile};
+        for (i = 0; i < snake.length; i++) {
+            if (choice == snake[i]) {
+                Random();
+                console.log("REPLACEMENT FRUIT");
+                return choice;
+            } else {
+                return choice
+            };
+        };
+    };
+
+let food = 
+    Random()
+;
+
+let score = 0;
 
 // Keydown event handler
 
@@ -80,16 +90,14 @@ function draw() {
 
     // if snake newHead has same coordinates as food, then clear food and add newHead WITHOUT removing last object in snake array
     if (snake[0].x === food.x && snake[0].y === food.y) {
-    console.log("ATE FOOD");
-    food = {
-    x: Random(),
-    y: Random()
-    };
-    snake.unshift(newHead);
+        food = Random();
+        snake.unshift(newHead);
+        score ++;
+        console.log(`Score: ${score}`);
     // else remove last object in snake array (snake does not grow)
     } else {
         snake.unshift(newHead);
-        snake.pop(); // removes last object (tail end) in snake array
+        // snake.pop(); // removes last object (tail end) in snake array
     };
 
     // Detects whether newHead has same coordinates as existing objects in snake array. Stops game if true
