@@ -36,10 +36,10 @@ function draw() {
             console.log("ATE SELF");
         }; // Detects whether currentHead has same coordinates as existing objects in snake array
     };
-    if (currentHeadX > gameBoard.width || currentHeadX < tile) {
-        console.log("HIT X WALL");
-    } else if (currentHeadY > gameBoard.height || currentHeadY < tile) {
-        console.log("HIT Y WALL");
+    if (currentHeadX > gameBoard.width || currentHeadX < -10) {
+        console.log("HIT X WALL"); 
+    } else if (currentHeadY > gameBoard.height || currentHeadY < -10) {
+        console.log("HIT Y WALL"); 
     }
 };
 
