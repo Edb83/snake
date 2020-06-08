@@ -4,10 +4,16 @@ const tile = 10;
 
 // Initial gamestate
 
-let food = {
-    x: 15 * tile,
-    y: 19 * tile
+function Random() {
+    return Math.floor(Math.random() * 21) * tile;
 };
+
+let food = {
+    x: Random(),
+    y: Random()
+};
+
+
 
 // Initial snake array
 let snake = [];
@@ -23,6 +29,8 @@ snake[2] = {
     x: 21 * tile,
     y: 19 * tile
 };
+
+// Keydown event handler
 
 let direction = "left";
 
@@ -76,7 +84,10 @@ function draw() {
     //
     if (snake[0].x === food.x && snake[0].y === food.y) {
     console.log("ATE FOOD");
-    food = "";
+    food = {
+    x: Random(),
+    y: Random()
+    };
     snake.unshift(newHead);
     // else remove last object in snake array (snake does not grow)
     } else {
