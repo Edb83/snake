@@ -5,15 +5,13 @@ const tile = 10;
 // Initial gamestate
 
 function Random() {
-    return Math.floor(Math.random() * 21) * tile;
+    return Math.floor(Math.random() * 41) * tile;
 };
 
 let food = {
     x: Random(),
     y: Random()
 };
-
-
 
 // Initial snake array
 let snake = [];
