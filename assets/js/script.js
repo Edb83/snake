@@ -64,18 +64,23 @@ function draw() {
         snake.pop(); // removes last object (tail end) in snake array
     };
 
+    // Detects whether currentHead has same coordinates as existing objects in snake array. Stops game if true
     for (let i = 1; i < snake.length; i++) {
         if (currentHeadX === snake[i].x && currentHeadY === snake[i].y) {
             console.log("ATE SELF");
-        }; // Detects whether currentHead has same coordinates as existing objects in snake array
+            clearInterval(game);
+        }; 
     };
-
+    // Detects whether currentHeadX has coordinates outside of gameBoard. Stops game if true
     if (currentHeadX > gameBoard.width || currentHeadX < -10) {
-        console.log("HIT X WALL"); // Detects whether currentHeadX has coordinates outside of gameBoard
+        console.log("HIT X WALL"); 
+        clearInterval(game);
+    // Detects whether currentHeadY has coordinates outside of gameBoard. Stops game if true
     } else if (currentHeadY > gameBoard.height || currentHeadY < -10) {
-        console.log("HIT Y WALL"); // Detects whether currentHeadY has coordinates outside of gameBoard
+        console.log("HIT Y WALL"); 
+        clearInterval(game);
     };
 };
 
-setInterval(draw, 1000); // time between each draw, effectively the speed of the snake
+let game = setInterval(draw, 1000); // time between each draw, effectively the speed of the snake
 
