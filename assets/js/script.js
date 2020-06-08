@@ -1,11 +1,13 @@
 const gameBoard = document.getElementById("gameBoard");
 const ctx = gameBoard.getContext("2d");
-const tile = 10;
+const tile = 10; // the tile represents the smallest unit of measurement for the gameBoard.
 
 // Initial gamestate
 
+// returns random integer for either x or y coordinate. Works for square gameBoard and currently set to 40 * tile(10) = 400.
+// if gameBoard is not square then separate functions would be needed for x and y
 function Random() {
-    return Math.floor(Math.random() * 41) * tile;
+    return Math.floor(Math.random() * 40) * tile;
 };
 
 let food = {
@@ -44,7 +46,7 @@ function keyDownHandler(event) {
     } else if (event.keyCode == 39 && direction != "left") {
         direction = "right"
     };
-}
+};
 
 // Active gamestate
 function draw() {
@@ -58,7 +60,7 @@ function draw() {
         ctx.fillRect(snake[i].x, snake[i].y, tile, tile); // Fills tiles occupied by snake array's coordinates
     };
 
-    let currentHeadX = snake[0].x; // current position of snake head coordinates. Will supply new coordinate on each draw or change in direction
+    let currentHeadX = snake[0].x; // current position of snake head coordinates. Will supply newHead coordinates on each draw
     let currentHeadY = snake[0].y;
 
     if (direction === "up") {
@@ -76,10 +78,7 @@ function draw() {
         y: currentHeadY
     };
 
-    // if snake currentHead has same coordinates as food, then clear food and add newHead WITHOUT removing last object in snake array
-    //
-    // ISSUE: currentHeadX and Y are one tile ahead due to newHead. Current resolution is to use snake[0].x and y
-    //
+    // if snake newHead has same coordinates as food, then clear food and add newHead WITHOUT removing last object in snake array
     if (snake[0].x === food.x && snake[0].y === food.y) {
     console.log("ATE FOOD");
     food = {
@@ -93,26 +92,22 @@ function draw() {
         snake.pop(); // removes last object (tail end) in snake array
     };
 
-    // Detects whether currentHead has same coordinates as existing objects in snake array. Stops game if true
-    // See above issue
+    // Detects whether newHead has same coordinates as existing objects in snake array. Stops game if true
     for (let i = 1; i < snake.length; i++) {
-        if (snake[0].x === snake[i].x && snake[0].y === snake[i].y) {
+        if (newHead.x === snake[i].x && newHead.y === snake[i].y) {
             console.log("ATE SELF");
             clearInterval(game);
         }; 
     };
-    // Detects whether currentHeadX has coordinates outside of gameBoard. Stops game if true
-    // See above issue
-    if (snake[0].x > gameBoard.width || snake[0].x < -tile) {
+    // Detects whether newHead has coordinates outside of gameBoard (x). Stops game if true
+    if (newHead.x > gameBoard.width - tile || newHead.x < 0) {
         console.log("HIT X WALL");
         clearInterval(game);
-    // Detects whether currentHeadY has coordinates outside of gameBoard. Stops game if true
-    // See above issue
-    } else if (snake[0].y > gameBoard.height || snake[0].y < -tile) {
+    // Detects whether newHead has coordinates outside of gameBoard (y). Stops game if true
+    } else if (newHead.y > gameBoard.height - tile || newHead.y < 0) {
         console.log("HIT Y WALL");
         clearInterval(game);
     };
 };
 
 let game = setInterval(draw, 200); // time between each draw, effectively the speed of the snake
-
