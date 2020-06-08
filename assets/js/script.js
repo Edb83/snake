@@ -54,10 +54,13 @@ function draw() {
     };
 
     // if snake currentHead has same coordinates as food, then clear food and add newHead WITHOUT removing last object in snake array
-    if (currentHeadX === food.x && currentHeadY === food.y) {
-    snake.unshift(newHead);
+    //
+    // ISSUE: currentHeadX and Y are one tile ahead due to newHead. Current resolution is to use snake[0].x and y
+    //
+    if (snake[0].x === food.x && snake[0].y === food.y) {
     console.log("ATE FOOD");
     food = "";
+    snake.unshift(newHead);
     // else remove last object in snake array (snake does not grow)
     } else {
         snake.unshift(newHead);
@@ -65,18 +68,21 @@ function draw() {
     };
 
     // Detects whether currentHead has same coordinates as existing objects in snake array. Stops game if true
+    // See above issue
     for (let i = 1; i < snake.length; i++) {
-        if (currentHeadX === snake[i].x && currentHeadY === snake[i].y) {
+        if (snake[0].x === snake[i].x && snake[0].y === snake[i].y) {
             console.log("ATE SELF");
             clearInterval(game);
         }; 
     };
     // Detects whether currentHeadX has coordinates outside of gameBoard. Stops game if true
-    if (currentHeadX > gameBoard.width || currentHeadX < -10) {
+    // See above issue
+    if (snake[0].x > gameBoard.width || snake[0].x < -10) {
         console.log("HIT X WALL"); 
         clearInterval(game);
     // Detects whether currentHeadY has coordinates outside of gameBoard. Stops game if true
-    } else if (currentHeadY > gameBoard.height || currentHeadY < -10) {
+    // See above issue
+    } else if (snake[0].y > gameBoard.height || snake[0].y < 0) {
         console.log("HIT Y WALL"); 
         clearInterval(game);
     };
