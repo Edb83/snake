@@ -60,18 +60,24 @@ document.addEventListener("keydown", function () {
 function draw() {
   ctx.clearRect(0, 0, gameBoard.clientWidth, gameBoard.height); // clears any tiles filled on each draw to prevent trail
 
+  // Draw the score
+  ctx.fillStyle = "grey";
+  ctx.font = "50px Verdana";
+  ctx.fillText(score, 2 * tile, 5 * tile);
+
   // Draw the food
+  ctx.beginPath();
+  ctx.arc(food.x + (tile/2), food.y + (tile/2), tile/2, 0, 2 * Math.PI, false);
+  ctx.strokeStyle = "red"
+  ctx.stroke();
   ctx.fillStyle = "green";
-  ctx.fillRect(food.x, food.y, tile, tile);
+  ctx.fill();
+
   // Draw the snake
   ctx.fillStyle = "red";
   for (let i = 0; i < snake.length; i++) {
     ctx.fillRect(snake[i].x, snake[i].y, tile, tile); // fills tiles occupied by snake array's coordinates
   };
-  // Draw the score
-  ctx.fillStyle = "grey";
-  ctx.font = "50px Verdana";
-  ctx.fillText(score, 2 * tile, 5 * tile);
 
   // Current position of snake head coordinates. Will supply newHead coordinates on each draw
   let currentHeadX = snake[0].x; 
