@@ -1,6 +1,8 @@
 const gameBoard = document.getElementById("gameBoard");
+gameBoard.width = 400;
+gameBoard.height = 460;
 const ctx = gameBoard.getContext("2d");
-const tile = 10; // the tile represents the smallest unit of measurement for the gameBoard
+const tile = 20; // the tile represents the smallest unit of measurement for the gameBoard
 
 // INITIAL GAME STATE
 
@@ -23,7 +25,7 @@ snake[2] = {
 // returns random integer for either x or y coordinate. Works for square gameBoard and currently set to 40 * tile(10) = 400
 // if gameBoard is not square then separate functions needed for x and y
 function Random() {
-  return Math.floor(Math.random() * 40) * tile;
+  return Math.floor(Math.random() * 20) * tile;
 };
 
 // Food coordinates
@@ -61,13 +63,16 @@ function draw() {
   ctx.clearRect(0, 0, gameBoard.clientWidth, gameBoard.height); // clears any tiles filled on each draw to prevent trail
 
   // Draw the score
-  ctx.fillStyle = "grey";
-  ctx.font = "50px Verdana";
-  ctx.fillText(score, 2 * tile, 5 * tile);
+  ctx.fillStyle = "black";
+  ctx.fillRect(0, 0, gameBoard.clientWidth, tile * 3);
+
+  ctx.fillStyle = "white";
+  ctx.font = "40px Verdana";
+  ctx.fillText(score, tile, tile *2.25);
 
   // Draw the food
   ctx.beginPath();
-  ctx.arc(food.x + (tile/2), food.y + (tile/2), tile/2, 0, 2 * Math.PI, false);
+  ctx.arc(food.x + (tile - 3) /2, food.y + (tile - 3) /2, tile/2, 0, 2 * Math.PI, false);
   ctx.strokeStyle = "red"
   ctx.stroke();
   ctx.fillStyle = "green";
