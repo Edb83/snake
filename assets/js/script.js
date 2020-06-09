@@ -35,12 +35,13 @@ let food = {
 // Initial score and snake direction
 let score = 0;
 let direction = "left";
-
+let gameSpeed = 125; // lower is faster
 let lastKey = 0; // used to store time since last keydown
+let safeDelay = 130; // refresh rate speed to prevent snake eating its neck when multiple keys pressed
 
 // Keydown event listener
 document.addEventListener("keydown", function () {
-  if (Date.now() - lastKey > 100) { // function only operates if more than 100 milliseconds since last keydown
+  if (Date.now() - lastKey > safeDelay) {
     if (event.keyCode == 38 && direction != "down") {
       direction = "up";
     } else if (event.keyCode == 40 && direction != "up") {
@@ -129,4 +130,4 @@ function draw() {
 };
 
 // Game speed
-let game = setInterval(draw, 100); // number of milliseconds between each draw
+let game = setInterval(draw, gameSpeed); // number of milliseconds between each draw
