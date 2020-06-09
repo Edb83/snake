@@ -21,17 +21,10 @@ snake[2] = {
   y: 19 * tile,
 };
 
-// Random number generator
-// returns random integer for either x or y coordinate. Works for square gameBoard and currently set to 40 * tile(10) = 400
-// if gameBoard is not square then separate functions needed for x and y
-function Random() {
-  return Math.floor(Math.random() * 20) * tile;
-};
-
 // Food coordinates
 let food = {
-  x: Random(),
-  y: Random(),
+  x: Math.floor(Math.random() * 20) * tile,
+  y: Math.floor(Math.random() * 20 + 3) * tile
 };
 
 // Initial score and snake direction
@@ -107,8 +100,8 @@ function draw() {
   // If snake newHead has same coordinates as food, then clear food and add newHead WITHOUT removing last object in snake array
   if (newHead.x === food.x && newHead.y === food.y) {
     food = {
-      x: Random(),
-      y: Random(),
+        x: Math.floor(Math.random() * 20) * tile,
+        y: Math.floor(Math.random() * 20 + 3) * tile
     };
     snake.unshift(newHead);
     score++;
@@ -122,8 +115,8 @@ function draw() {
   for (let i = 1; i < snake.length; i++) {
     if (snake[i].x === food.x && snake[i].y === food.y) {
       food = {
-        x: Random(),
-        y: Random(),
+        x: Math.floor(Math.random() * 20) * tile,
+        y: Math.floor(Math.random() * 20 + 3) * tile
       };
     };
   };
@@ -135,7 +128,7 @@ function draw() {
     }
   }
   // Checks whether snake newHead has coordinates outside of gameBoard. Stops game if true
-  if (newHead.x > gameBoard.width - tile || newHead.x < 0 || newHead.y > gameBoard.height - tile || newHead.y < 0) {
+  if (newHead.x > gameBoard.width - tile || newHead.x < 0 || newHead.y > gameBoard.height - tile || newHead.y < 3 * tile) {
     clearInterval(game);
   };
 };
