@@ -3,7 +3,7 @@ body {
   padding: 0;
 }
 
-#gameBoardContainer {
+#canvasContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -14,4 +14,10 @@ body {
 #gameBoard {
   border-style: solid;
   border-color: black;
+  z-index: 0;
+}
+
+#backgroundCanvas {
+    position: absolute;
+    z-index: -1;
 }
