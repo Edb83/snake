@@ -1,3 +1,9 @@
+const backgroundCanvas = document.getElementById("backgroundCanvas")
+backgroundCanvas.width = window.innerWidth;
+backgroundCanvas.height = window.innerHeight;
+
+let c = backgroundCanvas.getContext("2d");
+
 const gameBoard = document.getElementById("gameBoard");
 gameBoard.width = 400;
 gameBoard.height = 460;
@@ -53,11 +59,19 @@ document.addEventListener("keydown", function () {
 // ACTIVE GAMESTATE
 
 function draw() {
-  ctx.clearRect(0, 0, gameBoard.clientWidth, gameBoard.height); // clears any tiles filled on each draw to prevent trail
+  c.clearRect(0,0, backgroundCanvas.width, backgroundCanvas.height);
+  c.fillStyle = "#34358F";
+  c.fillRect(0,0, window.innerWidth, window.innerHeight);
+  
+  ctx.clearRect(0, 0, gameBoard.width, gameBoard.height); // clears any tiles filled on each draw to prevent trail
+
+  // Draw game board background
+  ctx.fillStyle = "#8788CC";
+  ctx.fillRect(0, tile * 3, gameBoard.width, gameBoard.height);
 
   // Draw the score area
-  ctx.fillStyle = "#745DD9";
-  ctx.fillRect(0, 0, gameBoard.clientWidth, tile * 3);
+  ctx.fillStyle = "#2C2C42";
+  ctx.fillRect(0, 0, gameBoard.width, tile * 3);
   
   // Draw the score
   ctx.fillStyle = "white";
@@ -67,11 +81,13 @@ function draw() {
   // Draw the food
   ctx.beginPath();
   ctx.arc(food.x + (tile - 3) /2, food.y + (tile - 3) /2, tile/2, 0, 2 * Math.PI, false);
-  ctx.fillStyle = "#3D1BD1";
+  ctx.fillStyle = "#AE00C2";
   ctx.fill();
+  ctx.strokeStyle = "white";
+  ctx.stroke();
 
   // Draw the snake
-  ctx.fillStyle = "#180B52";
+  ctx.fillStyle = "#181942";
   for (let i = 0; i < snake.length; i++) {
     ctx.fillRect(snake[i].x, snake[i].y, tile, tile); // fills tiles occupied by snake array's coordinates
     ctx.strokeStyle = "white";
