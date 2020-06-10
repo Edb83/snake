@@ -1,8 +1,10 @@
-const backgroundCanvas = document.getElementById("backgroundCanvas") // move to separate js file?
-backgroundCanvas.width = window.innerWidth; // move to separate js file?
-backgroundCanvas.height = window.innerHeight; // move to separate js file?
-let c = backgroundCanvas.getContext("2d"); // move to separate js file?
+// Background canvas
+// const backgroundCanvas = document.getElementById("backgroundCanvas")
+// backgroundCanvas.width = window.innerWidth;
+// backgroundCanvas.height = window.innerHeight;
+// let c = backgroundCanvas.getContext("2d");
 
+// Game board
 const gameBoard = document.getElementById("gameBoard");
 gameBoard.width = 400;
 gameBoard.height = 460;
@@ -25,6 +27,7 @@ function sound(src) {
     this.sound.pause();
   }
 }
+
 let eat; 
 let gameover;
 
@@ -74,16 +77,27 @@ document.addEventListener("keydown", function () {
   };
 });
 
+let gameOver = function() {
+    ctx.fillStyle = "#C20A00";
+    ctx.fillRect(snake[1].x, snake[1].y, tile, tile);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "white";
+    ctx.strokeRect(snake[1].x, snake[1].y, tile, tile);
+    gameover.play();
+    clearInterval(game);
+};
+
 // ACTIVE GAMESTATE
 
 function draw() {
-
+  
   eat = new sound("assets/audio/eat.wav");
   gameover = new sound("assets/audio/gameover.wav");
   
-  c.clearRect(0,0, backgroundCanvas.width, backgroundCanvas.height); // move to separate js file?
-  c.fillStyle = "#34358F"; // move to separate js file?
-  c.fillRect(0,0, window.innerWidth, window.innerHeight); // move to separate js file?
+
+//   c.clearRect(0,0, backgroundCanvas.width, backgroundCanvas.height); // move to separate js file?
+//   c.fillStyle = "#34358F"; // move to separate js file?
+//   c.fillRect(0,0, window.innerWidth, window.innerHeight); // move to separate js file?
   
   ctx.clearRect(0, 0, gameBoard.width, gameBoard.height); // clears any tiles filled on each draw to prevent trail
 
@@ -164,26 +178,14 @@ function draw() {
   // Checks whether snake newHead has same coordinates as existing objects in snake array. Stops game if true
   for (let i = 1; i < snake.length; i++) {
     if (newHead.x === snake[i].x && newHead.y === snake[i].y) {
-      ctx.fillStyle = "#C20A00";
-      ctx.fillRect(snake[1].x, snake[1].y, tile, tile);
-      ctx.lineWidth = 2;
-      ctx.strokeStyle = "white";
-      ctx.strokeRect(snake[1].x, snake[1].y, tile, tile);
-      gameover.play();
-      clearInterval(game);
+      gameOver();
     }
   }
   // Checks whether snake newHead has coordinates outside of gameBoard. Stops game if true
   if (newHead.x > gameBoard.width - tile || newHead.x < 0 || newHead.y > gameBoard.height - tile || newHead.y < 3 * tile) {
-      ctx.fillStyle = "#C20A00";
-      ctx.fillRect(snake[1].x, snake[1].y, tile, tile);
-      ctx.lineWidth = 2;
-      ctx.strokeStyle = "white";
-      ctx.strokeRect(snake[1].x, snake[1].y, tile, tile);
-      gameover.play();
-      clearInterval(game);
+      gameOver();
   };
 };
 
 // Game speed
-let game = setInterval(draw, gameSpeed); // number of milliseconds between each draw
+let game = setInterval(draw, gameSpeed);
