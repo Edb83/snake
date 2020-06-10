@@ -77,6 +77,13 @@ document.addEventListener("keydown", function () {
   };
 });
 
+let newFood = function() {
+    food = {
+        x: Math.floor(Math.random() * 20) * tile,
+        y: Math.floor(Math.random() * 20 + 3) * tile
+      };
+}
+
 let gameOver = function() {
     ctx.fillStyle = "#C20A00";
     ctx.fillRect(snake[1].x, snake[1].y, tile, tile);
@@ -152,10 +159,7 @@ function draw() {
 
   // If snake newHead has same coordinates as food, then clear food and add newHead WITHOUT removing last object in snake array
   if (newHead.x === food.x && newHead.y === food.y) {
-    food = {
-        x: Math.floor(Math.random() * 20) * tile,
-        y: Math.floor(Math.random() * 20 + 3) * tile
-    };
+    newFood();
     snake.unshift(newHead);
     score++;
     eat.play(); // plays sounds
@@ -168,10 +172,7 @@ function draw() {
   // If food spawns inside snake array, spawns new food
   for (let i = 1; i < snake.length; i++) {
     if (snake[i].x === food.x && snake[i].y === food.y) {
-      food = {
-        x: Math.floor(Math.random() * 20) * tile,
-        y: Math.floor(Math.random() * 20 + 3) * tile
-      };
+      newFood()
     };
   };
 
