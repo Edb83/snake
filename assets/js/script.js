@@ -141,12 +141,22 @@ function draw() {
   // Checks whether snake newHead has same coordinates as existing objects in snake array. Stops game if true
   for (let i = 1; i < snake.length; i++) {
     if (newHead.x === snake[i].x && newHead.y === snake[i].y) {
+      ctx.fillStyle = "#C20A00";
+      ctx.fillRect(snake[1].x, snake[1].y, tile, tile);
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = "white";
+      ctx.strokeRect(snake[1].x, snake[1].y, tile, tile);
       clearInterval(game);
     }
   }
   // Checks whether snake newHead has coordinates outside of gameBoard. Stops game if true
   if (newHead.x > gameBoard.width - tile || newHead.x < 0 || newHead.y > gameBoard.height - tile || newHead.y < 3 * tile) {
-    clearInterval(game);
+      ctx.fillStyle = "#C20A00";
+      ctx.fillRect(snake[1].x, snake[1].y, tile, tile);
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = "white";
+      ctx.strokeRect(snake[1].x, snake[1].y, tile, tile);
+      clearInterval(game);
   };
 };
 
