@@ -1,14 +1,32 @@
-const backgroundCanvas = document.getElementById("backgroundCanvas")
-backgroundCanvas.width = window.innerWidth;
-backgroundCanvas.height = window.innerHeight;
-
-let c = backgroundCanvas.getContext("2d");
+const backgroundCanvas = document.getElementById("backgroundCanvas") // move to separate js file?
+backgroundCanvas.width = window.innerWidth; // move to separate js file?
+backgroundCanvas.height = window.innerHeight; // move to separate js file?
+let c = backgroundCanvas.getContext("2d"); // move to separate js file?
 
 const gameBoard = document.getElementById("gameBoard");
 gameBoard.width = 400;
 gameBoard.height = 460;
 const ctx = gameBoard.getContext("2d");
 const tile = 20; // the tile represents the smallest unit of measurement for the gameBoard
+
+// Audio
+
+function sound(src) {
+  this.sound = document.createElement("audio");
+  this.sound.src = src;
+  this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute("controls", "none");
+  this.sound.style.display = "none";
+  document.body.appendChild(this.sound);
+  this.play = function(){
+    this.sound.play();
+  }
+  this.stop = function(){
+    this.sound.pause();
+  }
+}
+let eat; 
+let gameover;
 
 // INITIAL GAME STATE
 
@@ -59,9 +77,13 @@ document.addEventListener("keydown", function () {
 // ACTIVE GAMESTATE
 
 function draw() {
-  c.clearRect(0,0, backgroundCanvas.width, backgroundCanvas.height);
-  c.fillStyle = "#34358F";
-  c.fillRect(0,0, window.innerWidth, window.innerHeight);
+
+  eat = new sound("assets/audio/eat.wav");
+  gameover = new sound("assets/audio/gameover.wav");
+  
+  c.clearRect(0,0, backgroundCanvas.width, backgroundCanvas.height); // move to separate js file?
+  c.fillStyle = "#34358F"; // move to separate js file?
+  c.fillRect(0,0, window.innerWidth, window.innerHeight); // move to separate js file?
   
   ctx.clearRect(0, 0, gameBoard.width, gameBoard.height); // clears any tiles filled on each draw to prevent trail
 
@@ -122,6 +144,7 @@ function draw() {
     };
     snake.unshift(newHead);
     score++;
+    eat.play(); // plays sounds
     // else remove last object in snake array (snake does not grow)
   } else {
     snake.unshift(newHead);
@@ -146,6 +169,7 @@ function draw() {
       ctx.lineWidth = 2;
       ctx.strokeStyle = "white";
       ctx.strokeRect(snake[1].x, snake[1].y, tile, tile);
+      gameover.play();
       clearInterval(game);
     }
   }
@@ -156,6 +180,7 @@ function draw() {
       ctx.lineWidth = 2;
       ctx.strokeStyle = "white";
       ctx.strokeRect(snake[1].x, snake[1].y, tile, tile);
+      gameover.play();
       clearInterval(game);
   };
 };
