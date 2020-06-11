@@ -17,5 +17,15 @@ https://stackoverflow.com/questions/14667010/limit-how-many-times-an-event-liste
 Sound function:
 https://www.w3schools.com/graphics/game_sound.asp
 
+Free sounds:
+https://freesound.org/home/
+
 Canvas tutorial:
 https://www.youtube.com/watch?v=EO6OkltgudE&list=PLpPnRKq7eNW3We9VdCfx9fprhqXHwTPXL&index=1
+
+Color wheel:
+https://color.adobe.com/create/color-wheel
+
+Layered canvases (could use this):
+https://html5.litten.com/using-multiple-html5-canvases-as-layers/
+
