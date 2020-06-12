@@ -57,7 +57,7 @@ let food = {
 // Initial score and snake direction
 let score = 0;
 let direction = "left";
-// let gameSpeed = 125; // lower is faster
+let gameSpeed = 500; // lower is faster
 let lastKey = 0; // used to store time since last keydown
 let safeDelay = 130; // refresh rate speed to prevent snake eating its neck when multiple keys pressed
 
@@ -105,7 +105,7 @@ let collisionDetected = false;
 
 
 
-let game = setInterval(update,150);
+let game = setInterval(update,gameSpeed);
 
 function update() {
 
@@ -153,7 +153,7 @@ let eat = new sound("assets/audio/eat.wav");
 
   // Checks whether snake newHead has same coordinates as existing objects in snake array. Stops game if true
   for (let i = 1; i < snake.length; i++) {
-    if (snake[0].x === snake[i].x && snake[0].y === snake[i].y) {
+    if (newHead.x === snake[i].x && newHead.y === snake[i].y) {
     failState();
     gameover.play();
 
