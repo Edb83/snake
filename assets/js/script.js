@@ -84,22 +84,10 @@ let newFood = function() {
       };
 }
 
-// let gameOver = function() {
-//     ctx.fillStyle = "#C20A00";
-//     ctx.fillRect(snake[1].x, snake[1].y, tile, tile); // snake[0] represents the newHead position in draw function, so snake[1] used
-//     ctx.lineWidth = 2;
-//     ctx.strokeStyle = "white";
-//     ctx.strokeRect(snake[1].x, snake[1].y, tile, tile);
-//     gameover.play();
-//     clearInterval(game);
-// };
-
 // ACTIVE GAMESTATE
 
 
-// let startGame = function() {
-//     setInterval(update,150)
-// }
+let startGame = false;
 
 let collisionDetected = false;
 
@@ -111,6 +99,8 @@ function update() {
 
 let gameover = new sound("assets/audio/gameover.wav");
 let eat = new sound("assets/audio/eat.wav");
+
+if (startGame === true) {
 
   // Current position of snake head coordinates. Will supply newHead coordinates on each draw
   let currentHeadX = snake[0].x; 
@@ -167,6 +157,7 @@ let eat = new sound("assets/audio/eat.wav");
     clearInterval(game);
   };
 }
+}
 
 let failState = function() {
     collisionDetected = true;
@@ -216,19 +207,15 @@ function draw() {
   };
 };
 
-
+// Loop to callback, with conditions for stopping on collision
 let mainLoop = function() {
-    if (collisionDetected === true) {
+  if (collisionDetected === true) {
         cancelAnimationFrame(draw);
     } else {
     draw();
     requestAnimationFrame(mainLoop);
     }
 }
- 
-// Start things off
+
+// Initialise loop by callback
 requestAnimationFrame(mainLoop);
-
-
-// // Game speed
-// let game = setInterval(draw, gameSpeed);
