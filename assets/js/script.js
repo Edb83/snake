@@ -35,24 +35,10 @@ let gameover;
 
 // Snake array
 let snake = [];
-snake[0] = {
-  x: 15 * tile,
-  y: 19 * tile,
-};
-snake[1] = {
-  x: 16 * tile,
-  y: 19 * tile,
-};
-snake[2] = {
-  x: 17 * tile,
-  y: 19 * tile,
-};
+let food = {};
 
-// Food coordinates
-let food = {
-  x: Math.floor(Math.random() * 20) * tile,
-  y: Math.floor(Math.random() * 20 + 3) * tile,
-};
+let liveGame = false;
+let collisionDetected = false;
 
 // Initial score and snake direction
 let score = 0;
@@ -84,6 +70,21 @@ let newFood = function () {
   };
 };
 
+let newSnake = function() {
+  snake[0] = {
+  x: 15 * tile,
+  y: 19 * tile,
+};
+snake[1] = {
+  x: 16 * tile,
+  y: 19 * tile,
+};
+snake[2] = {
+  x: 17 * tile,
+  y: 19 * tile,
+};
+}
+
 // new game: snake, food, score, collision, liveGame, mainLoop
 // snake = array, direction
 // food = newFood
@@ -92,16 +93,23 @@ let newFood = function () {
 // liveGame = true
 // mainLoop()
 
+let newGame = function() {
+    snake = [];
+    newSnake();
+    newFood();
+    score = 0;
+    collisionDetected = false;
+    liveGame = true;
+    draw();
+}
+
 // ACTIVE GAMESTATE
 
-let liveGame = false;
-let collisionDetected = false;
 
-let game = setInterval(update, gameSpeed);
 
-function update() {
-  let gameover = new sound("assets/audio/gameover.wav");
-  let eat = new sound("assets/audio/eat.wav");
+
+
+function update() { 
 
   if (liveGame === true) {
     // Current position of snake head coordinates. Will supply newHead coordinates on each draw
@@ -129,6 +137,7 @@ function update() {
       newFood();
       snake.unshift(newHead);
       score++;
+      let eat = new sound("assets/audio/eat.wav");
       eat.play();
       // else remove last object in snake array (snake does not grow)
     } else {
@@ -146,10 +155,10 @@ function update() {
     // Checks whether snake newHead has same coordinates as existing objects in snake array. Stops game if true
     for (let i = 1; i < snake.length; i++) {
       if (newHead.x === snake[i].x && newHead.y === snake[i].y) {
-        failState();
+        let gameover = new sound("assets/audio/gameover.wav");  
         gameover.play();
-        clearInterval(game);
-      }
+        failState();
+        }
     }
     // Checks whether snake newHead has coordinates outside of gameBoard. Stops game if true
     if (
@@ -158,21 +167,14 @@ function update() {
       newHead.y > gameBoard.height - tile ||
       newHead.y < 3 * tile
     ) {
-      failState();
+      let gameover = new sound("assets/audio/gameover.wav");  
       gameover.play();
-      clearInterval(game);
+      failState();
     }
   }
 }
+let game = setInterval(update, gameSpeed);
 
-let failState = function () {
-  collisionDetected = true;
-  ctx.fillStyle = "#C20A00";
-  ctx.fillRect(snake[1].x, snake[1].y, tile, tile); // snake[0] represents the newHead position in draw function, so snake[1] used
-  ctx.lineWidth = 2;
-  ctx.strokeStyle = "white";
-  ctx.strokeRect(snake[1].x, snake[1].y, tile, tile);
-};
 
 function draw() {
   
@@ -219,6 +221,16 @@ function draw() {
     ctx.strokeRect(snake[i].x, snake[i].y, tile, tile);
   };
 }
+
+let failState = function () {
+  collisionDetected = true;
+  ctx.fillStyle = "#C20A00";
+  ctx.fillRect(snake[1].x, snake[1].y, tile, tile); // snake[0] represents the newHead position in draw function, so snake[1] used
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = "white";
+  ctx.strokeRect(snake[1].x, snake[1].y, tile, tile);
+  clearInterval(game);
+};
 
 // Loop to callback, with conditions for stopping on collision
 let mainLoop = function () {
