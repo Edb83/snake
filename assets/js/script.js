@@ -11,25 +11,25 @@ gameBoard.height = 460;
 const ctx = gameBoard.getContext("2d");
 const tile = 20; // the tile represents the smallest unit of measurement for the gameBoard
 
-// // Audio
-// // creates new <audio> elements to be accessed during the game
-// function sound(src) {
-//   this.sound = document.createElement("audio");
-//   this.sound.src = src;
-//   this.sound.setAttribute("preload", "auto");
-//   this.sound.setAttribute("controls", "none");
-//   this.sound.style.display = "none";
-//   document.body.appendChild(this.sound);
-//   this.play = function(){
-//     this.sound.play();
-//   }
-//   this.stop = function(){
-//     this.sound.pause();
-//   }
-// }
+// Audio
+// creates new <audio> elements to be accessed during the game
+function sound(src) {
+  this.sound = document.createElement("audio");
+  this.sound.src = src;
+  this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute("controls", "none");
+  this.sound.style.display = "none";
+  document.body.appendChild(this.sound);
+  this.play = function(){
+    this.sound.play();
+  }
+  this.stop = function(){
+    this.sound.pause();
+  }
+}
 
-// let eat; 
-// let gameover;
+let eat; 
+let gameover;
 
 // INITIAL GAME STATE
 
@@ -57,7 +57,7 @@ let food = {
 // Initial score and snake direction
 let score = 0;
 let direction = "left";
-let gameSpeed = 125; // lower is faster
+// let gameSpeed = 125; // lower is faster
 let lastKey = 0; // used to store time since last keydown
 let safeDelay = 130; // refresh rate speed to prevent snake eating its neck when multiple keys pressed
 
@@ -96,11 +96,19 @@ let newFood = function() {
 
 // ACTIVE GAMESTATE
 
-let startGame = function() {
-    setInterval(update,150)
-}
+
+// let startGame = function() {
+//     setInterval(update,150)
+// }
+
+let collisionDetected = false;
+
+let game = setInterval(update,150);
 
 function update() {
+
+let gameover = new sound("assets/audio/gameover.wav");
+let eat = new sound("assets/audio/eat.wav");
 
   // Current position of snake head coordinates. Will supply newHead coordinates on each draw
   let currentHeadX = snake[0].x; 
@@ -143,23 +151,24 @@ function update() {
 
   // Checks whether snake newHead has same coordinates as existing objects in snake array. Stops game if true
   for (let i = 1; i < snake.length; i++) {
-    if (newHead.x === snake[i].x && newHead.y === snake[i].y) {
-      gameOver();
+    if (snake[0].x === snake[i].x && snake[0].y === snake[i].y) {
+    collisionDetected = true;
+    gameover.play();
+
+    clearInterval(game);
     }
   }
   // Checks whether snake newHead has coordinates outside of gameBoard. Stops game if true
   if (newHead.x > gameBoard.width - tile || newHead.x < 0 || newHead.y > gameBoard.height - tile || newHead.y < 3 * tile) {
-      gameOver();
+    collisionDetected = true;
+    gameover.play();
+    clearInterval(game);
   };
 }
 
 
 
 function draw() {
-  
-//   eat = new sound("assets/audio/eat.wav");
-//   gameover = new sound("assets/audio/gameover.wav");
-  
 
   c.clearRect(0,0, backgroundCanvas.width, backgroundCanvas.height); // move to separate js file?
   c.fillStyle = "#34358F"; // move to separate js file?
@@ -195,15 +204,16 @@ function draw() {
     ctx.strokeStyle = "white";
     ctx.strokeRect(snake[i].x, snake[i].y, tile, tile);
   };
-
-
 };
 
 
 let mainLoop = function() {
-    // update();
+    if (collisionDetected === true) {
+        cancelAnimationFrame(draw);
+    } else {
     draw();
     requestAnimationFrame(mainLoop);
+    }
 }
  
 // Start things off
