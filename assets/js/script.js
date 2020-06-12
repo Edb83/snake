@@ -1,5 +1,5 @@
 // Background canvas
-const backgroundCanvas = document.getElementById("backgroundCanvas")
+const backgroundCanvas = document.getElementById("backgroundCanvas");
 backgroundCanvas.width = window.innerWidth;
 backgroundCanvas.height = window.innerHeight;
 let c = backgroundCanvas.getContext("2d");
@@ -20,15 +20,15 @@ function sound(src) {
   this.sound.setAttribute("controls", "none");
   this.sound.style.display = "none";
   document.body.appendChild(this.sound);
-  this.play = function(){
+  this.play = function () {
     this.sound.play();
-  }
-  this.stop = function(){
+  };
+  this.stop = function () {
     this.sound.pause();
-  }
+  };
 }
 
-let eat; 
+let eat;
 let gameover;
 
 // INITIAL GAME STATE
@@ -51,15 +51,15 @@ snake[2] = {
 // Food coordinates
 let food = {
   x: Math.floor(Math.random() * 20) * tile,
-  y: Math.floor(Math.random() * 20 + 3) * tile
+  y: Math.floor(Math.random() * 20 + 3) * tile,
 };
 
 // Initial score and snake direction
 let score = 0;
 let direction = "left";
-let gameSpeed = 500; // lower is faster
+const gameSpeed = 125; // lower is faster
 let lastKey = 0; // used to store time since last keydown
-let safeDelay = 130; // refresh rate speed to prevent snake eating its neck when multiple keys pressed
+const safeDelay = 130; // refresh rate speed to prevent snake eating its neck when multiple keys pressed
 
 // Keydown event listener
 document.addEventListener("keydown", function () {
@@ -72,109 +72,115 @@ document.addEventListener("keydown", function () {
       direction = "left";
     } else if (event.keyCode == 39 && direction != "left") {
       direction = "right";
-    };
+    }
     lastKey = Date.now();
-  };
+  }
 });
 
-let newFood = function() {
-    food = {
-        x: Math.floor(Math.random() * 20) * tile,
-        y: Math.floor(Math.random() * 20 + 3) * tile
-      };
-}
+let newFood = function () {
+  food = {
+    x: Math.floor(Math.random() * 20) * tile,
+    y: Math.floor(Math.random() * 20 + 3) * tile,
+  };
+};
+
+// new game: snake, food, score, collision, liveGame, mainLoop
+// snake = array, direction
+// food = newFood
+// score = 0
+// collision = false
+// liveGame = true
+// mainLoop()
 
 // ACTIVE GAMESTATE
 
-
-let startGame = false;
-
+let liveGame = false;
 let collisionDetected = false;
 
-
-
-let game = setInterval(update,gameSpeed);
+let game = setInterval(update, gameSpeed);
 
 function update() {
+  let gameover = new sound("assets/audio/gameover.wav");
+  let eat = new sound("assets/audio/eat.wav");
 
-let gameover = new sound("assets/audio/gameover.wav");
-let eat = new sound("assets/audio/eat.wav");
+  if (liveGame === true) {
+    // Current position of snake head coordinates. Will supply newHead coordinates on each draw
+    let currentHeadX = snake[0].x;
+    let currentHeadY = snake[0].y;
 
-if (startGame === true) {
+    // Move the snake head according to keydown event listener - will provide coordinates of the new snake head
+    if (direction === "up") {
+      currentHeadY = currentHeadY - tile; // Y coordinate of head reduced by tile length
+    } else if (direction === "down") {
+      currentHeadY = currentHeadY + tile; // Y coordinate of head increased by tile length
+    } else if (direction === "left") {
+      currentHeadX = currentHeadX - tile; // X coordinate of head reduced by tile length
+    } else if (direction === "right") {
+      currentHeadX = currentHeadX + tile; // X coordinate of head increased by tile length
+    }
 
-  // Current position of snake head coordinates. Will supply newHead coordinates on each draw
-  let currentHeadX = snake[0].x; 
-  let currentHeadY = snake[0].y;
-
-  // Move the snake head according to keydown event listener - will provide coordinates of the new snake head
-  if (direction === "up") {
-    currentHeadY = currentHeadY - tile; // Y coordinate of head reduced by tile length
-  } else if (direction === "down") {
-    currentHeadY = currentHeadY + tile; // Y coordinate of head increased by tile length
-  } else if (direction === "left") {
-    currentHeadX = currentHeadX - tile; // X coordinate of head reduced by tile length
-  } else if (direction === "right") {
-    currentHeadX = currentHeadX + tile; // X coordinate of head increased by tile length
-  };
-
-  let newHead = {
-    x: currentHeadX,
-    y: currentHeadY,
-  };
-
-  // If snake newHead has same coordinates as food, then clear food and add newHead WITHOUT removing last object in snake array
-  if (newHead.x === food.x && newHead.y === food.y) {
-    newFood();
-    snake.unshift(newHead);
-    score++;
-    eat.play();
-    // else remove last object in snake array (snake does not grow)
-  } else {
-    snake.unshift(newHead);
-    snake.pop(); // removes last object (tail end) in snake array
-  };
-
-  // If food spawns inside snake array, spawns new food
-  for (let i = 1; i < snake.length; i++) {
-    if (snake[i].x === food.x && snake[i].y === food.y) {
-      newFood()
+    let newHead = {
+      x: currentHeadX,
+      y: currentHeadY,
     };
-  };
 
-  // Checks whether snake newHead has same coordinates as existing objects in snake array. Stops game if true
-  for (let i = 1; i < snake.length; i++) {
-    if (newHead.x === snake[i].x && newHead.y === snake[i].y) {
-    failState();
-    gameover.play();
+    // If snake newHead has same coordinates as food, then clear food and add newHead WITHOUT removing last object in snake array
+    if (newHead.x === food.x && newHead.y === food.y) {
+      newFood();
+      snake.unshift(newHead);
+      score++;
+      eat.play();
+      // else remove last object in snake array (snake does not grow)
+    } else {
+      snake.unshift(newHead);
+      snake.pop(); // removes last object (tail end) in snake array
+    }
 
-    clearInterval(game);
+    // If food spawns inside snake array, spawns new food
+    for (let i = 1; i < snake.length; i++) {
+      if (snake[i].x === food.x && snake[i].y === food.y) {
+        newFood();
+      }
+    }
+
+    // Checks whether snake newHead has same coordinates as existing objects in snake array. Stops game if true
+    for (let i = 1; i < snake.length; i++) {
+      if (newHead.x === snake[i].x && newHead.y === snake[i].y) {
+        failState();
+        gameover.play();
+        clearInterval(game);
+      }
+    }
+    // Checks whether snake newHead has coordinates outside of gameBoard. Stops game if true
+    if (
+      newHead.x > gameBoard.width - tile ||
+      newHead.x < 0 ||
+      newHead.y > gameBoard.height - tile ||
+      newHead.y < 3 * tile
+    ) {
+      failState();
+      gameover.play();
+      clearInterval(game);
     }
   }
-  // Checks whether snake newHead has coordinates outside of gameBoard. Stops game if true
-  if (newHead.x > gameBoard.width - tile || newHead.x < 0 || newHead.y > gameBoard.height - tile || newHead.y < 3 * tile) {
-    failState();
-    gameover.play();
-    clearInterval(game);
-  };
-}
 }
 
-let failState = function() {
-    collisionDetected = true;
-    ctx.fillStyle = "#C20A00";
-    ctx.fillRect(snake[1].x, snake[1].y, tile, tile); // snake[0] represents the newHead position in draw function, so snake[1] used
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = "white";
-    ctx.strokeRect(snake[1].x, snake[1].y, tile, tile);
-}
-
+let failState = function () {
+  collisionDetected = true;
+  ctx.fillStyle = "#C20A00";
+  ctx.fillRect(snake[1].x, snake[1].y, tile, tile); // snake[0] represents the newHead position in draw function, so snake[1] used
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = "white";
+  ctx.strokeRect(snake[1].x, snake[1].y, tile, tile);
+};
 
 function draw() {
-
-  c.clearRect(0,0, backgroundCanvas.width, backgroundCanvas.height); // move to separate js file?
-  c.fillStyle = "#34358F"; // move to separate js file?
-  c.fillRect(0,0, window.innerWidth, window.innerHeight); // move to separate js file?
   
+  // Draw the page background canvas - need to decide how to include this
+  c.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height); // move to separate js file?
+  c.fillStyle = "#34358F"; // move to separate js file?
+  c.fillRect(0, 0, window.innerWidth, window.innerHeight); // move to separate js file?
+
   ctx.clearRect(0, 0, gameBoard.width, gameBoard.height); // clears any tiles filled on each draw to prevent trail
 
   // Draw game board background
@@ -184,15 +190,22 @@ function draw() {
   // Draw the score area
   ctx.fillStyle = "#2C2C42";
   ctx.fillRect(0, 0, gameBoard.width, tile * 3);
-  
+
   // Draw the score
   ctx.fillStyle = "white";
   ctx.font = "40px Verdana";
-  ctx.fillText(score, tile, tile *2.25);
+  ctx.fillText(score, tile, tile * 2.25);
 
   // Draw the food
   ctx.beginPath();
-  ctx.arc(food.x + (tile - 3) /2, food.y + (tile - 3) /2, tile/2, 0, 2 * Math.PI, false);
+  ctx.arc(
+    food.x + (tile - 3) / 2,
+    food.y + (tile - 3) / 2,
+    tile / 2,
+    0,
+    2 * Math.PI,
+    false
+  );
   ctx.fillStyle = "#AE00C2";
   ctx.fill();
   ctx.strokeStyle = "white";
@@ -205,17 +218,17 @@ function draw() {
     ctx.strokeStyle = "white";
     ctx.strokeRect(snake[i].x, snake[i].y, tile, tile);
   };
-};
+}
 
 // Loop to callback, with conditions for stopping on collision
-let mainLoop = function() {
+let mainLoop = function () {
   if (collisionDetected === true) {
-        cancelAnimationFrame(draw);
-    } else {
+    cancelAnimationFrame(draw);
+  } else {
     draw();
     requestAnimationFrame(mainLoop);
-    }
-}
+  }
+};
 
 // Initialise loop by callback
 requestAnimationFrame(mainLoop);
