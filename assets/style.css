@@ -17,6 +17,11 @@ body {
   z-index: 0;
 }
 
+#newGameButton {
+    z-index: 0;
+    
+}
+
 #backgroundCanvas {
     position: absolute;
     z-index: -1;
