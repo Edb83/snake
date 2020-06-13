@@ -223,7 +223,6 @@ function draw() {
     ctx.strokeRect(snake[i].x, snake[i].y, tile, tile);
   };
   if (collisionDetected === true) {
-        cancelAnimationFrame(stopDraw);
   ctx.fillStyle = "#C20A00";
   ctx.fillRect(snake[0].x, snake[0].y, tile, tile); // snake[0] represents the newHead position in draw function, so snake[1] used
   }
