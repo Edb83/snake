@@ -37,7 +37,6 @@ let gameover;
 let snake = [];
 let food = {};
 
-let liveGame = false;
 let collisionDetected = false;
 
 // Global variables
@@ -93,6 +92,7 @@ let newGame = function() {
     snake = [];
     newSnake();
     newFood();
+    collisionDetected = false;
     score = 0;
     direction = "left";
     update();
@@ -108,7 +108,9 @@ function update() {
     function gameFate() {
 
     let failState = function() {
+          
       clearInterval(game);
+      collisionDetected = true;
       let gameover = new sound("assets/audio/gameover.wav");  
       gameover.play();
       scoreBoard.push(score);
@@ -155,7 +157,7 @@ function update() {
 
     // Checks whether snake newHead has same coordinates as existing objects in snake array. Stops game if true
     for (let i = 1; i < snake.length; i++) {
-      if (newHead.x === snake[i].x && newHead.y === snake[i].y) {
+      if (snake[0].x === snake[i].x && snake[0].y === snake[i].y) {
         failState();
       }
     }
@@ -169,65 +171,6 @@ function update() {
 
   }
 }
-//     // Current position of snake head coordinates. Will supply newHead coordinates on each draw
-//     let currentHeadX = snake[0].x;
-//     let currentHeadY = snake[0].y;
-
-//     // Move the snake head according to keydown event listener - will provide coordinates of the new snake head
-//     if (direction === "up") {
-//       currentHeadY = currentHeadY - tile; // Y coordinate of head reduced by tile length
-//     } else if (direction === "down") {
-//       currentHeadY = currentHeadY + tile; // Y coordinate of head increased by tile length
-//     } else if (direction === "left") {
-//       currentHeadX = currentHeadX - tile; // X coordinate of head reduced by tile length
-//     } else if (direction === "right") {
-//       currentHeadX = currentHeadX + tile; // X coordinate of head increased by tile length
-//     }
-
-//     let newHead = {
-//       x: currentHeadX,
-//       y: currentHeadY,
-//     };
-
-//     // If snake newHead has same coordinates as food, then clear food and add newHead WITHOUT removing last object in snake array
-//     if (newHead.x === food.x && newHead.y === food.y) {
-//       newFood();
-//       snake.unshift(newHead);
-//       score++;
-//       let eat = new sound("assets/audio/eat.wav");
-//       eat.play();
-//       // else remove last object in snake array (snake does not grow)
-//     } else {
-//       snake.unshift(newHead);
-//       snake.pop(); // removes last object (tail end) in snake array
-//     }
-
-//     // If food spawns inside snake array, spawns new food
-//     for (let i = 1; i < snake.length; i++) {
-//       if (snake[i].x === food.x && snake[i].y === food.y) {
-//         newFood();
-//       }
-//     }
-
-//     // Checks whether snake newHead has same coordinates as existing objects in snake array. Stops game if true
-//     for (let i = 1; i < snake.length; i++) {
-//       if (newHead.x === snake[i].x && newHead.y === snake[i].y) {
-//         let gameover = new sound("assets/audio/gameover.wav");  
-//         gameover.play();
-//         return false;
-//         }
-//     }
-//     // Checks whether snake newHead has coordinates outside of gameBoard. Stops game if true
-//     if (newHead.x > gameBoard.width - tile ||
-//       newHead.x < 0 ||
-//       newHead.y > gameBoard.height - tile ||
-//       newHead.y < 3 * tile) {
-//       let gameover = new sound("assets/audio/gameover.wav");  
-//       gameover.play();
-//         return false;
-//     }
-//   }
-
 
 function draw() {
   
@@ -274,22 +217,17 @@ function draw() {
 
   // Draw the snake
   ctx.fillStyle = "#181942";
-  for (let i = 0; i < snake.length; i++) {
+  for (let i = 0; i < snake.length; i++) { 
     ctx.fillRect(snake[i].x, snake[i].y, tile, tile); // fills tiles occupied by snake array's coordinates
     ctx.strokeStyle = "white";
     ctx.strokeRect(snake[i].x, snake[i].y, tile, tile);
   };
+  if (collisionDetected === true) {
+        cancelAnimationFrame(stopDraw);
+  ctx.fillStyle = "#C20A00";
+  ctx.fillRect(snake[0].x, snake[0].y, tile, tile); // snake[0] represents the newHead position in draw function, so snake[1] used
+  }
 }
-
-// let failState = function () {
-//   collisionDetected = true;
-//   ctx.fillStyle = "#C20A00";
-//   ctx.fillRect(snake[1].x, snake[1].y, tile, tile); // snake[0] represents the newHead position in draw function, so snake[1] used
-//   ctx.lineWidth = 2;
-//   ctx.strokeStyle = "white";
-//   ctx.strokeRect(snake[1].x, snake[1].y, tile, tile);
-//   clearInterval(game);
-// };
 
 // Loop to callback, with conditions for stopping on collision
 let mainLoop = function () {
