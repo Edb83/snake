@@ -40,8 +40,9 @@ let food = {};
 let liveGame = false;
 let collisionDetected = false;
 
-// Initial score and snake direction
+// Global variables
 let score = 0;
+let scoreBoard = [];
 let direction = "left";
 const gameSpeed = 125; // lower is faster
 let lastKey = 0; // used to store time since last keydown
@@ -85,31 +86,36 @@ snake[2] = {
 };
 }
 
-// new game: snake, food, score, collision, liveGame, mainLoop
+
+// New game
+let newGame = function() {
+    mainLoop();
+    snake = [];
+    newSnake();
+    newFood();
+    score = 0;
+    direction = "left";
+    update();
+}
+
 
 
 // ACTIVE GAMESTATE
 
-// function update() {  
-//   var game = setInterval(gameFate, gameSpeed);
-//   function gameFate() {
-//     if (CONDITION) {
-//       clearInterval(game);
-//     } else {
-//       ACTIONS
-//     }
-//   }
-// }
-
-
-
 function update() { 
     let game = setInterval(gameFate, gameSpeed);
 
+    function gameFate() {
+
+    let failState = function() {
+      clearInterval(game);
+      let gameover = new sound("assets/audio/gameover.wav");  
+      gameover.play();
+      scoreBoard.push(score);
+    }
+
     let currentHeadX = snake[0].x;
     let currentHeadY = snake[0].y;
-
-    function gameFate() {
 
     // Move the snake head according to keydown event listener - will provide coordinates of the new snake head
     if (direction === "up") {
@@ -131,7 +137,7 @@ function update() {
     if (newHead.x === food.x && newHead.y === food.y) {
       newFood();
       snake.unshift(newHead);
-      score++;
+      score ++;
       let eat = new sound("assets/audio/eat.wav");
       eat.play();
       // else remove last object in snake array (snake does not grow)
@@ -150,20 +156,17 @@ function update() {
     // Checks whether snake newHead has same coordinates as existing objects in snake array. Stops game if true
     for (let i = 1; i < snake.length; i++) {
       if (newHead.x === snake[i].x && newHead.y === snake[i].y) {
-        let gameover = new sound("assets/audio/gameover.wav");  
-        gameover.play();
-        clearInterval(game);
-        }
+        failState();
+      }
     }
     // Checks whether snake newHead has coordinates outside of gameBoard. Stops game if true
     if (newHead.x > gameBoard.width - tile ||
       newHead.x < 0 ||
       newHead.y > gameBoard.height - tile ||
       newHead.y < 3 * tile) {
-      let gameover = new sound("assets/audio/gameover.wav");  
-      gameover.play();
-      clearInterval(game);
-    }
+          failState();
+    };
+
   }
 }
 //     // Current position of snake head coordinates. Will supply newHead coordinates on each draw
@@ -248,6 +251,12 @@ function draw() {
   ctx.font = "40px Verdana";
   ctx.fillText(score, tile, tile * 2.25);
 
+  ctx.fillStyle = "white";
+  ctx.font = "32px Verdana";
+  if(scoreBoard.length > 0) {
+  ctx.fillText(Math.max(...scoreBoard), gameBoard.width - 2 * tile, tile * 2.25)
+  };
+
   // Draw the food
   ctx.beginPath();
   ctx.arc(
@@ -289,4 +298,6 @@ let mainLoop = function () {
 };
 
 // Initialise loop by callback
-// requestAnimationFrame(mainLoop);
+requestAnimationFrame(mainLoop);
+
+
