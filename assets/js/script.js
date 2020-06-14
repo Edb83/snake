@@ -6,10 +6,10 @@ let c = backgroundCanvas.getContext("2d");
 
 // Game board
 const gameBoard = document.getElementById("gameBoard");
-gameBoard.width = 400;
-gameBoard.height = 460;
+gameBoard.width = 500;
+gameBoard.height = gameBoard.width * 1.15;
 const ctx = gameBoard.getContext("2d");
-const tile = 20; // the tile represents the smallest unit of measurement for the gameBoard
+const tile = gameBoard.width / 20; // the tile represents the smallest unit of measurement for the gameBoard
 
 // Audio
 // creates new <audio> elements to be accessed during the game
@@ -45,7 +45,7 @@ let scoreBoard = [];
 let direction = "left";
 const gameSpeed = 125; // lower is faster
 let lastKey = 0; // used to store time since last keydown
-const safeDelay = 130; // refresh rate speed to prevent snake eating its neck when multiple keys pressed
+const safeDelay = 125; // refresh rate speed to prevent snake eating its neck when multiple keys pressed
 
 // Keydown event listener
 document.addEventListener("keydown", function () {
@@ -85,7 +85,6 @@ snake[2] = {
 };
 }
 
-
 // New game
 let newGame = function() {
     mainLoop();
@@ -97,8 +96,6 @@ let newGame = function() {
     direction = "left";
     update();
 }
-
-
 
 // ACTIVE GAMESTATE
 
@@ -196,8 +193,10 @@ function draw() {
 
   ctx.fillStyle = "white";
   ctx.font = "32px Verdana";
-  if(scoreBoard.length > 0) {
+  if(scoreBoard.length > 0 && (Math.max(...scoreBoard) > score)) {
   ctx.fillText(Math.max(...scoreBoard), gameBoard.width - 2 * tile, tile * 2.25)
+  } else {
+      ctx.fillText(score, gameBoard.width - 2 * tile, tile * 2.25)
   };
 
   // Draw the food
