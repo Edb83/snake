@@ -5,9 +5,10 @@ backgroundCanvas.height = window.innerHeight;
 let c = backgroundCanvas.getContext("2d");
 
 // Game board
+
 const gameBoard = document.getElementById("gameBoard");
-gameBoard.width = 500;
-gameBoard.height = gameBoard.width * 1.15;
+gameBoard.width = 400;
+gameBoard.height = Math.ceil(gameBoard.width * 1.15);
 const ctx = gameBoard.getContext("2d");
 const tile = gameBoard.width / 20; // the tile represents the smallest unit of measurement for the gameBoard
 
@@ -192,7 +193,7 @@ function draw() {
   ctx.fillText(score, tile, tile * 2.25);
 
   ctx.fillStyle = "white";
-  ctx.font = "32px Verdana";
+  ctx.font = "40px Arial";
   if(scoreBoard.length > 0 && (Math.max(...scoreBoard) > score)) {
   ctx.fillText(Math.max(...scoreBoard), gameBoard.width - 2 * tile, tile * 2.25)
   } else {
