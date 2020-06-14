@@ -23,6 +23,7 @@ body {
 button {
     display: inline-block;
     height: 25px;
+    -webkit-touch-callout: none;
 }
 
 #backgroundCanvas {
