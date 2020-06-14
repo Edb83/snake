@@ -24,6 +24,7 @@ button {
     display: inline-block;
     height: 25px;
     -webkit-touch-callout: none;
+    margin: 5px;
 }
 
 #backgroundCanvas {
