@@ -7,7 +7,7 @@ let c = backgroundCanvas.getContext("2d");
 // Game board
 
 const gameBoard = document.getElementById("gameBoard");
-gameBoard.width = 400;
+gameBoard.width = 320;
 gameBoard.height = Math.ceil(gameBoard.width * 1.15);
 const ctx = gameBoard.getContext("2d");
 const tile = gameBoard.width / 20; // the tile represents the smallest unit of measurement for the gameBoard
@@ -48,17 +48,30 @@ const gameSpeed = 125; // lower is faster
 let lastKey = 0; // used to store time since last keydown
 const safeDelay = 125; // refresh rate speed to prevent snake eating its neck when multiple keys pressed
 
+let moveUp = function() {
+    if (direction != "down") {direction ="up"}
+}
+let moveDown = function() {
+    if (direction != "up") {direction ="down"}
+}
+let moveLeft = function() {
+    if (direction !="right") {direction ="left"}
+}
+let moveRight = function() {
+    if (direction !="left") {direction ="right"}
+}
+
 // Keydown event listener
 document.addEventListener("keydown", function () {
   if (Date.now() - lastKey > safeDelay) {
     if (event.keyCode == 38 && direction != "down") {
-      direction = "up";
+      moveUp();
     } else if (event.keyCode == 40 && direction != "up") {
-      direction = "down";
+      moveDown();
     } else if (event.keyCode == 37 && direction != "right") {
-      direction = "left";
+      moveLeft();
     } else if (event.keyCode == 39 && direction != "left") {
-      direction = "right";
+      moveRight();
     }
     lastKey = Date.now();
   }

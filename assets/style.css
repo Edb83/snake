@@ -3,7 +3,7 @@ body {
   padding: 0;
 }
 
-#canvasContainer {
+#gameContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -12,14 +12,17 @@ body {
 }
 
 #gameBoard {
-  border-style: solid;
-  border-color: black;
   z-index: 0;
 }
 
 #newGameButton {
     z-index: 0;
     
+}
+
+button {
+    display: inline-block;
+    height: 25px;
 }
 
 #backgroundCanvas {

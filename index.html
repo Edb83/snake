@@ -7,10 +7,13 @@
     <title>Snake test</title>
 </head>
 <body>
- <div id="canvasContainer">
+ <div id="gameContainer">
     <button id="newGame" onclick="newGame()">New Game</button>
     <canvas id="gameBoard"></canvas>
     <canvas id="backgroundCanvas"></canvas>
+    <button id="up" onclick="moveUp()">UP</button>
+    <span><button id="left" onclick="moveDown()">LEFT</button><button id="right" onclick="moveRight()">RIGHT</button></span>
+    <button id="down" onclick="moveDown()">DOWN</button>
  </div>
     <script type="text/javascript" src="assets/js/script.js"></script>
 </body>
