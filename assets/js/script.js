@@ -64,13 +64,13 @@ let moveRight = function() {
 // Keydown event listener
 document.addEventListener("keydown", function () {
   if (Date.now() - lastKey > safeDelay) {
-    if (event.keyCode == 38 && direction != "down") {
+    if (event.keyCode == 38) {
       moveUp();
-    } else if (event.keyCode == 40 && direction != "up") {
+    } else if (event.keyCode == 40) {
       moveDown();
-    } else if (event.keyCode == 37 && direction != "right") {
+    } else if (event.keyCode == 37) {
       moveLeft();
-    } else if (event.keyCode == 39 && direction != "left") {
+    } else if (event.keyCode == 39) {
       moveRight();
     }
     lastKey = Date.now();
@@ -115,6 +115,8 @@ let newGame = function() {
 
 function update() { 
     let game = setInterval(gameFate, gameSpeed);
+    let eat = new sound("assets/audio/eat.wav");
+    let gameover = new sound("assets/audio/gameover.wav");  
 
     function gameFate() {
 
@@ -122,9 +124,10 @@ function update() {
           
       clearInterval(game);
       collisionDetected = true;
-      let gameover = new sound("assets/audio/gameover.wav");  
       gameover.play();
       scoreBoard.push(score);
+      scoreBoard.sort((a, b) => b - a);
+      console.log(scoreBoard);
     }
 
     let currentHeadX = snake[0].x;
@@ -151,7 +154,7 @@ function update() {
       newFood();
       snake.unshift(newHead);
       score ++;
-      let eat = new sound("assets/audio/eat.wav");
+      
       eat.play();
       // else remove last object in snake array (snake does not grow)
     } else {
