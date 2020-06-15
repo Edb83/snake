@@ -29,3 +29,6 @@ https://color.adobe.com/create/color-wheel
 Layered canvases (could use this):
 https://html5.litten.com/using-multiple-html5-canvases-as-layers/
 
+
+Sorting scores:
+https://www.javascripttutorial.net/javascript-array-sort/

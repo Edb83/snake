@@ -43,8 +43,13 @@ let collisionDetected = false;
 // Global variables
 let score = 0;
 let scoreBoard = [];
+let topFive = function() {
+    scoreBoard.sort((a, b) => b - a);
+    scoreBoard.slice(0,5);
+};
+
 let direction = "left";
-const gameSpeed = 125; // lower is faster
+const gameSpeed = 150; // lower is faster
 let lastKey = 0; // used to store time since last keydown
 const safeDelay = 125; // refresh rate speed to prevent snake eating its neck when multiple keys pressed
 
@@ -99,6 +104,18 @@ snake[2] = {
 };
 }
 
+let gameHud = {
+    showScoreBoard: function() {
+        let scoreOl = document.querySelector('ol');
+        scoreOl.innerHTML = "";
+        for (let i = 0; i < scoreBoard.length; i ++) {
+            let scoreLi = document.createElement('li');
+            scoreLi.textContent = scoreBoard[i];
+            scoreOl.appendChild(scoreLi);
+        }
+    }
+};
+
 // New game
 let newGame = function() {
     mainLoop();
@@ -126,8 +143,7 @@ function update() {
       collisionDetected = true;
       gameover.play();
       scoreBoard.push(score);
-      scoreBoard.sort((a, b) => b - a);
-      console.log(scoreBoard);
+      topFive();
     }
 
     let currentHeadX = snake[0].x;
@@ -182,7 +198,6 @@ function update() {
       newHead.y < 3 * tile) {
           failState();
     };
-
   }
 }
 
@@ -211,9 +226,9 @@ function draw() {
   ctx.fillStyle = "white";
   ctx.font = "40px Arial";
   if(scoreBoard.length > 0 && (Math.max(...scoreBoard) > score)) {
-  ctx.fillText(Math.max(...scoreBoard), gameBoard.width - 2 * tile, tile * 2.25)
+  ctx.fillText(Math.max(...scoreBoard), gameBoard.width - 4 * tile, tile * 2.25)
   } else {
-      ctx.fillText(score, gameBoard.width - 2 * tile, tile * 2.25)
+      ctx.fillText(score, gameBoard.width - 4 * tile, tile * 2.25)
   };
 
   // Draw the food
