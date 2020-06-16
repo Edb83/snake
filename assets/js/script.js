@@ -14,23 +14,23 @@ const tile = gameBoard.width / 20; // the tile represents the smallest unit of m
 
 // Audio
 // creates new <audio> elements to be accessed during the game
-function sound(src) {
-  this.sound = document.createElement("audio");
-  this.sound.src = src;
-  this.sound.setAttribute("preload", "auto");
-  this.sound.setAttribute("controls", "none");
-  this.sound.style.display = "none";
-  document.body.appendChild(this.sound);
-  this.play = function () {
-    this.sound.play();
-  };
-  this.stop = function () {
-    this.sound.pause();
-  };
-}
+// function sound(src) {
+//   this.sound = document.createElement("audio");
+//   this.sound.src = src;
+//   this.sound.setAttribute("preload", "auto");
+//   this.sound.setAttribute("controls", "none");
+//   this.sound.style.display = "none";
+//   document.body.appendChild(this.sound);
+//   this.play = function () {
+//     this.sound.play();
+//   };
+//   this.stop = function () {
+//     this.sound.pause();
+//   };
+// }
 
-let eat;
-let gameover;
+let eat = document.getElementById("eatSound");
+let gameover = document.getElementById("gameoverSound");
 
 // INITIAL GAME STATE
 
@@ -132,8 +132,8 @@ let newGame = function() {
 
 function update() { 
     let game = setInterval(gameFate, gameSpeed);
-    let eat = new sound("assets/audio/eat.wav");
-    let gameover = new sound("assets/audio/gameover.wav");  
+    // let eat = new sound("assets/audio/eat.wav");
+    // let gameover = new sound("assets/audio/gameover.wav");  
 
     function gameFate() {
 
