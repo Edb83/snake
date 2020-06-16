@@ -20,43 +20,26 @@ let collisionDetected = false;
 let eat = document.getElementById("eatSound");
 let gameover = document.getElementById("gameoverSound");
 
-// Move functions
-let moveUp = function () {
-  if (direction != "down") {
-    direction = "up";
-  }
-};
-let moveDown = function () {
-  if (direction != "up") {
-    direction = "down";
-  }
-};
-let moveLeft = function () {
-  if (direction != "right") {
-    direction = "left";
-  }
-};
-let moveRight = function () {
-  if (direction != "left") {
-    direction = "right";
-  }
-};
 
 // Keydown event listener
 document.addEventListener("keydown", function () {
   if (Date.now() - lastKey > safeDelay) {
-    if (event.keyCode == 38) {
-      moveUp();
-    } else if (event.keyCode == 40) {
-      moveDown();
-    } else if (event.keyCode == 37) {
-      moveLeft();
-    } else if (event.keyCode == 39) {
-      moveRight();
+    if (event.keyCode == 38 && direction !== "down") {
+      direction = "up";
+    } else if (event.keyCode == 40 && direction !== "up") {
+      direction = "down";
+    } else if (event.keyCode == 37 && direction !== "right") {
+      direction = "left";
+    } else if (event.keyCode == 39 && direction !== "left") {
+      direction = "right";
     }
     lastKey = Date.now();
   }
 });
+
+// function keyboardHandler(event) {
+    
+// }
 
 // Get coordinates of new food
 let newFood = function () {
@@ -95,19 +78,23 @@ let gameHud = {
   },
 };
 
-// New game
-let newGame = function () {
-  mainLoop();
-  snake = [];
-  newSnake();
-  newFood();
-  collisionDetected = false;
-  score = 0;
-  direction = "left";
-  update();
+// Game
+let game = {
+  initialise: function () {
+    mainLoop();
+    snake = [];
+    newSnake();
+    newFood();
+    collisionDetected = false;
+    score = 0;
+    direction = "left";
+  },
+  start: function () {
+    update();
+  },
 };
 
-// Update game
+// Update
 
 function update() {
   let game = setInterval(gameFate, gameSpeed);
@@ -215,7 +202,6 @@ let draw = {
       ctx.fillText(`Best: ${score}`, gameBoard.width * 0.7, tile * 2);
     }
   },
-
   food: function () {
     ctx.beginPath();
     ctx.arc(
@@ -231,7 +217,6 @@ let draw = {
     ctx.strokeStyle = "white";
     ctx.stroke();
   },
-
   snake: function () {
     ctx.fillStyle = "#181942";
     for (let i = 0; i < snake.length; i++) {
