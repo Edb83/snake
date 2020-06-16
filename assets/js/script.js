@@ -4,14 +4,6 @@
 // backgroundCanvas.height = window.innerHeight;
 // let c = backgroundCanvas.getContext("2d");
 
-// Game board
-
-const gameBoard = document.getElementById("gameBoard");
-gameBoard.width = 450;
-gameBoard.height = Math.ceil(gameBoard.width * 1.15);
-const ctx = gameBoard.getContext("2d");
-const tile = gameBoard.width / 20; // the tile represents the smallest unit of measurement for the gameBoard
-
 // Audio
 // creates new <audio> elements to be accessed during the game
 // function sound(src) {
@@ -29,39 +21,41 @@ const tile = gameBoard.width / 20; // the tile represents the smallest unit of m
 //   };
 // }
 
-let eat = document.getElementById("eatSound");
-let gameover = document.getElementById("gameoverSound");
-
 // INITIAL GAME STATE
 
-// Snake array
-let snake = [];
-let food = {};
-
-let collisionDetected = false;
+// Game board
+const gameBoard = document.getElementById("gameBoard");
+gameBoard.width = 450;
+gameBoard.height = Math.ceil(gameBoard.width * 1.15);
+const ctx = gameBoard.getContext("2d");
+const tile = gameBoard.width / 20; // the tile represents the smallest unit of measurement for the gameBoard
 
 // Global variables
 let score = 0;
 let scoreBoard = [];
-
-
 let direction = "left";
 const gameSpeed = 150; // lower is faster
 let lastKey = 0; // used to store time since last keydown
 const safeDelay = 125; // refresh rate speed to prevent snake eating its neck when multiple keys pressed
+let snake = [];
+let food = {};
+let collisionDetected = false;
+let eat = document.getElementById("eatSound");
+let gameover = document.getElementById("gameoverSound");
 
+// Move functions
 let moveUp = function() {
     if (direction != "down") {direction ="up"}
-}
+};
 let moveDown = function() {
     if (direction != "up") {direction ="down"}
-}
+};
 let moveLeft = function() {
     if (direction !="right") {direction ="left"}
-}
+};
 let moveRight = function() {
     if (direction !="left") {direction ="right"}
-}
+};
 
 // Keydown event listener
 document.addEventListener("keydown", function () {
@@ -76,31 +70,34 @@ document.addEventListener("keydown", function () {
       moveRight();
     }
     lastKey = Date.now();
-  }
+    }
 });
 
+// Get coordinates of new food
 let newFood = function () {
   food = {
     x: Math.floor(Math.random() * 20) * tile,
-    y: Math.floor(Math.random() * 20 + 3) * tile,
+    y: Math.floor(Math.random() * 20 + 3) * tile
   };
 };
 
+// Starting coordinates of snake
 let newSnake = function() {
-  snake[0] = {
-  x: 15 * tile,
-  y: 19 * tile,
+    snake[0] = {
+    x: 15 * tile,
+    y: 19 * tile
+    };
+    snake[1] = {
+    x: 16 * tile,
+    y: 19 * tile
+    };
+    snake[2] = {
+    x: 17 * tile,
+    y: 19 * tile
+    };
 };
-snake[1] = {
-  x: 16 * tile,
-  y: 19 * tile,
-};
-snake[2] = {
-  x: 17 * tile,
-  y: 19 * tile,
-};
-}
 
+// Game HUD
 let gameHud = {
     showScoreBoard: function() {
         let scoreOl = document.querySelector('ol');
@@ -123,29 +120,27 @@ let newGame = function() {
     score = 0;
     direction = "left";
     update();
-}
+};
 
 // ACTIVE GAMESTATE
 
 function update() { 
     let game = setInterval(gameFate, gameSpeed);
-    // let eat = new sound("assets/audio/eat.wav");
-    // let gameover = new sound("assets/audio/gameover.wav");  
 
     function gameFate() {
 
-    let failState = function() {
-          
-      clearInterval(game);
-      collisionDetected = true;
-      gameover.play();
-      if(scoreBoard.includes(score)) {
-          return
-        } else {
-        scoreBoard.push(score);      
-        scoreBoard.sort((a, b) => b - a);
-      }
-    }
+        let failState = function() {
+            
+        clearInterval(game);
+        collisionDetected = true;
+        gameover.play();
+        if(scoreBoard.includes(score)) {
+            return
+            } else {
+            scoreBoard.push(score);      
+            scoreBoard.sort((a, b) => b - a);
+        }
+    };
 
     let currentHeadX = snake[0].x;
     let currentHeadY = snake[0].y;
@@ -176,21 +171,22 @@ function update() {
     } else {
       snake.unshift(newHead);
       snake.pop(); // removes last object (tail end) in snake array
-    }
+    };
 
     // If food spawns inside snake array, spawns new food
     for (let i = 1; i < snake.length; i++) {
       if (snake[i].x === food.x && snake[i].y === food.y) {
         newFood();
       }
-    }
+    };
 
     // Checks whether snake newHead has same coordinates as existing objects in snake array. Stops game if true
     for (let i = 1; i < snake.length; i++) {
       if (snake[0].x === snake[i].x && snake[0].y === snake[i].y) {
         failState();
       }
-    }
+    };
+
     // Checks whether snake newHead has coordinates outside of gameBoard. Stops game if true
     if (newHead.x > gameBoard.width - tile ||
       newHead.x < 0 ||
@@ -199,7 +195,7 @@ function update() {
           failState();
     };
   }
-}
+};
 
 function draw() {
   
@@ -223,6 +219,7 @@ function draw() {
   ctx.font = "40px Verdana";
   ctx.fillText(score, tile, tile * 2.25);
 
+  // Draw the high score
   ctx.fillStyle = "white";
   ctx.font = "40px Arial";
   if(scoreBoard.length > 0 && (Math.max(...scoreBoard) > score)) {
@@ -257,7 +254,7 @@ function draw() {
   ctx.fillStyle = "#C20A00";
   ctx.fillRect(snake[0].x, snake[0].y, tile, tile); // snake[0] represents the newHead position in draw function, so snake[1] used
   }
-}
+};
 
 // Loop to callback, with conditions for stopping on collision
 let mainLoop = function () {
@@ -267,5 +264,3 @@ let mainLoop = function () {
 
 // Initialise loop by callback
 requestAnimationFrame(mainLoop);
-
-
