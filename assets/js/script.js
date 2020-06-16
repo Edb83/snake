@@ -1,8 +1,8 @@
 // Background canvas
-const backgroundCanvas = document.getElementById("backgroundCanvas");
-backgroundCanvas.width = window.innerWidth;
-backgroundCanvas.height = window.innerHeight;
-let c = backgroundCanvas.getContext("2d");
+// const backgroundCanvas = document.getElementById("backgroundCanvas");
+// backgroundCanvas.width = window.innerWidth;
+// backgroundCanvas.height = window.innerHeight;
+// let c = backgroundCanvas.getContext("2d");
 
 // Game board
 
@@ -203,10 +203,10 @@ function update() {
 
 function draw() {
   
-  // Draw the page background canvas - need to decide how to include this
-  c.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height); // move to separate js file?
-  c.fillStyle = "#34358F"; // move to separate js file?
-  c.fillRect(0, 0, window.innerWidth, window.innerHeight); // move to separate js file?
+//   // Draw the page background canvas - need to decide how to include this
+//   c.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height); // move to separate js file?
+//   c.fillStyle = "#34358F"; // move to separate js file?
+//   c.fillRect(0, 0, window.innerWidth, window.innerHeight); // move to separate js file?
 
   ctx.clearRect(0, 0, gameBoard.width, gameBoard.height); // clears any tiles filled on each draw to prevent trail
 
