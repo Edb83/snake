@@ -7,7 +7,7 @@
 // Game board
 
 const gameBoard = document.getElementById("gameBoard");
-gameBoard.width = 320;
+gameBoard.width = 450;
 gameBoard.height = Math.ceil(gameBoard.width * 1.15);
 const ctx = gameBoard.getContext("2d");
 const tile = gameBoard.width / 20; // the tile represents the smallest unit of measurement for the gameBoard
@@ -43,10 +43,7 @@ let collisionDetected = false;
 // Global variables
 let score = 0;
 let scoreBoard = [];
-let topFive = function() {
-    scoreBoard.sort((a, b) => b - a);
-    scoreBoard.slice(0,5);
-};
+
 
 let direction = "left";
 const gameSpeed = 150; // lower is faster
@@ -108,7 +105,7 @@ let gameHud = {
     showScoreBoard: function() {
         let scoreOl = document.querySelector('ol');
         scoreOl.innerHTML = "";
-        for (let i = 0; i < scoreBoard.length; i ++) {
+        for (let i = 0; i < 5; i ++) {
             let scoreLi = document.createElement('li');
             scoreLi.textContent = scoreBoard[i];
             scoreOl.appendChild(scoreLi);
@@ -142,8 +139,12 @@ function update() {
       clearInterval(game);
       collisionDetected = true;
       gameover.play();
-      scoreBoard.push(score);
-      topFive();
+      if(scoreBoard.includes(score)) {
+          return
+        } else {
+        scoreBoard.push(score);      
+        scoreBoard.sort((a, b) => b - a);
+      }
     }
 
     let currentHeadX = snake[0].x;
@@ -170,7 +171,6 @@ function update() {
       newFood();
       snake.unshift(newHead);
       score ++;
-      
       eat.play();
       // else remove last object in snake array (snake does not grow)
     } else {
