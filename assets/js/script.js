@@ -1,13 +1,5 @@
-// INITIAL GAME STATE
-
-// Game board
-const gameBoard = document.getElementById("gameBoard");
-gameBoard.width = 450;
-gameBoard.height = Math.ceil(gameBoard.width * 1.15);
-const ctx = gameBoard.getContext("2d");
-const tile = gameBoard.width / 20; // the tile represents the smallest unit of measurement for the gameBoard
-
 // Global variables
+let gameState;
 let score = 0;
 let scoreBoard = [];
 let direction = "left";
@@ -18,9 +10,19 @@ let snake = [];
 let food = {};
 let eat = document.getElementById("eatSound");
 let gameover = document.getElementById("gameoverSound");
+let myInterval = null; // used to prevent interval recorded by setInterval from increasing each time a new game is loaded
+
+// Initialise Game
+
+const gameBoard = document.getElementById("gameBoard");
+gameBoard.width = 500;
+gameBoard.height = Math.ceil(gameBoard.width * 1.15);
+document.addEventListener("keydown", keyboardHandler);
+
+const ctx = gameBoard.getContext("2d");
+const tile = gameBoard.width / 20; // the tile represents the smallest unit of measurement for the gameBoard
 
 // Keydown event listener
-document.addEventListener("keydown", keyboardHandler);
 
 function keyboardHandler(event) {
   if (Date.now() - lastKey > safeDelay) {
@@ -35,7 +37,7 @@ function keyboardHandler(event) {
     }
   }
   lastKey = Date.now();
-}
+};
 
 // Get coordinates of new food
 let newFood = function () {
@@ -61,6 +63,20 @@ let newSnake = function () {
   };
 };
 
+function newGame() { // resets all variables for a fresh game, preserving setInterval of gameLoop
+  snake = [];
+  direction = "left";
+  score = 0;
+  newSnake();
+  newFood();
+  if (myInterval == null) {
+    myInterval = setInterval(function () {
+      gameLoop();
+    }, gameSpeed);
+  }
+  changeState("PLAY");
+};
+
 // Game HUD
 let gameHud = {
   showScoreBoard: function () {
@@ -74,79 +90,58 @@ let gameHud = {
   },
 };
 
-// Game
-let game = {
-  initialise: function () {
-    mainLoop();
-    snake = [];
-    newSnake();
-    newFood();
-    score = 0;
-    direction = "left";
-  },
-  start: function () {
-    update();
-  },
-};
-
 // Update
 
-function update() {
-  let game = setInterval(gameFate, gameSpeed);
+function changeState(state) {
+  gameState = state;
+};
 
-  function gameFate() {
-    let failState = function () {
-      clearInterval(game);
-      gameover.play();
-      if (scoreBoard.includes(score)) {
-        return;
-      } else {
-        scoreBoard.push(score);
-        scoreBoard.sort((a, b) => b - a);
-      }
-    };
+function updateSnake() {
+  let currentHeadX = snake[0].x;
+  let currentHeadY = snake[0].y;
 
-    let currentHeadX = snake[0].x;
-    let currentHeadY = snake[0].y;
-
-    // Move the snake head according to keydown event listener - will provide coordinates of the new snake head
-    if (direction === "up") {
-      currentHeadY = currentHeadY - tile; // Y coordinate of head reduced by tile length
-    } else if (direction === "down") {
-      currentHeadY = currentHeadY + tile; // Y coordinate of head increased by tile length
-    } else if (direction === "left") {
-      currentHeadX = currentHeadX - tile; // X coordinate of head reduced by tile length
-    } else if (direction === "right") {
-      currentHeadX = currentHeadX + tile; // X coordinate of head increased by tile length
-    }
-
-    let newHead = {
-      x: currentHeadX,
-      y: currentHeadY,
-    };
-    collisionCheck.wall(newHead, failState);
-    collisionCheck.snake(failState);
-    collisionCheck.foodSpawn();
-    collisionCheck.food(newHead);
-
+  // Move the snake head according to keydown event listener - will provide coordinates of the new snake head
+  if (direction === "up") {
+    currentHeadY = currentHeadY - tile; // Y coordinate of head reduced by tile length
+  } else if (direction === "down") {
+    currentHeadY = currentHeadY + tile; // Y coordinate of head increased by tile length
+  } else if (direction === "left") {
+    currentHeadX = currentHeadX - tile; // X coordinate of head reduced by tile length
+  } else if (direction === "right") {
+    currentHeadX = currentHeadX + tile; // X coordinate of head increased by tile length
   }
+
+  let newHead = {
+    x: currentHeadX,
+    y: currentHeadY,
+  };
+  collisionCheck.wall(newHead);
+  collisionCheck.snake();
+  collisionCheck.foodSpawn();
+  collisionCheck.food(newHead);
 }
 
 let collisionCheck = {
-  wall: function (newHead, failState) {
+  wall: function (newHead) {
     if (
       newHead.x > gameBoard.width - tile ||
       newHead.x < 0 ||
       newHead.y > gameBoard.height - tile ||
       newHead.y < 3 * tile
     ) {
-      failState();
+      gameover.play();
+      updateScoreBoard();
+      gameHud.showScoreBoard();
+      changeState("GAMEOVER");
     }
   },
-  snake: function (failState) {
+  snake: function () {
     for (let i = 1; i < snake.length; i++) {
       if (snake[0].x === snake[i].x && snake[0].y === snake[i].y) {
-        failState();
+        gameover.play();
+        updateScoreBoard();
+        gameHud.showScoreBoard();
+        changeState("GAMEOVER");
       }
     }
   },
@@ -169,6 +164,15 @@ let collisionCheck = {
       snake.pop(); // removes last object (tail end) in snake array
     }
   },
+};
+
+function updateScoreBoard() {
+  if (scoreBoard.includes(score)) {
+    return;
+  } else {
+    scoreBoard.push(score);
+    scoreBoard.sort((a, b) => b - a); // sorts in descending order once added to scoreboard
+  }
 };
 
 // Draw game
@@ -229,17 +233,16 @@ let draw = {
   },
 };
 
-// Loop to callback, with conditions for stopping on collision
-let mainLoop = function () {
-  draw.clearGameBoard();
-  draw.background();
-  draw.scoreBackground();
-  draw.score();
-  draw.highScore();
-  draw.snake();
-  draw.food();
-  requestAnimationFrame(mainLoop);
+// Game loop with conditions for which functions are called depending on game state
+let gameLoop = function () {
+  if (gameState == "PLAY") { // NEED TO IMPLEMENT MAIN MENU, GAMEOVER AND STATS STATES
+    updateSnake();
+    draw.clearGameBoard();
+    draw.background();
+    draw.scoreBackground();
+    draw.score();
+    draw.highScore();
+    draw.snake();
+    draw.food();
+  }
 };
-
-// Initialise loop by callback
-requestAnimationFrame(mainLoop);
