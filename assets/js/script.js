@@ -116,7 +116,7 @@ function updateSnake() {
     y: currentHeadY,
   };
   collisionCheck.wall(newHead);
-  collisionCheck.snake();
+  collisionCheck.snake(newHead);
   collisionCheck.foodSpawn();
   collisionCheck.food(newHead);
 }
@@ -135,9 +135,9 @@ let collisionCheck = {
       changeState("GAMEOVER");
     }
   },
-  snake: function () {
+  snake: function (newHead) {
     for (let i = 1; i < snake.length; i++) {
-      if (snake[0].x === snake[i].x && snake[0].y === snake[i].y) {
+      if (newHead.x === snake[i].x && newHead.y === snake[i].y) {
         gameover.play();
         updateScoreBoard();
         gameHud.showScoreBoard();
@@ -160,8 +160,9 @@ let collisionCheck = {
       eat.play();
       // else remove last object in snake array (snake does not grow)
     } else {
-      snake.unshift(newHead);
       snake.pop(); // removes last object (tail end) in snake array
+      snake.unshift(newHead);
+      
     }
   },
 };
