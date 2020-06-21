@@ -15,16 +15,34 @@ body {
   z-index: 0;
 }
 
-#newGameButton {
-    z-index: 0;
-    
+#startScreen, #gameOverScreen {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background-color: #58036de7;
+  border: 2px;
+  border-color: #fff;
+  border-radius: 5px;
+  color: #fff;
+  z-index: 1;
+}
+
+.visible {
+    visibility: visible;
+}
+
+.hidden {
+    visibility: hidden;
 }
 
 button {
-    display: inline-block;
-    height: 25px;
-    -webkit-touch-callout: none;
-    margin: 5px;
+  display: inline-block;
+  height: 25px;
+  -webkit-touch-callout: none;
+  margin: 5px;
 }
 
 /* #backgroundCanvas {

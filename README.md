@@ -32,3 +32,9 @@ https://html5.litten.com/using-multiple-html5-canvases-as-layers/
 
 Sorting scores:
 https://www.javascripttutorial.net/javascript-array-sort/
+
+Guidance on how to handle game loops:
+https://developer.mozilla.org/en-US/docs/Games/Anatomy
+
+Preventing setInterval repeating on game restart:
+https://stackoverflow.com/questions/29836686/code-in-setinterval-executing-more-than-once
