@@ -78,7 +78,7 @@ let newGame = function () {
   score = 0;
   newSnake();
   newFood();
-  if (myInterval == null) {
+  if (myInterval === null) {
     myInterval = setInterval(function () {
       gameLoop();
     }, gameSpeed);
@@ -118,7 +118,7 @@ function findNewHead() {
 
   newHead = {
     x: newHeadX,
-    y: newHeadY,
+    y: newHeadY
   };
 }
 
@@ -146,11 +146,11 @@ function checkCollision() {
 }
 
 function checkAteFood() {
-    for (let i = 0; i < snake.length; i++) {
-        if (food.x === snake[i].x && food.y === snake[i].y) {
-            newFood();
-        }
+  for (let i = 0; i < snake.length; i++) {
+    if (food.x === snake[i].x && food.y === snake[i].y) {
+      newFood();
     }
+  }
   if (newHead.x === food.x && newHead.y === food.y) {
     ateFood = true;
   } else {
@@ -249,7 +249,13 @@ let draw = {
       ctx.strokeStyle = "white";
       ctx.strokeRect(snake[i].x, snake[i].y, tile, tile);
     }
-  },
+    if (collisionDetected === true) {
+        ctx.fillStyle = "red";
+        ctx.fillRect(snake[0].x, snake[0].y, tile, tile);
+        ctx.strokeStyle = "white";
+        ctx.strokeRect(snake[0].x, snake[0].y, tile, tile);
+    }
+  }
 };
 
 // Game loop with conditions for which functions are called depending on game state
