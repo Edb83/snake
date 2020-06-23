@@ -176,7 +176,7 @@ function advanceSnake() {
 }
 
 function updateScoreBoard() {
-  if (scoreBoard.includes(score)) {
+  if (scoreBoard.includes(score) || score === 0) {
     return;
   } else {
     scoreBoard.push(score);
@@ -193,27 +193,27 @@ let draw = {
 
   background: function () {
     if (gameState === "MENU") {
-      ctx.fillStyle = "#8788CC";
+      ctx.fillStyle = "#fff";
       ctx.fillRect(0, 0, gameBoard.width, gameBoard.height);
     } else {
-      ctx.fillStyle = "#8788CC";
+      ctx.fillStyle = "#fff";
       ctx.fillRect(0, tile * 3, gameBoard.width, gameBoard.height);
     }
   },
 
   scoreBackground: function () {
-    ctx.fillStyle = "#2C2C42";
+    ctx.fillStyle = "#000";
     ctx.fillRect(0, 0, gameBoard.width, tile * 3);
   },
 
   score: function () {
-    ctx.fillStyle = "white";
+    ctx.fillStyle = "#fff";
     ctx.font = "25px Verdana";
     ctx.fillText(score, tile, tile * 2);
   },
 
   highScore: function () {
-    ctx.fillStyle = "white";
+    ctx.fillStyle = "#fff";
     ctx.font = "25px Verdana";
     if (scoreBoard.length > 0 && Math.max(...scoreBoard) > score) {
       ctx.fillText(
@@ -236,23 +236,23 @@ let draw = {
       2 * Math.PI,
       false
     );
-    ctx.fillStyle = "#AE00C2";
+    ctx.fillStyle = "#ff8d28";
     ctx.fill();
-    ctx.strokeStyle = "white";
+    ctx.strokeStyle = "#000";
     ctx.stroke();
   },
 
   snake: function () {
-    ctx.fillStyle = "#181942";
+    ctx.fillStyle = "#3e9485";
     for (let i = 0; i < snake.length; i++) {
       ctx.fillRect(snake[i].x, snake[i].y, tile, tile); // fills tiles occupied by snake array's coordinates
-      ctx.strokeStyle = "white";
+      ctx.strokeStyle = "#000";
       ctx.strokeRect(snake[i].x, snake[i].y, tile, tile);
     }
     if (collisionDetected === true) {
-        ctx.fillStyle = "red";
+        ctx.fillStyle = "#e4232a";
         ctx.fillRect(snake[0].x, snake[0].y, tile, tile);
-        ctx.strokeStyle = "white";
+        ctx.strokeStyle = "#000";
         ctx.strokeRect(snake[0].x, snake[0].y, tile, tile);
     }
   }
