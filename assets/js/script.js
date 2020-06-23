@@ -202,27 +202,27 @@ let draw = {
   },
 
   scoreBackground: function () {
-    ctx.fillStyle = "#000";
+    ctx.fillStyle = "#5a0b70ed";
     ctx.fillRect(0, 0, gameBoard.width, tile * 3);
   },
 
   score: function () {
     ctx.fillStyle = "#fff";
-    ctx.font = "25px Verdana";
+    ctx.font = "25px Impact";
     ctx.fillText(score, tile, tile * 2);
   },
 
   highScore: function () {
     ctx.fillStyle = "#fff";
-    ctx.font = "25px Verdana";
+    ctx.font = "25px Impact";
     if (scoreBoard.length > 0 && Math.max(...scoreBoard) > score) {
       ctx.fillText(
-        `Best: ${Math.max(...scoreBoard)}`,
-        gameBoard.width * 0.7,
+        `High score: ${Math.max(...scoreBoard)}`,
+        gameBoard.width * 0.675,
         tile * 2
       );
     } else {
-      ctx.fillText(`Best: ${score}`, gameBoard.width * 0.7, tile * 2);
+      ctx.fillText(`High score: ${score}`, gameBoard.width * 0.675, tile * 2);
     }
   },
 
