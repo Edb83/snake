@@ -12,22 +12,23 @@ body {
 }
 
 #gameBoard {
-  z-index: 0;
+    z-index: 0;
+    border: solid black 1px;
 }
 
 #startScreen, #gameOverScreen {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 15px;
-  background-color: #58036de7;
-  border: 2px;
-  border-color: #fff;
-  border-radius: 5px;
-  color: #fff;
-  z-index: 1;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background-color: #282c75ed;
+    border: solid 1px black;
+    border-color: #000;
+    border-radius: 5%;
+    color: #fff;
+    z-index: 1;
 }
 
 .visible {
