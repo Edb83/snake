@@ -31,6 +31,10 @@ body {
     z-index: 1;
 }
 
+#highScores {
+    align-self: start;
+}
+
 .visible {
     visibility: visible;
 }
@@ -40,11 +44,22 @@ body {
 }
 
 button {
-  display: inline-block;
-  height: 25px;
-  -webkit-touch-callout: none;
-  margin: 5px;
+    display: inline-block;
+    height: 25px;
+    min-width: 90px;
+    -webkit-touch-callout: none;
+    margin: 15px;
+    background-color: #fff;
+    border-style: none;
+    border-radius: 5%;
 }
+
+button:hover {
+    background-color: #3e9485;
+    color: #fff;
+    border: solid 1px #fff;
+}
+
 
 /* #backgroundCanvas {
     position: absolute;
