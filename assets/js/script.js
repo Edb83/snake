@@ -23,7 +23,7 @@ let friction = 0.4;
 // Initialise Game
 
 const gameBoard = document.getElementById("gameBoard");
-gameBoard.width = 320;
+gameBoard.width = 500;
 gameBoard.height = Math.ceil(gameBoard.width * 1.15);
 document.addEventListener("keydown", keyboardHandler);
 
@@ -285,9 +285,9 @@ function populateSparkArray() {
   for (let i = 0; i < snake.length; i++) {
     let x = snake[0].x + tile / 2;
     let y = snake[0].y + tile / 2;
-    let dx = Math.random() - 0.3 * 2;
-    let dy = Math.random() - 1;
-    let radius = 2;
+    let dx = Math.random() - 0.3 * 3;
+    let dy = Math.random() - 1 * 2;
+    let radius = Math.random() * 5;
     if (sparkArray.length > 50) {
       sparkArray.shift(0, sparkArray.length);
     } else {
