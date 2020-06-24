@@ -17,8 +17,8 @@ let newHead;
 let collisionDetected = false;
 let ateFood = false;
 
-let gravity = 0.7;
-let friction = 0.5;
+let gravity = 0.2;
+let friction = 0.4;
 
 // Initialise Game
 
@@ -221,8 +221,7 @@ let gameLoop = function () {
   }
 };
 
-// gameLoop();
-
+// Game state selection
 function changeState(state) {
   gameState = state;
   showScreen(state);
@@ -246,8 +245,7 @@ function showScreen(state) {
   }
 }
 
-
-
+// Creating the spark
 class Spark {
   constructor(x, y, dx, dy, radius) {
     this.x = x;
@@ -285,78 +283,86 @@ Object.prototype.update = function () {
 let sparkArray = [];
 function populateSparkArray() {
   for (let i = 0; i < snake.length; i++) {
-    let x = snake[0].x;
-    let y = snake[0].y;
+    let x = snake[0].x + tile / 2;
+    let y = snake[0].y + tile / 2;
     let dx = Math.random() - 0.3 * 2;
-    let dy = Math.random() + 1;
+    let dy = Math.random() - 1;
     let radius = 2;
-    sparkArray.push(new Spark(x, y, dx, dy, radius));
+    if (sparkArray.length > 50) {
+      sparkArray.shift(0, sparkArray.length);
+    } else {
+      sparkArray.push(new Spark(x, y, dx, dy, radius));
+    }
   }
 }
 
-// Separating game updates and animation
+// Animation
 function animate() {
-  requestAnimationFrame(animate);
+  if (gameState === "PLAY") {
+    requestAnimationFrame(animate);
 
-  // Clear gameBoard
-  ctx.clearRect(0, 0, gameBoard.width, gameBoard.height); // clears any tiles filled on each draw to prevent trail
+    // Clear gameBoard
+    ctx.clearRect(0, 0, gameBoard.width, gameBoard.height); // clears any tiles filled on each draw to prevent trail
 
-  // Background
-  if (gameState === "MENU") {
+    // Background
+    if (gameState === "MENU") {
+      ctx.fillStyle = "#fff";
+      ctx.fillRect(0, 0, gameBoard.width, gameBoard.height);
+    } else {
+      ctx.fillStyle = "#fff";
+      ctx.fillRect(0, tile * 3, gameBoard.width, gameBoard.height);
+    }
+    // Score background
+    ctx.fillStyle = "#5a0b70ed";
+    ctx.fillRect(0, 0, gameBoard.width, tile * 3);
+    // Score text
     ctx.fillStyle = "#fff";
-    ctx.fillRect(0, 0, gameBoard.width, gameBoard.height);
-  } else {
+    ctx.font = "25px Impact";
+    ctx.fillText(score, tile, tile * 2);
+    // Highscore text
     ctx.fillStyle = "#fff";
-    ctx.fillRect(0, tile * 3, gameBoard.width, gameBoard.height);
-  }
-  // Score background
-  ctx.fillStyle = "#5a0b70ed";
-  ctx.fillRect(0, 0, gameBoard.width, tile * 3);
-  // Score text
-  ctx.fillStyle = "#fff";
-  ctx.font = "25px Impact";
-  ctx.fillText(score, tile, tile * 2);
-  // Highscore text
-  ctx.fillStyle = "#fff";
-  ctx.font = "25px Impact";
-  if (scoreBoard.length > 0 && Math.max(...scoreBoard) > score) {
-    ctx.fillText(
-      `High score: ${Math.max(...scoreBoard)}`,
-      gameBoard.width * 0.675,
-      tile * 2
+    ctx.font = "25px Impact";
+    if (scoreBoard.length > 0 && Math.max(...scoreBoard) > score) {
+      ctx.fillText(
+        `High score: ${Math.max(...scoreBoard)}`,
+        gameBoard.width * 0.675,
+        tile * 2
+      );
+    } else {
+      ctx.fillText(`High score: ${score}`, gameBoard.width * 0.675, tile * 2);
+    }
+    // Food
+    ctx.beginPath();
+    ctx.arc(
+      food.x + (tile - 3) / 2,
+      food.y + (tile - 3) / 2,
+      tile / 2,
+      0,
+      2 * Math.PI,
+      false
     );
-  } else {
-    ctx.fillText(`High score: ${score}`, gameBoard.width * 0.675, tile * 2);
-  }
-  // Food
-  ctx.beginPath();
-  ctx.arc(
-    food.x + (tile - 3) / 2,
-    food.y + (tile - 3) / 2,
-    tile / 2,
-    0,
-    2 * Math.PI,
-    false
-  );
-  ctx.fillStyle = "#ff8d28";
-  ctx.fill();
-  ctx.strokeStyle = "#000";
-  ctx.stroke();
-  // Snake
-  ctx.fillStyle = "#3e9485";
-  for (let i = 0; i < snake.length; i++) {
-    ctx.fillRect(snake[i].x, snake[i].y, tile, tile); // fills tiles occupied by snake array's coordinates
+    ctx.fillStyle = "#ff8d28";
+    ctx.fill();
     ctx.strokeStyle = "#000";
-    ctx.strokeRect(snake[i].x, snake[i].y, tile, tile);
-  }
-  if (collisionDetected === true) {
-    ctx.fillStyle = "#e4232a";
-    ctx.fillRect(snake[0].x, snake[0].y, tile, tile);
-    ctx.strokeStyle = "#000";
-    ctx.strokeRect(snake[0].x, snake[0].y, tile, tile);
-  }
+    ctx.stroke();
+    // Snake
+    ctx.fillStyle = "#3e9485";
+    for (let i = 0; i < snake.length; i++) {
+      ctx.fillRect(snake[i].x, snake[i].y, tile, tile); // fills tiles occupied by snake array's coordinates
+      ctx.strokeStyle = "#000";
+      ctx.strokeRect(snake[i].x, snake[i].y, tile, tile);
+    }
+    if (collisionDetected === true) {
+      ctx.fillStyle = "#e4232a";
+      ctx.fillRect(snake[0].x, snake[0].y, tile, tile);
+      ctx.strokeStyle = "#000";
+      ctx.strokeRect(snake[0].x, snake[0].y, tile, tile);
+    }
 
-  sparkArray.forEach((spark) => {
-    spark.update();
-  });
+    sparkArray.forEach((spark) => {
+      spark.update();
+    });
+  } else {
+    return;
+  }
 }
