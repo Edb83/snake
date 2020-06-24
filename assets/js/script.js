@@ -257,9 +257,9 @@ class Spark {
   draw() {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-    ctx.strokeStyle = "orange";
+    ctx.strokeStyle = "red";
     ctx.stroke();
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "yellow";
     ctx.fill();
     ctx.closePath();
   }
@@ -309,7 +309,7 @@ function animate() {
       ctx.fillStyle = "#fff";
       ctx.fillRect(0, 0, gameBoard.width, gameBoard.height);
     } else {
-      ctx.fillStyle = "#fff";
+      ctx.fillStyle = "#000";
       ctx.fillRect(0, tile * 3, gameBoard.width, gameBoard.height);
     }
     // Score background
@@ -346,7 +346,7 @@ function animate() {
     ctx.strokeStyle = "#000";
     ctx.stroke();
     // Snake
-    ctx.fillStyle = "#3e9485";
+    ctx.fillStyle = "#fff";
     for (let i = 0; i < snake.length; i++) {
       ctx.fillRect(snake[i].x, snake[i].y, tile, tile); // fills tiles occupied by snake array's coordinates
       ctx.strokeStyle = "#000";
