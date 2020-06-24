@@ -6,20 +6,24 @@ let direction;
 const gameSpeed = 150; // lower is faster
 let lastKey = 0; // used to store time since last keydown
 const safeDelay = 130; // refresh rate speed to prevent snake eating its neck when multiple keys pressed
-let snake;
+
 let food;
 let eat = document.getElementById("eatSound");
 let gameover = document.getElementById("gameoverSound");
+let music = document.getElementById("music");
 let myInterval = null; // used to prevent interval recorded by setInterval from increasing each time a new game is loaded
 
 let newHead;
 let collisionDetected = false;
 let ateFood = false;
 
+let gravity = 0.7;
+let friction = 0.5;
+
 // Initialise Game
 
 const gameBoard = document.getElementById("gameBoard");
-gameBoard.width = 500;
+gameBoard.width = 320;
 gameBoard.height = Math.ceil(gameBoard.width * 1.15);
 document.addEventListener("keydown", keyboardHandler);
 
@@ -28,6 +32,20 @@ const gameOverScreen = document.getElementById("gameOverScreen");
 
 const ctx = gameBoard.getContext("2d");
 const tile = gameBoard.width / 20; // the tile represents the smallest unit of measurement for the gameBoard
+
+let snake = [];
+snake[0] = {
+  x: 15 * tile,
+  y: 19 * tile,
+};
+snake[1] = {
+  x: 16 * tile,
+  y: 19 * tile,
+};
+snake[2] = {
+  x: 17 * tile,
+  y: 19 * tile,
+};
 
 // Keydown event listener
 
@@ -74,6 +92,7 @@ let newGame = function () {
   // resets all variables for a fresh game, preserving setInterval of gameLoop
   collisionDetected = false;
   snake = [];
+  sparkArray = [];
   direction = "left";
   score = 0;
   newSnake();
@@ -84,6 +103,8 @@ let newGame = function () {
     }, gameSpeed);
   }
   changeState("PLAY");
+  //   music.play();
+  animate();
 };
 
 // Game HUD
@@ -118,7 +139,7 @@ function findNewHead() {
 
   newHead = {
     x: newHeadX,
-    y: newHeadY
+    y: newHeadY,
   };
 }
 
@@ -169,6 +190,7 @@ function advanceSnake() {
     snake.unshift(newHead);
     score++;
     eat.play();
+    populateSparkArray();
   } else {
     snake.unshift(newHead);
     snake.pop();
@@ -184,80 +206,6 @@ function updateScoreBoard() {
   }
 }
 
-// Draw game
-
-let draw = {
-  clearGameBoard: function () {
-    ctx.clearRect(0, 0, gameBoard.width, gameBoard.height); // clears any tiles filled on each draw to prevent trail
-  },
-
-  background: function () {
-    if (gameState === "MENU") {
-      ctx.fillStyle = "#fff";
-      ctx.fillRect(0, 0, gameBoard.width, gameBoard.height);
-    } else {
-      ctx.fillStyle = "#fff";
-      ctx.fillRect(0, tile * 3, gameBoard.width, gameBoard.height);
-    }
-  },
-
-  scoreBackground: function () {
-    ctx.fillStyle = "#5a0b70ed";
-    ctx.fillRect(0, 0, gameBoard.width, tile * 3);
-  },
-
-  score: function () {
-    ctx.fillStyle = "#fff";
-    ctx.font = "25px Impact";
-    ctx.fillText(score, tile, tile * 2);
-  },
-
-  highScore: function () {
-    ctx.fillStyle = "#fff";
-    ctx.font = "25px Impact";
-    if (scoreBoard.length > 0 && Math.max(...scoreBoard) > score) {
-      ctx.fillText(
-        `High score: ${Math.max(...scoreBoard)}`,
-        gameBoard.width * 0.675,
-        tile * 2
-      );
-    } else {
-      ctx.fillText(`High score: ${score}`, gameBoard.width * 0.675, tile * 2);
-    }
-  },
-
-  food: function () {
-    ctx.beginPath();
-    ctx.arc(
-      food.x + (tile - 3) / 2,
-      food.y + (tile - 3) / 2,
-      tile / 2,
-      0,
-      2 * Math.PI,
-      false
-    );
-    ctx.fillStyle = "#ff8d28";
-    ctx.fill();
-    ctx.strokeStyle = "#000";
-    ctx.stroke();
-  },
-
-  snake: function () {
-    ctx.fillStyle = "#3e9485";
-    for (let i = 0; i < snake.length; i++) {
-      ctx.fillRect(snake[i].x, snake[i].y, tile, tile); // fills tiles occupied by snake array's coordinates
-      ctx.strokeStyle = "#000";
-      ctx.strokeRect(snake[i].x, snake[i].y, tile, tile);
-    }
-    if (collisionDetected === true) {
-        ctx.fillStyle = "#e4232a";
-        ctx.fillRect(snake[0].x, snake[0].y, tile, tile);
-        ctx.strokeStyle = "#000";
-        ctx.strokeRect(snake[0].x, snake[0].y, tile, tile);
-    }
-  }
-};
-
 // Game loop with conditions for which functions are called depending on game state
 let gameLoop = function () {
   if (gameState === "PLAY") {
@@ -265,27 +213,15 @@ let gameLoop = function () {
     checkCollision();
     checkAteFood();
     advanceSnake();
-    draw.clearGameBoard();
-    draw.background();
-    draw.scoreBackground();
-    draw.score();
-    draw.highScore();
-    draw.food();
-    draw.snake();
   }
   if (gameState === "MENU") {
-    draw.background();
+    // NEED TO REPOPULATE
   } else {
-    draw.background();
-    draw.scoreBackground();
-    draw.score();
-    draw.highScore();
-    draw.snake();
-    draw.food();
+    // NEED TO REPOPULATE
   }
 };
 
-gameLoop();
+// gameLoop();
 
 function changeState(state) {
   gameState = state;
@@ -308,4 +244,119 @@ function showScreen(state) {
   if (state === "GAMEOVER") {
     makeVisible(gameOverScreen);
   }
+}
+
+
+
+class Spark {
+  constructor(x, y, dx, dy, radius) {
+    this.x = x;
+    this.y = y;
+    this.dx = dx;
+    this.dy = dy;
+    this.radius = radius;
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+    ctx.strokeStyle = "orange";
+    ctx.stroke();
+    ctx.fillStyle = "red";
+    ctx.fill();
+    ctx.closePath();
+  }
+}
+
+Object.prototype.update = function () {
+  this.draw();
+
+  if (this.x + this.radius > gameBoard.width || this.x - this.radius < 0) {
+    this.dx = -this.dx;
+  }
+  this.x += this.dx;
+  if (this.y + this.radius > gameBoard.height) {
+    this.dy = -this.dy * friction;
+  } else {
+    this.dy += gravity;
+  }
+  this.y += this.dy;
+};
+
+let sparkArray = [];
+function populateSparkArray() {
+  for (let i = 0; i < snake.length; i++) {
+    let x = snake[0].x;
+    let y = snake[0].y;
+    let dx = Math.random() - 0.3 * 2;
+    let dy = Math.random() + 1;
+    let radius = 2;
+    sparkArray.push(new Spark(x, y, dx, dy, radius));
+  }
+}
+
+// Separating game updates and animation
+function animate() {
+  requestAnimationFrame(animate);
+
+  // Clear gameBoard
+  ctx.clearRect(0, 0, gameBoard.width, gameBoard.height); // clears any tiles filled on each draw to prevent trail
+
+  // Background
+  if (gameState === "MENU") {
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0, 0, gameBoard.width, gameBoard.height);
+  } else {
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(0, tile * 3, gameBoard.width, gameBoard.height);
+  }
+  // Score background
+  ctx.fillStyle = "#5a0b70ed";
+  ctx.fillRect(0, 0, gameBoard.width, tile * 3);
+  // Score text
+  ctx.fillStyle = "#fff";
+  ctx.font = "25px Impact";
+  ctx.fillText(score, tile, tile * 2);
+  // Highscore text
+  ctx.fillStyle = "#fff";
+  ctx.font = "25px Impact";
+  if (scoreBoard.length > 0 && Math.max(...scoreBoard) > score) {
+    ctx.fillText(
+      `High score: ${Math.max(...scoreBoard)}`,
+      gameBoard.width * 0.675,
+      tile * 2
+    );
+  } else {
+    ctx.fillText(`High score: ${score}`, gameBoard.width * 0.675, tile * 2);
+  }
+  // Food
+  ctx.beginPath();
+  ctx.arc(
+    food.x + (tile - 3) / 2,
+    food.y + (tile - 3) / 2,
+    tile / 2,
+    0,
+    2 * Math.PI,
+    false
+  );
+  ctx.fillStyle = "#ff8d28";
+  ctx.fill();
+  ctx.strokeStyle = "#000";
+  ctx.stroke();
+  // Snake
+  ctx.fillStyle = "#3e9485";
+  for (let i = 0; i < snake.length; i++) {
+    ctx.fillRect(snake[i].x, snake[i].y, tile, tile); // fills tiles occupied by snake array's coordinates
+    ctx.strokeStyle = "#000";
+    ctx.strokeRect(snake[i].x, snake[i].y, tile, tile);
+  }
+  if (collisionDetected === true) {
+    ctx.fillStyle = "#e4232a";
+    ctx.fillRect(snake[0].x, snake[0].y, tile, tile);
+    ctx.strokeStyle = "#000";
+    ctx.strokeRect(snake[0].x, snake[0].y, tile, tile);
+  }
+
+  sparkArray.forEach((spark) => {
+    spark.update();
+  });
 }
