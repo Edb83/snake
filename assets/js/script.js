@@ -72,6 +72,12 @@ let newFood = function () {
   };
 };
 
+let colorArray = [
+    "red",
+    "orange",
+    "yellow"
+]
+
 // Starting coordinates of snake
 let newSnake = function () {
   snake[0] = {
@@ -247,19 +253,20 @@ function showScreen(state) {
 
 // Creating the spark
 class Spark {
-  constructor(x, y, dx, dy, radius) {
+  constructor(x, y, dx, dy, radius, color) {
     this.x = x;
     this.y = y;
     this.dx = dx;
     this.dy = dy;
     this.radius = radius;
+    this.color = colorArray[Math.floor(Math.random() * colorArray.length)];
   }
   draw() {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
     ctx.strokeStyle = "red";
     ctx.stroke();
-    ctx.fillStyle = "yellow";
+    ctx.fillStyle = this.color;
     ctx.fill();
     ctx.closePath();
   }
@@ -272,6 +279,7 @@ Object.prototype.update = function () {
     this.dx = -this.dx;
   }
   this.x += this.dx;
+
   if (this.y + this.radius > gameBoard.height) {
     this.dy = -this.dy * friction;
   } else {
@@ -288,7 +296,7 @@ function populateSparkArray() {
     let dx = Math.random() - 0.3 * 3;
     let dy = Math.random() - 1 * 2;
     let radius = Math.random() * 5;
-    if (sparkArray.length > 50) {
+    if (sparkArray.length > 250) {
       sparkArray.shift(0, sparkArray.length);
     } else {
       sparkArray.push(new Spark(x, y, dx, dy, radius));
