@@ -272,7 +272,7 @@ class Spark {
   }
 }
 
-Object.prototype.update = function () {
+Spark.prototype.update = function () {
   this.draw();
 
   if (this.x + this.radius > gameBoard.width || this.x - this.radius < 0) {
@@ -282,6 +282,7 @@ Object.prototype.update = function () {
 
   if (this.y + this.radius > gameBoard.height) {
     this.dy = -this.dy * friction;
+  this.radius -= 1
   } else {
     this.dy += gravity;
   }
@@ -295,7 +296,7 @@ function populateSparkArray() {
     let y = snake[0].y + tile / 2;
     let dx = Math.random() - 0.3 * 3;
     let dy = Math.random() - 1 * 2;
-    let radius = Math.random() * 5;
+    let radius = 5;
     if (sparkArray.length > 250) {
       sparkArray.shift(0, sparkArray.length);
     } else {
@@ -367,8 +368,11 @@ function animate() {
       ctx.strokeRect(snake[0].x, snake[0].y, tile, tile);
     }
 
-    sparkArray.forEach((spark) => {
+    sparkArray.forEach((spark, index) => {
       spark.update();
+      if (spark.radius === 0) {
+          sparkArray.splice(index, 1)
+      }
     });
   } else {
     return;
