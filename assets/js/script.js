@@ -318,7 +318,7 @@ function animate() {
       ctx.fillStyle = "#fff";
       ctx.fillRect(0, 0, gameBoard.width, gameBoard.height);
     } else {
-      ctx.fillStyle = "#000";
+      ctx.fillStyle = "#eaeaea";
       ctx.fillRect(0, tile * 3, gameBoard.width, gameBoard.height);
     }
     // Score background
