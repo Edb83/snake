@@ -267,11 +267,15 @@ class Spark {
     this.opacity = 1;
   }
   draw() {
+    ctx.save();
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
     ctx.fillStyle = this.color.substring(0, this.color.length - 2)+ this.opacity + ")";
+    ctx.shadowColor = this.color;
+    ctx.shadowBlur = 10;
     ctx.fill();
     ctx.closePath();
+    ctx.restore();
   }
 }
 
@@ -341,6 +345,7 @@ function animate() {
       ctx.fillText(`High score: ${score}`, gameBoard.width * 0.675, tile * 2);
     }
     // Food
+    ctx.save();
     ctx.beginPath();
     ctx.arc(
       food.x + (tile - 3) / 2,
@@ -351,9 +356,12 @@ function animate() {
       false
     );
     ctx.fillStyle = "#ff8d28";
+    ctx.shadowColor = "#ff8d28";
+    ctx.shadowBlur = 20;
     ctx.fill();
-    ctx.strokeStyle = "#000";
-    ctx.stroke();
+    ctx.closePath();
+    ctx.restore();
+
     // Snake
     ctx.fillStyle = "#fff";
     for (let i = 0; i < snake.length; i++) {
