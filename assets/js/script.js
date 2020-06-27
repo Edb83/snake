@@ -17,8 +17,9 @@ let newHead;
 let collisionDetected = false;
 let ateFood = false;
 
-let gravity = 0.2;
-let friction = 0.4;
+function randomNumber(min, max) {
+  return Math.random() * (max - min) + min;
+}
 
 // Initialise Game
 
@@ -73,9 +74,9 @@ let newFood = function () {
 };
 
 let colorArray = [
-    "red",
-    "orange",
-    "yellow"
+    "rgba(255,0,0,1)",
+    "rgba(255,174,66,1)",
+    "rgba(255,255,0,1)"
 ]
 
 // Starting coordinates of snake
@@ -259,14 +260,16 @@ class Spark {
     this.dx = dx;
     this.dy = dy;
     this.radius = radius;
-    this.color = colorArray[Math.floor(Math.random() * colorArray.length)];
+    this.color = colorArray[Math.floor(Math.random() * colorArray.length)]; // HOW TO REFERENCE??
+    this.gravity = 0.2;
+    this.friction = 0.4;
+    this.ttl = 100;
+    this.opacity = 1;
   }
   draw() {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-    ctx.strokeStyle = "red";
-    ctx.stroke();
-    ctx.fillStyle = this.color;
+    ctx.fillStyle = this.color.substring(0, this.color.length - 2)+ this.opacity + ")";
     ctx.fill();
     ctx.closePath();
   }
@@ -281,10 +284,11 @@ Spark.prototype.update = function () {
   this.x += this.dx;
 
   if (this.y + this.radius > gameBoard.height) {
-    this.dy = -this.dy * friction;
-  this.radius -= 1
+    this.dy = -this.dy * this.friction;
+    this.ttl -= 1;
+    this.opacity -= 1 / this.ttl;
   } else {
-    this.dy += gravity;
+    this.dy += this.gravity;
   }
   this.y += this.dy;
 };
@@ -294,14 +298,10 @@ function populateSparkArray() {
   for (let i = 0; i < snake.length; i++) {
     let x = snake[0].x + tile / 2;
     let y = snake[0].y + tile / 2;
-    let dx = Math.random() - 0.3 * 3;
-    let dy = Math.random() - 1 * 2;
-    let radius = 5;
-    if (sparkArray.length > 250) {
-      sparkArray.shift(0, sparkArray.length);
-    } else {
-      sparkArray.push(new Spark(x, y, dx, dy, radius));
-    }
+    let dx = randomNumber(-2, 2);
+    let dy = randomNumber(-5, 0);
+    let radius = randomNumber(2, 5);
+    sparkArray.push(new Spark(x, y, dx, dy, radius));
   }
 }
 
@@ -370,7 +370,7 @@ function animate() {
 
     sparkArray.forEach((spark, index) => {
       spark.update();
-      if (spark.radius === 0) {
+      if (spark.ttl === 0) {
           sparkArray.splice(index, 1)
       }
     });
