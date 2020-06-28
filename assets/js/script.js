@@ -74,9 +74,10 @@ let newFood = function () {
 };
 
 let colorArray = [
-    "rgba(255,0,0,1)",
-    "rgba(255,174,66,1)",
-    "rgba(255,255,0,1)"
+    "rgba(128,255,0,1)",
+    "rgba(252,243,64,1)",
+    "rgba(251,51,219,1)",
+    "rgba(3,16,234,1)"
 ]
 
 // Starting coordinates of snake
@@ -260,7 +261,7 @@ class Spark {
     this.dx = dx;
     this.dy = dy;
     this.radius = radius;
-    this.color = colorArray[Math.floor(Math.random() * colorArray.length)]; // HOW TO REFERENCE??
+    this.color = colorArray[Math.floor(Math.random() * colorArray.length)];
     this.gravity = 0.2;
     this.friction = 0.4;
     this.ttl = 100;
@@ -272,7 +273,7 @@ class Spark {
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
     ctx.fillStyle = this.color.substring(0, this.color.length - 2)+ this.opacity + ")";
     ctx.shadowColor = this.color;
-    ctx.shadowBlur = 10;
+    ctx.shadowBlur = 20;
     ctx.fill();
     ctx.closePath();
     ctx.restore();
@@ -300,10 +301,26 @@ Spark.prototype.update = function () {
 let sparkArray = [];
 function populateSparkArray() {
   for (let i = 0; i < snake.length; i++) {
+      let dx;
+      let dy;
     let x = snake[0].x + tile / 2;
     let y = snake[0].y + tile / 2;
-    let dx = randomNumber(-2, 2);
-    let dy = randomNumber(-5, 0);
+    if (direction === "up") {
+        dx = randomNumber(-2, 2);
+        dy = randomNumber(-5, -2);
+    }
+    if (direction === "down") {
+        dx = randomNumber(-2, 2);
+        dy = randomNumber(2, 5);
+    }
+    if (direction === "left") {
+        dx = randomNumber(-5, -2);
+        dy = randomNumber(-2, 2);
+    }
+    if (direction === "right") {
+        dx = randomNumber(2, 5);
+        dy = randomNumber(-2, 2);
+    }
     let radius = randomNumber(2, 5);
     sparkArray.push(new Spark(x, y, dx, dy, radius));
   }
@@ -318,20 +335,18 @@ function animate() {
     ctx.clearRect(0, 0, gameBoard.width, gameBoard.height); // clears any tiles filled on each draw to prevent trail
 
     // Background
-    if (gameState === "MENU") {
-      ctx.fillStyle = "#fff";
-      ctx.fillRect(0, 0, gameBoard.width, gameBoard.height);
-    } else {
-      ctx.fillStyle = "#eaeaea";
+      ctx.fillStyle = "#312e6c";
       ctx.fillRect(0, tile * 3, gameBoard.width, gameBoard.height);
-    }
+
     // Score background
-    ctx.fillStyle = "#5a0b70ed";
+    ctx.fillStyle = "#001437";
     ctx.fillRect(0, 0, gameBoard.width, tile * 3);
+
     // Score text
     ctx.fillStyle = "#fff";
     ctx.font = "25px Impact";
     ctx.fillText(score, tile, tile * 2);
+
     // Highscore text
     ctx.fillStyle = "#fff";
     ctx.font = "25px Impact";
@@ -355,25 +370,25 @@ function animate() {
       2 * Math.PI,
       false
     );
-    ctx.fillStyle = "#ff8d28";
-    ctx.shadowColor = "#ff8d28";
-    ctx.shadowBlur = 20;
+    ctx.fillStyle = "#80ff00";
+    ctx.shadowColor = "#80ff00";
+    ctx.shadowBlur = 10;
     ctx.fill();
     ctx.closePath();
     ctx.restore();
 
     // Snake
-    ctx.fillStyle = "#fff";
+    
     for (let i = 0; i < snake.length; i++) {
+      ctx.save();
+      ctx.fillStyle = "#fb33db";
+      ctx.shadowColor = "#fb33db";
+    ctx.shadowBlur = 10;
       ctx.fillRect(snake[i].x, snake[i].y, tile, tile); // fills tiles occupied by snake array's coordinates
-      ctx.strokeStyle = "#000";
+
+      ctx.restore();
+            ctx.strokeStyle = "#000";
       ctx.strokeRect(snake[i].x, snake[i].y, tile, tile);
-    }
-    if (collisionDetected === true) {
-      ctx.fillStyle = "#e4232a";
-      ctx.fillRect(snake[0].x, snake[0].y, tile, tile);
-      ctx.strokeStyle = "#000";
-      ctx.strokeRect(snake[0].x, snake[0].y, tile, tile);
     }
 
     sparkArray.forEach((spark, index) => {
