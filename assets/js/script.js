@@ -10,7 +10,6 @@ const safeDelay = 130; // refresh rate speed to prevent snake eating its neck wh
 let food;
 let eat = document.getElementById("eatSound");
 let gameover = document.getElementById("gameoverSound");
-let music = document.getElementById("music");
 let myInterval = null; // used to prevent interval recorded by setInterval from increasing each time a new game is loaded
 
 let newHead;
@@ -111,7 +110,6 @@ let newGame = function () {
     }, gameSpeed);
   }
   changeState("PLAY");
-  //   music.play();
   animate();
 };
 
@@ -263,7 +261,7 @@ class Spark {
     this.radius = radius;
     this.color = colorArray[Math.floor(Math.random() * colorArray.length)];
     this.gravity = 0.2;
-    this.friction = 0.4;
+    this.friction = 0.5;
     this.ttl = 100;
     this.opacity = 1;
   }
