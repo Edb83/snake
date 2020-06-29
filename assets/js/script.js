@@ -1,6 +1,7 @@
 // Global variables
 let gameState = "MENU";
-let score = "";
+let highestScore = 0;
+let currentScore = 0;
 let scoreBoard = [];
 let direction;
 const gameSpeed = 150; // lower is faster
@@ -73,11 +74,11 @@ let newFood = function () {
 };
 
 let colorArray = [
-    "rgba(128,255,0,1)",
-    "rgba(252,243,64,1)",
-    "rgba(251,51,219,1)",
-    "rgba(3,16,234,1)"
-]
+  "rgba(128,255,0,1)",
+  "rgba(252,243,64,1)",
+  "rgba(251,51,219,1)",
+  "rgba(3,16,234,1)",
+];
 
 // Starting coordinates of snake
 let newSnake = function () {
@@ -101,7 +102,7 @@ let newGame = function () {
   snake = [];
   sparkArray = [];
   direction = "left";
-  score = 0;
+  currentScore = 0;
   newSnake();
   newFood();
   if (myInterval === null) {
@@ -114,17 +115,26 @@ let newGame = function () {
 };
 
 // Game HUD
-let gameHud = {
-  showScoreBoard: function () {
-    let scoreOl = document.querySelector("ol");
-    scoreOl.innerHTML = "";
-    for (let i = 0; i < 5; i++) {
-      let scoreLi = document.createElement("li");
-      scoreLi.textContent = scoreBoard[i];
-      scoreOl.appendChild(scoreLi);
-    }
-  },
-};
+function showScoreBoard() {
+  let highScoreAward = document.getElementById("highScoreAward");
+  highScoreAward.innerHTML = "";
+  if (currentScore > highestScore && highestScore !== 0) {
+    highScoreAward.innerHTML =
+    `Congratulations! 
+    You beat your previous high score by ${currentScore - highestScore}!`;
+    highestScore = currentScore;
+  } else if (currentScore > highestScore) {
+    highestScore = currentScore;
+  }
+
+  let scoreOl = document.querySelector("ol");
+  scoreOl.innerHTML = "";
+  for (let i = 0; i < 5; i++) {
+    let scoreLi = document.createElement("li");
+    scoreLi.textContent = scoreBoard[i];
+    scoreOl.appendChild(scoreLi);
+  }
+}
 
 // Update
 
@@ -188,13 +198,13 @@ function advanceSnake() {
   if (collisionDetected === true) {
     gameover.play();
     updateScoreBoard();
-    gameHud.showScoreBoard();
+    showScoreBoard();
     changeState("GAMEOVER");
     return;
   } else if (ateFood === true) {
     newFood();
     snake.unshift(newHead);
-    score++;
+    currentScore++;
     eat.play();
     populateSparkArray();
   } else {
@@ -204,10 +214,10 @@ function advanceSnake() {
 }
 
 function updateScoreBoard() {
-  if (scoreBoard.includes(score) || score === 0) {
+  if (scoreBoard.includes(currentScore) || currentScore === 0) {
     return;
   } else {
-    scoreBoard.push(score);
+    scoreBoard.push(currentScore);
     scoreBoard.sort((a, b) => b - a); // sorts in descending order once added to scoreboard
   }
 }
@@ -251,6 +261,45 @@ function showScreen(state) {
   }
 }
 
+// class Snake {
+//   constructor(x, y, dx, dy, color) {
+//     this.x = x;
+//     this.y = y;
+//     this.dx = dx;
+//     this.dy = dy;
+//     this.color = color;
+//   }
+//   draw() {
+//       ctx.save();
+//       ctx.fillStyle = "#fb33db";
+//       ctx.shadowColor = "#fb33db";
+//       ctx.shadowBlur = 10;
+//       ctx.fillRect(this.x, this.y, tile, tile); // fills tiles occupied by snake array's coordinates
+//       ctx.restore();
+//       ctx.strokeStyle = "#000";
+//       ctx.strokeRect(this.x, this.y, tile, tile);
+//   }
+// }
+
+// Snake.prototype.update = function() {
+//     this.draw();
+
+//     if (direction === "up") {
+//         this.dy = -tile;
+//     }
+//     if (direction === "down") {
+//         this.dy = +tile;
+//     }
+//     if (direction === "left") {
+//         this.dx = -tile;
+//     }
+//     if (direction === "right") {
+//         this.dx = +tile
+//     }
+//     this.x += this.dx;
+//     this.y += this.dy;
+// }
+
 // Creating the spark
 class Spark {
   constructor(x, y, dx, dy, radius, color) {
@@ -269,7 +318,8 @@ class Spark {
     ctx.save();
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-    ctx.fillStyle = this.color.substring(0, this.color.length - 2)+ this.opacity + ")";
+    ctx.fillStyle =
+      this.color.substring(0, this.color.length - 2) + this.opacity + ")";
     ctx.shadowColor = this.color;
     ctx.shadowBlur = 20;
     ctx.fill();
@@ -299,25 +349,25 @@ Spark.prototype.update = function () {
 let sparkArray = [];
 function populateSparkArray() {
   for (let i = 0; i < snake.length; i++) {
-      let dx;
-      let dy;
+    let dx;
+    let dy;
     let x = snake[0].x + tile / 2;
     let y = snake[0].y + tile / 2;
     if (direction === "up") {
-        dx = randomNumber(-2, 2);
-        dy = randomNumber(-5, -2);
+      dx = randomNumber(-2, 2);
+      dy = randomNumber(-5, -2);
     }
     if (direction === "down") {
-        dx = randomNumber(-2, 2);
-        dy = randomNumber(2, 5);
+      dx = randomNumber(-2, 2);
+      dy = randomNumber(2, 5);
     }
     if (direction === "left") {
-        dx = randomNumber(-5, -2);
-        dy = randomNumber(-2, 2);
+      dx = randomNumber(-3, -2);
+      dy = randomNumber(-2, 2);
     }
     if (direction === "right") {
-        dx = randomNumber(2, 5);
-        dy = randomNumber(-2, 2);
+      dx = randomNumber(2, 3);
+      dy = randomNumber(-2, 2);
     }
     let radius = randomNumber(2, 5);
     sparkArray.push(new Spark(x, y, dx, dy, radius));
@@ -330,11 +380,11 @@ function animate() {
     requestAnimationFrame(animate);
 
     // Clear gameBoard
-    ctx.clearRect(0, 0, gameBoard.width, gameBoard.height); // clears any tiles filled on each draw to prevent trail
+    // ctx.clearRect(0, 0, gameBoard.width, gameBoard.height); // clears any tiles filled on each draw to prevent trail
 
     // Background
-      ctx.fillStyle = "#312e6c";
-      ctx.fillRect(0, tile * 3, gameBoard.width, gameBoard.height);
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, tile * 3, gameBoard.width, gameBoard.height);
 
     // Score background
     ctx.fillStyle = "#001437";
@@ -342,20 +392,24 @@ function animate() {
 
     // Score text
     ctx.fillStyle = "#fff";
-    ctx.font = "25px Impact";
-    ctx.fillText(score, tile, tile * 2);
+    ctx.font = "25px Orbitron";
+    ctx.fillText(currentScore, tile, tile * 2);
 
     // Highscore text
     ctx.fillStyle = "#fff";
-    ctx.font = "25px Impact";
-    if (scoreBoard.length > 0 && Math.max(...scoreBoard) > score) {
+    ctx.font = "25px Orbitron";
+    if (scoreBoard.length > 0 && Math.max(...scoreBoard) > currentScore) {
       ctx.fillText(
         `High score: ${Math.max(...scoreBoard)}`,
-        gameBoard.width * 0.675,
+        gameBoard.width * 0.5,
         tile * 2
       );
     } else {
-      ctx.fillText(`High score: ${score}`, gameBoard.width * 0.675, tile * 2);
+      ctx.fillText(
+        `High score: ${currentScore}`,
+        gameBoard.width * 0.5,
+        tile * 2
+      );
     }
     // Food
     ctx.save();
@@ -376,23 +430,23 @@ function animate() {
     ctx.restore();
 
     // Snake
-    
+
     for (let i = 0; i < snake.length; i++) {
       ctx.save();
       ctx.fillStyle = "#fb33db";
       ctx.shadowColor = "#fb33db";
-    ctx.shadowBlur = 10;
+      ctx.shadowBlur = 10;
       ctx.fillRect(snake[i].x, snake[i].y, tile, tile); // fills tiles occupied by snake array's coordinates
 
       ctx.restore();
-            ctx.strokeStyle = "#000";
+      ctx.strokeStyle = "#000";
       ctx.strokeRect(snake[i].x, snake[i].y, tile, tile);
     }
 
     sparkArray.forEach((spark, index) => {
       spark.update();
       if (spark.ttl === 0) {
-          sparkArray.splice(index, 1)
+        sparkArray.splice(index, 1);
       }
     });
   } else {

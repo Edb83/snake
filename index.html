@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/style.css" type="text/css" />
     <title>Snake test</title>
   </head>
@@ -13,6 +14,12 @@
       class="audio"
       src="assets/audio/gameover.wav"
     ></audio>
+    <audio
+      id="music"
+      class="audio"
+      src="assets/audio/music.mp3"
+      loop = "true"
+    ></audio>
 
     <div id="gameContainer">
         <div id="startScreen" class="visible">
@@ -20,14 +27,17 @@
         <p>Use the arrow keys to move your snake</p>
         <p>Eat food to grow</p>
         <p>Don't crash into the walls or yourself!</p>
-        <button onclick="newGame()">Start!</button>
+        <button onclick="newGame()">Play</button>
         </div>
       <canvas id="gameBoard"></canvas>
       <div id="gameOverScreen" class="hidden">
         <h1>Game Over</h1>
-        <h3>Top 5 scores:</h3>
+        <p id="highScoreAward"></p>
+        <h3>High scores</h3>
+        <div id="highScores">
         <ol></ol>
-        <button onclick="newGame()">Play again?</button>
+        </div>
+        <button onclick="newGame()">Play again</button>
       </div>
 
     </div>
