@@ -38,3 +38,7 @@ https://developer.mozilla.org/en-US/docs/Games/Anatomy
 
 Preventing setInterval repeating on game restart:
 https://stackoverflow.com/questions/29836686/code-in-setinterval-executing-more-than-once
+
+Random int (min, max):
+https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
+

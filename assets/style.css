@@ -2,6 +2,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #00218a;
+
 }
 
 #gameContainer {
@@ -28,6 +29,7 @@ body {
     border: solid 1px #fff;
     border-radius: 5%;
     color: #fff;
+    font-family: "Orbitron", sans-serif;
     z-index: 1;
 }
 
@@ -59,9 +61,3 @@ button:hover {
     color: #fff;
     border: solid 1px #fff;
 }
-
-
-/* #backgroundCanvas {
-    position: absolute;
-    z-index: -1;
-} */
