@@ -136,6 +136,9 @@ function showScoreBoard() {
   }
 }
 
+    // Need to redo scoring system to update highscore on the fly
+    // localStorage.setItem("top", ); 
+
 // Update
 
 function findNewHead() {
@@ -269,36 +272,88 @@ function showScreen(state) {
 //     this.dy = dy;
 //     this.color = color;
 //   }
-//   draw() {
-//       ctx.save();
-//       ctx.fillStyle = "#fb33db";
-//       ctx.shadowColor = "#fb33db";
-//       ctx.shadowBlur = 10;
-//       ctx.fillRect(this.x, this.y, tile, tile); // fills tiles occupied by snake array's coordinates
-//       ctx.restore();
-//       ctx.strokeStyle = "#000";
-//       ctx.strokeRect(this.x, this.y, tile, tile);
-//   }
-// }
 
-// Snake.prototype.update = function() {
-//     this.draw();
-
+//   update() {
 //     if (direction === "up") {
-//         this.dy = -tile;
+//       this.dy = -tile;
+//       this.dx = 0;
 //     }
 //     if (direction === "down") {
-//         this.dy = +tile;
+//       this.dy = +tile;
+//       this.dx = 0;
 //     }
 //     if (direction === "left") {
-//         this.dx = -tile;
+//       this.dy = 0;
+//       this.dx = -tile;
 //     }
 //     if (direction === "right") {
-//         this.dx = +tile
+//       this.dy = 0;
+//       this.dx = +tile;
 //     }
 //     this.x += this.dx;
 //     this.y += this.dy;
+
+//     snakeArray.push(
+//       new Snake(
+//         this.x,
+//         this.y,
+//         this.dx,
+//         this.dy,
+//         colorArray[Math.floor(Math.random() * colorArray.length)]
+//       )
+//     );
+//     // snakeArray.pop();
+//   }
+
+//   draw() {
+//     for (let i = 0; i < snakeArray.length; i++) {
+//       ctx.save();
+//       ctx.fillStyle = snakeArray[i].color;
+//       ctx.shadowColor = snakeArray[i].color;
+//       ctx.shadowBlur = 10;
+//       ctx.fillRect(snakeArray[i].x, snakeArray[i].y, tile, tile); // fills tiles occupied by snake array's coordinates
+//       ctx.restore();
+//       ctx.strokeStyle = "#000";
+//       ctx.strokeRect(snakeArray[i].x, snakeArray[i].y, tile, tile);
+//     }
+//   }
 // }
+
+// let snake = new Snake(15 * tile, 15 * tile, 0, 0);
+// let snakeArray = [snake];
+
+// class Food {
+//   constructor(x, y, color) {
+//     this.x = Math.floor(Math.random() * 20) * tile;
+//     this.y = Math.floor(Math.random() * 20 + 3) * tile;
+//     this.color = color;
+//   }
+//  update() {
+//      this.x = Math.floor(Math.random() * 20) * tile;
+//     this.y = Math.floor(Math.random() * 20 + 3) * tile;
+//     this.color = color;
+//  }
+//   draw() {
+//     ctx.save();
+//     ctx.beginPath();
+//     ctx.arc(
+//       this.x + (tile - 3) / 2,
+//       this.y + (tile - 3) / 2,
+//       tile / 2,
+//       0,
+//       2 * Math.PI,
+//       false
+//     );
+//     ctx.fillStyle = this.color;
+//     ctx.shadowColor = this.color;
+//     ctx.shadowBlur = 10;
+//     ctx.fill();
+//     ctx.closePath();
+//     ctx.restore();
+//   }
+// }
+
+// let food = new Food ()
 
 // Creating the spark
 class Spark {
