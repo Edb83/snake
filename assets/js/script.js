@@ -322,17 +322,15 @@ function showScreen(state) {
 // let snake = new Snake(15 * tile, 15 * tile, 0, 0);
 // let snakeArray = [snake];
 
+
+
 // class Food {
 //   constructor(x, y, color) {
 //     this.x = Math.floor(Math.random() * 20) * tile;
 //     this.y = Math.floor(Math.random() * 20 + 3) * tile;
-//     this.color = color;
+//     this.color = colorArray[Math.floor(Math.random() * colorArray.length)];
 //   }
-//  update() {
-//      this.x = Math.floor(Math.random() * 20) * tile;
-//     this.y = Math.floor(Math.random() * 20 + 3) * tile;
-//     this.color = color;
-//  }
+
 //   draw() {
 //     ctx.save();
 //     ctx.beginPath();
@@ -353,7 +351,11 @@ function showScreen(state) {
 //   }
 // }
 
-// let food = new Food ()
+// let newFood = function () {
+//   food = new Food()
+// };
+
+
 
 // Creating the spark
 class Spark {
@@ -364,8 +366,8 @@ class Spark {
     this.dy = dy;
     this.radius = radius;
     this.color = colorArray[Math.floor(Math.random() * colorArray.length)];
-    this.gravity = 0.2;
-    this.friction = 0.5;
+    this.gravity = randomNumber(0.2, 0.4);
+    this.friction = randomNumber(0.4, 0.6);
     this.ttl = 100;
     this.opacity = 1;
   }
@@ -417,12 +419,12 @@ function populateSparkArray() {
       dy = randomNumber(2, 5);
     }
     if (direction === "left") {
-      dx = randomNumber(-3, -2);
-      dy = randomNumber(-2, 2);
+      dx = randomNumber(-4, -1);
+      dy = randomNumber(-3, 3);
     }
     if (direction === "right") {
-      dx = randomNumber(2, 3);
-      dy = randomNumber(-2, 2);
+      dx = randomNumber(1, 4);
+      dy = randomNumber(-3, 3);
     }
     let radius = randomNumber(2, 5);
     sparkArray.push(new Spark(x, y, dx, dy, radius));
@@ -497,7 +499,7 @@ function animate() {
       ctx.strokeStyle = "#000";
       ctx.strokeRect(snake[i].x, snake[i].y, tile, tile);
     }
-
+    // food.draw();
     sparkArray.forEach((spark, index) => {
       spark.update();
       if (spark.ttl === 0) {
