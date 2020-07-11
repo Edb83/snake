@@ -83,17 +83,10 @@ let colorArray = [
 // Starting coordinates of snake
 let newSnake = function () {
   snake[0] = {
-    x: 15 * tile,
-    y: 19 * tile,
+    x: 10 * tile,
+    y: 13 * tile,
   };
-  snake[1] = {
-    x: 16 * tile,
-    y: 19 * tile,
-  };
-  snake[2] = {
-    x: 17 * tile,
-    y: 19 * tile,
-  };
+
 };
 
 let newGame = function () {
@@ -101,7 +94,7 @@ let newGame = function () {
   collisionDetected = false;
   snake = [];
   sparkArray = [];
-  direction = "left";
+  direction = undefined;
   currentScore = 0;
   newSnake();
   newFood();
@@ -154,6 +147,8 @@ function findNewHead() {
     newHeadX = newHeadX - tile; // X coordinate of head reduced by tile length
   } else if (direction === "right") {
     newHeadX = newHeadX + tile; // X coordinate of head increased by tile length
+  } else {
+      return
   }
 
   newHead = {
@@ -198,7 +193,10 @@ function checkAteFood() {
   }
 }
 function advanceSnake() {
-  if (collisionDetected === true) {
+    if (direction === undefined) {
+        return
+    }
+  else if (collisionDetected === true) {
     gameover.play();
     updateScoreBoard();
     showScoreBoard();
