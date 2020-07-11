@@ -1,21 +1,24 @@
 // Global variables
 let gameState = "MENU";
-let highestScore = 0;
-let currentScore = 0;
-let scoreBoard = [];
+// let highScore = 0;
+let highScore = parseInt(localStorage.getItem("top"));
+let currentHighScore;
+let currentScore;
+let scoreBoardArray = [];
 let direction;
 const gameSpeed = 150; // lower is faster
 let lastKey = 0; // used to store time since last keydown
 const safeDelay = 130; // refresh rate speed to prevent snake eating its neck when multiple keys pressed
 
+let snake;
 let food;
 let eat = document.getElementById("eatSound");
 let gameover = document.getElementById("gameoverSound");
 let myInterval = null; // used to prevent interval recorded by setInterval from increasing each time a new game is loaded
 
 let newHead;
-let collisionDetected = false;
-let ateFood = false;
+let collisionDetected;
+let ateFood;
 
 function randomNumber(min, max) {
   return Math.random() * (max - min) + min;
@@ -33,20 +36,6 @@ const gameOverScreen = document.getElementById("gameOverScreen");
 
 const ctx = gameBoard.getContext("2d");
 const tile = gameBoard.width / 20; // the tile represents the smallest unit of measurement for the gameBoard
-
-let snake = [];
-snake[0] = {
-  x: 15 * tile,
-  y: 19 * tile,
-};
-snake[1] = {
-  x: 16 * tile,
-  y: 19 * tile,
-};
-snake[2] = {
-  x: 17 * tile,
-  y: 19 * tile,
-};
 
 // Keydown event listener
 
@@ -82,19 +71,20 @@ let colorArray = [
 
 // Starting coordinates of snake
 let newSnake = function () {
+  snake = [];
   snake[0] = {
-    x: 10 * tile,
+    x: 17 * tile,
     y: 13 * tile,
   };
-
 };
 
 let newGame = function () {
   // resets all variables for a fresh game, preserving setInterval of gameLoop
   collisionDetected = false;
-  snake = [];
+  ateFood = false;
   sparkArray = [];
-  direction = undefined;
+  direction = "left";
+  scoreBoard.getCurrentHighScore();
   currentScore = 0;
   newSnake();
   newFood();
@@ -106,31 +96,6 @@ let newGame = function () {
   changeState("PLAY");
   animate();
 };
-
-// Game HUD
-function showScoreBoard() {
-  let highScoreAward = document.getElementById("highScoreAward");
-  highScoreAward.innerHTML = "";
-  if (currentScore > highestScore && highestScore !== 0) {
-    highScoreAward.innerHTML =
-    `Congratulations! 
-    You beat your previous high score by ${currentScore - highestScore}!`;
-    highestScore = currentScore;
-  } else if (currentScore > highestScore) {
-    highestScore = currentScore;
-  }
-
-  let scoreOl = document.querySelector("ol");
-  scoreOl.innerHTML = "";
-  for (let i = 0; i < 5; i++) {
-    let scoreLi = document.createElement("li");
-    scoreLi.textContent = scoreBoard[i];
-    scoreOl.appendChild(scoreLi);
-  }
-}
-
-    // Need to redo scoring system to update highscore on the fly
-    // localStorage.setItem("top", ); 
 
 // Update
 
@@ -148,7 +113,7 @@ function findNewHead() {
   } else if (direction === "right") {
     newHeadX = newHeadX + tile; // X coordinate of head increased by tile length
   } else {
-      return
+    return;
   }
 
   newHead = {
@@ -193,19 +158,17 @@ function checkAteFood() {
   }
 }
 function advanceSnake() {
-    if (direction === undefined) {
-        return
-    }
-  else if (collisionDetected === true) {
+  if (collisionDetected === true) {
     gameover.play();
-    updateScoreBoard();
-    showScoreBoard();
+    scoreBoard.update();
+    scoreBoard.show();
     changeState("GAMEOVER");
     return;
   } else if (ateFood === true) {
     newFood();
     snake.unshift(newHead);
     currentScore++;
+
     eat.play();
     populateSparkArray();
   } else {
@@ -214,14 +177,72 @@ function advanceSnake() {
   }
 }
 
-function updateScoreBoard() {
-  if (scoreBoard.includes(currentScore) || currentScore === 0) {
-    return;
-  } else {
-    scoreBoard.push(currentScore);
-    scoreBoard.sort((a, b) => b - a); // sorts in descending order once added to scoreboard
-  }
-}
+let scoreBoard = {
+  update: function () {
+    if (scoreBoardArray.includes(currentScore) || currentScore === 0) {
+      return;
+    } else {
+      scoreBoardArray.push(currentScore);
+      scoreBoardArray.sort((a, b) => b - a);
+    }
+  },
+  getCurrentHighScore: function () {
+    currentHighScore = parseInt(localStorage.getItem("top"));
+  },
+  updateHighScore: function () {
+    if (currentScore > parseInt(highScore)) {
+      localStorage.setItem("top", currentScore);
+      highScore = currentScore;
+    } else {
+      return;
+    }
+  },
+  resetHighScore: function () {
+    localStorage.removeItem("top");
+    highScore = 0;
+  },
+  draw: function () {
+    ctx.fillStyle = "#fff";
+    ctx.font = "25px Orbitron";
+    ctx.fillText(currentScore, tile, tile * 2);
+
+    // if (highScore > Math.max(...scoreBoardArray)) {
+    ctx.fillText(`High score: ${highScore}`, gameBoard.width * 0.5, tile * 2);
+    // } else if (
+    //   scoreBoardArray.length > 0 &&
+    //   Math.max(...scoreBoardArray) > currentScore
+    // ) {
+    //   ctx.fillText(
+    //     `High score: ${Math.max(...scoreBoardArray)}`,
+    //     gameBoard.width * 0.5,
+    //     tile * 2
+    //   );
+    // } else {
+    //   ctx.fillText(
+    //     `High score: ${currentScore}`,
+    //     gameBoard.width * 0.5,
+    //     tile * 2
+    //   );
+    // }
+  },
+  show: function () {
+    let highScoreAward = document.getElementById("highScoreAward");
+    highScoreAward.innerHTML = "";
+    if (currentScore > currentHighScore) {
+      highScoreAward.innerHTML = `Congratulations!</br>You beat your previous high score by ${
+        currentScore - currentHighScore
+      }!`;
+    }
+
+    let scoreOl = document.querySelector("ol");
+    scoreOl.innerHTML = "";
+    for (let i = 0; i < 5; i++) {
+      let scoreLi = document.createElement("li");
+      scoreLi.textContent = scoreBoardArray[i];
+      scoreOl.appendChild(scoreLi);
+    }
+  },
+};
 
 // Game loop with conditions for which functions are called depending on game state
 let gameLoop = function () {
@@ -230,6 +251,7 @@ let gameLoop = function () {
     checkCollision();
     checkAteFood();
     advanceSnake();
+    scoreBoard.updateHighScore();
   }
   if (gameState === "MENU") {
     // NEED TO REPOPULATE
@@ -320,8 +342,6 @@ function showScreen(state) {
 // let snake = new Snake(15 * tile, 15 * tile, 0, 0);
 // let snakeArray = [snake];
 
-
-
 // class Food {
 //   constructor(x, y, color) {
 //     this.x = Math.floor(Math.random() * 20) * tile;
@@ -352,8 +372,6 @@ function showScreen(state) {
 // let newFood = function () {
 //   food = new Food()
 // };
-
-
 
 // Creating the spark
 class Spark {
@@ -403,7 +421,7 @@ Spark.prototype.update = function () {
 
 let sparkArray = [];
 function populateSparkArray() {
-  for (let i = 0; i < snake.length; i++) {
+  for (let i = 0; i < snake.length && i < 150; i++) {
     let dx;
     let dy;
     let x = snake[0].x + tile / 2;
@@ -445,27 +463,6 @@ function animate() {
     ctx.fillStyle = "#001437";
     ctx.fillRect(0, 0, gameBoard.width, tile * 3);
 
-    // Score text
-    ctx.fillStyle = "#fff";
-    ctx.font = "25px Orbitron";
-    ctx.fillText(currentScore, tile, tile * 2);
-
-    // Highscore text
-    ctx.fillStyle = "#fff";
-    ctx.font = "25px Orbitron";
-    if (scoreBoard.length > 0 && Math.max(...scoreBoard) > currentScore) {
-      ctx.fillText(
-        `High score: ${Math.max(...scoreBoard)}`,
-        gameBoard.width * 0.5,
-        tile * 2
-      );
-    } else {
-      ctx.fillText(
-        `High score: ${currentScore}`,
-        gameBoard.width * 0.5,
-        tile * 2
-      );
-    }
     // Food
     ctx.save();
     ctx.beginPath();
@@ -498,6 +495,7 @@ function animate() {
       ctx.strokeRect(snake[i].x, snake[i].y, tile, tile);
     }
     // food.draw();
+    scoreBoard.draw();
     sparkArray.forEach((spark, index) => {
       spark.update();
       if (spark.ttl === 0) {
