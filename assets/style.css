@@ -33,6 +33,10 @@ body {
     z-index: 1;
 }
 
+#highScoreAward {
+    text-align: center;
+}
+
 #highScores {
     align-self: start;
 }
