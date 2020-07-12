@@ -443,6 +443,10 @@ function animate() {
     ctx.fillStyle = "#001437";
     ctx.fillRect(0, 0, gameBoard.width, tile * 3);
 
+    // Reworked objects [ALL TO APPEAR LIKE THIS]
+    food.draw();
+    scoreBoard.draw();
+
     // Snake [NEEDS TO BE CONVERTED TO SNAKE OBJECT]
     for (let i = 0; i < snake.length; i++) {
       ctx.save();
@@ -456,8 +460,6 @@ function animate() {
       ctx.strokeRect(snake[i].x, snake[i].y, tile, tile);
     }
 
-    food.draw();
-    scoreBoard.draw();
 
     sparkArray.forEach((spark, index) => {
       spark.update();
