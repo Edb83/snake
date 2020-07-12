@@ -1,44 +1,41 @@
 // Global variables
 let gameState = "MENU";
-// let highScore = 0;
 let highScore = parseInt(localStorage.getItem("top")) || 0;
 let currentHighScore;
 let currentScore;
 let scoreBoardArray = [];
+let sparkArray = [];
+
 let direction;
 const gameSpeed = 150; // lower is faster
 let lastKey = 0; // used to store time since last keydown
 const safeDelay = 130; // refresh rate speed to prevent snake eating its neck when multiple keys pressed
+let myInterval = null; // used to prevent interval recorded by setInterval from increasing each time a new game is loaded
 
 let snake;
 let food;
-let eat = document.getElementById("eatSound");
-let gameover = document.getElementById("gameoverSound");
-let myInterval = null; // used to prevent interval recorded by setInterval from increasing each time a new game is loaded
 
 let newHead;
 let collisionDetected;
 let ateFood;
 
+let eat = document.getElementById("eatSound");
+let gameover = document.getElementById("gameoverSound");
+
+// Random number generator
 function randomNumber(min, max) {
   return Math.random() * (max - min) + min;
 }
 
-// Initialise Game
-
-const gameBoard = document.getElementById("gameBoard");
-gameBoard.width = 500;
-gameBoard.height = Math.ceil(gameBoard.width * 1.15);
-document.addEventListener("keydown", keyboardHandler);
-
-const startScreen = document.getElementById("startScreen");
-const gameOverScreen = document.getElementById("gameOverScreen");
-
-const ctx = gameBoard.getContext("2d");
-const tile = gameBoard.width / 20; // the tile represents the smallest unit of measurement for the gameBoard
+// Color array
+let colorArray = [
+  "rgba(128,255,0,1)",
+  "rgba(252,243,64,1)",
+  "rgba(251,51,219,1)",
+  "rgba(3,16,234,1)",
+];
 
 // Keydown event listener
-
 function keyboardHandler(event) {
   if (Date.now() - lastKey > safeDelay) {
     if (event.keyCode == 38 && direction !== "down") {
@@ -54,28 +51,30 @@ function keyboardHandler(event) {
   lastKey = Date.now();
 }
 
-// Get coordinates of new food
-let newFood = function () {
-  food = {
-    x: Math.floor(Math.random() * 20) * tile,
-    y: Math.floor(Math.random() * 20 + 3) * tile,
-  };
-};
+// GAME INITIALISATION
+const gameBoard = document.getElementById("gameBoard");
+gameBoard.width = 500;
+gameBoard.height = Math.ceil(gameBoard.width * 1.15);
+document.addEventListener("keydown", keyboardHandler);
 
-let colorArray = [
-  "rgba(128,255,0,1)",
-  "rgba(252,243,64,1)",
-  "rgba(251,51,219,1)",
-  "rgba(3,16,234,1)",
-];
+const startScreen = document.getElementById("startScreen");
+const gameOverScreen = document.getElementById("gameOverScreen");
 
-// Starting coordinates of snake
+const ctx = gameBoard.getContext("2d");
+const tile = gameBoard.width / 20; // the tile represents the smallest unit of measurement for the gameBoard
+
+// Create new snake [NEEDS TO BE CONVERTED TO SNAKE OBJECT]
 let newSnake = function () {
   snake = [];
   snake[0] = {
     x: 17 * tile,
     y: 13 * tile,
   };
+};
+
+// Create new Food
+let newFood = function () {
+  food = new Food();
 };
 
 let newGame = function () {
@@ -86,7 +85,7 @@ let newGame = function () {
   direction = "left";
   scoreBoard.getCurrentHighScore();
   currentScore = 0;
-  newSnake();
+  newSnake(); // [NEEDS TO BE CONVERTED TO SNAKE OBJECT]
   newFood();
   if (myInterval === null) {
     myInterval = setInterval(function () {
@@ -97,7 +96,7 @@ let newGame = function () {
   animate();
 };
 
-// Update
+// Snake updates [NEEDS TO BE CONVERTED TO SNAKE OBJECT]
 
 function findNewHead() {
   let newHeadX = snake[0].x;
@@ -112,8 +111,6 @@ function findNewHead() {
     newHeadX = newHeadX - tile; // X coordinate of head reduced by tile length
   } else if (direction === "right") {
     newHeadX = newHeadX + tile; // X coordinate of head increased by tile length
-  } else {
-    return;
   }
 
   newHead = {
@@ -122,6 +119,7 @@ function findNewHead() {
   };
 }
 
+// Collision detection [NEEDS TO BE CONVERTED TO SNAKE OBJECT]
 function checkCollision() {
   for (let i = 0; i < snake.length; i++) {
     if (newHead.x === snake[i].x && newHead.y === snake[i].y) {
@@ -145,6 +143,7 @@ function checkCollision() {
   }
 }
 
+// Food updates
 function checkAteFood() {
   for (let i = 0; i < snake.length; i++) {
     if (food.x === snake[i].x && food.y === snake[i].y) {
@@ -157,18 +156,19 @@ function checkAteFood() {
     ateFood = false;
   }
 }
+
+// Snake updates [NEEDS TO BE CONVERTED TO SNAKE OBJECT]
 function advanceSnake() {
   if (collisionDetected === true) {
     gameover.play();
     scoreBoard.update();
-    scoreBoard.show();
+    scoreBoard.print();
     changeState("GAMEOVER");
     return;
   } else if (ateFood === true) {
     newFood();
     snake.unshift(newHead);
     currentScore++;
-
     eat.play();
     populateSparkArray();
   } else {
@@ -177,6 +177,7 @@ function advanceSnake() {
   }
 }
 
+// Scoreboard
 let scoreBoard = {
   update: function () {
     if (scoreBoardArray.includes(currentScore) || currentScore === 0) {
@@ -186,8 +187,8 @@ let scoreBoard = {
       scoreBoardArray.sort((a, b) => b - a);
     }
   },
-  resetArray: function() {
-      scoreBoardArray = [];
+  resetArray: function () {
+    scoreBoardArray = [];
   },
   getCurrentHighScore: function () {
     currentHighScore = parseInt(localStorage.getItem("top"));
@@ -210,7 +211,7 @@ let scoreBoard = {
     ctx.fillText(currentScore, tile, tile * 2);
     ctx.fillText(`High score: ${highScore}`, gameBoard.width * 0.5, tile * 2);
   },
-  show: function () {
+  print: function () {
     let highScoreAward = document.getElementById("highScoreAward");
     highScoreAward.innerHTML = "";
     if (currentScore > currentHighScore) {
@@ -218,7 +219,6 @@ let scoreBoard = {
         currentScore - currentHighScore
       }!`;
     }
-
     let scoreOl = document.querySelector("ol");
     scoreOl.innerHTML = "";
     for (let i = 0; i < 5; i++) {
@@ -269,6 +269,7 @@ function showScreen(state) {
   }
 }
 
+// // Snake object
 // class Snake {
 //   constructor(x, y, dx, dy, color) {
 //     this.x = x;
@@ -327,38 +328,35 @@ function showScreen(state) {
 // let snake = new Snake(15 * tile, 15 * tile, 0, 0);
 // let snakeArray = [snake];
 
-// class Food {
-//   constructor(x, y, color) {
-//     this.x = Math.floor(Math.random() * 20) * tile;
-//     this.y = Math.floor(Math.random() * 20 + 3) * tile;
-//     this.color = colorArray[Math.floor(Math.random() * colorArray.length)];
-//   }
+// Food object
+class Food {
+  constructor(x, y, color) {
+    this.x = Math.floor(Math.random() * 20) * tile;
+    this.y = Math.floor(Math.random() * 20 + 3) * tile;
+    this.color = colorArray[Math.floor(Math.random() * colorArray.length)];
+  }
 
-//   draw() {
-//     ctx.save();
-//     ctx.beginPath();
-//     ctx.arc(
-//       this.x + (tile - 3) / 2,
-//       this.y + (tile - 3) / 2,
-//       tile / 2,
-//       0,
-//       2 * Math.PI,
-//       false
-//     );
-//     ctx.fillStyle = this.color;
-//     ctx.shadowColor = this.color;
-//     ctx.shadowBlur = 10;
-//     ctx.fill();
-//     ctx.closePath();
-//     ctx.restore();
-//   }
-// }
+  draw() {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(
+      this.x + (tile - 3) / 2,
+      this.y + (tile - 3) / 2,
+      tile / 2,
+      0,
+      2 * Math.PI,
+      false
+    );
+    ctx.fillStyle = this.color;
+    ctx.shadowColor = this.color;
+    ctx.shadowBlur = 10;
+    ctx.fill();
+    ctx.closePath();
+    ctx.restore();
+  }
+}
 
-// let newFood = function () {
-//   food = new Food()
-// };
-
-// Creating the spark
+// Spark object
 class Spark {
   constructor(x, y, dx, dy, radius, color) {
     this.x = x;
@@ -404,7 +402,7 @@ Spark.prototype.update = function () {
   this.y += this.dy;
 };
 
-let sparkArray = [];
+// Spark array
 function populateSparkArray() {
   for (let i = 0; i < snake.length && i < 150; i++) {
     let dx;
@@ -437,9 +435,6 @@ function animate() {
   if (gameState === "PLAY") {
     requestAnimationFrame(animate);
 
-    // Clear gameBoard
-    // ctx.clearRect(0, 0, gameBoard.width, gameBoard.height); // clears any tiles filled on each draw to prevent trail
-
     // Background
     ctx.fillStyle = "#000";
     ctx.fillRect(0, tile * 3, gameBoard.width, gameBoard.height);
@@ -448,26 +443,7 @@ function animate() {
     ctx.fillStyle = "#001437";
     ctx.fillRect(0, 0, gameBoard.width, tile * 3);
 
-    // Food
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(
-      food.x + (tile - 3) / 2,
-      food.y + (tile - 3) / 2,
-      tile / 2,
-      0,
-      2 * Math.PI,
-      false
-    );
-    ctx.fillStyle = "#80ff00";
-    ctx.shadowColor = "#80ff00";
-    ctx.shadowBlur = 10;
-    ctx.fill();
-    ctx.closePath();
-    ctx.restore();
-
-    // Snake
-
+    // Snake [NEEDS TO BE CONVERTED TO SNAKE OBJECT]
     for (let i = 0; i < snake.length; i++) {
       ctx.save();
       ctx.fillStyle = "#fb33db";
@@ -479,8 +455,10 @@ function animate() {
       ctx.strokeStyle = "#000";
       ctx.strokeRect(snake[i].x, snake[i].y, tile, tile);
     }
-    // food.draw();
+
+    food.draw();
     scoreBoard.draw();
+
     sparkArray.forEach((spark, index) => {
       spark.update();
       if (spark.ttl === 0) {
