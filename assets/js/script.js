@@ -53,7 +53,7 @@ function keyboardHandler(event) {
 
 // GAME INITIALISATION
 const gameBoard = document.getElementById("gameBoard");
-gameBoard.width = 500;
+gameBoard.width = 320;
 gameBoard.height = Math.ceil(gameBoard.width * 1.15);
 document.addEventListener("keydown", keyboardHandler);
 
@@ -209,7 +209,7 @@ let scoreBoard = {
     ctx.fillStyle = "#fff";
     ctx.font = "25px Orbitron";
     ctx.fillText(currentScore, tile, tile * 2);
-    ctx.fillText(`High score: ${highScore}`, gameBoard.width * 0.5, tile * 2);
+    ctx.fillText(`High score: ${highScore}`, gameBoard.width * 0.25, tile * 2);
   },
   print: function () {
     let highScoreAward = document.getElementById("highScoreAward");
