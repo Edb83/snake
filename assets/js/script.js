@@ -1,7 +1,7 @@
 // Global variables
 let gameState = "MENU";
 // let highScore = 0;
-let highScore = parseInt(localStorage.getItem("top"));
+let highScore = parseInt(localStorage.getItem("top")) || 0;
 let currentHighScore;
 let currentScore;
 let scoreBoardArray = [];
@@ -205,25 +205,7 @@ let scoreBoard = {
     ctx.fillStyle = "#fff";
     ctx.font = "25px Orbitron";
     ctx.fillText(currentScore, tile, tile * 2);
-
-    // if (highScore > Math.max(...scoreBoardArray)) {
     ctx.fillText(`High score: ${highScore}`, gameBoard.width * 0.5, tile * 2);
-    // } else if (
-    //   scoreBoardArray.length > 0 &&
-    //   Math.max(...scoreBoardArray) > currentScore
-    // ) {
-    //   ctx.fillText(
-    //     `High score: ${Math.max(...scoreBoardArray)}`,
-    //     gameBoard.width * 0.5,
-    //     tile * 2
-    //   );
-    // } else {
-    //   ctx.fillText(
-    //     `High score: ${currentScore}`,
-    //     gameBoard.width * 0.5,
-    //     tile * 2
-    //   );
-    // }
   },
   show: function () {
     let highScoreAward = document.getElementById("highScoreAward");
