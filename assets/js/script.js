@@ -186,6 +186,9 @@ let scoreBoard = {
       scoreBoardArray.sort((a, b) => b - a);
     }
   },
+  resetArray: function() {
+      scoreBoardArray = [];
+  },
   getCurrentHighScore: function () {
     currentHighScore = parseInt(localStorage.getItem("top"));
   },
