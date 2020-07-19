@@ -355,11 +355,11 @@ Spark.prototype.update = function () {
 
 // Spark array
 function populateSparkArray() {
-  for (let i = 0; i < snake.length && i < 150; i++) {
+  for (let i = 0; i < snake.array.length && i < 150; i++) {
     let dx;
     let dy;
-    let x = snake[0].x + tile / 2;
-    let y = snake[0].y + tile / 2;
+    let x = snake.array[0].x + tile / 2;
+    let y = snake.array[0].y + tile / 2;
     if (direction === "up") {
       dx = randomNumber(-2, 2);
       dy = randomNumber(-5, -2);
