@@ -14,7 +14,6 @@ let myInterval = null; // used to prevent interval recorded by setInterval from 
 
 let snake;
 let food;
-let foodArray = [];
 
 let collisionDetected;
 let ateFood;
@@ -70,7 +69,6 @@ let newSnake = function () {
 
 let newFood = function () {
   food = new Food("rgba(128,255,0,1)");
-
 };
 
 let newGame = function () {
@@ -78,7 +76,6 @@ let newGame = function () {
   collisionDetected = false;
   ateFood = false;
   sparkArray = [];
-  foodArray = ["rgba(255,255,255,1"];
   direction = "left";
   scoreBoard.getCurrentHighScore();
   currentScore = 0;
@@ -268,7 +265,6 @@ class Snake {
       changeState("GAMEOVER");
       return;
     } else if (ateFood === true) {
-      foodArray.push(food.color);
       newFood();
       this.array.unshift(this.newHead);
       currentScore++;
@@ -282,8 +278,8 @@ class Snake {
   draw() {
     for (let i = 0; i < snake.array.length; i++) {
       ctx.save();
-      ctx.fillStyle = foodArray[i];
-      ctx.shadowColor = foodArray[i];
+      ctx.fillStyle = this.color;
+      ctx.shadowColor = this.color;
       ctx.shadowBlur = 10;
       ctx.fillRect(snake.array[i].x, snake.array[i].y, tile, tile); // fills tiles occupied by snake array's coordinates
 
@@ -299,7 +295,7 @@ class Food {
   constructor(color) {
     this.x = Math.floor(Math.random() * 20) * tile;
     this.y = Math.floor(Math.random() * 20 + 3) * tile;
-    this.color = colorArray[Math.floor(Math.random() * colorArray.length)];
+    this.color = color;
   }
 
   draw() {
