@@ -7,13 +7,14 @@ const scoreBoardArray = []; // top five scores since window refresh
 let sparkArray = [];
 
 let direction;
-const gameSpeed = 150; // fed into setInterval for game updates (ie game speed) 
+const gameSpeed = 125; // fed into setInterval for game updates (ie game speed) 
 let lastKey = 0; // used to store time since last keydown
 const safeDelay = 130; // used to add minimum interval between key presses to prevent snake eating its neck (milliseconds)
 let myInterval = null; // used to prevent interval recorded by setInterval from increasing each time a new game is loaded
 
 let snake;
 let food;
+let foodArray = [];
 
 let collisionDetected;
 let ateFood;
@@ -69,6 +70,7 @@ let newSnake = function () {
 
 let newFood = function () {
   food = new Food("rgba(128,255,0,1)");
+
 };
 
 let newGame = function () {
@@ -76,6 +78,7 @@ let newGame = function () {
   collisionDetected = false;
   ateFood = false;
   sparkArray = [];
+  foodArray = ["rgba(255,255,255,1"];
   direction = "left";
   scoreBoard.getCurrentHighScore();
   currentScore = 0;
@@ -265,6 +268,7 @@ class Snake {
       changeState("GAMEOVER");
       return;
     } else if (ateFood === true) {
+      foodArray.push(food.color);
       newFood();
       this.array.unshift(this.newHead);
       currentScore++;
@@ -278,8 +282,8 @@ class Snake {
   draw() {
     for (let i = 0; i < snake.array.length; i++) {
       ctx.save();
-      ctx.fillStyle = this.color;
-      ctx.shadowColor = this.color;
+      ctx.fillStyle = foodArray[i];
+      ctx.shadowColor = foodArray[i];
       ctx.shadowBlur = 10;
       ctx.fillRect(snake.array[i].x, snake.array[i].y, tile, tile); // fills tiles occupied by snake array's coordinates
 
@@ -295,7 +299,7 @@ class Food {
   constructor(color) {
     this.x = Math.floor(Math.random() * 20) * tile;
     this.y = Math.floor(Math.random() * 20 + 3) * tile;
-    this.color = color;
+    this.color = colorArray[Math.floor(Math.random() * colorArray.length)];
   }
 
   draw() {
