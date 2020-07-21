@@ -229,19 +229,23 @@ class Snake {
         collisionDetected = true;
       }
       if (this.newHead.x > gameBoard.width - tile && direction === "right") {
-        collisionDetected = true;
+        // collisionDetected = true;
+        this.x = -tile;
       }
 
       if (this.newHead.x < 0 && direction === "left") {
-        collisionDetected = true;
+        // collisionDetected = true;
+        this.x = gameBoard.width;
       }
 
       if (this.newHead.y > gameBoard.height - tile && direction === "down") {
-        collisionDetected = true;
+        // collisionDetected = true;
+        this.y = 2 * tile;
       }
 
       if (this.newHead.y < 3 * tile && direction === "up") {
-        collisionDetected = true;
+        // collisionDetected = true;
+        this.y = gameBoard.height
       }
     }
   }
