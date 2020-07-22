@@ -7,13 +7,20 @@ const scoreBoardArray = []; // top five scores since window refresh
 let sparkArray = [];
 
 let direction;
-const gameSpeed = 125; // fed into setInterval for game updates (ie game speed) 
+const gameSpeed = 125; // fed into setInterval for game updates (ie game speed)
 let lastKey = 0; // used to store time since last keydown
 const safeDelay = 130; // used to add minimum interval between key presses to prevent snake eating its neck (milliseconds)
 let myInterval = null; // used to prevent interval recorded by setInterval from increasing each time a new game is loaded
 
 let snake;
 let food;
+
+let walls = true;
+
+function toggleWalls() {
+    walls = !walls;
+}
+
 
 let collisionDetected;
 let ateFood;
@@ -37,7 +44,8 @@ const colorArray = [
 
 // Keydown event listener
 function keyboardHandler(event) {
-  if (Date.now() - lastKey > safeDelay) { // checks time since last key press to prevent multiple presses causing snake to eat its neck
+  if (Date.now() - lastKey > safeDelay) {
+    // checks time since last key press to prevent multiple presses causing snake to eat its neck
     if (event.keyCode == 38 && direction !== "down") {
       direction = "up";
     } else if (event.keyCode == 40 && direction !== "up") {
@@ -92,8 +100,7 @@ let newGame = function () {
 
 // Game area object
 let gameArea = {
-    draw: function () {
-
+  draw: function () {
     // Background
     ctx.fillStyle = "#000";
     ctx.fillRect(0, tile * 3, gameBoard.width, gameBoard.height);
@@ -101,8 +108,8 @@ let gameArea = {
     // Score background
     ctx.fillStyle = "#001437";
     ctx.fillRect(0, 0, gameBoard.width, tile * 3);
-    }
-}
+  },
+};
 
 // Scoreboard object
 let scoreBoard = {
@@ -229,23 +236,35 @@ class Snake {
         collisionDetected = true;
       }
       if (this.newHead.x > gameBoard.width - tile && direction === "right") {
-        // collisionDetected = true;
-        this.x = -tile;
+        if ((walls === true)) {
+          collisionDetected = true;
+        } else {
+          this.x = -tile;
+        }
       }
 
       if (this.newHead.x < 0 && direction === "left") {
-        // collisionDetected = true;
-        this.x = gameBoard.width;
+        if ((walls === true)) {
+          collisionDetected = true;
+        } else {
+          this.x = gameBoard.width;
+        }
       }
 
       if (this.newHead.y > gameBoard.height - tile && direction === "down") {
-        // collisionDetected = true;
-        this.y = 2 * tile;
+        if ((walls === true)) {
+          collisionDetected = true;
+        } else {
+          this.y = 2 * tile;
+        }
       }
 
       if (this.newHead.y < 3 * tile && direction === "up") {
-        // collisionDetected = true;
-        this.y = gameBoard.height
+        if ((walls === true)) {
+          collisionDetected = true;
+        } else {
+          this.y = gameBoard.height;
+        }
       }
     }
   }
