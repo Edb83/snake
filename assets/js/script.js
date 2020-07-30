@@ -7,15 +7,15 @@ const scoreBoardArray = []; // top five scores since window refresh
 let sparkArray = [];
 
 let direction;
-const gameSpeed = 125; // fed into setInterval for game updates (ie game speed)
+const gameSpeed = 140; // fed into setInterval for game updates (ie game speed)
 let lastKey = 0; // used to store time since last keydown
-const safeDelay = 130; // used to add minimum interval between key presses to prevent snake eating its neck (milliseconds)
+const safeDelay = 140; // used to add minimum interval between key presses to prevent snake eating its neck (milliseconds)
 let myInterval = null; // used to prevent interval recorded by setInterval from increasing each time a new game is loaded
 
 let snake;
 let food;
 
-let walls = true;
+let walls = false;
 
 function toggleWalls() {
     walls = !walls;
@@ -343,12 +343,12 @@ class Food {
 
 // Spark constructor
 class Spark {
-  constructor(x, y, dx, dy, radius, color) {
+  constructor(x, y, dx, dy) {
     this.x = x;
     this.y = y;
     this.dx = dx;
     this.dy = dy;
-    this.radius = radius;
+    this.radius = randomNumber(2, 5);
     this.color = colorArray[Math.floor(Math.random() * colorArray.length)];
     this.gravity = randomNumber(0.2, 0.4);
     this.friction = randomNumber(0.4, 0.6);
@@ -410,8 +410,8 @@ function populateSparkArray() {
       dx = randomNumber(1, 4);
       dy = randomNumber(-3, 3);
     }
-    let radius = randomNumber(2, 5);
-    sparkArray.push(new Spark(x, y, dx, dy, radius));
+
+    sparkArray.push(new Spark(x, y, dx, dy));
   }
 }
 
