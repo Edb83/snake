@@ -105,7 +105,28 @@ function setTileSize() {
     tile = gameBoard.width / 20;
 }
 
+window.addEventListener('resize', function() {
+    let formerFoodCoordinates = food;
+    let formerSnakeCoordinates = snake;
+    let formerSnakeArray = snake.array;
+    let formerTileSize = tile;
+    checkOrientation();
+    setGameBoardSize();
+    setTileSize();
 
+    food.x = (formerFoodCoordinates.x / formerTileSize) * tile;
+    food.y = (formerFoodCoordinates.y / formerTileSize) * tile;
+
+    snake.x = (formerSnakeCoordinates.x / formerTileSize) * tile;
+    snake.y = (formerSnakeCoordinates.y / formerTileSize) * tile;
+
+    let i;
+    for(i = 0; i < formerSnakeArray.length; i++) {
+        snake.array[i].x = (formerSnakeArray[i].x / formerTileSize) * tile;
+        snake.array[i].y = (formerSnakeArray[i].y / formerTileSize) * tile;
+    }
+
+})
 
 
 let newSnake = function () {
@@ -182,8 +203,8 @@ let scoreBoard = {
   draw: function () {
     ctx.fillStyle = "#fff";
     ctx.font = "25px Orbitron";
-    ctx.fillText(currentScore, tile, tile * 2);
-    ctx.fillText(`High score: ${highScore}`, gameBoard.width * 0.35, tile * 2);
+    ctx.fillText(currentScore, tile, tile * 2); // needs to be dynamic
+    ctx.fillText(`High score: ${highScore}`, gameBoard.width * 0.35, tile * 2); // needs to be dynamic
   },
   print: function () {
     let highScoreAward = document.getElementById("highScoreAward");
