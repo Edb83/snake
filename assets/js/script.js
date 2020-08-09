@@ -18,9 +18,8 @@ let food;
 let walls = false;
 
 function toggleWalls() {
-    walls = !walls;
+  walls = !walls;
 }
-
 
 let collisionDetected;
 let ateFood;
@@ -59,75 +58,78 @@ function keyboardHandler(event) {
   lastKey = Date.now();
 }
 
+document.addEventListener("keydown", keyboardHandler);
+
 // GAME INITIALISATION
 const gameBoard = document.getElementById("gameBoard");
 const ctx = gameBoard.getContext("2d");
 
-document.addEventListener("keydown", keyboardHandler);
-
 const startScreen = document.getElementById("startScreen");
 const gameOverScreen = document.getElementById("gameOverScreen");
 
-
-
 let orientationPortrait;
-
-function checkOrientation() {
-    if (window.innerWidth <= window.innerHeight) {
-        orientationPortrait = true;
-    } else {
-        orientationPortrait = false;
-    }
-}
-
-
-
 let tile;
 
-
-function setGameBoardSize() {
-    if (orientationPortrait === true) {
-        gameBoard.width = window.innerWidth;
-        while(gameBoard.width % 20 > 0) {
-            gameBoard.width--
-                }
-        gameBoard.height = gameBoard.width;
+// Game area object
+let gameArea = {
+  checkOrientation: function () {
+    if (window.innerWidth <= window.innerHeight) {
+      orientationPortrait = true;
     } else {
-        gameBoard.width = window.innerHeight;
-        while(gameBoard.width % 20 > 0) {
-                gameBoard.width--
-            }
-        gameBoard.height = gameBoard.width;
-            }
+      orientationPortrait = false;
     }
-
-function setTileSize() {
+  },
+  setGameBoardSize: function () {
+    if (orientationPortrait === true) {
+      gameBoard.width = window.innerWidth;
+      while (gameBoard.width % 20 > 0) {
+        gameBoard.width--;
+      }
+      gameBoard.height = gameBoard.width;
+    } else {
+      gameBoard.width = window.innerHeight;
+      while (gameBoard.width % 20 > 0) {
+        gameBoard.width--;
+      }
+      gameBoard.height = gameBoard.width;
+    }
+  },
+  setTileSize: function () {
     tile = gameBoard.width / 20;
-}
+  },
+  draw: function () {
+    // Background
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, tile * 3, gameBoard.width, gameBoard.height);
 
-window.addEventListener('resize', function() {
-    let formerFoodCoordinates = food;
-    let formerSnakeCoordinates = snake;
-    let formerSnakeArray = snake.array;
-    let formerTileSize = tile;
-    checkOrientation();
-    setGameBoardSize();
-    setTileSize();
+    // Score background
+    ctx.fillStyle = "#001437";
+    ctx.fillRect(0, 0, gameBoard.width, tile * 3);
+  },
+};
 
-    food.x = (formerFoodCoordinates.x / formerTileSize) * tile;
-    food.y = (formerFoodCoordinates.y / formerTileSize) * tile;
+// Window reseize event listener
+window.addEventListener("resize", function () {
+  let formerFoodCoordinates = food;
+  let formerSnakeCoordinates = snake;
+  let formerSnakeArray = snake.array;
+  let formerTileSize = tile;
+  gameArea.checkOrientation();
+  gameArea.setGameBoardSize();
+  gameArea.setTileSize();
 
-    snake.x = (formerSnakeCoordinates.x / formerTileSize) * tile;
-    snake.y = (formerSnakeCoordinates.y / formerTileSize) * tile;
+  food.x = (formerFoodCoordinates.x / formerTileSize) * tile;
+  food.y = (formerFoodCoordinates.y / formerTileSize) * tile;
 
-    let i;
-    for(i = 0; i < formerSnakeArray.length; i++) {
-        snake.array[i].x = (formerSnakeArray[i].x / formerTileSize) * tile;
-        snake.array[i].y = (formerSnakeArray[i].y / formerTileSize) * tile;
-    }
+  snake.x = (formerSnakeCoordinates.x / formerTileSize) * tile;
+  snake.y = (formerSnakeCoordinates.y / formerTileSize) * tile;
 
-})
-
+  let i;
+  for (i = 0; i < formerSnakeArray.length; i++) {
+    snake.array[i].x = (formerSnakeArray[i].x / formerTileSize) * tile;
+    snake.array[i].y = (formerSnakeArray[i].y / formerTileSize) * tile;
+  }
+});
 
 let newSnake = function () {
   snake = new Snake(15 * tile, 15 * tile, "rgba(251,51,219,1)");
@@ -139,9 +141,9 @@ let newFood = function () {
 
 let newGame = function () {
   // resets all variables for a fresh game, preserving setInterval of gameLoop
-  checkOrientation(); // temp
-  setGameBoardSize(); // temp
-  setTileSize(); // temp
+  gameArea.checkOrientation(); // temp
+  gameArea.setGameBoardSize(); // temp
+  gameArea.setTileSize(); // temp
   collisionDetected = false;
   ateFood = false;
   sparkArray = [];
@@ -157,19 +159,6 @@ let newGame = function () {
   }
   changeState("PLAY");
   animate();
-};
-
-// Game area object
-let gameArea = {
-  draw: function () {
-    // Background
-    ctx.fillStyle = "#000";
-    ctx.fillRect(0, tile * 3, gameBoard.width, gameBoard.height);
-
-    // Score background
-    ctx.fillStyle = "#001437";
-    ctx.fillRect(0, 0, gameBoard.width, tile * 3);
-  },
 };
 
 // Scoreboard object
@@ -297,7 +286,7 @@ class Snake {
         collisionDetected = true;
       }
       if (this.newHead.x > gameBoard.width - tile && direction === "right") {
-        if ((walls === true)) {
+        if (walls === true) {
           collisionDetected = true;
         } else {
           this.x = -tile;
@@ -305,7 +294,7 @@ class Snake {
       }
 
       if (this.newHead.x < 0 && direction === "left") {
-        if ((walls === true)) {
+        if (walls === true) {
           collisionDetected = true;
         } else {
           this.x = gameBoard.width;
@@ -313,7 +302,7 @@ class Snake {
       }
 
       if (this.newHead.y > gameBoard.height - tile && direction === "down") {
-        if ((walls === true)) {
+        if (walls === true) {
           collisionDetected = true;
         } else {
           this.y = -tile;
@@ -321,7 +310,7 @@ class Snake {
       }
 
       if (this.newHead.y < 0 && direction === "up") {
-        if ((walls === true)) {
+        if (walls === true) {
           collisionDetected = true;
         } else {
           this.y = gameBoard.height;
@@ -409,7 +398,7 @@ class Spark {
     this.y = y;
     this.dx = dx;
     this.dy = dy;
-    this.radius = randomNumber((tile / 10), (tile / 4));
+    this.radius = randomNumber(tile / 10, tile / 4);
     this.color = colorArray[Math.floor(Math.random() * colorArray.length)];
     this.gravity = randomNumber(0.2, 0.4);
     this.friction = randomNumber(0.4, 0.6);
