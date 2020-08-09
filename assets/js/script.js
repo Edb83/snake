@@ -388,7 +388,7 @@ class Spark {
     this.y = y;
     this.dx = dx;
     this.dy = dy;
-    this.radius = randomNumber(2, 5);
+    this.radius = randomNumber((tile / 10), (tile / 4));
     this.color = colorArray[Math.floor(Math.random() * colorArray.length)];
     this.gravity = randomNumber(0.2, 0.4);
     this.friction = randomNumber(0.4, 0.6);
