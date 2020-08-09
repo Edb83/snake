@@ -61,15 +61,52 @@ function keyboardHandler(event) {
 
 // GAME INITIALISATION
 const gameBoard = document.getElementById("gameBoard");
-gameBoard.width = 500;
-gameBoard.height = Math.ceil(gameBoard.width * 1.15);
+const ctx = gameBoard.getContext("2d");
+
 document.addEventListener("keydown", keyboardHandler);
 
 const startScreen = document.getElementById("startScreen");
 const gameOverScreen = document.getElementById("gameOverScreen");
 
-const ctx = gameBoard.getContext("2d");
-const tile = gameBoard.width / 20; // the tile represents the smallest unit of measurement for the gameBoard
+
+
+let orientationPortrait;
+
+function checkOrientation() {
+    if (window.innerWidth <= window.innerHeight) {
+        orientationPortrait = true;
+    } else {
+        orientationPortrait = false;
+    }
+}
+
+
+
+let tile;
+
+
+function setGameBoardSize() {
+    if (orientationPortrait === true) {
+        gameBoard.width = window.innerWidth;
+        while(gameBoard.width % 20 > 0) {
+            gameBoard.width--
+                }
+        gameBoard.height = gameBoard.width;
+    } else {
+        gameBoard.width = window.innerHeight;
+        while(gameBoard.width % 20 > 0) {
+                gameBoard.width--
+            }
+        gameBoard.height = gameBoard.width;
+            }
+    }
+
+function setTileSize() {
+    tile = gameBoard.width / 20;
+}
+
+
+
 
 let newSnake = function () {
   snake = new Snake(15 * tile, 15 * tile, "rgba(251,51,219,1)");
@@ -81,6 +118,9 @@ let newFood = function () {
 
 let newGame = function () {
   // resets all variables for a fresh game, preserving setInterval of gameLoop
+  checkOrientation(); // temp
+  setGameBoardSize(); // temp
+  setTileSize(); // temp
   collisionDetected = false;
   ateFood = false;
   sparkArray = [];
@@ -255,11 +295,11 @@ class Snake {
         if ((walls === true)) {
           collisionDetected = true;
         } else {
-          this.y = 2 * tile;
+          this.y = -tile;
         }
       }
 
-      if (this.newHead.y < 3 * tile && direction === "up") {
+      if (this.newHead.y < 0 && direction === "up") {
         if ((walls === true)) {
           collisionDetected = true;
         } else {
@@ -317,7 +357,7 @@ class Snake {
 class Food {
   constructor(color) {
     this.x = Math.floor(Math.random() * 20) * tile;
-    this.y = Math.floor(Math.random() * 20 + 3) * tile;
+    this.y = Math.floor(Math.random() * 20) * tile;
     this.color = color;
   }
 
