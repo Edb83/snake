@@ -60,9 +60,9 @@ function keyboardHandler(event) {
 
 document.addEventListener("keydown", keyboardHandler);
 
-document.body.addEventListener("touchmove", function (e) {
-  e.preventDefault();
-});
+// document.body.addEventListener("touchmove", function (e) {
+//   e.preventDefault();
+// });
 
 // GAME INITIALISATION
 const gameBoard = document.getElementById("gameBoard");
@@ -70,6 +70,7 @@ const ctx = gameBoard.getContext("2d");
 
 const startScreen = document.getElementById("startScreen");
 const gameOverScreen = document.getElementById("gameOverScreen");
+const settingsScreen = document.getElementById("settingsScreen");
 
 const gameBoardHeightToWidthRatio = 20 / 23; // ie 20 wide, 23 high to account for score area
 
@@ -133,11 +134,10 @@ window.addEventListener("resize", function () {
     snake.array[i].x = (formerSnakeArray[i].x / formerTileSize) * tile;
     snake.array[i].y = (formerSnakeArray[i].y / formerTileSize) * tile;
   }
-  for (i = 0; i < formerSparkArray.length; i ++) {
-      sparkArray[i].x = (formerSparkArray[i].x / formerTileSize) * tile;
-      sparkArray[i].y = (formerSparkArray[i].y / formerTileSize) * tile;
+  for (i = 0; i < formerSparkArray.length; i++) {
+    sparkArray[i].x = (formerSparkArray[i].x / formerTileSize) * tile;
+    sparkArray[i].y = (formerSparkArray[i].y / formerTileSize) * tile;
   }
-
 });
 
 let newSnake = function () {
@@ -262,7 +262,18 @@ function showScreen(state) {
     makeHidden(gameOverScreen);
   }
   if (state === "GAMEOVER") {
+    makeHidden(settingsScreen);
     makeVisible(gameOverScreen);
+  }
+  if (state === "SETTINGS") {
+    makeHidden(startScreen);
+    makeHidden(gameOverScreen);
+    makeVisible(settingsScreen);
+  }
+  if (state === "MENU") {
+    makeHidden(gameOverScreen);
+    makeHidden(settingsScreen);
+    makeVisible(startScreen);
   }
 }
 
