@@ -115,7 +115,9 @@ window.addEventListener("resize", function () {
   let formerFoodCoordinates = food;
   let formerSnakeCoordinates = snake;
   let formerSnakeArray = snake.array;
+  let formerSparkArray = sparkArray;
   let formerTileSize = tile;
+
   gameArea.checkOrientation();
   gameArea.setGameBoardSize();
   gameArea.setTileSize();
@@ -131,6 +133,11 @@ window.addEventListener("resize", function () {
     snake.array[i].x = (formerSnakeArray[i].x / formerTileSize) * tile;
     snake.array[i].y = (formerSnakeArray[i].y / formerTileSize) * tile;
   }
+  for (i = 0; i < formerSparkArray.length; i ++) {
+      sparkArray[i].x = (formerSparkArray[i].x / formerTileSize) * tile;
+      sparkArray[i].y = (formerSparkArray[i].y / formerTileSize) * tile;
+  }
+
 });
 
 let newSnake = function () {
