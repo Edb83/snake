@@ -67,8 +67,7 @@ const ctx = gameBoard.getContext("2d");
 const startScreen = document.getElementById("startScreen");
 const gameOverScreen = document.getElementById("gameOverScreen");
 
-const gameBoardWidthToHeightRatio = (23 / 20);
-const gameBoardHeightToWidthRatio = (20 / 23);
+const gameBoardHeightToWidthRatio = 20 / 23; // ie 20 wide, 23 high to account for score area
 
 let orientationPortrait;
 let tile;
@@ -86,13 +85,12 @@ let gameArea = {
     if (orientationPortrait === true) {
       gameBoard.height = window.innerWidth;
     } else {
-        gameBoard.height = window.innerHeight;
+      gameBoard.height = window.innerHeight;
     }
-      while (gameBoard.height % 23 > 0) {
-        gameBoard.height--;
-      }
-      gameBoard.width = Math.ceil(gameBoard.height * gameBoardHeightToWidthRatio);
-    
+    while (gameBoard.height % 23 > 0) {
+      gameBoard.height--;
+    }
+    gameBoard.width = Math.ceil(gameBoard.height * gameBoardHeightToWidthRatio);
   },
   setTileSize: function () {
     tile = gameBoard.width / 20;
@@ -309,7 +307,7 @@ class Snake {
         }
       }
 
-      if (this.newHead.y < 0 && direction === "up") {
+      if (this.newHead.y < 3 * tile && direction === "up") {
         if (walls === true) {
           collisionDetected = true;
         } else {
@@ -367,7 +365,7 @@ class Snake {
 class Food {
   constructor(color) {
     this.x = Math.floor(Math.random() * 20) * tile;
-    this.y = Math.floor(Math.random() * 20) * tile;
+    this.y = Math.floor(Math.random() * 20 + 3) * tile; // taking account of the score area
     this.color = color;
   }
 
