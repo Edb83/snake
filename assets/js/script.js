@@ -303,7 +303,7 @@ class Snake {
         if (walls === true) {
           collisionDetected = true;
         } else {
-          this.y = -tile;
+          this.y = 2 * tile;
         }
       }
 
