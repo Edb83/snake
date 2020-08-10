@@ -67,6 +67,9 @@ const ctx = gameBoard.getContext("2d");
 const startScreen = document.getElementById("startScreen");
 const gameOverScreen = document.getElementById("gameOverScreen");
 
+const gameBoardWidthToHeightRatio = (23 / 20);
+const gameBoardHeightToWidthRatio = (20 / 23);
+
 let orientationPortrait;
 let tile;
 
@@ -81,18 +84,15 @@ let gameArea = {
   },
   setGameBoardSize: function () {
     if (orientationPortrait === true) {
-      gameBoard.width = window.innerWidth;
-      while (gameBoard.width % 20 > 0) {
-        gameBoard.width--;
-      }
-      gameBoard.height = gameBoard.width;
+      gameBoard.height = window.innerWidth;
     } else {
-      gameBoard.width = window.innerHeight;
-      while (gameBoard.width % 20 > 0) {
-        gameBoard.width--;
-      }
-      gameBoard.height = gameBoard.width;
+        gameBoard.height = window.innerHeight;
     }
+      while (gameBoard.height % 23 > 0) {
+        gameBoard.height--;
+      }
+      gameBoard.width = Math.ceil(gameBoard.height * gameBoardHeightToWidthRatio);
+    
   },
   setTileSize: function () {
     tile = gameBoard.width / 20;
@@ -141,9 +141,9 @@ let newFood = function () {
 
 let newGame = function () {
   // resets all variables for a fresh game, preserving setInterval of gameLoop
-  gameArea.checkOrientation(); // temp
-  gameArea.setGameBoardSize(); // temp
-  gameArea.setTileSize(); // temp
+  gameArea.checkOrientation();
+  gameArea.setGameBoardSize();
+  gameArea.setTileSize();
   collisionDetected = false;
   ateFood = false;
   sparkArray = [];
