@@ -60,6 +60,10 @@ function keyboardHandler(event) {
 
 document.addEventListener("keydown", keyboardHandler);
 
+document.body.addEventListener("touchmove", function (e) {
+  e.preventDefault();
+});
+
 // GAME INITIALISATION
 const gameBoard = document.getElementById("gameBoard");
 const ctx = gameBoard.getContext("2d");
