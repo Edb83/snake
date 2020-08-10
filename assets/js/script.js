@@ -160,6 +160,9 @@ let newGame = function () {
 };
 
 // Scoreboard object
+
+let fontRatio = 0.05;
+
 let scoreBoard = {
   update: function () {
     if (scoreBoardArray.includes(currentScore) || currentScore === 0) {
@@ -187,11 +190,15 @@ let scoreBoard = {
     localStorage.removeItem("top");
     highScore = 0;
   },
+  getFont: function () {
+    let fontSize = gameBoard.width * fontRatio;
+    return (fontSize | 0) + "px Orbitron";
+  },
   draw: function () {
     ctx.fillStyle = "#fff";
-    ctx.font = "25px Orbitron";
-    ctx.fillText(currentScore, tile, tile * 2); // needs to be dynamic
-    ctx.fillText(`High score: ${highScore}`, gameBoard.width * 0.35, tile * 2); // needs to be dynamic
+    ctx.font = this.getFont();
+    ctx.fillText(currentScore, tile, tile * 2);
+    ctx.fillText(`High score: ${highScore}`, gameBoard.width * 0.55, tile * 2);
   },
   print: function () {
     let highScoreAward = document.getElementById("highScoreAward");
