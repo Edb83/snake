@@ -10,7 +10,7 @@ let direction;
 const gameSpeed = 140; // fed into setInterval for game updates (ie game speed)
 let lastKey = 0; // used to store time since last keydown
 const safeDelay = 140; // used to add minimum interval between key presses to prevent snake eating its neck (milliseconds)
-let myInterval = null; // used to prevent interval recorded by setInterval from increasing each time a new game is loaded
+let myInterval;
 
 let snake;
 let food;
@@ -45,17 +45,27 @@ const colorArray = [
 function keyboardHandler(event) {
   if (Date.now() - lastKey > safeDelay) {
     // checks time since last key press to prevent multiple presses causing snake to eat its neck
-    if (event.keyCode == 38 && direction !== "down") {
+    if (event.keyCode === 38 && direction !== "down") {
       direction = "up";
-    } else if (event.keyCode == 40 && direction !== "up") {
+    } else if (event.keyCode === 40 && direction !== "up") {
       direction = "down";
-    } else if (event.keyCode == 37 && direction !== "right") {
+    } else if (event.keyCode === 37 && direction !== "right") {
       direction = "left";
-    } else if (event.keyCode == 39 && direction !== "left") {
+    } else if (event.keyCode === 39 && direction !== "left") {
       direction = "right";
     }
   }
   lastKey = Date.now();
+  if (event.keyCode == 32 && gameState === "PLAY") {
+    changeState("PAUSE");
+    clearInterval(myInterval);
+  } else if (event.keyCode == 32 && gameState === "PAUSE") {
+    changeState("PLAY");
+    myInterval = setInterval(function () {
+      gameLoop();
+    }, gameSpeed);
+    animate();
+  }
 }
 
 document.addEventListener("keydown", keyboardHandler);
@@ -164,20 +174,21 @@ let newGame = function () {
   direction = "left";
   scoreBoard.getCurrentHighScore();
   currentScore = 0;
+
   if (wallsCheckBox.checked) {
     walls = true;
   } else {
     walls = false;
-  }
+  };
+  
   newSnake();
   newFood();
-  if (myInterval === null) {
-    myInterval = setInterval(function () {
-      gameLoop();
-    }, gameSpeed);
-  }
   changeState("PLAY");
   animate();
+
+  myInterval = setInterval(function () {
+    gameLoop();
+  }, gameSpeed);
 };
 
 // Scoreboard object
@@ -251,6 +262,7 @@ let gameLoop = function () {
     snake.update();
     scoreBoard.updateHighScore();
   } else {
+    clearInterval(myInterval);
     return;
   }
 };
