@@ -225,6 +225,7 @@ let scoreBoard = {
   resetArray: function () {
     scoreBoardArray.length = 0;
     currentScore = 0;
+    score = 0;
     this.print();
   },
   resetHighScore: function () {
