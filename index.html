@@ -25,7 +25,6 @@
     ></audio> -->
 
     <div id="gameContainer">
-      <canvas id="gameBoard"></canvas>
       <div id="startScreen" class="visible">
         <h1>Welcome to Snake!</h1>
         <p>Use the arrow keys to move your snake</p>
@@ -49,13 +48,14 @@
       <div id="settingsScreen" class="hidden">
         <h1>Settings</h1>
         <div>
-          <p>Sound<input type="checkbox" /></p>
-          <p>Walls<input type="checkbox" /></p>
-          <p>Reset session scores<input type="checkbox" /></p>
-          <p>Reset High Score<input type="checkbox" /></p>
+          <p>Sound<input id="soundCheckBox" type="checkbox" /></p>
+          <p>Walls<input id="wallsCheckBox" type="checkbox" checked /></p>
+          <p><button onclick="scoreBoard.resetArray()">Reset session scores</button></p>
+          <p><button onclick="scoreBoard.resetHighScore()">Reset High Score</button></p>
           <p><button onclick="changeState('GAMEOVER')">Save</button></p>
         </div>
       </div>
+      <canvas id="gameBoard"></canvas>
     </div>
     <script type="text/javascript" src="assets/js/script.js"></script>
   </body>
