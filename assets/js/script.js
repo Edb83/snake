@@ -1,5 +1,6 @@
 // Global variables
 let gameState = "MENU";
+let gamesPlayed = 0;
 let highScore = parseInt(localStorage.getItem("top")) || 0; // all time high score (since reset)
 let currentHighScore; // highest score since window refresh
 let currentScore; // score this game
@@ -183,9 +184,9 @@ let newGame = function () {
   }
 
   if (audioCheckBox.checked) {
-      gameAudio = true;
+    gameAudio = true;
   } else {
-      gameAudio = false;
+    gameAudio = false;
   }
 
   newSnake();
@@ -193,6 +194,7 @@ let newGame = function () {
   changeState("PLAY");
   animate();
 
+  gamesPlayed++;
   myInterval = setInterval(function () {
     gameLoop();
   }, gameSpeed);
@@ -231,7 +233,9 @@ let scoreBoard = {
   resetHighScore: function () {
     localStorage.removeItem("top");
     highScore = 0;
-    animate();
+    if (gamesPlayed > 0) {
+      animate();
+    }
   },
   getFont: function () {
     let fontSize = gameBoard.width * fontRatio;
