@@ -51,9 +51,9 @@
           <p>Sound<input id="audioCheckBox" type="checkbox" checked /></p>
           <p>Walls<input id="wallsCheckBox" type="checkbox" checked /></p>
           <p><button onclick="scoreBoard.resetArray()">Reset session scores</button></p>
-          <p><button onclick="scoreBoard.resetHighScore()">Reset High Score</button></p>
+          <p><button onclick="scoreBoard.resetHighScore(); scoreBoard.resetArray()">Reset ALL scores</button></p>
           <!-- need to set so resets ALL scores -->
-          <p><button onclick="changeState('GAMEOVER')">Save</button></p>
+          <p><button onclick="changeState('GAMEOVER')">Back</button></p>
         </div>
       </div>
       <canvas id="gameBoard"></canvas>

@@ -130,7 +130,7 @@ window.addEventListener("resize", function () {
   let formerSparkArray = sparkArray;
   let formerTileSize = tile;
 
-  gameArea.checkOrientation();
+  gameArea.checkOrientation(); // could refactor?
   gameArea.setGameBoardSize();
   gameArea.setTileSize();
 
@@ -166,8 +166,7 @@ let newFood = function () {
 };
 
 let newGame = function () {
-  // resets all variables for a fresh game, preserving setInterval of gameLoop
-  gameArea.checkOrientation();
+  gameArea.checkOrientation(); // could refactor?
   gameArea.setGameBoardSize();
   gameArea.setTileSize();
   collisionDetected = false;
@@ -212,11 +211,6 @@ let scoreBoard = {
       scoreBoardArray.sort((a, b) => b - a);
     }
   },
-  resetArray: function () {
-    scoreBoardArray.length = 0;
-    currentScore = 0;
-    this.print();
-  },
   getCurrentHighScore: function () {
     currentHighScore = parseInt(localStorage.getItem("top"));
   },
@@ -227,6 +221,11 @@ let scoreBoard = {
     } else {
       return;
     }
+  },
+  resetArray: function () {
+    scoreBoardArray.length = 0;
+    currentScore = 0;
+    this.print();
   },
   resetHighScore: function () {
     localStorage.removeItem("top");
