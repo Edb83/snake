@@ -48,10 +48,11 @@
       <div id="settingsScreen" class="hidden">
         <h1>Settings</h1>
         <div>
-          <p>Sound<input id="soundCheckBox" type="checkbox" /></p>
+          <p>Sound<input id="audioCheckBox" type="checkbox" checked /></p>
           <p>Walls<input id="wallsCheckBox" type="checkbox" checked /></p>
           <p><button onclick="scoreBoard.resetArray()">Reset session scores</button></p>
           <p><button onclick="scoreBoard.resetHighScore()">Reset High Score</button></p>
+          <!-- need to set so resets ALL scores -->
           <p><button onclick="changeState('GAMEOVER')">Save</button></p>
         </div>
       </div>

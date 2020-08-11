@@ -16,6 +16,7 @@ let snake;
 let food;
 
 let walls = true;
+let gameAudio = true;
 
 function toggleWalls() {
   walls = !walls;
@@ -154,6 +155,7 @@ window.addEventListener("resize", function () {
 });
 
 let wallsCheckBox = document.querySelector("#wallsCheckBox");
+let audioCheckBox = document.querySelector("#audioCheckBox");
 
 let newSnake = function () {
   snake = new Snake(15 * tile, 15 * tile, "rgba(251,51,219,1)");
@@ -179,8 +181,14 @@ let newGame = function () {
     walls = true;
   } else {
     walls = false;
-  };
-  
+  }
+
+  if (audioCheckBox.checked) {
+      gameAudio = true;
+  } else {
+      gameAudio = false;
+  }
+
   newSnake();
   newFood();
   changeState("PLAY");
@@ -384,7 +392,9 @@ class Snake {
   }
   advance() {
     if (collisionDetected === true) {
-      gameOverSound.play();
+      if (gameAudio === true) {
+        gameOverSound.play();
+      }
       scoreBoard.update();
       scoreBoard.print();
       changeState("GAMEOVER");
@@ -393,7 +403,9 @@ class Snake {
       newFood();
       this.array.unshift(this.newHead);
       currentScore++;
-      eatSound.play();
+      if (gameAudio === true) {
+        eatSound.play();
+      }
       populateSparkArray();
     } else {
       this.array.unshift(this.newHead);
