@@ -15,7 +15,7 @@ let myInterval = null; // used to prevent interval recorded by setInterval from 
 let snake;
 let food;
 
-let walls = false;
+let walls = true;
 
 function toggleWalls() {
   walls = !walls;
@@ -138,7 +138,12 @@ window.addEventListener("resize", function () {
     sparkArray[i].x = (formerSparkArray[i].x / formerTileSize) * tile;
     sparkArray[i].y = (formerSparkArray[i].y / formerTileSize) * tile;
   }
+  if (gameState !== "PLAY") {
+    animate();
+  }
 });
+
+let wallsCheckBox = document.querySelector("#wallsCheckBox");
 
 let newSnake = function () {
   snake = new Snake(15 * tile, 15 * tile, "rgba(251,51,219,1)");
@@ -159,6 +164,11 @@ let newGame = function () {
   direction = "left";
   scoreBoard.getCurrentHighScore();
   currentScore = 0;
+  if (wallsCheckBox.checked) {
+    walls = true;
+  } else {
+    walls = false;
+  }
   newSnake();
   newFood();
   if (myInterval === null) {
@@ -184,7 +194,9 @@ let scoreBoard = {
     }
   },
   resetArray: function () {
-    scoreBoardArray = [];
+    scoreBoardArray.length = 0;
+    currentScore = 0;
+    this.print();
   },
   getCurrentHighScore: function () {
     currentHighScore = parseInt(localStorage.getItem("top"));
@@ -200,6 +212,7 @@ let scoreBoard = {
   resetHighScore: function () {
     localStorage.removeItem("top");
     highScore = 0;
+    animate();
   },
   getFont: function () {
     let fontSize = gameBoard.width * fontRatio;
@@ -494,20 +507,20 @@ function populateSparkArray() {
 
 // Animation loop
 function animate() {
+  gameArea.draw();
+  food.draw();
+  scoreBoard.draw();
+  snake.draw();
+
+  sparkArray.forEach((spark, index) => {
+    spark.update();
+    if (spark.ttl === 0) {
+      sparkArray.splice(index, 1);
+    }
+  });
+
   if (gameState === "PLAY") {
     requestAnimationFrame(animate);
-
-    gameArea.draw();
-    food.draw();
-    scoreBoard.draw();
-    snake.draw();
-
-    sparkArray.forEach((spark, index) => {
-      spark.update();
-      if (spark.ttl === 0) {
-        sparkArray.splice(index, 1);
-      }
-    });
   } else {
     return;
   }
