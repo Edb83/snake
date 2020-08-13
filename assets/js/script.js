@@ -72,9 +72,7 @@ function keyboardHandler(event) {
 
 document.addEventListener("keydown", keyboardHandler);
 
-// document.body.addEventListener("touchmove", function (e) {
-//   e.preventDefault();
-// });
+
 
 // GAME INITIALISATION
 const gameBoard = document.getElementById("gameBoard");
@@ -157,6 +155,28 @@ window.addEventListener("resize", function () {
 
 let wallsCheckBox = document.querySelector("#wallsCheckBox");
 let audioCheckBox = document.querySelector("#audioCheckBox");
+
+// create a simple instance
+// by default, it only adds horizontal recognizers
+let mc = new Hammer(gameBoard);
+
+// let the pan gesture support all directions.
+// this will block the vertical scrolling on a touch-device while on the element
+mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+
+// listen to events...
+mc.on("panleft panright panup pandown tap press", function(e) {
+    if (e.type = "panleft" && direction !== "right") {
+        direction = "left";
+    } if (e.type = "panup" && direction !== "down") {
+        direction = "up";
+    } if (e.type = "panright" && direction !== "left") {
+        direction = "right"
+    } if (e.type = "pandown" && direction !== "up") {
+        direction = "down"
+    }
+});
+
 
 let newSnake = function () {
   snake = new Snake(15 * tile, 15 * tile, "rgba(251,51,219,1)");
