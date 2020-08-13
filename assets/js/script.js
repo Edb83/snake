@@ -168,11 +168,11 @@ mc.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
 mc.on("swipeleft swiperight swipeup swipedown tap press", function(e) {
     if (e.type === "swipeleft" && direction !== "right") {
         direction = "left";
-    } if (e.type === "swipeup" && direction !== "down") {
+    } else if (e.type === "swipeup" && direction !== "down") {
         direction = "up";
-    } if (e.type === "swiperight" && direction !== "left") {
+    } else if (e.type === "swiperight" && direction !== "left") {
         direction = "right"
-    } if (e.type === "swipedown" && direction !== "up") {
+    } else if (e.type === "swipedown" && direction !== "up") {
         direction = "down"
     }
 });
