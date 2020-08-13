@@ -160,19 +160,19 @@ let audioCheckBox = document.querySelector("#audioCheckBox");
 // by default, it only adds horizontal recognizers
 let mc = new Hammer(gameBoard);
 
-// let the pan gesture support all directions.
+// let the swipe gesture support all directions.
 // this will block the vertical scrolling on a touch-device while on the element
-mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+mc.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
 
 // listen to events...
-mc.on("panleft panright panup pandown tap press", function(e) {
-    if (e.type === "panleft" && direction !== "right") {
+mc.on("swipeleft swiperight swipeup swipedown tap press", function(e) {
+    if (e.type === "swipeleft" && direction !== "right") {
         direction = "left";
-    } if (e.type === "panup" && direction !== "down") {
+    } if (e.type === "swipeup" && direction !== "down") {
         direction = "up";
-    } if (e.type === "panright" && direction !== "left") {
+    } if (e.type === "swiperight" && direction !== "left") {
         direction = "right"
-    } if (e.type === "pandown" && direction !== "up") {
+    } if (e.type === "swipedown" && direction !== "up") {
         direction = "down"
     }
 });
