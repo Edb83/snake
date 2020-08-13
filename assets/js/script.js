@@ -166,13 +166,13 @@ mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
 
 // listen to events...
 mc.on("panleft panright panup pandown tap press", function(e) {
-    if (e.type = "panleft" && direction !== "right") {
+    if (e.type === "panleft" && direction !== "right") {
         direction = "left";
-    } if (e.type = "panup" && direction !== "down") {
+    } if (e.type === "panup" && direction !== "down") {
         direction = "up";
-    } if (e.type = "panright" && direction !== "left") {
+    } if (e.type === "panright" && direction !== "left") {
         direction = "right"
-    } if (e.type = "pandown" && direction !== "up") {
+    } if (e.type === "pandown" && direction !== "up") {
         direction = "down"
     }
 });
