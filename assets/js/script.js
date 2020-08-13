@@ -44,24 +44,24 @@ const colorArray = [
 ];
 
 // Keydown event listener
-function keyboardHandler(event) {
+function keyboardHandler(e) {
   if (Date.now() - lastKey > safeDelay) {
     // checks time since last key press to prevent multiple presses causing snake to eat its neck
-    if (event.keyCode === 38 && direction !== "down") {
+    if (e.keyCode === 38 && direction !== "down") {
       direction = "up";
-    } else if (event.keyCode === 40 && direction !== "up") {
+    } else if (e.keyCode === 40 && direction !== "up") {
       direction = "down";
-    } else if (event.keyCode === 37 && direction !== "right") {
+    } else if (e.keyCode === 37 && direction !== "right") {
       direction = "left";
-    } else if (event.keyCode === 39 && direction !== "left") {
+    } else if (e.keyCode === 39 && direction !== "left") {
       direction = "right";
     }
   }
   lastKey = Date.now();
-  if (event.keyCode == 32 && gameState === "PLAY") {
+  if (eveent.keyCode == 32 && gameState === "PLAY") {
     changeState("PAUSE");
     clearInterval(myInterval);
-  } else if (event.keyCode == 32 && gameState === "PAUSE") {
+  } else if (e.keyCode == 32 && gameState === "PAUSE") {
     changeState("PLAY");
     myInterval = setInterval(function () {
       gameLoop();
@@ -71,8 +71,6 @@ function keyboardHandler(event) {
 }
 
 document.addEventListener("keydown", keyboardHandler);
-
-
 
 // GAME INITIALISATION
 const gameBoard = document.getElementById("gameBoard");
@@ -156,26 +154,6 @@ window.addEventListener("resize", function () {
 let wallsCheckBox = document.querySelector("#wallsCheckBox");
 let audioCheckBox = document.querySelector("#audioCheckBox");
 
-// create a simple instance
-// by default, it only adds horizontal recognizers
-let mc = new Hammer(gameBoard);
-
-// let the pan gesture support all directions.
-// this will block the vertical scrolling on a touch-device while on the element
-mc.get('pan').set({ direction: Hammer.DIRECTION_ALL });
-
-// listen to events...
-mc.on("panleft panright panup pandown tap press", function(e) {
-    if (e.type === "panleft" && direction !== "right") {
-        direction = "left";
-    } else if (e.type === "panup" && direction !== "down") {
-        direction = "up";
-    } else if (e.type === "panright" && direction !== "left") {
-        direction = "right"
-    } else if (e.type === "pandown" && direction !== "up") {
-        direction = "down"
-    }
-});
 
 
 let newSnake = function () {
@@ -196,6 +174,8 @@ let newGame = function () {
   direction = "left";
   scoreBoard.getCurrentHighScore();
   currentScore = 0;
+
+findGestureChoice();
 
   if (wallsCheckBox.checked) {
     walls = true;
@@ -219,6 +199,42 @@ let newGame = function () {
     gameLoop();
   }, gameSpeed);
 };
+
+let mc = new Hammer(gameBoard);
+
+let touchGesture = "pan";
+let gestureRadio = document.getElementsByName("gestureRadio");
+function findGestureChoice() {
+    let i;
+    for (i = 0; i < gestureRadio.length; i++) {
+        if (gestureRadio[i].checked) {
+            touchGesture = gestureRadio[i].value;
+        }
+    }
+}
+
+
+// this will block the vertical scrolling on a touch-device while on the element
+mc.get(touchGesture).set({ direction: Hammer.DIRECTION_ALL });
+
+// listen to events...
+mc.on(
+  `${touchGesture}left ${touchGesture}right ${touchGesture}up ${touchGesture}down tap press`,
+  function (e) {
+    if (Date.now() - lastKey > safeDelay) {
+      if (e.type === `${touchGesture}left` && direction !== "right") {
+        direction = "left";
+      } else if (e.type === `${touchGesture}up` && direction !== "down") {
+        direction = "up";
+      } else if (e.type === `${touchGesture}right` && direction !== "left") {
+        direction = "right";
+      } else if (e.type === `${touchGesture}down` && direction !== "up") {
+        direction = "down";
+      }
+    }
+    lastKey = Date.now();
+  }
+);
 
 // Scoreboard object
 

@@ -51,8 +51,24 @@
         <div>
           <p>Sound<input id="audioCheckBox" type="checkbox" checked /></p>
           <p>Walls<input id="wallsCheckBox" type="checkbox" checked /></p>
-          <p><button onclick="scoreBoard.resetArray()">Reset session scores</button></p>
-          <p><button onclick="scoreBoard.resetArray(); scoreBoard.resetHighScore()">Reset ALL scores</button></p>
+          <p>
+            <input id="gesturePan" name="gestureRadio" value="pan" type="radio" checked />
+            <label for="gesturePan">Pan</label>
+            <input id="gestureSwipe" name="gestureRadio" value="swipe" type="radio" />
+            <label for="gestureSwipe">Swipe</label>
+          </p>
+          <p>
+            <button onclick="scoreBoard.resetArray()">
+              Reset session scores
+            </button>
+          </p>
+          <p>
+            <button
+              onclick="scoreBoard.resetArray(); scoreBoard.resetHighScore()"
+            >
+              Reset ALL scores
+            </button>
+          </p>
           <!-- need to set so resets ALL scores -->
           <p><button onclick="changeState('GAMEOVER')">Back</button></p>
         </div>
