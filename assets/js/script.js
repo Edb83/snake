@@ -18,6 +18,7 @@ let food;
 
 let walls = true;
 let gameAudio = true;
+let touchGesture = "pan";
 
 function toggleWalls() {
   walls = !walls;
@@ -58,7 +59,7 @@ function keyboardHandler(e) {
     }
   }
   lastKey = Date.now();
-  if (eveent.keyCode == 32 && gameState === "PLAY") {
+  if (e.keyCode == 32 && gameState === "PLAY") {
     changeState("PAUSE");
     clearInterval(myInterval);
   } else if (e.keyCode == 32 && gameState === "PAUSE") {
@@ -153,7 +154,7 @@ window.addEventListener("resize", function () {
 
 let wallsCheckBox = document.querySelector("#wallsCheckBox");
 let audioCheckBox = document.querySelector("#audioCheckBox");
-
+// let gestureRadio = document.querySelector("#gesturePan");
 
 
 let newSnake = function () {
@@ -175,7 +176,7 @@ let newGame = function () {
   scoreBoard.getCurrentHighScore();
   currentScore = 0;
 
-findGestureChoice();
+// findGestureChoice();
 
   if (wallsCheckBox.checked) {
     walls = true;
@@ -188,6 +189,12 @@ findGestureChoice();
   } else {
     gameAudio = false;
   }
+
+// if (gesturePan.checked) {
+//     touchGesturePan = "pan";
+//   } else {
+//     touchGesturePan = "swipe";
+//   }
 
   newSnake();
   newFood();
@@ -202,16 +209,16 @@ findGestureChoice();
 
 let mc = new Hammer(gameBoard);
 
-let touchGesture = "pan";
-let gestureRadio = document.getElementsByName("gestureRadio");
-function findGestureChoice() {
-    let i;
-    for (i = 0; i < gestureRadio.length; i++) {
-        if (gestureRadio[i].checked) {
-            touchGesture = gestureRadio[i].value;
-        }
-    }
-}
+
+
+// function findGestureChoice() {
+//     let i;
+//     for (i = 0; i < gestureRadio.length; i++) {
+//         if (gestureRadio[i].checked) {
+//             touchGesture = gestureRadio[i].value;
+//         }
+//     }
+// }
 
 
 // this will block the vertical scrolling on a touch-device while on the element
