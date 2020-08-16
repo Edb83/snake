@@ -18,7 +18,7 @@ let food;
 
 let walls = true;
 let gameAudio = true;
-let touchGesture = "pan";
+let touchGesture = "pan"; // this can be switched to 'swipe' to change reading of input on mobile devices (accessing hammer.js)
 
 function toggleWalls() {
   walls = !walls;
@@ -154,8 +154,6 @@ window.addEventListener("resize", function () {
 
 let wallsCheckBox = document.querySelector("#wallsCheckBox");
 let audioCheckBox = document.querySelector("#audioCheckBox");
-// let gestureRadio = document.querySelector("#gesturePan");
-
 
 let newSnake = function () {
   snake = new Snake(15 * tile, 15 * tile, "rgba(251,51,219,1)");
@@ -190,12 +188,6 @@ let newGame = function () {
     gameAudio = false;
   }
 
-// if (gesturePan.checked) {
-//     touchGesturePan = "pan";
-//   } else {
-//     touchGesturePan = "swipe";
-//   }
-
   newSnake();
   newFood();
   changeState("PLAY");
@@ -209,24 +201,12 @@ let newGame = function () {
 
 let mc = new Hammer(gameBoard);
 
-
-
-// function findGestureChoice() {
-//     let i;
-//     for (i = 0; i < gestureRadio.length; i++) {
-//         if (gestureRadio[i].checked) {
-//             touchGesture = gestureRadio[i].value;
-//         }
-//     }
-// }
-
-
 // this will block the vertical scrolling on a touch-device while on the element
 mc.get(touchGesture).set({ direction: Hammer.DIRECTION_ALL });
 
 // listen to events...
 mc.on(
-  `${touchGesture}left ${touchGesture}right ${touchGesture}up ${touchGesture}down tap press`,
+  `${touchGesture}left ${touchGesture}right ${touchGesture}up ${touchGesture}down press`,
   function (e) {
     if (Date.now() - lastKey > safeDelay) {
       if (e.type === `${touchGesture}left` && direction !== "right") {
@@ -245,7 +225,7 @@ mc.on(
 
 // Scoreboard object
 
-let fontRatio = 0.05;
+let fontRatio = 0.058;
 
 let scoreBoard = {
   update: function () {
@@ -288,7 +268,7 @@ let scoreBoard = {
     ctx.fillStyle = "#fff";
     ctx.font = this.getFont();
     ctx.fillText(currentScore, tile, tile * 2);
-    ctx.fillText(`High score: ${highScore}`, gameBoard.width * 0.55, tile * 2);
+    ctx.fillText(`High score: ${highScore}`, gameBoard.width * 0.50, tile * 2);
   },
   print: function () {
     let highScoreAward = document.getElementById("highScoreAward");

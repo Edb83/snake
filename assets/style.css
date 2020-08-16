@@ -18,7 +18,7 @@ body {
     /* cursor: none; */
 }
 
-#startScreen, #gameOverScreen, #settingsScreen {
+.menuScreen {
     position: absolute;
     /* display: flex; */
     flex-direction: column;
@@ -65,4 +65,18 @@ button:hover {
     background-color: #3e9485;
     color: #fff;
     border: solid 1px #fff;
+}
+
+@media (orientation: portrait) {
+    #gameBoard {
+        width: 100vw;
+        height: auto;
+    }
+}
+
+@media (orientation: landscape) {
+    #gameBoard {
+        width: auto;
+        height: 100vh;
+    }
 }
