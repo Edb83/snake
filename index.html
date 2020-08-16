@@ -25,7 +25,7 @@
     ></audio> -->
 
     <div id="gameContainer">
-      <div id="startScreen" class="visible">
+      <div id="startScreen" class="visible menuScreen">
         <h1>Welcome to Snake!</h1>
         <p>Use the ARROW keys to move your snake</p>
         <p>Press SPACE to pause</p>
@@ -35,7 +35,7 @@
         <button onclick="changeState('SETTINGS')">Settings</button>
       </div>
 
-      <div id="gameOverScreen" class="hidden">
+      <div id="gameOverScreen" class="hidden menuScreen">
         <h1>Game Over</h1>
         <p id="highScoreAward"></p>
         <h3>Top session scores</h3>
@@ -46,17 +46,11 @@
         <button onclick="changeState('SETTINGS')">Settings</button>
         <button onclick="changeState('MENU')">Instructions</button>
       </div>
-      <div id="settingsScreen" class="hidden">
+      <div id="settingsScreen" class="hidden menuScreen">
         <h1>Settings</h1>
         <div>
           <p>Sound<input id="audioCheckBox" type="checkbox" checked /></p>
           <p>Walls<input id="wallsCheckBox" type="checkbox" checked /></p>
-          <!-- <p>
-            <input id="gesturePan" name="gestureRadio" value="pan" type="radio" checked />
-            <label for="gesturePan">Pan</label>
-            <input id="gestureSwipe" name="gestureRadio" value="swipe" type="radio" />
-            <label for="gestureSwipe">Swipe</label>
-          </p> -->
           <p>
             <button onclick="scoreBoard.resetArray()">
               Reset session scores
@@ -69,7 +63,6 @@
               Reset ALL scores
             </button>
           </p>
-          <!-- need to set so resets ALL scores -->
           <p><button onclick="changeState('GAMEOVER')">Back</button></p>
         </div>
       </div>
