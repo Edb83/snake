@@ -531,12 +531,12 @@ class Spark {
 Spark.prototype.update = function () {
   this.draw();
 
-  if (this.x + this.radius > gameBoard.width || this.x - this.radius < 0) {
+  if (this.x + this.dx > gameBoard.width - this.radius || this.x + this.dx < this.radius) {
     this.dx = -this.dx;
   }
   this.x += this.dx;
 
-  if (this.y + this.radius > gameBoard.height) {
+  if (this.y + this.dy  > gameBoard.height - this.radius) {
     this.dy = -this.dy * this.friction;
     this.ttl -= 1;
     this.opacity -= 1 / this.ttl;
