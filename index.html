@@ -32,7 +32,7 @@
         <p>Eat food to grow</p>
         <p>Don't crash into the walls or yourself!</p>
         <button onclick="newGame()">Play</button>
-        <button onclick="changeState('SETTINGS')">Settings</button>
+        <button onclick="changeState('OPTIONS')">Options</button>
       </div>
 
       <div id="gameOverScreen" class="hidden menuScreen">
@@ -43,11 +43,11 @@
           <ol></ol>
         </div>
         <button onclick="newGame()">Play again</button>
-        <button onclick="changeState('SETTINGS')">Settings</button>
+        <button onclick="changeState('OPTIONS')">Options</button>
         <button onclick="changeState('MENU')">Instructions</button>
       </div>
-      <div id="settingsScreen" class="hidden menuScreen">
-        <h1>Settings</h1>
+      <div id="optionsScreen" class="hidden menuScreen">
+        <h1>Options</h1>
         <div>
           <p>Sound<input id="audioCheckBox" type="checkbox" checked /></p>
           <p>Walls<input id="wallsCheckBox" type="checkbox" checked /></p>
