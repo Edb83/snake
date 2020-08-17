@@ -78,7 +78,7 @@ const gameBoard = document.getElementById("gameBoard");
 const ctx = gameBoard.getContext("2d");
 
 const startScreen = document.getElementById("startScreen");
-const gameOverScreen = document.getElementById("gameOverScreen");
+const scoresScreen = document.getElementById("scoresScreen");
 const optionsScreen = document.getElementById("optionsScreen");
 
 const gameBoardHeightToWidthRatio = 20 / 23; // ie 20 wide, 23 high to account for score area
@@ -337,19 +337,19 @@ function makeHidden(screen) {
 function showScreen(state) {
   if (state === "PLAY") {
     makeHidden(startScreen);
-    makeHidden(gameOverScreen);
+    makeHidden(scoresScreen);
   }
   if (state === "GAMEOVER") {
     makeHidden(optionsScreen);
-    makeVisible(gameOverScreen);
+    makeVisible(scoresScreen);
   }
   if (state === "OPTIONS") {
     makeHidden(startScreen);
-    makeHidden(gameOverScreen);
+    makeHidden(scoresScreen);
     makeVisible(optionsScreen);
   }
   if (state === "MENU") {
-    makeHidden(gameOverScreen);
+    makeHidden(scoresScreen);
     makeHidden(optionsScreen);
     makeVisible(startScreen);
   }
