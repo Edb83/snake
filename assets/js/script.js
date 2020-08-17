@@ -86,6 +86,8 @@ const gameBoardHeightToWidthRatio = 20 / 23; // ie 20 wide, 23 high to account f
 let orientationPortrait;
 let tile;
 
+let gameBoardWidthToLineWidthRatio = 100;
+
 // Game area object
 let gameArea = {
   checkOrientation: function () {
@@ -110,13 +112,31 @@ let gameArea = {
     tile = gameBoard.width / 20;
   },
   draw: function () {
+          // Score background
+    ctx.fillStyle = "#001437";
+    ctx.fillRect(0, 0, gameBoard.width, tile * 3);
+    ctx.strokeStyle = "#fff";
+    ctx.strokeRect(0, 0, gameBoard.width, tile * 3);
     // Background
     ctx.fillStyle = "#000";
     ctx.fillRect(0, tile * 3, gameBoard.width, gameBoard.height);
+    if (walls) { // refactor this?
+      ctx.save();
+      ctx.beginPath();
+      ctx.strokeStyle = "red";
+      ctx.lineWidth = gameBoard.width / gameBoardWidthToLineWidthRatio;
+      ctx.strokeRect(0, tile * 3, gameBoard.width, gameBoard.height);
+      
+    } else {
+      ctx.save();
+      ctx.beginPath();
+      ctx.strokeStyle = "green";
+      ctx.lineWidth = gameBoard.width / gameBoardWidthToLineWidthRatio;
+      ctx.strokeRect(0, tile * 3, gameBoard.width, gameBoard.height);
+    }
 
-    // Score background
-    ctx.fillStyle = "#001437";
-    ctx.fillRect(0, 0, gameBoard.width, tile * 3);
+    ctx.closePath();
+      ctx.restore();
   },
 };
 
@@ -173,8 +193,6 @@ let newGame = function () {
   direction = "left";
   scoreBoard.getCurrentHighScore();
   currentScore = 0;
-
-// findGestureChoice();
 
   if (wallsCheckBox.checked) {
     walls = true;
@@ -268,7 +286,7 @@ let scoreBoard = {
     ctx.fillStyle = "#fff";
     ctx.font = this.getFont();
     ctx.fillText(currentScore, tile, tile * 2);
-    ctx.fillText(`High score: ${highScore}`, gameBoard.width * 0.50, tile * 2);
+    ctx.fillText(`High score: ${highScore}`, gameBoard.width * 0.5, tile * 2);
   },
   print: function () {
     let highScoreAward = document.getElementById("highScoreAward");
@@ -541,7 +559,7 @@ function populateSparkArray() {
     }
     if (direction === "down") {
       dx = randomNumber(-2, 2);
-      dy = randomNumber(2, 5);
+      dy = randomNumber(2, 3);
     }
     if (direction === "left") {
       dx = randomNumber(-4, -1);
