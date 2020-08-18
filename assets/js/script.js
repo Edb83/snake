@@ -86,7 +86,7 @@ const gameBoardHeightToWidthRatio = 20 / 23; // ie 20 wide, 23 high to account f
 let orientationPortrait;
 let tile;
 
-let gameBoardWidthToLineWidthRatio = 100;
+let gameBoardWidthToLineWidthRatio = 125;
 
 // Game area object
 let gameArea = {
@@ -112,31 +112,39 @@ let gameArea = {
     tile = gameBoard.width / 20;
   },
   draw: function () {
-          // Score background
+    // Score background
+    ctx.save();
+    ctx.beginPath();
+
     ctx.fillStyle = "#001437";
     ctx.fillRect(0, 0, gameBoard.width, tile * 3);
-    ctx.strokeStyle = "#fff";
-    ctx.strokeRect(0, 0, gameBoard.width, tile * 3);
-    // Background
+
+    // GameBoard Background
     ctx.fillStyle = "#000";
     ctx.fillRect(0, tile * 3, gameBoard.width, gameBoard.height);
-    if (walls) { // refactor this?
-      ctx.save();
-      ctx.beginPath();
+
+    // Walls
+    if (walls) {
       ctx.strokeStyle = "red";
-      ctx.lineWidth = gameBoard.width / gameBoardWidthToLineWidthRatio;
-      ctx.strokeRect(0, tile * 3, gameBoard.width, gameBoard.height);
-      
     } else {
-      ctx.save();
-      ctx.beginPath();
       ctx.strokeStyle = "green";
-      ctx.lineWidth = gameBoard.width / gameBoardWidthToLineWidthRatio;
-      ctx.strokeRect(0, tile * 3, gameBoard.width, gameBoard.height);
     }
+    ctx.lineWidth = gameBoard.width / gameBoardWidthToLineWidthRatio;
+    ctx.strokeRect(
+      ctx.lineWidth / 2,
+      ctx.lineWidth / 2,
+      gameBoard.width - ctx.lineWidth,
+      3 * tile
+    );
+    ctx.strokeRect(
+      ctx.lineWidth / 2,
+      tile * 3 + ctx.lineWidth / 2,
+      gameBoard.width - ctx.lineWidth,
+      gameBoard.height - 3 * tile - ctx.lineWidth
+    );
 
     ctx.closePath();
-      ctx.restore();
+    ctx.restore();
   },
 };
 
@@ -531,12 +539,15 @@ class Spark {
 Spark.prototype.update = function () {
   this.draw();
 
-  if (this.x + this.dx > gameBoard.width - this.radius || this.x + this.dx < this.radius) {
+  if (
+    this.x + this.dx > gameBoard.width - this.radius ||
+    this.x + this.dx < this.radius
+  ) {
     this.dx = -this.dx;
   }
   this.x += this.dx;
 
-  if (this.y + this.dy  > gameBoard.height - this.radius) {
+  if (this.y + this.dy > gameBoard.height - this.radius) {
     this.dy = -this.dy * this.friction;
     this.ttl -= 1;
     this.opacity -= 1 / this.ttl;
