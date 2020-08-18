@@ -86,7 +86,7 @@ const gameBoardHeightToWidthRatio = 20 / 23; // ie 20 wide, 23 high to account f
 let orientationPortrait;
 let tile;
 
-let gameBoardWidthToLineWidthRatio = 125;
+let gameBoardWidthToLineWidthRatio = 150;
 
 // Game area object
 let gameArea = {
@@ -120,7 +120,7 @@ let gameArea = {
     ctx.fillRect(0, 0, gameBoard.width, tile * 3);
 
     // GameBoard Background
-    ctx.fillStyle = "#000";
+    ctx.fillStyle = "#fff";
     ctx.fillRect(0, tile * 3, gameBoard.width, gameBoard.height);
 
     // Walls
@@ -470,7 +470,7 @@ class Snake {
       ctx.save();
       ctx.fillStyle = this.color;
       ctx.shadowColor = this.color;
-      ctx.shadowBlur = 10;
+      ctx.shadowBlur = tile / 2;
       ctx.fillRect(snake.array[i].x, snake.array[i].y, tile, tile); // fills tiles occupied by snake array's coordinates
 
       ctx.restore();
@@ -500,13 +500,20 @@ class Food {
       false
     );
     ctx.fillStyle = this.color;
+    
     ctx.shadowColor = this.color;
+    ctx.strokeStyle = "#000";
     ctx.shadowBlur = 10;
     ctx.fill();
+    ctx.stroke();
     ctx.closePath();
     ctx.restore();
   }
 }
+
+
+// let gameBoardWidthToGravityRatio = 1700;
+//     this.gravity = randomNumber(gameBoard.width / gameBoardWidthToGravityRatio, (gameBoard.width / gameBoardWidthToGravityRatio) * 2);
 
 // Spark constructor
 class Spark {
@@ -519,7 +526,7 @@ class Spark {
     this.color = colorArray[Math.floor(Math.random() * colorArray.length)];
     this.gravity = randomNumber(0.2, 0.4);
     this.friction = randomNumber(0.4, 0.6);
-    this.ttl = 25;
+    this.ttl = 25; // time to live
     this.opacity = 1;
   }
   draw() {
@@ -529,7 +536,7 @@ class Spark {
     ctx.fillStyle =
       this.color.substring(0, this.color.length - 2) + this.opacity + ")";
     ctx.shadowColor = this.color;
-    ctx.shadowBlur = 20;
+    ctx.shadowBlur = this.radius / 2;
     ctx.fill();
     ctx.closePath();
     ctx.restore();
@@ -570,7 +577,7 @@ function populateSparkArray() {
     }
     if (direction === "down") {
       dx = randomNumber(-2, 2);
-      dy = randomNumber(2, 3);
+      dy = randomNumber(5, 10);
     }
     if (direction === "left") {
       dx = randomNumber(-4, -1);
