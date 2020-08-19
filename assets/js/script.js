@@ -553,7 +553,7 @@ Spark.prototype.update = function () {
     this.x + this.dx > gameBoard.width - this.radius ||
     this.x + this.dx < this.radius
   ) {
-    this.dx = -this.dx;
+    this.dx = -this.dx * this.friction;
   }
   this.x += this.dx;
 
