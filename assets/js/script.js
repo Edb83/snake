@@ -86,9 +86,10 @@ const gameBoardHeightToWidthRatio = 20 / 23; // ie 20 wide, 23 high to account f
 
 let orientationPortrait;
 let tile;
-let tileToDRatio;
+let tileToSparkDRatio;
 
 const gameBoardWidthToLineWidthRatio = 150;
+const tileToSparkGravityRatio = 0.009;
 
 // Game area object
 let gameArea = {
@@ -186,7 +187,7 @@ const wallsCheckBox = document.querySelector("#wallsCheckBox");
 const audioCheckBox = document.querySelector("#audioCheckBox");
 
 let newSnake = function () {
-  snake = new Snake(15 * tile, 15 * tile, "rgba(251,51,219,1)");
+  snake = new Snake(15 * tile, 15 * tile, "rgba(223,0,254,1)");
 };
 
 let newFood = function () {
@@ -203,7 +204,7 @@ let newGame = function () {
   direction = "left";
   scoreBoard.getCurrentHighScore();
   currentScore = 0;
-  tileToDRatio = 0.1;
+  tileToSparkDRatio = 0.1;
 
   if (wallsCheckBox.checked) {
     walls = true;
@@ -459,7 +460,7 @@ class Snake {
       populateSparkArray();
       newFood();
       currentScore++;
-      tileToDRatio += 0.0025;
+      tileToSparkDRatio += 0.0025;
 
       if (gameAudio === true) {
         eatSound.play();
@@ -516,6 +517,12 @@ class Food {
   }
 }
 
+
+
+function dynamicSparkGravity() {
+  return tile * tileToSparkGravityRatio;
+}
+
 // Spark constructor
 class Spark {
   constructor(x, y, dx, dy) {
@@ -525,7 +532,8 @@ class Spark {
     this.dy = dy;
     this.radius = randomNumber(tile / 10, tile / 4);
     this.color = food.color;
-    this.gravity = randomNumber(0.2, 0.4);
+    // this.gravity = randomNumber(0.2, 0.4);
+    this.gravity = randomNumber(dynamicSparkGravity(), dynamicSparkGravity() * 2);
     this.friction = randomNumber(0.4, 0.6);
     this.ttl = 25; // time to live ticks
     this.opacity = 1;
@@ -567,7 +575,7 @@ Spark.prototype.update = function () {
 };
 
 function dynamicSparkD() {
-  return tile * tileToDRatio;
+  return tile * tileToSparkDRatio;
 }
 
 // Spark array
