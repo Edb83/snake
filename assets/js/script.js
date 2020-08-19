@@ -5,7 +5,7 @@ let highScore = parseInt(localStorage.getItem("top")) || 0; // all time high sco
 let currentHighScore; // highest score since window refresh
 let currentScore; // score this game
 const scoreBoardArray = []; // top five scores since window refresh
-let sparkArray = [];
+const sparkArray = [];
 
 let direction;
 const gameSpeed = 140; // fed into setInterval for game updates (ie game speed)
@@ -16,8 +16,8 @@ let myInterval;
 let snake;
 let food;
 
-let walls = true;
-let gameAudio = true;
+let walls;
+let gameAudio;
 let touchGesture = "pan"; // this can be switched to 'swipe' to change reading of input on mobile devices (accessing hammer.js)
 
 function toggleWalls() {
@@ -38,10 +38,11 @@ function randomNumber(min, max) {
 // Color array
 // Randomiser: colorArray[Math.floor(Math.random() * colorArray.length)]
 const colorArray = [
-  "rgba(128,255,0,1)",
-  "rgba(252,243,64,1)",
-  "rgba(251,51,219,1)",
-  "rgba(3,16,234,1)",
+  "rgba(128,255,0,1)", // green
+  "rgba(252,243,64,1)", // yellow
+  "rgba(255,191,0,1)", // orange
+  "rgba(226,0,0,1)", // red
+  "rgba(125,249,255,1)", // blue
 ];
 
 // Keydown event listener
@@ -87,7 +88,7 @@ let orientationPortrait;
 let tile;
 let tileToDRatio;
 
-let gameBoardWidthToLineWidthRatio = 150;
+const gameBoardWidthToLineWidthRatio = 150;
 
 // Game area object
 let gameArea = {
@@ -121,7 +122,7 @@ let gameArea = {
     ctx.fillRect(0, 0, gameBoard.width, tile * 3);
 
     // GameBoard Background
-    ctx.fillStyle = "#fff";
+    ctx.fillStyle = "#001437";
     ctx.fillRect(0, tile * 3, gameBoard.width, gameBoard.height);
 
     // Walls
@@ -181,8 +182,8 @@ window.addEventListener("resize", function () {
   }
 });
 
-let wallsCheckBox = document.querySelector("#wallsCheckBox");
-let audioCheckBox = document.querySelector("#audioCheckBox");
+const wallsCheckBox = document.querySelector("#wallsCheckBox");
+const audioCheckBox = document.querySelector("#audioCheckBox");
 
 let newSnake = function () {
   snake = new Snake(15 * tile, 15 * tile, "rgba(251,51,219,1)");
@@ -198,7 +199,7 @@ let newGame = function () {
   gameArea.setTileSize();
   collisionDetected = false;
   ateFood = false;
-  sparkArray = [];
+  sparkArray.length = 0;
   direction = "left";
   scoreBoard.getCurrentHighScore();
   currentScore = 0;
@@ -253,7 +254,7 @@ mc.on(
 
 // Scoreboard object
 
-let fontRatio = 0.058;
+const fontRatio = 0.058;
 
 let scoreBoard = {
   update: function () {
@@ -371,7 +372,7 @@ class Snake {
     this.x = x;
     this.y = y;
     this.color = color;
-    this.array = [{ x: this.x, y: this.y }];
+    this.array = [{ x: this.x, y: this.y }, { x: this.x + tile, y: this.y }, { x: this.x + (tile * 2), y: this.y }];
   }
 
   get newHead() {
@@ -515,9 +516,6 @@ class Food {
   }
 }
 
-// let gameBoardWidthToGravityRatio = 1700;
-//     this.gravity = randomNumber(gameBoard.width / gameBoardWidthToGravityRatio, (gameBoard.width / gameBoardWidthToGravityRatio) * 2);
-
 // Spark constructor
 class Spark {
   constructor(x, y, dx, dy) {
@@ -580,27 +578,19 @@ function populateSparkArray() {
     let x = snake.array[0].x + tile / 2;
     let y = snake.array[0].y + tile / 2;
     if (direction === "up") {
-      //   dx = randomNumber(-5, 5);
       dx = randomNumber(-dynamicSparkD(), dynamicSparkD());
-      //   dy = randomNumber(-5, -2);
       dy = randomNumber(-dynamicSparkD(), -dynamicSparkD() / 2);
     }
     if (direction === "down") {
-      //   dx = randomNumber(-5, 5);
       dx = randomNumber(-dynamicSparkD(), dynamicSparkD());
-      //   dy = randomNumber(5, 10);
       dy = randomNumber(dynamicSparkD(), dynamicSparkD() * 2);
     }
     if (direction === "left") {
-      //   dx = randomNumber(-10, -5);
       dx = randomNumber(-dynamicSparkD() * 2, -dynamicSparkD());
-      //   dy = randomNumber(-5, 5);
       dy = randomNumber(-dynamicSparkD(), dynamicSparkD());
     }
     if (direction === "right") {
-      //   dx = randomNumber(5, 10);
       dx = randomNumber(dynamicSparkD(), dynamicSparkD() * 2);
-      //   dy = randomNumber(-5, 5);
       dy = randomNumber(-dynamicSparkD(), dynamicSparkD());
     }
 
