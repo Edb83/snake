@@ -85,6 +85,11 @@ const gameBoardHeightToWidthRatio = 20 / 23; // ie 20 wide, 23 high to account f
 
 let orientationPortrait;
 let tile;
+const tileToDRatio = 0.4;
+
+function dynamicSparkD()  {
+    return tile * tileToDRatio;
+};
 
 let gameBoardWidthToLineWidthRatio = 150;
 
@@ -148,7 +153,7 @@ let gameArea = {
   },
 };
 
-// Window reseize event listener
+// Window resize event listener
 window.addEventListener("resize", function () {
   let formerFoodCoordinates = food;
   let formerSnakeCoordinates = snake;
@@ -503,7 +508,7 @@ class Food {
     
     ctx.shadowColor = this.color;
     ctx.strokeStyle = "#000";
-    ctx.shadowBlur = 10;
+    ctx.shadowBlur = tile / 2;
     ctx.fill();
     ctx.stroke();
     ctx.closePath();
@@ -526,7 +531,7 @@ class Spark {
     this.color = colorArray[Math.floor(Math.random() * colorArray.length)];
     this.gravity = randomNumber(0.2, 0.4);
     this.friction = randomNumber(0.4, 0.6);
-    this.ttl = 25; // time to live
+    this.ttl = 25; // time to live ticks
     this.opacity = 1;
   }
   draw() {
@@ -564,6 +569,8 @@ Spark.prototype.update = function () {
   this.y += this.dy;
 };
 
+
+
 // Spark array
 function populateSparkArray() {
   for (let i = 0; i < snake.array.length && i < 150; i++) {
@@ -572,20 +579,28 @@ function populateSparkArray() {
     let x = snake.array[0].x + tile / 2;
     let y = snake.array[0].y + tile / 2;
     if (direction === "up") {
-      dx = randomNumber(-2, 2);
-      dy = randomNumber(-5, -2);
+    //   dx = randomNumber(-5, 5);
+      dx = randomNumber(-dynamicSparkD(), dynamicSparkD());
+    //   dy = randomNumber(-5, -2);
+      dy = randomNumber(-dynamicSparkD(), -dynamicSparkD() / 2);
     }
     if (direction === "down") {
-      dx = randomNumber(-2, 2);
-      dy = randomNumber(5, 10);
+    //   dx = randomNumber(-5, 5);
+      dx = randomNumber(-dynamicSparkD(), dynamicSparkD());
+    //   dy = randomNumber(5, 10);
+      dy = randomNumber(dynamicSparkD(), dynamicSparkD() * 2);
     }
     if (direction === "left") {
-      dx = randomNumber(-4, -1);
-      dy = randomNumber(-3, 3);
+    //   dx = randomNumber(-10, -5);
+      dx = randomNumber(-dynamicSparkD() * 2, -dynamicSparkD());
+    //   dy = randomNumber(-5, 5);
+      dy = randomNumber(-dynamicSparkD(), dynamicSparkD());
     }
     if (direction === "right") {
-      dx = randomNumber(1, 4);
-      dy = randomNumber(-3, 3);
+    //   dx = randomNumber(5, 10);
+      dx = randomNumber(dynamicSparkD(), dynamicSparkD() * 2);
+    //   dy = randomNumber(-5, 5);
+      dy = randomNumber(-dynamicSparkD(), dynamicSparkD());
     }
 
     sparkArray.push(new Spark(x, y, dx, dy));
