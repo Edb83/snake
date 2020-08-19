@@ -85,11 +85,7 @@ const gameBoardHeightToWidthRatio = 20 / 23; // ie 20 wide, 23 high to account f
 
 let orientationPortrait;
 let tile;
-const tileToDRatio = 0.4;
-
-function dynamicSparkD()  {
-    return tile * tileToDRatio;
-};
+let tileToDRatio;
 
 let gameBoardWidthToLineWidthRatio = 150;
 
@@ -193,7 +189,7 @@ let newSnake = function () {
 };
 
 let newFood = function () {
-  food = new Food("rgba(128,255,0,1)");
+  food = new Food(colorArray[Math.floor(Math.random() * colorArray.length)]); // picks random color from colorArray
 };
 
 let newGame = function () {
@@ -206,6 +202,7 @@ let newGame = function () {
   direction = "left";
   scoreBoard.getCurrentHighScore();
   currentScore = 0;
+  tileToDRatio = 0.1;
 
   if (wallsCheckBox.checked) {
     walls = true;
@@ -456,15 +453,17 @@ class Snake {
       scoreBoard.update();
       scoreBoard.print();
       changeState("GAMEOVER");
-      return;
     } else if (ateFood === true) {
-      newFood();
       this.array.unshift(this.newHead);
+      populateSparkArray();
+      newFood();
       currentScore++;
+      tileToDRatio += 0.0025;
+
       if (gameAudio === true) {
         eatSound.play();
       }
-      populateSparkArray();
+      
     } else {
       this.array.unshift(this.newHead);
       this.array.pop();
@@ -505,7 +504,7 @@ class Food {
       false
     );
     ctx.fillStyle = this.color;
-    
+
     ctx.shadowColor = this.color;
     ctx.strokeStyle = "#000";
     ctx.shadowBlur = tile / 2;
@@ -515,7 +514,6 @@ class Food {
     ctx.restore();
   }
 }
-
 
 // let gameBoardWidthToGravityRatio = 1700;
 //     this.gravity = randomNumber(gameBoard.width / gameBoardWidthToGravityRatio, (gameBoard.width / gameBoardWidthToGravityRatio) * 2);
@@ -528,7 +526,7 @@ class Spark {
     this.dx = dx;
     this.dy = dy;
     this.radius = randomNumber(tile / 10, tile / 4);
-    this.color = colorArray[Math.floor(Math.random() * colorArray.length)];
+    this.color = food.color;
     this.gravity = randomNumber(0.2, 0.4);
     this.friction = randomNumber(0.4, 0.6);
     this.ttl = 25; // time to live ticks
@@ -561,6 +559,7 @@ Spark.prototype.update = function () {
 
   if (this.y + this.dy > gameBoard.height - this.radius) {
     this.dy = -this.dy * this.friction;
+    this.dx = this.dx * (this.friction + 0.35); // ensures sparks stop rolling but prevents them stopping too soon
     this.ttl -= 1;
     this.opacity -= 1 / this.ttl;
   } else {
@@ -569,7 +568,9 @@ Spark.prototype.update = function () {
   this.y += this.dy;
 };
 
-
+function dynamicSparkD() {
+  return tile * tileToDRatio;
+}
 
 // Spark array
 function populateSparkArray() {
@@ -579,27 +580,27 @@ function populateSparkArray() {
     let x = snake.array[0].x + tile / 2;
     let y = snake.array[0].y + tile / 2;
     if (direction === "up") {
-    //   dx = randomNumber(-5, 5);
+      //   dx = randomNumber(-5, 5);
       dx = randomNumber(-dynamicSparkD(), dynamicSparkD());
-    //   dy = randomNumber(-5, -2);
+      //   dy = randomNumber(-5, -2);
       dy = randomNumber(-dynamicSparkD(), -dynamicSparkD() / 2);
     }
     if (direction === "down") {
-    //   dx = randomNumber(-5, 5);
+      //   dx = randomNumber(-5, 5);
       dx = randomNumber(-dynamicSparkD(), dynamicSparkD());
-    //   dy = randomNumber(5, 10);
+      //   dy = randomNumber(5, 10);
       dy = randomNumber(dynamicSparkD(), dynamicSparkD() * 2);
     }
     if (direction === "left") {
-    //   dx = randomNumber(-10, -5);
+      //   dx = randomNumber(-10, -5);
       dx = randomNumber(-dynamicSparkD() * 2, -dynamicSparkD());
-    //   dy = randomNumber(-5, 5);
+      //   dy = randomNumber(-5, 5);
       dy = randomNumber(-dynamicSparkD(), dynamicSparkD());
     }
     if (direction === "right") {
-    //   dx = randomNumber(5, 10);
+      //   dx = randomNumber(5, 10);
       dx = randomNumber(dynamicSparkD(), dynamicSparkD() * 2);
-    //   dy = randomNumber(-5, 5);
+      //   dy = randomNumber(-5, 5);
       dy = randomNumber(-dynamicSparkD(), dynamicSparkD());
     }
 
