@@ -43,6 +43,7 @@ const colorArray = [
   "rgba(255,191,0,1)", // orange
   "rgba(226,0,0,1)", // red
   "rgba(125,249,255,1)", // blue
+  "rgba(254,1,154,1)", // pink
 ];
 
 // Keydown event listener
@@ -480,7 +481,7 @@ class Snake {
       ctx.fillRect(snake.array[i].x, snake.array[i].y, tile, tile); // fills tiles occupied by snake array's coordinates
 
       ctx.restore();
-      ctx.strokeStyle = "#000";
+      ctx.strokeStyle = "#fff";
       ctx.strokeRect(snake.array[i].x, snake.array[i].y, tile, tile);
     }
   }
@@ -516,8 +517,6 @@ class Food {
     ctx.restore();
   }
 }
-
-
 
 function dynamicSparkGravity() {
   return tile * tileToSparkGravityRatio;
