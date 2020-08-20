@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #00218a;
+  background-color: #001437;
 
 }
 
@@ -15,7 +15,7 @@ body {
 
 #gameBoard {
     z-index: 0;
-    /* cursor: none; */
+    cursor: none;
 }
 
 .menuScreen {

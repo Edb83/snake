@@ -230,7 +230,7 @@ let newGame = function () {
   }, gameSpeed);
 };
 
-let mc = new Hammer(gameBoard);
+let mc = new Hammer(document.querySelector("body"));
 
 // this will block the vertical scrolling on a touch-device while on the element
 mc.get(touchGesture).set({ direction: Hammer.DIRECTION_ALL });
@@ -481,7 +481,7 @@ class Snake {
       ctx.fillRect(snake.array[i].x, snake.array[i].y, tile, tile); // fills tiles occupied by snake array's coordinates
 
       ctx.restore();
-      ctx.strokeStyle = "#fff";
+      ctx.strokeStyle = "#001437";
       ctx.strokeRect(snake.array[i].x, snake.array[i].y, tile, tile);
     }
   }
@@ -531,7 +531,6 @@ class Spark {
     this.dy = dy;
     this.radius = randomNumber(tile / 10, tile / 4);
     this.color = food.color;
-    // this.gravity = randomNumber(0.2, 0.4);
     this.gravity = randomNumber(dynamicSparkGravity(), dynamicSparkGravity() * 2);
     this.friction = randomNumber(0.4, 0.6);
     this.ttl = 25; // time to live ticks
