@@ -254,6 +254,9 @@ mc.on(
   }
 );
 
+
+
+
 // Scoreboard object
 
 const fontRatio = 0.058;
@@ -456,6 +459,8 @@ class Snake {
       scoreBoard.update();
       scoreBoard.print();
       changeState("GAMEOVER");
+      mc.off(
+  `${touchGesture}left ${touchGesture}right ${touchGesture}up ${touchGesture}down press`);
     } else if (ateFood === true) {
       this.array.unshift(this.newHead);
       populateSparkArray();
