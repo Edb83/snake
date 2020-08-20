@@ -15,24 +15,27 @@ let myInterval;
 
 let snake;
 let food;
+let collisionDetected;
+let ateFood;
 
 let walls;
 let gameAudio;
 let touchGesture = "pan"; // this can be switched to 'swipe' to change reading of input on mobile devices (accessing hammer.js)
 
-function toggleWalls() {
-  walls = !walls;
-}
 
-let collisionDetected;
-let ateFood;
 
 const eatSound = document.getElementById("eatSound");
 const gameOverSound = document.getElementById("gameoverSound");
+const wallsCheckBox = document.querySelector("#wallsCheckBox");
+const audioCheckBox = document.querySelector("#audioCheckBox");
 
 // Random number generator
 function randomNumber(min, max) {
   return Math.random() * (max - min) + min;
+}
+
+function toggleWalls() {
+  walls = !walls;
 }
 
 // Color array
@@ -74,6 +77,99 @@ function keyboardHandler(e) {
 }
 
 document.addEventListener("keydown", keyboardHandler);
+
+let mc = new Hammer(document.querySelector("body"));
+
+// this will block the vertical scrolling on a touch-device while on the element
+mc.get(touchGesture).set({ direction: Hammer.DIRECTION_ALL });
+
+mc.on(
+  `${touchGesture}left ${touchGesture}right ${touchGesture}up ${touchGesture}down press`,
+  function (e) {
+    if (Date.now() - lastKey > safeDelay) {
+      if (e.type === `${touchGesture}left` && direction !== "right") {
+        direction = "left";
+      } else if (e.type === `${touchGesture}up` && direction !== "down") {
+        direction = "up";
+      } else if (e.type === `${touchGesture}right` && direction !== "left") {
+        direction = "right";
+      } else if (e.type === `${touchGesture}down` && direction !== "up") {
+        direction = "down";
+      }
+    }
+    lastKey = Date.now();
+  }
+);
+
+// let mc;
+
+// function addTouchControls() {
+//   mc = new Hammer(document.querySelector("body"));
+  
+//   // this will block the vertical scrolling on a touch-device while on the element
+//   mc.get(touchGesture).set({ direction: Hammer.DIRECTION_ALL });
+
+//   // listen to events...
+//   mc.on(
+//     `${touchGesture}left ${touchGesture}right ${touchGesture}up ${touchGesture}down press`,
+//     function (e) {
+//       if (Date.now() - lastKey > safeDelay) {
+//         if (e.type === `${touchGesture}left` && direction !== "right") {
+//           direction = "left";
+//         } else if (e.type === `${touchGesture}up` && direction !== "down") {
+//           direction = "up";
+//         } else if (e.type === `${touchGesture}right` && direction !== "left") {
+//           direction = "right";
+//         } else if (e.type === `${touchGesture}down` && direction !== "up") {
+//           direction = "down";
+//         }
+//       }
+//       lastKey = Date.now();
+//     }
+//   );
+// }
+
+// function removeTouchControls() {
+//   mc.remove(touchGesture);
+// }
+
+function recalculateGameAssets() {
+  let formerFoodCoordinates = food;
+  let formerSnakeCoordinates = snake;
+  let formerSnakeArray = snake.array;
+  let formerSparkArray = sparkArray;
+  let formerTileSize = tile;
+
+  gameArea.checkOrientation(); // could refactor?
+  gameArea.setGameBoardSize();
+  gameArea.setTileSize();
+
+  food.x = (formerFoodCoordinates.x / formerTileSize) * tile;
+  food.y = (formerFoodCoordinates.y / formerTileSize) * tile;
+
+  snake.x = (formerSnakeCoordinates.x / formerTileSize) * tile;
+  snake.y = (formerSnakeCoordinates.y / formerTileSize) * tile;
+
+  let i;
+  for (i = 0; i < formerSnakeArray.length; i++) {
+    snake.array[i].x = (formerSnakeArray[i].x / formerTileSize) * tile;
+    snake.array[i].y = (formerSnakeArray[i].y / formerTileSize) * tile;
+  }
+  for (i = 0; i < formerSparkArray.length; i++) {
+    sparkArray[i].x = (formerSparkArray[i].x / formerTileSize) * tile;
+    sparkArray[i].y = (formerSparkArray[i].y / formerTileSize) * tile;
+  }
+  if (gameState !== "PLAY") {
+    animate();
+  }
+}
+
+// Window resize event listener
+window.addEventListener("resize", recalculateGameAssets);
+
+// Orientation change event listener
+window.addEventListener("orientationchange", recalculateGameAssets);
+
 
 // GAME INITIALISATION
 const gameBoard = document.getElementById("gameBoard");
@@ -152,40 +248,7 @@ let gameArea = {
   },
 };
 
-// Window resize event listener
-window.addEventListener("resize", function () {
-  let formerFoodCoordinates = food;
-  let formerSnakeCoordinates = snake;
-  let formerSnakeArray = snake.array;
-  let formerSparkArray = sparkArray;
-  let formerTileSize = tile;
 
-  gameArea.checkOrientation(); // could refactor?
-  gameArea.setGameBoardSize();
-  gameArea.setTileSize();
-
-  food.x = (formerFoodCoordinates.x / formerTileSize) * tile;
-  food.y = (formerFoodCoordinates.y / formerTileSize) * tile;
-
-  snake.x = (formerSnakeCoordinates.x / formerTileSize) * tile;
-  snake.y = (formerSnakeCoordinates.y / formerTileSize) * tile;
-
-  let i;
-  for (i = 0; i < formerSnakeArray.length; i++) {
-    snake.array[i].x = (formerSnakeArray[i].x / formerTileSize) * tile;
-    snake.array[i].y = (formerSnakeArray[i].y / formerTileSize) * tile;
-  }
-  for (i = 0; i < formerSparkArray.length; i++) {
-    sparkArray[i].x = (formerSparkArray[i].x / formerTileSize) * tile;
-    sparkArray[i].y = (formerSparkArray[i].y / formerTileSize) * tile;
-  }
-  if (gameState !== "PLAY") {
-    animate();
-  }
-});
-
-const wallsCheckBox = document.querySelector("#wallsCheckBox");
-const audioCheckBox = document.querySelector("#audioCheckBox");
 
 let newSnake = function () {
   snake = new Snake(15 * tile, 15 * tile, "rgba(223,0,254,1)");
@@ -230,61 +293,9 @@ let newGame = function () {
   }, gameSpeed);
 };
 
-let mc = new Hammer(document.querySelector("body"));
 
-// this will block the vertical scrolling on a touch-device while on the element
-mc.get(touchGesture).set({ direction: Hammer.DIRECTION_ALL });
 
-// listen to events...
-mc.on(
-  `${touchGesture}left ${touchGesture}right ${touchGesture}up ${touchGesture}down press`,
-  function (e) {
-    if (Date.now() - lastKey > safeDelay) {
-      if (e.type === `${touchGesture}left` && direction !== "right") {
-        direction = "left";
-      } else if (e.type === `${touchGesture}up` && direction !== "down") {
-        direction = "up";
-      } else if (e.type === `${touchGesture}right` && direction !== "left") {
-        direction = "right";
-      } else if (e.type === `${touchGesture}down` && direction !== "up") {
-        direction = "down";
-      }
-    }
-    lastKey = Date.now();
-  }
-);
 
-// let mc;
-
-// function addTouchControls() {
-//   mc = new Hammer(document.querySelector("body"));
-  
-//   // this will block the vertical scrolling on a touch-device while on the element
-//   mc.get(touchGesture).set({ direction: Hammer.DIRECTION_ALL });
-
-//   // listen to events...
-//   mc.on(
-//     `${touchGesture}left ${touchGesture}right ${touchGesture}up ${touchGesture}down press`,
-//     function (e) {
-//       if (Date.now() - lastKey > safeDelay) {
-//         if (e.type === `${touchGesture}left` && direction !== "right") {
-//           direction = "left";
-//         } else if (e.type === `${touchGesture}up` && direction !== "down") {
-//           direction = "up";
-//         } else if (e.type === `${touchGesture}right` && direction !== "left") {
-//           direction = "right";
-//         } else if (e.type === `${touchGesture}down` && direction !== "up") {
-//           direction = "down";
-//         }
-//       }
-//       lastKey = Date.now();
-//     }
-//   );
-// }
-
-// function removeTouchControls() {
-//   mc.remove(touchGesture);
-// }
 
 
 
