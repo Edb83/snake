@@ -357,10 +357,17 @@ let scoreBoard = {
     let scoreOl = document.querySelector("ol");
     scoreOl.innerHTML = "";
     for (let i = 0; i < 5; i++) {
-      let scoreLi = document.createElement("li");
-      scoreLi.textContent = scoreBoardArray[i];
-      scoreOl.appendChild(scoreLi);
+      let newScoreLi = document.createElement("li");
+      newScoreLi.textContent = scoreBoardArray[i];
+      scoreOl.appendChild(newScoreLi);
     }
+    let scoreLi = document.querySelectorAll("li");
+    for (let i = 0; i < scoreLi.length; i ++) {
+        if (scoreLi[i].textContent == currentScore) {
+            scoreLi[i].classList.add("special-menu-text")
+        }
+    }
+    
   },
 };
 

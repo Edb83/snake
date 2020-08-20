@@ -32,6 +32,33 @@ body {
   width: 90vw;
 }
 
+/* https://www.w3schools.com/howto/howto_css_glowing_text.asp */
+
+.special-menu-text, h1 {
+  color: #fff;
+  -webkit-animation: glow 1s ease-in-out infinite alternate;
+  -moz-animation: glow 1s ease-in-out infinite alternate;
+  animation: glow 1s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 0.1em #fff, 0 0 0.2em #fff, 0 0 0.3em #e60073, 0 0 0.4em #e60073, 0 0 0.5em #e60073, 0 0 0.6em #e60073, 0 0 0.7em #e60073;
+  }
+  
+  to {
+    text-shadow: 0 0 0.2em #fff, 0 0 0.3em #ff4da6, 0 0 0.4em #ff4da6, 0 0 0.5em #ff4da6, 0 0 0.6em #ff4da6, 0 0 0.7em #ff4da6, 0 0 0.8em #ff4da6;
+  }
+}
+
+.desktop-controls-text {
+    color: #ffb329;
+}
+
+.mobile-controls-text {
+    color: #36da34;
+}
+
 #highScoreAward {
   text-align: center;
 }
