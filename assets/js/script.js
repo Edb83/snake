@@ -254,6 +254,37 @@ mc.on(
   }
 );
 
+// let mc;
+
+// function addTouchControls() {
+//   mc = new Hammer(document.querySelector("body"));
+  
+//   // this will block the vertical scrolling on a touch-device while on the element
+//   mc.get(touchGesture).set({ direction: Hammer.DIRECTION_ALL });
+
+//   // listen to events...
+//   mc.on(
+//     `${touchGesture}left ${touchGesture}right ${touchGesture}up ${touchGesture}down press`,
+//     function (e) {
+//       if (Date.now() - lastKey > safeDelay) {
+//         if (e.type === `${touchGesture}left` && direction !== "right") {
+//           direction = "left";
+//         } else if (e.type === `${touchGesture}up` && direction !== "down") {
+//           direction = "up";
+//         } else if (e.type === `${touchGesture}right` && direction !== "left") {
+//           direction = "right";
+//         } else if (e.type === `${touchGesture}down` && direction !== "up") {
+//           direction = "down";
+//         }
+//       }
+//       lastKey = Date.now();
+//     }
+//   );
+// }
+
+// function removeTouchControls() {
+//   mc.remove(touchGesture);
+// }
 
 
 
@@ -459,8 +490,6 @@ class Snake {
       scoreBoard.update();
       scoreBoard.print();
       changeState("GAMEOVER");
-      mc.off(
-  `${touchGesture}left ${touchGesture}right ${touchGesture}up ${touchGesture}down press`);
     } else if (ateFood === true) {
       this.array.unshift(this.newHead);
       populateSparkArray();
