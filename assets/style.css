@@ -2,7 +2,6 @@ body {
   margin: 0;
   padding: 0;
   background-color: #001437;
-
 }
 
 #gameContainer {
@@ -14,69 +13,68 @@ body {
 }
 
 #gameBoard {
-    z-index: 0;
-    cursor: none;
+  z-index: 0;
+  /* cursor: none; */
 }
 
 .menuScreen {
-    position: absolute;
-    /* display: flex; */
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
-    background-color: #282c75ed;
-    border: solid 1px #fff;
-    border-radius: 5%;
-    color: #fff;
-    font-family: "Orbitron", sans-serif;
-    z-index: 1;
+  position: absolute;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background-color: #001437;
+  border: solid 1px #fff;
+  color: #fff;
+  font-family: "Orbitron", sans-serif;
+  z-index: 1;
+  width: 90vw;
 }
 
 #highScoreAward {
-    text-align: center;
+  text-align: center;
 }
 
 #highScores {
-    align-self: start;
+  align-self: start;
 }
 
 .visible {
-    visibility: visible;
+  visibility: visible;
 }
 
 .hidden {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 button {
-    display: inline-block;
-    height: 25px;
-    min-width: 90px;
-    -webkit-touch-callout: none;
-    margin: 15px;
-    background-color: #fff;
-    border-style: none;
-    border-radius: 5%;
+  display: inline-block;
+  height: 25px;
+  min-width: 90px;
+  -webkit-touch-callout: none;
+  margin: 15px;
+  background-color: #fff;
+  border-style: none;
+  border-radius: 5%;
 }
 
 button:hover {
-    background-color: #3e9485;
-    color: #fff;
-    border: solid 1px #fff;
+  background-color: #3e9485;
+  color: #fff;
+  border: solid 1px #fff;
 }
 
 @media (orientation: portrait) {
-    #gameBoard {
-        width: 100vw;
-        height: auto;
-    }
+  #gameBoard {
+    width: 100vw;
+    height: auto;
+  }
 }
 
 @media (orientation: landscape) {
-    #gameBoard {
-        width: auto;
-        height: 100vh;
-    }
+  #gameBoard {
+    width: auto;
+    height: 100vh;
+  }
 }
