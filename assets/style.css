@@ -2,11 +2,11 @@ body {
   margin: 0;
   padding: 0;
   background-color: #001437;
+  font-size: 1rem;
 }
 
 #gameContainer {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
@@ -34,7 +34,7 @@ body {
 
 /* https://www.w3schools.com/howto/howto_css_glowing_text.asp */
 
-.special-menu-text, h1 {
+h1 {
   color: #fff;
   -webkit-animation: glow 1s ease-in-out infinite alternate;
   -moz-animation: glow 1s ease-in-out infinite alternate;
@@ -59,12 +59,17 @@ body {
     color: #36da34;
 }
 
+.special-menu-text {
+    color: #ff31e6;
+    text-shadow: 0 0 1em;
+}
+
 #highScoreAward {
   text-align: center;
 }
 
 #highScores {
-  align-self: start;
+  padding: 0 25%;
 }
 
 .visible {
@@ -103,5 +108,17 @@ button:hover {
   #gameBoard {
     width: auto;
     height: 100vh;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  body {
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  body {
+    font-size: 2rem;
   }
 }
