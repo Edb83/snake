@@ -37,7 +37,6 @@ function toggleWalls() {
 }
 
 // Color array
-// Randomiser: colorArray[Math.floor(Math.random() * colorArray.length)]
 const colorArray = [
   "rgba(128,255,0,1)", // green
   "rgba(252,243,64,1)", // yellow
@@ -78,13 +77,10 @@ document.addEventListener("keydown", keyboardHandler);
 
 // Hammertime event listener
 let hammertime = new Hammer.Manager(document.querySelector("body"));
-
 hammertime.add(new Hammer.Pan({ direction: Hammer.DIRECTION_ALL }));
 hammertime.add(new Hammer.Tap({ event: "doubletap", taps: 2 }));
-
 hammertime.get(touchGesture);
 hammertime.get("doubletap");
-
 hammertime.on(
   `${touchGesture}left ${touchGesture}right ${touchGesture}up ${touchGesture}down doubletap`,
   function (e) {
@@ -144,11 +140,10 @@ function recalculateGameAssets() {
   }
 }
 
-// Window resize event listener
+// Window resize and orientationchange event listeners
 window.addEventListener("resize", recalculateGameAssets);
-
-// Orientation change event listener
 window.addEventListener("orientationchange", recalculateGameAssets);
+
 
 // GAME INITIALISATION
 const gameBoard = document.getElementById("gameBoard");
@@ -164,8 +159,52 @@ let orientationPortrait;
 let tile;
 let tileToSparkDRatio;
 
-const gameBoardWidthToLineWidthRatio = 150;
-const tileToSparkGravityRatio = 0.009;
+const gameBoardWidthToLineWidthRatio = 150; // used in gameBoard object
+const tileToSparkGravityRatio = 0.009; // used in spark object
+const fontRatio = 0.058; // used in scoreBoard object
+
+let newSnake = function () {
+  snake = new Snake(15 * tile, 15 * tile, "rgba(223,0,254,1)");
+};
+
+let newFood = function () {
+  food = new Food(colorArray[Math.floor(Math.random() * colorArray.length)]); // picks random color from colorArray
+};
+
+let newGame = function () {
+  gameArea.checkOrientation(); // could refactor?
+  gameArea.setGameBoardSize();
+  gameArea.setTileSize();
+  collisionDetected = false;
+  ateFood = false;
+  sparkArray.length = 0;
+  direction = "left";
+  scoreBoard.getCurrentHighScore();
+  currentScore = 0;
+  tileToSparkDRatio = 0.1;
+
+  if (wallsCheckBox.checked) {
+    walls = true;
+  } else {
+    walls = false;
+  }
+
+  if (audioCheckBox.checked) {
+    gameAudio = true;
+  } else {
+    gameAudio = false;
+  }
+
+  newSnake();
+  newFood();
+  changeState("PLAY");
+  animate();
+
+  gamesPlayed++;
+  myInterval = setInterval(function () {
+    gameLoop();
+  }, gameSpeed);
+};
 
 // Game area object
 let gameArea = {
@@ -227,52 +266,7 @@ let gameArea = {
   },
 };
 
-let newSnake = function () {
-  snake = new Snake(15 * tile, 15 * tile, "rgba(223,0,254,1)");
-};
-
-let newFood = function () {
-  food = new Food(colorArray[Math.floor(Math.random() * colorArray.length)]); // picks random color from colorArray
-};
-
-let newGame = function () {
-  gameArea.checkOrientation(); // could refactor?
-  gameArea.setGameBoardSize();
-  gameArea.setTileSize();
-  collisionDetected = false;
-  ateFood = false;
-  sparkArray.length = 0;
-  direction = "left";
-  scoreBoard.getCurrentHighScore();
-  currentScore = 0;
-  tileToSparkDRatio = 0.1;
-
-  if (wallsCheckBox.checked) {
-    walls = true;
-  } else {
-    walls = false;
-  }
-
-  if (audioCheckBox.checked) {
-    gameAudio = true;
-  } else {
-    gameAudio = false;
-  }
-
-  newSnake();
-  newFood();
-  changeState("PLAY");
-  animate();
-
-  gamesPlayed++;
-  myInterval = setInterval(function () {
-    gameLoop();
-  }, gameSpeed);
-};
-
 // Scoreboard object
-
-const fontRatio = 0.058;
 
 let scoreBoard = {
   update: function () {
@@ -315,7 +309,7 @@ let scoreBoard = {
     ctx.fillStyle = "#fff";
     ctx.font = this.getFont();
     ctx.fillText(currentScore, tile, tile * 2);
-    ctx.fillText(`High score: ${highScore}`, gameBoard.width * 0.5, tile * 2);
+    ctx.fillText(`High score: ${highScore}`, gameBoard.width * 0.45, tile * 2);
   },
   print: function () {
     let highScoreAward = document.getElementById("highScoreAward");
@@ -342,7 +336,7 @@ let scoreBoard = {
     ) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
-        `${currentScore}. Really?`
+        `${currentScore}... Really?`
       );
     }
 
@@ -388,54 +382,6 @@ let scoreBoard = {
   },
 };
 
-// Game loop with conditions for which functions are called depending on game state
-let gameLoop = function () {
-  if (gameState === "PLAY") {
-    snake.checkCollision();
-    snake.checkAteFood();
-    snake.advance();
-    snake.update();
-    scoreBoard.updateHighScore();
-  } else {
-    clearInterval(myInterval);
-    return;
-  }
-};
-
-// Game state selection
-function changeState(state) {
-  gameState = state;
-  showScreen(state);
-}
-
-function makeVisible(screen) {
-  screen.style.visibility = "visible";
-}
-
-function makeHidden(screen) {
-  screen.style.visibility = "hidden";
-}
-
-function showScreen(state) {
-  if (state === "PLAY") {
-    makeHidden(startScreen);
-    makeHidden(scoresScreen);
-  }
-  if (state === "GAMEOVER") {
-    makeHidden(optionsScreen);
-    makeVisible(scoresScreen);
-  }
-  if (state === "OPTIONS") {
-    makeHidden(startScreen);
-    makeHidden(scoresScreen);
-    makeVisible(optionsScreen);
-  }
-  if (state === "MENU") {
-    makeHidden(scoresScreen);
-    makeHidden(optionsScreen);
-    makeVisible(startScreen);
-  }
-}
 
 // Snake constructor
 class Snake {
@@ -678,6 +624,57 @@ function populateSparkArray() {
     sparkArray.push(new Spark(x, y, dx, dy));
   }
 }
+
+
+// Game loop with conditions for which functions are called depending on game state
+let gameLoop = function () {
+  if (gameState === "PLAY") {
+    snake.checkCollision();
+    snake.checkAteFood();
+    snake.advance();
+    snake.update();
+    scoreBoard.updateHighScore();
+  } else {
+    clearInterval(myInterval);
+    return;
+  }
+};
+
+// Game state selection
+function changeState(state) {
+  gameState = state;
+  showScreen(state);
+}
+
+function makeVisible(screen) {
+  screen.style.visibility = "visible";
+}
+
+function makeHidden(screen) {
+  screen.style.visibility = "hidden";
+}
+
+function showScreen(state) {
+  if (state === "PLAY") {
+    makeHidden(startScreen);
+    makeHidden(scoresScreen);
+  }
+  if (state === "GAMEOVER") {
+    makeHidden(optionsScreen);
+    makeVisible(scoresScreen);
+  }
+  if (state === "OPTIONS") {
+    makeHidden(startScreen);
+    makeHidden(scoresScreen);
+    makeVisible(optionsScreen);
+  }
+  if (state === "MENU") {
+    makeHidden(scoresScreen);
+    makeHidden(optionsScreen);
+    makeVisible(startScreen);
+  }
+}
+
 
 // Animation loop
 function animate() {
