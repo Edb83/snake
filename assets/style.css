@@ -43,12 +43,12 @@ h1 {
 @keyframes glow {
   from {
     text-shadow: 0 0 0.1em #fff, 0 0 0.2em #e60073, 0 0 0.3em #e60073,
-      0 0 0.4em #e60073, 0 0 0.5em #e60073, 0 0 0.6em #e60073, 0 0 0.7em #e60073;
+      0 0 0.4rem #e60073, 0 0 0.5rem #e60073, 0 0 0.6rem #e60073, 0 0 0.7rem #e60073;
   }
 
   to {
     text-shadow: 0 0 0.2em #fff, 0 0 0.3em #ff4da6, 0 0 0.4em #ff4da6,
-      0 0 0.5em #ff4da6, 0 0 0.6em #ff4da6, 0 0 0.7em #ff4da6, 0 0 0.8em #ff4da6;
+      0 0 0.5rem #ff4da6, 0 0 0.6rem #ff4da6, 0 0 0.7rem #ff4da6, 0 0 0.8rem #ff4da6;
   }
 }
 
@@ -62,7 +62,7 @@ h1 {
 
 .special-menu-text {
   color: #ff31e6;
-  text-shadow: 0 0 1em;
+  text-shadow: 0 0 1rem;
 }
 
 #highScoreAward {
@@ -112,7 +112,7 @@ button:hover {
   }
 }
 
-@media screen and (min-width: 768px) and (min-height: 570px) and (orientation: landscape) {
+@media screen and (min-height: 570px) and (orientation: landscape) {
   body {
     font-size: 1.2rem;
   }
