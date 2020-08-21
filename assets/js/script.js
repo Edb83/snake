@@ -144,7 +144,6 @@ function recalculateGameAssets() {
 window.addEventListener("resize", recalculateGameAssets);
 window.addEventListener("orientationchange", recalculateGameAssets);
 
-
 // GAME INITIALISATION
 const gameBoard = document.getElementById("gameBoard");
 const ctx = gameBoard.getContext("2d");
@@ -326,7 +325,7 @@ let scoreBoard = {
     }
 
     if (currentScore < 1) {
-      highScoreAward.insertAdjacentHTML("beforeend", "Whoops!");
+      highScoreAward.insertAdjacentHTML("beforeend", `Whoops!`);
     }
 
     if (
@@ -336,27 +335,112 @@ let scoreBoard = {
     ) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
-        `${currentScore}... Really?`
+        `${currentScore}... Great.`
       );
     }
 
-    if (currentScore >= 50 && currentScore < 100) {
-      highScoreAward.insertAdjacentHTML("beforeend", "I've seen better.");
+    if (currentScore >= 10 && currentScore < 20) {
+      highScoreAward.insertAdjacentHTML("beforeend", `Double digits, is it?`);
     }
 
-    if (currentScore >= 100 && currentScore < 150) {
+    if (currentScore >= 20 && currentScore < 30) {
+      highScoreAward.insertAdjacentHTML(
+        "beforeend",
+        `This is Cyber <em>Snake</em>, not Cyber Slow Worm.`
+      );
+    }
+
+    if (currentScore >= 30 && currentScore < 40) {
+      highScoreAward.insertAdjacentHTML(
+        "beforeend",
+        `Was it worth it, just to get ${currentScore}?`
+      );
+    }
+
+    if (currentScore >= 40 && currentScore < 50) {
+      highScoreAward.insertAdjacentHTML(
+        "beforeend",
+        `The Nanite Narwhal would be proud.`
+      );
+    }
+
+    if (currentScore >= 50 && currentScore < 60) {
+      highScoreAward.insertAdjacentHTML(
+        "beforeend",
+        "Maybe getting to 50 was good enough for you."
+      );
+    }
+
+    if (currentScore >= 60 && currentScore < 70 && currentScore != 69) {
+      highScoreAward.insertAdjacentHTML(
+        "beforeend",
+        `Cyber Snake's pigmentation has been coded to bamboozle the weak of mind.`
+      );
+    }
+
+    if (currentScore == 69) {
+      highScoreAward.insertAdjacentHTML("beforeend", "Nice.");
+    }
+
+    if (currentScore >= 70 && currentScore < 80) {
+      highScoreAward.insertAdjacentHTML(
+        "beforeend",
+        "Don't tell me. You were distracted by the pretty colors."
+      );
+    }
+
+    if (currentScore >= 80 && currentScore < 90) {
+      highScoreAward.insertAdjacentHTML(
+        "beforeend",
+        "Next time, have a vague strategy."
+      );
+    }
+
+    if (currentScore >= 90 && currentScore < 100) {
+      highScoreAward.insertAdjacentHTML(
+        "beforeend",
+        "It would have been better if you got to 100."
+      );
+    }
+
+    if (currentScore >= 100 && currentScore < 125) {
       highScoreAward.insertAdjacentHTML("beforeend", "I'm almost impressed.");
     }
 
-    if (currentScore >= 150 && currentScore < 200) {
+    if (currentScore >= 125 && currentScore < 150) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
         "That was actually pretty good."
       );
     }
 
-    if (currentScore >= 200) {
-      highScoreAward.insertAdjacentHTML("beforeend", "Somewhat suspicious.");
+    if (currentScore >= 150 && currentScore < 200) {
+      highScoreAward.insertAdjacentHTML(
+        "beforeend",
+        "The Digital Mongoose has been informed of your progress."
+      );
+    }
+
+    if (currentScore >= 200 && currentScore < 300) {
+      highScoreAward.insertAdjacentHTML("beforeend", "Definitely cheating.");
+    }
+
+    if (currentScore >= 300 && currentScore < 397) {
+      highScoreAward.insertAdjacentHTML(
+        "beforeend",
+        "Assuming you're not cheating, I'm impressed by your commitment and sorry that you have wasted your time."
+      );
+    }
+
+    if (currentScore == 397) {
+      highScoreAward.insertAdjacentHTML(
+        "beforeend",
+        "Congratulations.<br>You have completed the tutorial of Cyber Snake.<br>In Level 001 the food is invisible. You have 3 lives remaining.<br>Good luck."
+      );
+    }
+
+    if (currentScore > 397) {
+      highScoreAward.insertAdjacentHTML("beforeend", "Is that even possible?");
     }
 
     if (currentScore >= 100 && !walls) {
@@ -381,7 +465,6 @@ let scoreBoard = {
     }
   },
 };
-
 
 // Snake constructor
 class Snake {
@@ -625,7 +708,6 @@ function populateSparkArray() {
   }
 }
 
-
 // Game loop with conditions for which functions are called depending on game state
 let gameLoop = function () {
   if (gameState === "PLAY") {
@@ -674,7 +756,6 @@ function showScreen(state) {
     makeVisible(startScreen);
   }
 }
-
 
 // Animation loop
 function animate() {
