@@ -14,7 +14,7 @@ body {
 
 #gameBoard {
   z-index: 0;
-  /* cursor: none; */
+  height: 75vh;
 }
 
 .menuScreen {
@@ -105,24 +105,25 @@ button:hover {
   }
 }
 
-@media (orientation: landscape) {
+@media screen and (min-height: 900px) and (orientation: landscape) {
   #gameBoard {
     width: auto;
-    height: 80vh;
+    height: 100vh;
   }
-}
 
-@media screen and (min-width: 800px) and (orientation: landscape) {
+
+@media screen and (min-width: 1024px) and (orientation: landscape),
+        screen and (min-height: 900px) and (orientation: portrait) {
   body {
     font-size: 1.2rem;
   }
 }
 
-@media screen and (min-width: 1024px) and (orientation: landscape) {
+/* @media screen and (min-width: 1024px) and (orientation: landscape) {
   body {
     font-size: 1.4rem;
   }
   #highScores {
     padding: 0 40%;
   }
-}
+} */
