@@ -42,25 +42,27 @@ h1 {
 
 @keyframes glow {
   from {
-    text-shadow: 0 0 0.1em #fff, 0 0 0.2em #fff, 0 0 0.3em #e60073, 0 0 0.4em #e60073, 0 0 0.5em #e60073, 0 0 0.6em #e60073, 0 0 0.7em #e60073;
+    text-shadow: 0 0 0.1em #fff, 0 0 0.2em #e60073, 0 0 0.3em #e60073,
+      0 0 0.4em #e60073, 0 0 0.5em #e60073, 0 0 0.6em #e60073, 0 0 0.7em #e60073;
   }
-  
+
   to {
-    text-shadow: 0 0 0.2em #fff, 0 0 0.3em #ff4da6, 0 0 0.4em #ff4da6, 0 0 0.5em #ff4da6, 0 0 0.6em #ff4da6, 0 0 0.7em #ff4da6, 0 0 0.8em #ff4da6;
+    text-shadow: 0 0 0.2em #fff, 0 0 0.3em #ff4da6, 0 0 0.4em #ff4da6,
+      0 0 0.5em #ff4da6, 0 0 0.6em #ff4da6, 0 0 0.7em #ff4da6, 0 0 0.8em #ff4da6;
   }
 }
 
 .desktop-controls-text {
-    color: #ffb329;
+  color: #ffb329;
 }
 
 .mobile-controls-text {
-    color: #36da34;
+  color: #36da34;
 }
 
 .special-menu-text {
-    color: #ff31e6;
-    text-shadow: 0 0 1em;
+  color: #ff31e6;
+  text-shadow: 0 0 1em;
 }
 
 #highScoreAward {
@@ -110,7 +112,7 @@ button:hover {
   }
 }
 
-@media screen and (min-width: 768px) and (orientation: landscape) {
+@media screen and (min-width: 768px) and (min-height: 570px) and (orientation: landscape) {
   body {
     font-size: 1.2rem;
   }
@@ -121,6 +123,6 @@ button:hover {
     font-size: 1.4rem;
   }
   #highScores {
-  padding: 0 40%;
-}
+    padding: 0 40%;
+  }
 }
