@@ -108,11 +108,11 @@ button:hover {
 @media (orientation: landscape) {
   #gameBoard {
     width: auto;
-    height: 100vh;
+    height: 80vh;
   }
 }
 
-@media screen and (min-height: 570px) and (orientation: landscape) {
+@media screen and (min-width: 800px) and (orientation: landscape) {
   body {
     font-size: 1.2rem;
   }
