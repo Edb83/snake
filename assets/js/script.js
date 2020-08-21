@@ -82,7 +82,7 @@ let mc = new Hammer(document.querySelector("body"));
 mc.get(touchGesture).set({ direction: Hammer.DIRECTION_ALL });
 mc.get("pinch").set({ enable: true });
 mc.on(
-  `${touchGesture}left ${touchGesture}right ${touchGesture}up ${touchGesture}down`,
+  `${touchGesture}left ${touchGesture}right ${touchGesture}up ${touchGesture}down pinchin pinchout`,
   function (e) {
     if (Date.now() - lastKey > safeDelay) {
       if (e.type === `${touchGesture}left` && direction !== "right") {
