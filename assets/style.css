@@ -6,17 +6,23 @@ body {
 }
 
 #gameContainer {
-  display: flex;
+  display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+  display: -ms-flexbox; /* TWEENER - IE 10 */
+  display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+  display: flex; /* NEW, Spec - Firefox, Chrome, Opera */
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  position: relative;
 }
 
 #gameBoard {
   z-index: 0;
+  flex: initial;
 }
 
 .menuScreen {
+  display: block;
   position: absolute;
   text-align: center;
   justify-content: center;
@@ -42,12 +48,14 @@ h1 {
 @keyframes glow {
   from {
     text-shadow: 0 0 0.1em #fff, 0 0 0.2em #e60073, 0 0 0.3em #e60073,
-      0 0 0.4rem #e60073, 0 0 0.5rem #e60073, 0 0 0.6rem #e60073, 0 0 0.7rem #e60073;
+      0 0 0.4rem #e60073, 0 0 0.5rem #e60073, 0 0 0.6rem #e60073,
+      0 0 0.7rem #e60073;
   }
 
   to {
     text-shadow: 0 0 0.2em #fff, 0 0 0.3em #ff4da6, 0 0 0.4em #ff4da6,
-      0 0 0.5rem #ff4da6, 0 0 0.6rem #ff4da6, 0 0 0.7rem #ff4da6, 0 0 0.8rem #ff4da6;
+      0 0 0.5rem #ff4da6, 0 0 0.6rem #ff4da6, 0 0 0.7rem #ff4da6,
+      0 0 0.8rem #ff4da6;
   }
 }
 
