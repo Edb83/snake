@@ -96,10 +96,10 @@ mc.on(
       }
     }
     lastKey = Date.now();
-    if (e.type == "pinch" && gameState === "PLAY") {
+    if (e.type == "pinchout" && gameState === "PLAY") {
       changeState("PAUSE");
       clearInterval(myInterval);
-    } else if (e.type == "pinch" && gameState === "PAUSE") {
+    } else if (e.type == "pinchin" && gameState === "PAUSE") {
       changeState("PLAY");
       myInterval = setInterval(function () {
         gameLoop();
