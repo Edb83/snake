@@ -329,22 +329,22 @@ let scoreBoard = {
     if (currentScore > currentHighScore) {
       highScoreAward.innerHTML = `You're improving.</br>You beat your previous high score by ${
         currentScore - currentHighScore
-      }!`;
+      }.`;
     }
 
-    if (currentScore >= 50 && currentScore < 100) {
+    if (currentScore >= 50 && currentScore < 100 && currentScore < currentHighScore) {
         highScoreAward.innerHTML = `Yes.</br>But I've seen better.`
     }
 
-    if (currentScore >= 100 && currentScore < 150) {
+    if (currentScore >= 100 && currentScore < 150 && currentScore < currentHighScore) {
         highScoreAward.innerHTML = `Hmm.</br>I'm almost impressed.`
     }
 
-    if (currentScore >= 150 && currentScore < 200) {
+    if (currentScore >= 150 && currentScore < 200 && currentScore < currentHighScore) {
         highScoreAward.innerHTML = `OK.</br>That was good.`
     }
 
-    if (currentScore >= 200) {
+    if (currentScore >= 200 && currentScore < currentHighScore) {
         highScoreAward.innerHTML = `Well.</br>That's suspicious.`
     }
 
