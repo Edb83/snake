@@ -78,7 +78,7 @@ document.addEventListener("keydown", keyboardHandler);
 
 let mc = new Hammer.Manager(document.querySelector("body"));
 
-mc.add(new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 0 }));
+mc.add(new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 10, pointers: 1 }));
 mc.add(new Hammer.Tap({ event: "tripletap", taps: 3 }));
 
 // this will block the vertical scrolling on a touch-device while on the body element
