@@ -2,7 +2,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #001437;
-  font-size: 1rem;
+  font-size: 14px;
 }
 
 #gameContainer {
@@ -19,7 +19,6 @@ body {
 
 .menuScreen {
   position: absolute;
-  flex-direction: column;
   text-align: center;
   justify-content: center;
   align-items: center;
@@ -111,14 +110,17 @@ button:hover {
   }
 }
 
-@media screen and (min-width: 768px) and (min-height: 535px) {
+@media screen and (min-width: 768px) and (orientation: landscape) {
   body {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1024px) and (orientation: landscape) {
   body {
-    font-size: 2rem;
+    font-size: 1.4rem;
   }
+  #highScores {
+  padding: 0 40%;
+}
 }

@@ -22,8 +22,6 @@ let walls;
 let gameAudio;
 let touchGesture = "pan"; // this can be switched to 'swipe' to change reading of input on mobile devices (accessing hammer.js)
 
-
-
 const eatSound = document.getElementById("eatSound");
 const gameOverSound = document.getElementById("gameoverSound");
 const wallsCheckBox = document.querySelector("#wallsCheckBox");
@@ -78,13 +76,15 @@ function keyboardHandler(e) {
 
 document.addEventListener("keydown", keyboardHandler);
 
-let mc = new Hammer(document.querySelector("body"));
+let mc = new Hammer.Manager(document.querySelector("body"));
 
-// this will block the vertical scrolling on a touch-device while on the element
-mc.get(touchGesture).set({ direction: Hammer.DIRECTION_ALL });
+mc.add(new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 0 }));
+mc.add(new Hammer.Tap({ event: "tripletap", taps: 3 }));
+
+// this will block the vertical scrolling on a touch-device while on the body element
 
 mc.on(
-  `${touchGesture}left ${touchGesture}right ${touchGesture}up ${touchGesture}down press`,
+  `${touchGesture}left ${touchGesture}right ${touchGesture}up ${touchGesture}down tripletap`,
   function (e) {
     if (Date.now() - lastKey > safeDelay) {
       if (e.type === `${touchGesture}left` && direction !== "right") {
@@ -98,40 +98,19 @@ mc.on(
       }
     }
     lastKey = Date.now();
+
+    if (e.type == "tripletap" && gameState === "PLAY") {
+      changeState("PAUSE");
+      clearInterval(myInterval);
+    } else if (e.type == "tripletap" && gameState === "PAUSE") {
+      changeState("PLAY");
+      myInterval = setInterval(function () {
+        gameLoop();
+      }, gameSpeed);
+      animate();
+    }
   }
 );
-
-// let mc;
-
-// function addTouchControls() {
-//   mc = new Hammer(document.querySelector("body"));
-  
-//   // this will block the vertical scrolling on a touch-device while on the element
-//   mc.get(touchGesture).set({ direction: Hammer.DIRECTION_ALL });
-
-//   // listen to events...
-//   mc.on(
-//     `${touchGesture}left ${touchGesture}right ${touchGesture}up ${touchGesture}down press`,
-//     function (e) {
-//       if (Date.now() - lastKey > safeDelay) {
-//         if (e.type === `${touchGesture}left` && direction !== "right") {
-//           direction = "left";
-//         } else if (e.type === `${touchGesture}up` && direction !== "down") {
-//           direction = "up";
-//         } else if (e.type === `${touchGesture}right` && direction !== "left") {
-//           direction = "right";
-//         } else if (e.type === `${touchGesture}down` && direction !== "up") {
-//           direction = "down";
-//         }
-//       }
-//       lastKey = Date.now();
-//     }
-//   );
-// }
-
-// function removeTouchControls() {
-//   mc.remove(touchGesture);
-// }
 
 function recalculateGameAssets() {
   let formerFoodCoordinates = food;
@@ -169,7 +148,6 @@ window.addEventListener("resize", recalculateGameAssets);
 
 // Orientation change event listener
 window.addEventListener("orientationchange", recalculateGameAssets);
-
 
 // GAME INITIALISATION
 const gameBoard = document.getElementById("gameBoard");
@@ -248,8 +226,6 @@ let gameArea = {
   },
 };
 
-
-
 let newSnake = function () {
   snake = new Snake(15 * tile, 15 * tile, "rgba(223,0,254,1)");
 };
@@ -292,12 +268,6 @@ let newGame = function () {
     gameLoop();
   }, gameSpeed);
 };
-
-
-
-
-
-
 
 // Scoreboard object
 
@@ -362,12 +332,11 @@ let scoreBoard = {
       scoreOl.appendChild(newScoreLi);
     }
     let scoreLi = document.querySelectorAll("li");
-    for (let i = 0; i < scoreLi.length; i ++) {
-        if (scoreLi[i].textContent == currentScore) {
-            scoreLi[i].classList.add("special-menu-text")
-        }
+    for (let i = 0; i < scoreLi.length; i++) {
+      if (scoreLi[i].textContent == currentScore) {
+        scoreLi[i].classList.add("special-menu-text");
+      }
     }
-    
   },
 };
 
@@ -426,7 +395,11 @@ class Snake {
     this.x = x;
     this.y = y;
     this.color = color;
-    this.array = [{ x: this.x, y: this.y }, { x: this.x + tile, y: this.y }, { x: this.x + (tile * 2), y: this.y }];
+    this.array = [
+      { x: this.x, y: this.y },
+      { x: this.x + tile, y: this.y },
+      { x: this.x + tile * 2, y: this.y },
+    ];
   }
 
   get newHead() {
@@ -518,7 +491,6 @@ class Snake {
       if (gameAudio === true) {
         eatSound.play();
       }
-      
     } else {
       this.array.unshift(this.newHead);
       this.array.pop();
@@ -583,7 +555,10 @@ class Spark {
     this.dy = dy;
     this.radius = randomNumber(tile / 10, tile / 4);
     this.color = food.color;
-    this.gravity = randomNumber(dynamicSparkGravity(), dynamicSparkGravity() * 2);
+    this.gravity = randomNumber(
+      dynamicSparkGravity(),
+      dynamicSparkGravity() * 2
+    );
     this.friction = randomNumber(0.4, 0.6);
     this.ttl = 25; // time to live ticks
     this.opacity = 1;
