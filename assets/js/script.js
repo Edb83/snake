@@ -76,15 +76,13 @@ function keyboardHandler(e) {
 
 document.addEventListener("keydown", keyboardHandler);
 
-let mc = new Hammer.Manager(document.querySelector("body"));
+let mc = new Hammer(document.querySelector("body"));
 
-mc.add(new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 10, pointers: 1 }));
-mc.add(new Hammer.Tap({ event: "tripletap", taps: 3 }));
-
-// this will block the vertical scrolling on a touch-device while on the body element
-
+// this will block the vertical scrolling on a touch-device while on the element
+mc.get(touchGesture).set({ direction: Hammer.DIRECTION_ALL });
+mc.get("pinch").set({ enable: true });
 mc.on(
-  `${touchGesture}left ${touchGesture}right ${touchGesture}up ${touchGesture}down tripletap`,
+  `${touchGesture}left ${touchGesture}right ${touchGesture}up ${touchGesture}down`,
   function (e) {
     if (Date.now() - lastKey > safeDelay) {
       if (e.type === `${touchGesture}left` && direction !== "right") {
@@ -98,11 +96,10 @@ mc.on(
       }
     }
     lastKey = Date.now();
-
-    if (e.type == "tripletap" && gameState === "PLAY") {
+    if (e.type == "pinch" && gameState === "PLAY") {
       changeState("PAUSE");
       clearInterval(myInterval);
-    } else if (e.type == "tripletap" && gameState === "PAUSE") {
+    } else if (e.type == "pinch" && gameState === "PAUSE") {
       changeState("PLAY");
       myInterval = setInterval(function () {
         gameLoop();
