@@ -76,13 +76,18 @@ function keyboardHandler(e) {
 
 document.addEventListener("keydown", keyboardHandler);
 
-let mc = new Hammer(document.querySelector("body"));
 
-// this will block the vertical scrolling on a touch-device while on the element
-mc.get(touchGesture).set({ direction: Hammer.DIRECTION_ALL });
-mc.get("pinch").set({ enable: true });
-mc.on(
-  `${touchGesture}left ${touchGesture}right ${touchGesture}up ${touchGesture}down pinchin pinchout`,
+// Hammertime event listener
+let hammertime = new Hammer.Manager(document.querySelector("body"));
+
+hammertime.add(new Hammer.Pan({direction: Hammer.DIRECTION_ALL}));
+hammertime.add(new Hammer.Tap({event: "doubletap", taps: 2}))
+
+hammertime.get(touchGesture);
+hammertime.get("doubletap");
+
+hammertime.on(
+  `${touchGesture}left ${touchGesture}right ${touchGesture}up ${touchGesture}down doubletap`,
   function (e) {
     if (Date.now() - lastKey > safeDelay) {
       if (e.type === `${touchGesture}left` && direction !== "right") {
@@ -96,10 +101,10 @@ mc.on(
       }
     }
     lastKey = Date.now();
-    if (e.type == "pinchout" && gameState === "PLAY") {
+    if (e.type == "doubletap" && gameState === "PLAY") {
       changeState("PAUSE");
       clearInterval(myInterval);
-    } else if (e.type == "pinchin" && gameState === "PAUSE") {
+    } else if (e.type == "doubletap" && gameState === "PAUSE") {
       changeState("PLAY");
       myInterval = setInterval(function () {
         gameLoop();
