@@ -321,11 +321,33 @@ let scoreBoard = {
   print: function () {
     let highScoreAward = document.getElementById("highScoreAward");
     highScoreAward.innerHTML = "";
+    
+    if (isNaN(currentHighScore)) {
+        highScoreAward.innerHTML = `Congratulations.</br>You got a new high score.`
+    }
+
     if (currentScore > currentHighScore) {
-      highScoreAward.innerHTML = `Congratulations!</br>You beat your previous high score by ${
+      highScoreAward.innerHTML = `You're improving.</br>You beat your previous high score by ${
         currentScore - currentHighScore
       }!`;
     }
+
+    if (currentScore > 50) {
+        highScoreAward.innerHTML = `Yes.</br>But I've seen better.`
+    }
+
+    if (currentScore > 100) {
+        highScoreAward.innerHTML = `Hmm.</br>I'm almost impressed.`
+    }
+
+    if (currentScore > 150) {
+        highScoreAward.innerHTML = `OK.</br>That was good.`
+    }
+
+    if (currentScore > 200) {
+        highScoreAward.innerHTML = `Well.</br>That's suspicious.`
+    }
+
     let scoreOl = document.querySelector("ol");
     scoreOl.innerHTML = "";
     for (let i = 0; i < 5; i++) {
@@ -335,7 +357,7 @@ let scoreBoard = {
     }
     let scoreLi = document.querySelectorAll("li");
     for (let i = 0; i < scoreLi.length; i++) {
-      if (scoreLi[i].textContent == currentScore) {
+      if (scoreLi[i].textContent == currentScore && currentScore != 0) {
         scoreLi[i].classList.add("special-menu-text");
       }
     }
