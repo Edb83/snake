@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
+
 body {
   margin: 0;
   padding: 0;
@@ -6,11 +13,14 @@ body {
 }
 
 #gameContainer {
-  display: -webkit-box; /* OLD - iOS 6-, Safari 3.1-6, BB7 */
-  display: -ms-flexbox; /* TWEENER - IE 10 */
-  display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
-  display: flex; /* NEW, Spec - Firefox, Chrome, Opera */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   min-height: 100vh;
   position: relative;
@@ -18,6 +28,8 @@ body {
 
 #gameBoard {
   z-index: 0;
+  -webkit-box-flex: initial;
+  -ms-flex: initial;
   flex: initial;
 }
 
@@ -25,7 +37,11 @@ body {
   display: block;
   position: absolute;
   text-align: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   padding: 15px;
   background-color: #001437;
@@ -41,8 +57,21 @@ body {
 h1 {
   color: #fff;
   -webkit-animation: glow 1s ease-in-out infinite alternate;
-  -moz-animation: glow 1s ease-in-out infinite alternate;
   animation: glow 1s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 0.1em #fff, 0 0 0.2em #e60073, 0 0 0.3em #e60073,
+      0 0 0.4rem #e60073, 0 0 0.5rem #e60073, 0 0 0.6rem #e60073,
+      0 0 0.7rem #e60073;
+  }
+
+  to {
+    text-shadow: 0 0 0.2em #fff, 0 0 0.3em #ff4da6, 0 0 0.4em #ff4da6,
+      0 0 0.5rem #ff4da6, 0 0 0.6rem #ff4da6, 0 0 0.7rem #ff4da6,
+      0 0 0.8rem #ff4da6;
+  }
 }
 
 @keyframes glow {

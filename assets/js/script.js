@@ -76,12 +76,11 @@ function keyboardHandler(e) {
 
 document.addEventListener("keydown", keyboardHandler);
 
-
 // Hammertime event listener
 let hammertime = new Hammer.Manager(document.querySelector("body"));
 
-hammertime.add(new Hammer.Pan({direction: Hammer.DIRECTION_ALL}));
-hammertime.add(new Hammer.Tap({event: "doubletap", taps: 2}))
+hammertime.add(new Hammer.Pan({ direction: Hammer.DIRECTION_ALL }));
+hammertime.add(new Hammer.Tap({ event: "doubletap", taps: 2 }));
 
 hammertime.get(touchGesture);
 hammertime.get("doubletap");
@@ -321,31 +320,56 @@ let scoreBoard = {
   print: function () {
     let highScoreAward = document.getElementById("highScoreAward");
     highScoreAward.innerHTML = "";
-    
-    if (isNaN(currentHighScore)) {
-        highScoreAward.innerHTML = `Congratulations.</br>You got a new high score.`
+
+    if (isNaN(currentHighScore) && currentScore !== 0) {
+      highScoreAward.innerHTML = `Wow. You took part.`;
     }
 
     if (currentScore > currentHighScore) {
-      highScoreAward.innerHTML = `You're improving.</br>You beat your previous high score by ${
+      highScoreAward.innerHTML = `You're improving. You beat your previous high score by ${
         currentScore - currentHighScore
-      }.`;
+      }.</br>`;
     }
 
-    if (currentScore >= 50 && currentScore < 100 && currentScore < currentHighScore) {
-        highScoreAward.innerHTML = `Yes.</br>But I've seen better.`
+    if (currentScore < 1) {
+      highScoreAward.insertAdjacentHTML("beforeend", "Whoops!");
     }
 
-    if (currentScore >= 100 && currentScore < 150 && currentScore < currentHighScore) {
-        highScoreAward.innerHTML = `Hmm.</br>I'm almost impressed.`
+    if (
+      currentScore > 1 &&
+      currentScore < 10 &&
+      currentScore < currentHighScore
+    ) {
+      highScoreAward.insertAdjacentHTML(
+        "beforeend",
+        `${currentScore}. Really?`
+      );
     }
 
-    if (currentScore >= 150 && currentScore < 200 && currentScore < currentHighScore) {
-        highScoreAward.innerHTML = `OK.</br>That was good.`
+    if (currentScore >= 50 && currentScore < 100) {
+      highScoreAward.insertAdjacentHTML("beforeend", "I've seen better.");
     }
 
-    if (currentScore >= 200 && currentScore < currentHighScore) {
-        highScoreAward.innerHTML = `Well.</br>That's suspicious.`
+    if (currentScore >= 100 && currentScore < 150) {
+      highScoreAward.insertAdjacentHTML("beforeend", "I'm almost impressed.");
+    }
+
+    if (currentScore >= 150 && currentScore < 200) {
+      highScoreAward.insertAdjacentHTML(
+        "beforeend",
+        "That was actually pretty good."
+      );
+    }
+
+    if (currentScore >= 200) {
+      highScoreAward.insertAdjacentHTML("beforeend", "Somewhat suspicious.");
+    }
+
+    if (currentScore >= 100 && !walls) {
+      highScoreAward.insertAdjacentHTML(
+        "beforeend",
+        "..<br>You've got walls disabled btw."
+      );
     }
 
     let scoreOl = document.querySelector("ol");
