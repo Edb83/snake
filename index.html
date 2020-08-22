@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
     <link
       href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap"
       rel="stylesheet"
@@ -28,12 +28,24 @@
     <div id="gameContainer">
       <div id="startScreen" class="visible menuScreen">
         <h1>Cyber Snake</h1>
-        <p>Use the <span class="desktop-controls-text">ARROW keys</span> or <span class="mobile-controls-text">SWIPE</span> anywhere to change direction</p>
-        <p>Press <span class="desktop-controls-text">SPACE</span> or <span class="mobile-controls-text">DOUBLE TAP</span> to pause</p>
-        <p>The more you eat, the bigger you grow and the <span class="special-menu-text">messier</span> things become</p>
+        <p>
+          Use the <span class="desktop-controls-text">ARROW keys</span> or
+          <span class="mobile-controls-text">SWIPE</span> anywhere to change
+          direction
+        </p>
+        <p>
+          Press <span class="desktop-controls-text">SPACE</span> or
+          <span class="mobile-controls-text">DOUBLE TAP</span> to pause
+        </p>
+        <p>
+          The more you eat, the bigger you grow and the
+          <span class="special-menu-text">messier</span> things become
+        </p>
         <p>Don't eat yourself</p>
-        <button onclick="newGame()">Play</button>
-        <button onclick="changeState('OPTIONS')">Options</button>
+        <div class="menu-buttons-container">
+          <button onclick="newGame()">Play</button>
+          <button onclick="changeState('OPTIONS')">Options</button>
+        </div>
       </div>
 
       <div id="scoresScreen" class="hidden menuScreen">
@@ -43,28 +55,28 @@
         <div id="highScores">
           <ol></ol>
         </div>
-        <button onclick="newGame()">Play</button>
-        <button onclick="changeState('OPTIONS')">Options</button>
-        <button onclick="changeState('MENU')">Instructions</button>
+        <div class="menu-buttons-container">
+          <button onclick="newGame()">Play</button>
+          <button onclick="changeState('OPTIONS')">Options</button>
+          <button onclick="changeState('MENU')">Instructions</button>
+        </div>
       </div>
       <div id="optionsScreen" class="hidden menuScreen">
         <h1>Options</h1>
         <div>
           <p>Sound<input id="audioCheckBox" type="checkbox" checked /></p>
           <p>Walls<input id="wallsCheckBox" type="checkbox" /></p>
-          <p>
-            <button onclick="scoreBoard.resetArray()">
+          <div class="menu-buttons-container">
+            <!-- <button onclick="scoreBoard.resetArray()">
               Reset session scores
             </button>
-          </p>
-          <p>
             <button
               onclick="scoreBoard.resetArray(); scoreBoard.resetHighScore()"
             >
               Reset ALL scores
-            </button>
-          </p>
-          <p><button onclick="changeState('GAMEOVER')">Back</button></p>
+            </button> -->
+            <button onclick="changeState('GAMEOVER')">Back</button>
+          </div>
         </div>
       </div>
       <canvas id="gameBoard"></canvas>

@@ -117,7 +117,7 @@ h1 {
   visibility: hidden;
 }
 
-button {
+.menu-buttons-container button {
   display: inline-block;
   height: 25px;
   min-width: 90px;
@@ -128,7 +128,7 @@ button {
   border-radius: 5%;
 }
 
-button:hover {
+.menu-buttons-container button:hover {
   background-color: #3e9485;
   color: #fff;
   border: solid 1px #fff;
