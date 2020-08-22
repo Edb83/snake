@@ -50,8 +50,32 @@ function convertSecondsToMs(d) {
   return mDisplay + sDisplay;
 }
 
-function toggleWalls() { // MOVE TO GAME OBJECT?
+function toggleWalls() {
+  // MOVE TO GAME OBJECT?
   walls = !walls;
+}
+
+function loadDefaultSettings() {
+  collisionDetected = false;
+  ateFood = false;
+  sparkArray.length = 0;
+  direction = "left";
+  scoreBoard.getCurrentHighScore();
+  previousScore = currentScore;
+  currentScore = 0;
+  tileToSparkDRatio = 0.1;
+
+  if (wallsCheckBox.checked) {
+    walls = true;
+  } else {
+    walls = false;
+  }
+
+  if (audioCheckBox.checked) {
+    gameAudio = true;
+  } else {
+    gameAudio = false;
+  }
 }
 
 // Color array
@@ -80,10 +104,10 @@ function keyboardHandler(e) {
   }
   lastKey = Date.now();
   if (e.keyCode == 32 && gameState === "PLAY") {
-    changeState("PAUSE");
+    game.changeState("PAUSE");
     clearInterval(gameRefreshInterval);
   } else if (e.keyCode == 32 && gameState === "PAUSE") {
-    changeState("PLAY");
+    game.changeState("PLAY");
     gameRefreshInterval = setInterval(function () {
       gameLoop();
     }, gameSpeed);
@@ -95,37 +119,35 @@ document.addEventListener("keydown", keyboardHandler);
 
 // Hammertime event listener
 let hammertime = new Hammer.Manager(document.querySelector("body"));
+
 hammertime.add(new Hammer.Pan({ direction: Hammer.DIRECTION_ALL }));
 hammertime.add(new Hammer.Tap({ event: "doubletap", taps: 2 }));
 hammertime.get("pan");
 hammertime.get("doubletap");
-hammertime.on(
-  `panleft panright panup pandown doubletap`,
-  function (e) {
-    if (Date.now() - lastKey > safeDelay) {
-      if (e.type === `panleft` && direction !== "right") {
-        direction = "left";
-      } else if (e.type === `panup` && direction !== "down") {
-        direction = "up";
-      } else if (e.type === `panright` && direction !== "left") {
-        direction = "right";
-      } else if (e.type === `pandown` && direction !== "up") {
-        direction = "down";
-      }
-    }
-    lastKey = Date.now();
-    if (e.type == "doubletap" && gameState === "PLAY") {
-      changeState("PAUSE");
-      clearInterval(gameRefreshInterval);
-    } else if (e.type == "doubletap" && gameState === "PAUSE") {
-      changeState("PLAY");
-      gameRefreshInterval = setInterval(function () {
-        gameLoop();
-      }, gameSpeed);
-      animate();
+hammertime.on(`panleft panright panup pandown doubletap`, function (e) {
+  if (Date.now() - lastKey > safeDelay) {
+    if (e.type === `panleft` && direction !== "right") {
+      direction = "left";
+    } else if (e.type === `panup` && direction !== "down") {
+      direction = "up";
+    } else if (e.type === `panright` && direction !== "left") {
+      direction = "right";
+    } else if (e.type === `pandown` && direction !== "up") {
+      direction = "down";
     }
   }
-);
+  lastKey = Date.now();
+  if (e.type == "doubletap" && gameState === "PLAY") {
+    game.changeState("PAUSE");
+    clearInterval(gameRefreshInterval);
+  } else if (e.type == "doubletap" && gameState === "PAUSE") {
+    game.changeState("PLAY");
+    gameRefreshInterval = setInterval(function () {
+      gameLoop();
+    }, gameSpeed);
+    animate();
+  }
+});
 
 function recalculateGameAssets() {
   let formerFoodCoordinates = food;
@@ -192,36 +214,19 @@ let newGame = function () {
   gameArea.checkOrientation(); // could refactor?
   gameArea.setGameBoardSize();
   gameArea.setTileSize();
-  collisionDetected = false;
-  ateFood = false;
-  sparkArray.length = 0;
-  direction = "left";
-  scoreBoard.getCurrentHighScore();
-  previousScore = currentScore;
-  currentScore = 0;
-  tileToSparkDRatio = 0.1;
 
-  if (wallsCheckBox.checked) {
-    walls = true;
-  } else {
-    walls = false;
-  }
-
-  if (audioCheckBox.checked) {
-    gameAudio = true;
-  } else {
-    gameAudio = false;
-  }
+  loadDefaultSettings();
 
   newSnake();
   newFood();
-  changeState("PLAY");
+  game.changeState("PLAY");
   animate();
 
   stats.updateGamesPlayed();
   gameStartTime = Date.now();
 
   gameRefreshInterval = setInterval(function () {
+    // refactor
     gameLoop();
   }, gameSpeed);
 };
@@ -431,7 +436,11 @@ let scoreBoard = {
       );
     }
 
-    if (currentScore >= 100 && currentScore < 125 && (currentHighScore < 100 || isNaN(currentHighScore))) {
+    if (
+      currentScore >= 100 &&
+      currentScore < 125 &&
+      (currentHighScore < 100 || isNaN(currentHighScore))
+    ) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
         `That's quite the milestone you've hit.<br>And it only took you ${gamesPlayedAllTime} attempts!`
@@ -481,7 +490,7 @@ let scoreBoard = {
     }
 
     if (currentScore === previousScore && currentScore !== 0) {
-        highScoreAward.innerHTML = `Oops you did it again.`;
+      highScoreAward.innerHTML = `Oops you did it again.`;
     }
 
     let scoreOl = document.querySelector("ol");
@@ -586,7 +595,6 @@ class Snake {
   }
   advance() {
     if (collisionDetected === true) {
-        
       if (gameAudio === true) {
         gameOverSound.play();
       }
@@ -594,8 +602,7 @@ class Snake {
       previousGameLength = Math.round((Date.now() - gameStartTime) / 1000);
       scoreBoard.update();
       scoreBoard.print();
-      changeState("GAMEOVER");
-
+      game.changeState("GAMEOVER");
     } else if (ateFood === true) {
       this.array.unshift(this.newHead);
       populateSparkArray();
@@ -760,40 +767,75 @@ let gameLoop = function () {
   }
 };
 
+let game = {
+  changeState: function (state) {
+    gameState = state;
+    this.showScreen(state);
+  },
+
+  makeVisible: function (screen) {
+    screen.style.visibility = "visible";
+  },
+
+  makeHidden: function (screen) {
+    screen.style.visibility = "hidden";
+  },
+  showScreen: function (state) {
+    if (state === "PLAY") {
+      this.makeHidden(startScreen);
+      this.makeHidden(scoresScreen);
+    }
+    if (state === "GAMEOVER") {
+      this.makeHidden(optionsScreen);
+      this.makeVisible(scoresScreen);
+    }
+    if (state === "OPTIONS") {
+      this.makeHidden(startScreen);
+      this.makeHidden(scoresScreen);
+      this.makeVisible(optionsScreen);
+    }
+    if (state === "MENU") {
+      this.makeHidden(scoresScreen);
+      this.makeHidden(optionsScreen);
+      this.makeVisible(startScreen);
+    }
+  },
+};
+
 // Game state selection
-function changeState(state) {
-  gameState = state;
-  showScreen(state);
-}
+// function changeState(state) {
+//   gameState = state;
+//   showScreen(state);
+// }
 
-function makeVisible(screen) {
-  screen.style.visibility = "visible";
-}
+// function makeVisible(screen) {
+//   screen.style.visibility = "visible";
+// }
 
-function makeHidden(screen) {
-  screen.style.visibility = "hidden";
-}
+// function makeHidden(screen) {
+//   screen.style.visibility = "hidden";
+// }
 
-function showScreen(state) {
-  if (state === "PLAY") {
-    makeHidden(startScreen);
-    makeHidden(scoresScreen);
-  }
-  if (state === "GAMEOVER") {
-    makeHidden(optionsScreen);
-    makeVisible(scoresScreen);
-  }
-  if (state === "OPTIONS") {
-    makeHidden(startScreen);
-    makeHidden(scoresScreen);
-    makeVisible(optionsScreen);
-  }
-  if (state === "MENU") {
-    makeHidden(scoresScreen);
-    makeHidden(optionsScreen);
-    makeVisible(startScreen);
-  }
-}
+// function showScreen(state) {
+//   if (state === "PLAY") {
+//     makeHidden(startScreen);
+//     makeHidden(scoresScreen);
+//   }
+//   if (state === "GAMEOVER") {
+//     makeHidden(optionsScreen);
+//     makeVisible(scoresScreen);
+//   }
+//   if (state === "OPTIONS") {
+//     makeHidden(startScreen);
+//     makeHidden(scoresScreen);
+//     makeVisible(optionsScreen);
+//   }
+//   if (state === "MENU") {
+//     makeHidden(scoresScreen);
+//     makeHidden(optionsScreen);
+//     makeVisible(startScreen);
+//   }
+// }
 
 // Animation loop
 function animate() {
