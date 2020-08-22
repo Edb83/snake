@@ -214,7 +214,7 @@ let newGame = function () {
   gameArea.checkOrientation(); // could refactor?
   gameArea.setGameBoardSize();
   gameArea.setTileSize();
-
+  scoreBoard.getCurrentHighScore();
   game.loadDefaultSettings();
 
   newSnake();
@@ -805,7 +805,7 @@ let game = {
     ateFood = false;
     sparkArray.length = 0;
     direction = "left";
-    scoreBoard.getCurrentHighScore();
+
     previousScore = currentScore;
     currentScore = 0;
     tileToSparkDRatio = 0.1;
