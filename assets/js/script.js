@@ -16,7 +16,7 @@ const sparkArray = [];
 
 let direction; // MOVE TO SNAKE OBJECT?
 
-let lastKey = 0; // used to store time since last keydown - MOVE TO OBJECT?
+let lastKey; // used to store time since last keydown
 const gameSpeed = 140; // MOVE TO GAME OBJECT?
 const safeDelay = 140; // used to add minimum interval between key presses to prevent snake eating its neck (milliseconds). Risk vs Responsiveness
 let gameRefreshInterval; // MOVE TO GAME OBJECT?
@@ -49,34 +49,6 @@ function convertSecondsToMs(d) {
   var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
   return mDisplay + sDisplay;
 }
-
-// function toggleWalls() {
-//   // MOVE TO GAME OBJECT?
-//   walls = !walls;
-// }
-
-// function loadDefaultSettings() {
-//   collisionDetected = false;
-//   ateFood = false;
-//   sparkArray.length = 0;
-//   direction = "left";
-//   scoreBoard.getCurrentHighScore();
-//   previousScore = currentScore;
-//   currentScore = 0;
-//   tileToSparkDRatio = 0.1;
-
-//   if (wallsCheckBox.checked) {
-//     walls = true;
-//   } else {
-//     walls = false;
-//   }
-
-//   if (audioCheckBox.checked) {
-//     gameAudio = true;
-//   } else {
-//     gameAudio = false;
-//   }
-// }
 
 // Color array
 const colorArray = [
@@ -594,8 +566,8 @@ class Snake {
     }
   }
   advance() {
-    if (collisionDetected === true) {
-      if (gameAudio === true) {
+    if (collisionDetected) {
+      if (gameAudio) {
         gameOverSound.play();
       }
 
@@ -603,14 +575,14 @@ class Snake {
       scoreBoard.update();
       scoreBoard.print();
       game.changeState("GAMEOVER");
-    } else if (ateFood === true) {
+    } else if (ateFood) {
       this.array.unshift(this.newHead);
       populateSparkArray();
       newFood();
       currentScore++;
       tileToSparkDRatio += 0.0025;
 
-      if (gameAudio === true) {
+      if (gameAudio) {
         eatSound.play();
       }
     } else {
@@ -805,7 +777,7 @@ let game = {
     ateFood = false;
     sparkArray.length = 0;
     direction = "left";
-
+    lastKey = 0;
     previousScore = currentScore;
     currentScore = 0;
     tileToSparkDRatio = 0.1;
@@ -826,41 +798,6 @@ let game = {
     walls = !walls;
   },
 };
-
-// Game state selection
-// function changeState(state) {
-//   gameState = state;
-//   showScreen(state);
-// }
-
-// function makeVisible(screen) {
-//   screen.style.visibility = "visible";
-// }
-
-// function makeHidden(screen) {
-//   screen.style.visibility = "hidden";
-// }
-
-// function showScreen(state) {
-//   if (state === "PLAY") {
-//     makeHidden(startScreen);
-//     makeHidden(scoresScreen);
-//   }
-//   if (state === "GAMEOVER") {
-//     makeHidden(optionsScreen);
-//     makeVisible(scoresScreen);
-//   }
-//   if (state === "OPTIONS") {
-//     makeHidden(startScreen);
-//     makeHidden(scoresScreen);
-//     makeVisible(optionsScreen);
-//   }
-//   if (state === "MENU") {
-//     makeHidden(scoresScreen);
-//     makeHidden(optionsScreen);
-//     makeVisible(startScreen);
-//   }
-// }
 
 // Animation loop
 function animate() {
