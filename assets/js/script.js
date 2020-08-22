@@ -38,13 +38,13 @@ function randomNumber(min, max) {
 // Time convertor
 // https://stackoverflow.com/questions/37096367/how-to-convert-seconds-to-minutes-and-hours-in-javascript/37096923
 function convertSecondsToMs(d) {
-    d = Number(d);
-    var m = Math.floor(d % 3600 / 60);
-    var s = Math.floor(d % 3600 % 60);
+  d = Number(d);
+  var m = Math.floor((d % 3600) / 60);
+  var s = Math.floor((d % 3600) % 60);
 
-    var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
-    var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
-    return mDisplay + sDisplay; 
+  var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+  var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+  return mDisplay + sDisplay;
 }
 
 function toggleWalls() {
@@ -194,6 +194,7 @@ let newGame = function () {
   sparkArray.length = 0;
   direction = "left";
   scoreBoard.getCurrentHighScore();
+  previousScore = currentScore;
   currentScore = 0;
   tileToSparkDRatio = 0.1;
 
@@ -295,7 +296,7 @@ let stats = {
 // Scoreboard object
 
 let scoreBoard = {
-    array: [],
+  array: [],
   update: function () {
     if (this.array.includes(currentScore) || currentScore === 0) {
       return;
@@ -346,7 +347,6 @@ let scoreBoard = {
       highScoreAward.innerHTML = `You're off the mark, so to speak. `;
     }
 
-
     if (currentScore > currentHighScore) {
       highScoreAward.innerHTML = `Signs of improvement. You beat your previous high score by ${
         currentScore - currentHighScore
@@ -354,7 +354,7 @@ let scoreBoard = {
     }
 
     if (currentScore === 0) {
-      highScoreAward.insertAdjacentHTML("beforeend", `Whoops!`);
+      highScoreAward.innerHTML = `Whoops!`;
     }
 
     if (
@@ -428,17 +428,18 @@ let scoreBoard = {
       );
     }
 
-    if (
-      currentScore >= 100 &&
-      currentScore < 125 &&
-      (currentHighScore < 100 || isNaN(currentHighScore))
-    ) {
+    if (currentScore >= 100 && currentScore < 125 && (currentHighScore < 100 || isNaN(currentHighScore))) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
         `That's quite the milestone you've hit.<br>And it only took you ${gamesPlayedAllTime} attempts!`
       );
     } else if (currentScore >= 100 && currentScore < 125) {
-      highScoreAward.insertAdjacentHTML("beforeend", `It took you ${convertSecondsToMs(previousGameLength)} to disappoint me on this occasion.`);
+      highScoreAward.insertAdjacentHTML(
+        "beforeend",
+        `It only took you ${convertSecondsToMs(
+          previousGameLength
+        )} to disappoint me on this occasion.`
+      );
     }
     if (currentScore >= 125 && currentScore < 150) {
       highScoreAward.insertAdjacentHTML(
@@ -476,7 +477,6 @@ let scoreBoard = {
       highScoreAward.insertAdjacentHTML("beforeend", `Is that even possible?`);
     }
 
-    
     if (currentScore === previousScore && currentScore !== 0) {
         highScoreAward.innerHTML = `Oops you did it again.`;
     }
@@ -583,14 +583,16 @@ class Snake {
   }
   advance() {
     if (collisionDetected === true) {
+        
       if (gameAudio === true) {
         gameOverSound.play();
       }
-      previousScore = currentScore;
+
+      previousGameLength = Math.round((Date.now() - gameStartTime) / 1000);
       scoreBoard.update();
       scoreBoard.print();
       changeState("GAMEOVER");
-      previousGameLength = Math.round((Date.now() - gameStartTime) / 1000);
+
     } else if (ateFood === true) {
       this.array.unshift(this.newHead);
       populateSparkArray();
