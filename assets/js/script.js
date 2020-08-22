@@ -1,29 +1,33 @@
 // Global variables
-let gameState = "MENU";
+let gameState = "MENU"; // MOVE TO GAME OBJECT?
+
+let gamesPlayedThisSession = 0; // MOVE TO STATS OBJECT?
 let gamesPlayedAllTime = parseInt(localStorage.getItem("games")) || 0;
-let gamesPlayedThisSession = 0;
+
+let previousScore; // MOVE TO SCOREBOARD OBJECT?
+let currentScore; // MOVE TO SCOREBOARD OBJECT?
+let currentHighScore; // MOVE TO SCOREBOARD OBJECT?
 let highScore = parseInt(localStorage.getItem("top")) || 0; // all time high score (since reset)
-let currentHighScore; // highest score since window refresh
-let currentScore; // score this game
-let previousScore; // score last game
-let gameStartTime;
-let previousGameLength;
+
+let gameStartTime; // MOVE TO STATS OBJECT?
+let previousGameLength; // MOVE TO STATS OBJECT?
+
 const sparkArray = [];
 
-let direction;
-const gameSpeed = 140; // fed into setInterval for game updates (ie game speed)
-let lastKey = 0; // used to store time since last keydown
+let direction; // MOVE TO SNAKE OBJECT?
+
+let lastKey = 0; // used to store time since last keydown - MOVE TO OBJECT?
+const gameSpeed = 140; // MOVE TO GAME OBJECT?
 const safeDelay = 140; // used to add minimum interval between key presses to prevent snake eating its neck (milliseconds). Risk vs Responsiveness
-let myInterval;
+let gameRefreshInterval; // MOVE TO GAME OBJECT?
 
 let snake;
 let food;
-let collisionDetected;
-let ateFood;
+let collisionDetected; // MOVE TO GAME OBJECT?
+let ateFood; // MOVE TO GAME OBJECT?
 
-let walls;
-let gameAudio;
-let touchGesture = "pan"; // this can be switched to 'swipe' to change reading of input on mobile devices (accessing hammer.js)
+let walls; // MOVE TO GAME OBJECT?
+let gameAudio; // MOVE TO GAME OBJECT?
 
 const eatSound = document.getElementById("eatSound");
 const gameOverSound = document.getElementById("gameoverSound");
@@ -36,7 +40,6 @@ function randomNumber(min, max) {
 }
 
 // Time convertor
-// https://stackoverflow.com/questions/37096367/how-to-convert-seconds-to-minutes-and-hours-in-javascript/37096923
 function convertSecondsToMs(d) {
   d = Number(d);
   var m = Math.floor((d % 3600) / 60);
@@ -47,7 +50,7 @@ function convertSecondsToMs(d) {
   return mDisplay + sDisplay;
 }
 
-function toggleWalls() {
+function toggleWalls() { // MOVE TO GAME OBJECT?
   walls = !walls;
 }
 
@@ -78,10 +81,10 @@ function keyboardHandler(e) {
   lastKey = Date.now();
   if (e.keyCode == 32 && gameState === "PLAY") {
     changeState("PAUSE");
-    clearInterval(myInterval);
+    clearInterval(gameRefreshInterval);
   } else if (e.keyCode == 32 && gameState === "PAUSE") {
     changeState("PLAY");
-    myInterval = setInterval(function () {
+    gameRefreshInterval = setInterval(function () {
       gameLoop();
     }, gameSpeed);
     animate();
@@ -94,29 +97,29 @@ document.addEventListener("keydown", keyboardHandler);
 let hammertime = new Hammer.Manager(document.querySelector("body"));
 hammertime.add(new Hammer.Pan({ direction: Hammer.DIRECTION_ALL }));
 hammertime.add(new Hammer.Tap({ event: "doubletap", taps: 2 }));
-hammertime.get(touchGesture);
+hammertime.get("pan");
 hammertime.get("doubletap");
 hammertime.on(
-  `${touchGesture}left ${touchGesture}right ${touchGesture}up ${touchGesture}down doubletap`,
+  `panleft panright panup pandown doubletap`,
   function (e) {
     if (Date.now() - lastKey > safeDelay) {
-      if (e.type === `${touchGesture}left` && direction !== "right") {
+      if (e.type === `panleft` && direction !== "right") {
         direction = "left";
-      } else if (e.type === `${touchGesture}up` && direction !== "down") {
+      } else if (e.type === `panup` && direction !== "down") {
         direction = "up";
-      } else if (e.type === `${touchGesture}right` && direction !== "left") {
+      } else if (e.type === `panright` && direction !== "left") {
         direction = "right";
-      } else if (e.type === `${touchGesture}down` && direction !== "up") {
+      } else if (e.type === `pandown` && direction !== "up") {
         direction = "down";
       }
     }
     lastKey = Date.now();
     if (e.type == "doubletap" && gameState === "PLAY") {
       changeState("PAUSE");
-      clearInterval(myInterval);
+      clearInterval(gameRefreshInterval);
     } else if (e.type == "doubletap" && gameState === "PAUSE") {
       changeState("PLAY");
-      myInterval = setInterval(function () {
+      gameRefreshInterval = setInterval(function () {
         gameLoop();
       }, gameSpeed);
       animate();
@@ -218,7 +221,7 @@ let newGame = function () {
   stats.updateGamesPlayed();
   gameStartTime = Date.now();
 
-  myInterval = setInterval(function () {
+  gameRefreshInterval = setInterval(function () {
     gameLoop();
   }, gameSpeed);
 };
@@ -752,7 +755,7 @@ let gameLoop = function () {
     snake.update();
     scoreBoard.updateHighScore();
   } else {
-    clearInterval(myInterval);
+    clearInterval(gameRefreshInterval);
     return;
   }
 };
