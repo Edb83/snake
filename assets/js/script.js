@@ -5,13 +5,15 @@ let gamesPlayedThisSession = 0;
 let highScore = parseInt(localStorage.getItem("top")) || 0; // all time high score (since reset)
 let currentHighScore; // highest score since window refresh
 let currentScore; // score this game
-const scoreBoardArray = []; // top five scores since window refresh
+let previousScore; // score last game
+let gameStartTime;
+let previousGameLength;
 const sparkArray = [];
 
 let direction;
 const gameSpeed = 140; // fed into setInterval for game updates (ie game speed)
 let lastKey = 0; // used to store time since last keydown
-const safeDelay = 140; // used to add minimum interval between key presses to prevent snake eating its neck (milliseconds)
+const safeDelay = 140; // used to add minimum interval between key presses to prevent snake eating its neck (milliseconds). Risk vs Responsiveness
 let myInterval;
 
 let snake;
@@ -31,6 +33,18 @@ const audioCheckBox = document.querySelector("#audioCheckBox");
 // Random number generator
 function randomNumber(min, max) {
   return Math.random() * (max - min) + min;
+}
+
+// Time convertor
+// https://stackoverflow.com/questions/37096367/how-to-convert-seconds-to-minutes-and-hours-in-javascript/37096923
+function convertSecondsToMs(d) {
+    d = Number(d);
+    var m = Math.floor(d % 3600 / 60);
+    var s = Math.floor(d % 3600 % 60);
+
+    var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+    var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+    return mDisplay + sDisplay; 
 }
 
 function toggleWalls() {
@@ -201,7 +215,8 @@ let newGame = function () {
   animate();
 
   stats.updateGamesPlayed();
-  
+  gameStartTime = Date.now();
+
   myInterval = setInterval(function () {
     gameLoop();
   }, gameSpeed);
@@ -270,22 +285,23 @@ let gameArea = {
 // Stats object
 
 let stats = {
-    updateGamesPlayed: function() {
-        gamesPlayedThisSession ++;
-        gamesPlayedAllTime += 1;
-        localStorage.setItem("games", gamesPlayedAllTime);
-    },
-}
+  updateGamesPlayed: function () {
+    gamesPlayedThisSession++;
+    gamesPlayedAllTime += 1;
+    localStorage.setItem("games", gamesPlayedAllTime);
+  },
+};
 
 // Scoreboard object
 
 let scoreBoard = {
+    array: [],
   update: function () {
-    if (scoreBoardArray.includes(currentScore) || currentScore === 0) {
+    if (this.array.includes(currentScore) || currentScore === 0) {
       return;
     } else {
-      scoreBoardArray.push(currentScore);
-      scoreBoardArray.sort((a, b) => b - a);
+      this.array.push(currentScore);
+      this.array.sort((a, b) => b - a);
     }
   },
   getCurrentHighScore: function () {
@@ -300,7 +316,7 @@ let scoreBoard = {
     }
   },
   resetArray: function () {
-    scoreBoardArray.length = 0;
+    this.array.length = 0;
     currentScore = 0;
     score = 0;
     this.print();
@@ -330,6 +346,7 @@ let scoreBoard = {
       highScoreAward.innerHTML = `You're off the mark, so to speak. `;
     }
 
+
     if (currentScore > currentHighScore) {
       highScoreAward.innerHTML = `Signs of improvement. You beat your previous high score by ${
         currentScore - currentHighScore
@@ -343,7 +360,7 @@ let scoreBoard = {
     if (
       currentScore >= 1 &&
       currentScore < 10 &&
-      currentScore <= currentHighScore
+      currentScore < currentHighScore
     ) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
@@ -411,10 +428,17 @@ let scoreBoard = {
       );
     }
 
-    if (currentScore >= 100 && currentScore < 125 && (currentHighScore < 100 || isNaN(currentHighScore))) {
-      highScoreAward.insertAdjacentHTML("beforeend", `That's quite the milestone you've hit.<br>And it only took you ${gamesPlayedAllTime} attempts!`);
-    } else if (currentScore >= 100 && currentScore < 125 ) {
-      highScoreAward.insertAdjacentHTML("beforeend", `Oops you did it again.`)
+    if (
+      currentScore >= 100 &&
+      currentScore < 125 &&
+      (currentHighScore < 100 || isNaN(currentHighScore))
+    ) {
+      highScoreAward.insertAdjacentHTML(
+        "beforeend",
+        `That's quite the milestone you've hit.<br>And it only took you ${gamesPlayedAllTime} attempts!`
+      );
+    } else if (currentScore >= 100 && currentScore < 125) {
+      highScoreAward.insertAdjacentHTML("beforeend", `It took you ${convertSecondsToMs(previousGameLength)} to disappoint me on this occasion.`);
     }
     if (currentScore >= 125 && currentScore < 150) {
       highScoreAward.insertAdjacentHTML(
@@ -452,11 +476,16 @@ let scoreBoard = {
       highScoreAward.insertAdjacentHTML("beforeend", `Is that even possible?`);
     }
 
+    
+    if (currentScore === previousScore && currentScore !== 0) {
+        highScoreAward.innerHTML = `Oops you did it again.`;
+    }
+
     let scoreOl = document.querySelector("ol");
     scoreOl.innerHTML = "";
     for (let i = 0; i < 5; i++) {
       let newScoreLi = document.createElement("li");
-      newScoreLi.textContent = scoreBoardArray[i];
+      newScoreLi.textContent = this.array[i];
       scoreOl.appendChild(newScoreLi);
     }
     let scoreLi = document.querySelectorAll("li");
@@ -557,9 +586,11 @@ class Snake {
       if (gameAudio === true) {
         gameOverSound.play();
       }
+      previousScore = currentScore;
       scoreBoard.update();
       scoreBoard.print();
       changeState("GAMEOVER");
+      previousGameLength = Math.round((Date.now() - gameStartTime) / 1000);
     } else if (ateFood === true) {
       this.array.unshift(this.newHead);
       populateSparkArray();
