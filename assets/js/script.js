@@ -50,33 +50,33 @@ function convertSecondsToMs(d) {
   return mDisplay + sDisplay;
 }
 
-function toggleWalls() {
-  // MOVE TO GAME OBJECT?
-  walls = !walls;
-}
+// function toggleWalls() {
+//   // MOVE TO GAME OBJECT?
+//   walls = !walls;
+// }
 
-function loadDefaultSettings() {
-  collisionDetected = false;
-  ateFood = false;
-  sparkArray.length = 0;
-  direction = "left";
-  scoreBoard.getCurrentHighScore();
-  previousScore = currentScore;
-  currentScore = 0;
-  tileToSparkDRatio = 0.1;
+// function loadDefaultSettings() {
+//   collisionDetected = false;
+//   ateFood = false;
+//   sparkArray.length = 0;
+//   direction = "left";
+//   scoreBoard.getCurrentHighScore();
+//   previousScore = currentScore;
+//   currentScore = 0;
+//   tileToSparkDRatio = 0.1;
 
-  if (wallsCheckBox.checked) {
-    walls = true;
-  } else {
-    walls = false;
-  }
+//   if (wallsCheckBox.checked) {
+//     walls = true;
+//   } else {
+//     walls = false;
+//   }
 
-  if (audioCheckBox.checked) {
-    gameAudio = true;
-  } else {
-    gameAudio = false;
-  }
-}
+//   if (audioCheckBox.checked) {
+//     gameAudio = true;
+//   } else {
+//     gameAudio = false;
+//   }
+// }
 
 // Color array
 const colorArray = [
@@ -215,7 +215,7 @@ let newGame = function () {
   gameArea.setGameBoardSize();
   gameArea.setTileSize();
 
-  loadDefaultSettings();
+  game.loadDefaultSettings();
 
   newSnake();
   newFood();
@@ -799,6 +799,31 @@ let game = {
       this.makeHidden(optionsScreen);
       this.makeVisible(startScreen);
     }
+  },
+  loadDefaultSettings: function () {
+    collisionDetected = false;
+    ateFood = false;
+    sparkArray.length = 0;
+    direction = "left";
+    scoreBoard.getCurrentHighScore();
+    previousScore = currentScore;
+    currentScore = 0;
+    tileToSparkDRatio = 0.1;
+
+    if (wallsCheckBox.checked) {
+      walls = true;
+    } else {
+      walls = false;
+    }
+
+    if (audioCheckBox.checked) {
+      gameAudio = true;
+    } else {
+      gameAudio = false;
+    }
+  },
+  toggleWalls: function () {
+    walls = !walls;
   },
 };
 
