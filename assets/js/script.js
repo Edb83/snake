@@ -1,6 +1,7 @@
 // Global variables
 let gameState = "MENU";
-let gamesPlayed = 0;
+let gamesPlayedAllTime = parseInt(localStorage.getItem("games")) || 0;
+let gamesPlayedThisSession = 0;
 let highScore = parseInt(localStorage.getItem("top")) || 0; // all time high score (since reset)
 let currentHighScore; // highest score since window refresh
 let currentScore; // score this game
@@ -199,7 +200,8 @@ let newGame = function () {
   changeState("PLAY");
   animate();
 
-  gamesPlayed++;
+  stats.updateGamesPlayed();
+  
   myInterval = setInterval(function () {
     gameLoop();
   }, gameSpeed);
@@ -265,6 +267,16 @@ let gameArea = {
   },
 };
 
+// Stats object
+
+let stats = {
+    updateGamesPlayed: function() {
+        gamesPlayedThisSession ++;
+        gamesPlayedAllTime += 1;
+        localStorage.setItem("games", gamesPlayedAllTime);
+    },
+}
+
 // Scoreboard object
 
 let scoreBoard = {
@@ -296,7 +308,7 @@ let scoreBoard = {
   resetHighScore: function () {
     localStorage.removeItem("top");
     highScore = 0;
-    if (gamesPlayed > 0) {
+    if (gamesPlayedThisSession > 0) {
       animate();
     }
   },
@@ -315,23 +327,23 @@ let scoreBoard = {
     highScoreAward.innerHTML = "";
 
     if (isNaN(currentHighScore) && currentScore !== 0) {
-      highScoreAward.innerHTML = `Wow. You took part.`;
+      highScoreAward.innerHTML = `You're off the mark, so to speak. `;
     }
 
     if (currentScore > currentHighScore) {
-      highScoreAward.innerHTML = `You're improving. You beat your previous high score by ${
+      highScoreAward.innerHTML = `Signs of improvement. You beat your previous high score by ${
         currentScore - currentHighScore
       }.</br>`;
     }
 
-    if (currentScore < 1) {
+    if (currentScore === 0) {
       highScoreAward.insertAdjacentHTML("beforeend", `Whoops!`);
     }
 
     if (
-      currentScore > 1 &&
+      currentScore >= 1 &&
       currentScore < 10 &&
-      currentScore < currentHighScore
+      currentScore <= currentHighScore
     ) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
@@ -346,7 +358,7 @@ let scoreBoard = {
     if (currentScore >= 20 && currentScore < 30) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
-        `This is Cyber <em>Snake</em>, not Cyber Slow Worm.`
+        `Attempt #${gamesPlayedAllTime} and you got ${currentScore}. Speaks for itself.`
       );
     }
 
@@ -367,87 +379,77 @@ let scoreBoard = {
     if (currentScore >= 50 && currentScore < 60) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
-        "Maybe getting to 50 was good enough for you."
+        `Maybe getting to 50 was good enough for you.`
       );
     }
 
-    if (currentScore >= 60 && currentScore < 70 && currentScore != 69) {
+    if (currentScore >= 60 && currentScore < 70) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
-        `Cyber Snake's pigmentation has been coded to bamboozle the weak of mind.`
+        `FYI this is Cyber <em>Snake</em>, not Cyber Slow Worm.`
       );
-    }
-
-    if (currentScore == 69) {
-      highScoreAward.insertAdjacentHTML("beforeend", "Nice.");
     }
 
     if (currentScore >= 70 && currentScore < 80) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
-        "Don't tell me. You were distracted by the pretty colors."
+        `Don't tell me. You were distracted by the pretty colors.`
       );
     }
 
     if (currentScore >= 80 && currentScore < 90) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
-        "Next time, have a vague strategy."
+        `Next time, have a vague strategy.`
       );
     }
 
     if (currentScore >= 90 && currentScore < 100) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
-        "It would have been better if you got to 100."
+        `It would have been better if you got to 100.`
       );
     }
 
-    if (currentScore >= 100 && currentScore < 125) {
-      highScoreAward.insertAdjacentHTML("beforeend", "I'm almost impressed.");
+    if (currentScore >= 100 && currentScore < 125 && (currentHighScore < 100 || isNaN(currentHighScore))) {
+      highScoreAward.insertAdjacentHTML("beforeend", `That's quite the milestone you've hit.<br>And it only took you ${gamesPlayedAllTime} attempts!`);
+    } else if (currentScore >= 100 && currentScore < 125 ) {
+      highScoreAward.insertAdjacentHTML("beforeend", `Oops you did it again.`)
     }
-
     if (currentScore >= 125 && currentScore < 150) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
-        "That was actually pretty good."
+        `That was actually pretty good.`
       );
     }
 
     if (currentScore >= 150 && currentScore < 200) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
-        "The Digital Mongoose has been informed of your progress."
+        `The Digital Mongoose has been informed of your progress.`
       );
     }
 
     if (currentScore >= 200 && currentScore < 300) {
-      highScoreAward.insertAdjacentHTML("beforeend", "Definitely cheating.");
+      highScoreAward.insertAdjacentHTML("beforeend", `Definitely cheating.`);
     }
 
     if (currentScore >= 300 && currentScore < 397) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
-        "Assuming you're not cheating, I'm impressed by your commitment and sorry that you have wasted your time."
+        `Assuming you're not cheating, I'm impressed by your commitment and sorry that you have wasted your time.`
       );
     }
 
     if (currentScore == 397) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
-        "Congratulations.<br>You have completed the tutorial of Cyber Snake.<br>In Level 001 the food is invisible. You have 3 lives remaining.<br>Good luck."
+        `Congratulations.<br>You have completed the tutorial of Cyber Snake.<br>In Level 001 the food is invisible. You have 3 lives remaining.<br>Good luck.`
       );
     }
 
     if (currentScore > 397) {
-      highScoreAward.insertAdjacentHTML("beforeend", "Is that even possible?");
-    }
-
-    if (currentScore >= 100 && !walls) {
-      highScoreAward.insertAdjacentHTML(
-        "beforeend",
-        "..<br>You've got walls disabled btw."
-      );
+      highScoreAward.insertAdjacentHTML("beforeend", `Is that even possible?`);
     }
 
     let scoreOl = document.querySelector("ol");
