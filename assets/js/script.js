@@ -345,6 +345,7 @@ let scoreBoard = {
   },
   print() {
     let highScoreAward = document.getElementById("highScoreAward");
+    
     highScoreAward.innerHTML = "";
 
     if (isNaN(currentHighScore) && currentScore !== 0) {
@@ -536,84 +537,84 @@ class Snake {
     this.x = this.newHead.x;
     this.y = this.newHead.y;
   }
-  checkCollision() {
-    for (let i = 0; i < this.array.length; i++) {
-      if (
-        this.newHead.x === this.array[i].x &&
-        this.newHead.y === this.array[i].y
-      ) {
-        collisionDetected = true;
-      }
-      if (this.newHead.x > canvas.width - tile && direction === "RIGHT") {
-        if (walls === true) {
-          collisionDetected = true;
-        } else {
-          this.x = -tile;
-        }
-      }
+//   checkCollision() {
+//     for (let i = 0; i < this.array.length; i++) {
+//       if (
+//         this.newHead.x === this.array[i].x &&
+//         this.newHead.y === this.array[i].y
+//       ) {
+//         collisionDetected = true;
+//       }
+//       if (this.newHead.x > canvas.width - tile && direction === "RIGHT") {
+//         if (walls === true) {
+//           collisionDetected = true;
+//         } else {
+//           this.x = -tile;
+//         }
+//       }
 
-      if (this.newHead.x < 0 && direction === "LEFT") {
-        if (walls === true) {
-          collisionDetected = true;
-        } else {
-          this.x = canvas.width;
-        }
-      }
+//       if (this.newHead.x < 0 && direction === "LEFT") {
+//         if (walls === true) {
+//           collisionDetected = true;
+//         } else {
+//           this.x = canvas.width;
+//         }
+//       }
 
-      if (this.newHead.y > canvas.height - tile && direction === "DOWN") {
-        if (walls === true) {
-          collisionDetected = true;
-        } else {
-          this.y = 2 * tile;
-        }
-      }
+//       if (this.newHead.y > canvas.height - tile && direction === "DOWN") {
+//         if (walls === true) {
+//           collisionDetected = true;
+//         } else {
+//           this.y = 2 * tile;
+//         }
+//       }
 
-      if (this.newHead.y < 3 * tile && direction === "UP") {
-        if (walls === true) {
-          collisionDetected = true;
-        } else {
-          this.y = canvas.height;
-        }
-      }
-    }
-  }
-  checkAteFood() {
-    for (let i = 0; i < this.array.length; i++) {
-      if (food.x === this.array[i].x && food.y === this.array[i].y) {
-        newFood(); // if food is within snake body, spawns new food
-      }
-    }
-    if (this.newHead.x === food.x && this.newHead.y === food.y) {
-      ateFood = true;
-    } else {
-      ateFood = false;
-    }
-  }
-  advance() {
-    if (collisionDetected) {
-      if (gameAudio) {
-        gameOverSound.play();
-      }
+//       if (this.newHead.y < 3 * tile && direction === "UP") {
+//         if (walls === true) {
+//           collisionDetected = true;
+//         } else {
+//           this.y = canvas.height;
+//         }
+//       }
+//     }
+//   }
+//   checkAteFood() {
+//     for (let i = 0; i < this.array.length; i++) {
+//       if (food.x === this.array[i].x && food.y === this.array[i].y) {
+//         newFood(); // if food is within snake body, spawns new food
+//       }
+//     }
+//     if (this.newHead.x === food.x && this.newHead.y === food.y) {
+//       ateFood = true;
+//     } else {
+//       ateFood = false;
+//     }
+//   }
+//   advance() {
+//     if (collisionDetected) {
+//       if (gameAudio) {
+//         gameOverSound.play();
+//       }
 
-      gameTimeInSeconds = Math.round((Date.now() - gameStartTime) / 1000);
-      scoreBoard.update();
-      scoreBoard.print();
-      game.changeState("GAMEOVER");
-    } else if (ateFood) {
-      this.array.unshift(this.newHead);
-      populateSparkArray();
-      newFood();
-      currentScore++;
-      tileToSparkDRatio += 0.0025;
+//       gameTimeInSeconds = Math.round((Date.now() - gameStartTime) / 1000);
+//       scoreBoard.update();
+//       scoreBoard.print();
+//       game.changeState("GAMEOVER");
+//     } else if (ateFood) {
+//       this.array.unshift(this.newHead);
+//       populateSparkArray();
+//       newFood();
+//       currentScore++;
+//       tileToSparkDRatio += 0.0025;
 
-      if (gameAudio) {
-        eatSound.play();
-      }
-    } else {
-      this.array.unshift(this.newHead);
-      this.array.pop();
-    }
-  }
+//       if (gameAudio) {
+//         eatSound.play();
+//       }
+//     } else {
+//       this.array.unshift(this.newHead);
+//       this.array.pop();
+//     }
+//   }
   draw() {
     for (let i = 0; i < snake.array.length; i++) {
       ctx.save();
@@ -752,9 +753,9 @@ function populateSparkArray() {
 // Game loop with conditions for which functions are called depending on game state
 let gameLoop = function () {
   if (gameState === "PLAY") {
-    snake.checkCollision();
-    snake.checkAteFood();
-    snake.advance();
+    game.checkSnakeCollision();
+    game.checkAteFood();
+    game.update();
     snake.update();
     scoreBoard.updateHighScore();
   } else {
@@ -824,6 +825,84 @@ let game = {
       gameLoop();
     }, gameSpeed);
   },
+  checkSnakeCollision() {
+    for (let i = 0; i < snake.array.length; i++) {
+      if (
+        snake.newHead.x === snake.array[i].x &&
+        snake.newHead.y === snake.array[i].y
+      ) {
+        collisionDetected = true;
+      }
+      if (snake.newHead.x > canvas.width - tile && direction === "RIGHT") {
+        if (walls === true) {
+          collisionDetected = true;
+        } else {
+          snake.x = -tile;
+        }
+      }
+
+      if (snake.newHead.x < 0 && direction === "LEFT") {
+        if (walls === true) {
+          collisionDetected = true;
+        } else {
+          snake.x = canvas.width;
+        }
+      }
+
+      if (snake.newHead.y > canvas.height - tile && direction === "DOWN") {
+        if (walls === true) {
+          collisionDetected = true;
+        } else {
+          snake.y = 2 * tile;
+        }
+      }
+
+      if (snake.newHead.y < 3 * tile && direction === "UP") {
+        if (walls === true) {
+          collisionDetected = true;
+        } else {
+          snake.y = canvas.height;
+        }
+      }
+    }
+  },
+    checkAteFood() {
+    for (let i = 0; i < snake.array.length; i++) {
+      if (food.x === snake.array[i].x && food.y === snake.array[i].y) {
+        newFood(); // if food is within snake body, spawns new food
+      }
+    }
+    if (snake.newHead.x === food.x && snake.newHead.y === food.y) {
+      ateFood = true;
+    } else {
+      ateFood = false;
+    }
+  },
+  update() {
+    if (collisionDetected) {
+      if (gameAudio) {
+        gameOverSound.play();
+      }
+
+      gameTimeInSeconds = Math.round((Date.now() - gameStartTime) / 1000);
+      scoreBoard.update();
+      scoreBoard.print();
+      game.changeState("GAMEOVER");
+    } else if (ateFood) {
+      snake.array.unshift(snake.newHead);
+      populateSparkArray();
+      newFood();
+      currentScore++;
+      tileToSparkDRatio += 0.0025;
+
+      if (gameAudio) {
+        eatSound.play();
+      }
+    } else {
+      snake.array.unshift(snake.newHead);
+      snake.array.pop();
+    }
+  }
 };
 
 // Animation loop
