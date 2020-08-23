@@ -77,7 +77,7 @@ function keyboardHandler(e) {
   lastKey = Date.now();
   if (e.keyCode == 32 && gameState === "PLAY") {
     game.changeState("PAUSE");
-    clearInterval(gameRefreshInterval);
+    game.stop();
   } else if (e.keyCode == 32 && gameState === "PAUSE") {
     game.changeState("PLAY");
     game.play();
@@ -109,7 +109,7 @@ hammertime.on(`panleft panright panup pandown doubletap`, function (e) {
   lastKey = Date.now();
   if (e.type == "doubletap" && gameState === "PLAY") {
     game.changeState("PAUSE");
-    clearInterval(gameRefreshInterval);
+    game.stop();
   } else if (e.type == "doubletap" && gameState === "PAUSE") {
     game.changeState("PLAY");
     game.play();
@@ -616,16 +616,16 @@ class Snake {
 //     }
 //   }
   draw() {
-    for (let i = 0; i < snake.array.length; i++) {
+    for (let i = 0; i < this.array.length; i++) {
       ctx.save();
       ctx.fillStyle = this.color;
       ctx.shadowColor = this.color;
       ctx.shadowBlur = tile / 2;
-      ctx.fillRect(snake.array[i].x, snake.array[i].y, tile, tile); // fills tiles occupied by snake array's coordinates
+      ctx.fillRect(this.array[i].x, this.array[i].y, tile, tile); // fills tiles occupied by snake array's coordinates
 
       ctx.restore();
       ctx.strokeStyle = "#001437";
-      ctx.strokeRect(snake.array[i].x, snake.array[i].y, tile, tile);
+      ctx.strokeRect(this.array[i].x, this.array[i].y, tile, tile);
     }
   }
 }
@@ -759,8 +759,7 @@ let gameLoop = function () {
     snake.update();
     scoreBoard.updateHighScore();
   } else {
-    clearInterval(gameRefreshInterval);
-    return;
+    game.stop();
   }
 };
 
@@ -824,6 +823,9 @@ let game = {
     gameRefreshInterval = setInterval(function () {
       gameLoop();
     }, gameSpeed);
+  },
+  stop() {
+    clearInterval(gameRefreshInterval);
   },
   checkSnakeCollision() {
     for (let i = 0; i < snake.array.length; i++) {
