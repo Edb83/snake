@@ -149,20 +149,20 @@ hammertime.on(`panleft panright panup pandown doubletap`, function (e) {
 // }
 
 // GAME INITIALISATION
-const gameBoard = document.getElementById("gameBoard");
-const ctx = gameBoard.getContext("2d");
+const canvas = document.getElementById("gameBoard");
+const ctx = canvas.getContext("2d");
 
 const startScreen = document.getElementById("startScreen");
 const scoresScreen = document.getElementById("scoresScreen");
 const optionsScreen = document.getElementById("optionsScreen");
 
-const gameBoardHeightToWidthRatio = 20 / 23; // ie 20 wide, 23 high to account for score area
+const canvasHeightToWidthRatio = 20 / 23; // ie 20 wide, 23 high to account for score area
 
 let orientationPortrait;
 let tile;
 let tileToSparkDRatio;
 
-const gameBoardWidthToLineWidthRatio = 150; // used in gameBoard object
+const canvasWidthToLineWidthRatio = 150; // used in gameBoard object
 const tileToSparkGravityRatio = 0.009; // used in spark object
 const fontRatio = 0.058; // used in scoreBoard object
 
@@ -176,7 +176,7 @@ let newFood = function () {
 
 let newGame = function () {
   gameArea.checkOrientation(); // could refactor?
-  gameArea.setGameBoardSize();
+  gameArea.setCanvasSize();
   gameArea.setTileSize();
   scoreBoard.getCurrentHighScore();
   game.loadDefaultSettings();
@@ -202,19 +202,19 @@ let gameArea = {
       orientationPortrait = false;
     }
   },
-  setGameBoardSize() {
+  setCanvasSize() {
     if (orientationPortrait) {
-      gameBoard.height = window.innerWidth;
+      canvas.height = window.innerWidth;
     } else {
-      gameBoard.height = window.innerHeight;
+      canvas.height = window.innerHeight;
     }
-    while (gameBoard.height % 23 > 0) {
-      gameBoard.height--;
+    while (canvas.height % 23 > 0) {
+      canvas.height--;
     }
-    gameBoard.width = Math.ceil(gameBoard.height * gameBoardHeightToWidthRatio);
+    canvas.width = Math.ceil(canvas.height * canvasHeightToWidthRatio);
   },
   setTileSize() {
-    tile = gameBoard.width / 20;
+    tile = canvas.width / 20;
   },
   recalculateAssets() {
     let formerTileSize = tile;
@@ -224,7 +224,7 @@ let gameArea = {
     let formerSparkArray = sparkArray;
 
     gameArea.checkOrientation();
-    gameArea.setGameBoardSize();
+    gameArea.setCanvasSize();
     gameArea.setTileSize();
 
     food.x = (formerFoodCoordinates.x / formerTileSize) * tile;
@@ -252,11 +252,11 @@ let gameArea = {
     ctx.beginPath();
 
     ctx.fillStyle = "#001437";
-    ctx.fillRect(0, 0, gameBoard.width, tile * 3);
+    ctx.fillRect(0, 0, canvas.width, tile * 3);
 
     // GameBoard Background
     ctx.fillStyle = "#001437";
-    ctx.fillRect(0, tile * 3, gameBoard.width, gameBoard.height);
+    ctx.fillRect(0, tile * 3, canvas.width, canvas.height);
 
     // Walls
     if (walls) {
@@ -264,18 +264,18 @@ let gameArea = {
     } else {
       ctx.strokeStyle = "green";
     }
-    ctx.lineWidth = gameBoard.width / gameBoardWidthToLineWidthRatio;
+    ctx.lineWidth = canvas.width / canvasWidthToLineWidthRatio;
     ctx.strokeRect(
       ctx.lineWidth / 2,
       ctx.lineWidth / 2,
-      gameBoard.width - ctx.lineWidth,
+      canvas.width - ctx.lineWidth,
       3 * tile
     );
     ctx.strokeRect(
       ctx.lineWidth / 2,
       tile * 3 + ctx.lineWidth / 2,
-      gameBoard.width - ctx.lineWidth,
-      gameBoard.height - 3 * tile - ctx.lineWidth
+      canvas.width - ctx.lineWidth,
+      canvas.height - 3 * tile - ctx.lineWidth
     );
 
     ctx.closePath();
@@ -334,14 +334,14 @@ let scoreBoard = {
     }
   },
   getFont() {
-    let fontSize = gameBoard.width * fontRatio;
+    let fontSize = canvas.width * fontRatio;
     return (fontSize | 0) + "px Orbitron";
   },
   draw() {
     ctx.fillStyle = "#fff";
     ctx.font = this.getFont();
     ctx.fillText(currentScore, tile, tile * 2);
-    ctx.fillText(`High score: ${highScore}`, gameBoard.width * 0.45, tile * 2);
+    ctx.fillText(`High score: ${highScore}`, canvas.width * 0.45, tile * 2);
   },
   print() {
     let highScoreAward = document.getElementById("highScoreAward");
@@ -544,7 +544,7 @@ class Snake {
       ) {
         collisionDetected = true;
       }
-      if (this.newHead.x > gameBoard.width - tile && direction === "RIGHT") {
+      if (this.newHead.x > canvas.width - tile && direction === "RIGHT") {
         if (walls === true) {
           collisionDetected = true;
         } else {
@@ -556,11 +556,11 @@ class Snake {
         if (walls === true) {
           collisionDetected = true;
         } else {
-          this.x = gameBoard.width;
+          this.x = canvas.width;
         }
       }
 
-      if (this.newHead.y > gameBoard.height - tile && direction === "DOWN") {
+      if (this.newHead.y > canvas.height - tile && direction === "DOWN") {
         if (walls === true) {
           collisionDetected = true;
         } else {
@@ -572,7 +572,7 @@ class Snake {
         if (walls === true) {
           collisionDetected = true;
         } else {
-          this.y = gameBoard.height;
+          this.y = canvas.height;
         }
       }
     }
@@ -699,14 +699,14 @@ Spark.prototype.update = function () {
   this.draw();
 
   if (
-    this.x + this.dx > gameBoard.width - this.radius ||
+    this.x + this.dx > canvas.width - this.radius ||
     this.x + this.dx < this.radius
   ) {
     this.dx = -this.dx * this.friction;
   }
   this.x += this.dx;
 
-  if (this.y + this.dy > gameBoard.height - this.radius) {
+  if (this.y + this.dy > canvas.height - this.radius) {
     this.dy = -this.dy * this.friction;
     this.dx = this.dx * (this.friction + 0.35); // ensures sparks stop rolling but prevents them stopping too soon
     this.ttl -= 1;
