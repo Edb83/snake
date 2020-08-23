@@ -175,9 +175,9 @@ let newFood = function () {
 };
 
 let newGame = function () {
-  gameArea.checkOrientation(); // could refactor?
-  gameArea.setCanvasSize();
-  gameArea.setTileSize();
+  gameBoard.checkOrientation(); // could refactor?
+  gameBoard.setCanvasSize();
+  gameBoard.setTileSize();
   scoreBoard.getCurrentHighScore();
   game.loadDefaultSettings();
 
@@ -193,7 +193,7 @@ let newGame = function () {
 };
 
 // Game area object
-let gameArea = {
+let gameBoard = {
     
   checkOrientation() {
     if (window.innerWidth <= window.innerHeight) {
@@ -223,9 +223,9 @@ let gameArea = {
     let formerSnakeArray = snake.array;
     let formerSparkArray = sparkArray;
 
-    gameArea.checkOrientation();
-    gameArea.setCanvasSize();
-    gameArea.setTileSize();
+    gameBoard.checkOrientation();
+    gameBoard.setCanvasSize();
+    gameBoard.setTileSize();
 
     food.x = (formerFoodCoordinates.x / formerTileSize) * tile;
     food.y = (formerFoodCoordinates.y / formerTileSize) * tile;
@@ -284,8 +284,8 @@ let gameArea = {
 };
 
 // Window resize and orientationchange event listeners
-window.addEventListener("resize", gameArea.recalculateAssets);
-window.addEventListener("orientationchange", gameArea.recalculateAssets);
+window.addEventListener("resize", gameBoard.recalculateAssets);
+window.addEventListener("orientationchange", gameBoard.recalculateAssets);
 
 // Stats object
 
@@ -828,7 +828,7 @@ let game = {
 
 // Animation loop
 function animate() {
-  gameArea.draw();
+  gameBoard.draw();
   food.draw();
   scoreBoard.draw();
   snake.draw();
