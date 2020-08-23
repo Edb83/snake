@@ -117,37 +117,6 @@ hammertime.on(`panleft panright panup pandown doubletap`, function (e) {
   }
 });
 
-// function recalculateGameAssets() {
-//   let formerFoodCoordinates = food;
-//   let formerSnakeCoordinates = snake;
-//   let formerSnakeArray = snake.array;
-//   let formerSparkArray = sparkArray;
-//   let formerTileSize = tile;
-
-//   gameArea.checkOrientation(); // could refactor?
-//   gameArea.setGameBoardSize();
-//   gameArea.setTileSize();
-
-//   food.x = (formerFoodCoordinates.x / formerTileSize) * tile;
-//   food.y = (formerFoodCoordinates.y / formerTileSize) * tile;
-
-//   snake.x = (formerSnakeCoordinates.x / formerTileSize) * tile;
-//   snake.y = (formerSnakeCoordinates.y / formerTileSize) * tile;
-
-//   let i;
-//   for (i = 0; i < formerSnakeArray.length; i++) {
-//     snake.array[i].x = (formerSnakeArray[i].x / formerTileSize) * tile;
-//     snake.array[i].y = (formerSnakeArray[i].y / formerTileSize) * tile;
-//   }
-//   for (i = 0; i < formerSparkArray.length; i++) {
-//     sparkArray[i].x = (formerSparkArray[i].x / formerTileSize) * tile;
-//     sparkArray[i].y = (formerSparkArray[i].y / formerTileSize) * tile;
-//   }
-//   if (gameState !== "PLAY") {
-//     animate();
-//   }
-// }
-
 // GAME INITIALISATION
 const canvas = document.getElementById("gameBoard");
 const ctx = canvas.getContext("2d");
@@ -194,7 +163,6 @@ let newGame = function () {
 
 // Game area object
 let gameBoard = {
-    
   checkOrientation() {
     if (window.innerWidth <= window.innerHeight) {
       orientationPortrait = true;
@@ -217,33 +185,35 @@ let gameBoard = {
     tile = canvas.width / 20;
   },
   recalculateAssets() {
-    let formerTileSize = tile;
-    let formerFoodCoordinates = food;
-    let formerSnakeCoordinates = snake;
-    let formerSnakeArray = snake.array;
-    let formerSparkArray = sparkArray;
+    if (gameState === "PLAY" || gamesPlayedThisSession > 0) {
+      let formerTileSize = tile;
+      let formerFoodCoordinates = food;
+      let formerSnakeCoordinates = snake;
+      let formerSnakeArray = snake.array;
+      let formerSparkArray = sparkArray;
 
-    gameBoard.checkOrientation();
-    gameBoard.setCanvasSize();
-    gameBoard.setTileSize();
+      gameBoard.checkOrientation();
+      gameBoard.setCanvasSize();
+      gameBoard.setTileSize();
 
-    food.x = (formerFoodCoordinates.x / formerTileSize) * tile;
-    food.y = (formerFoodCoordinates.y / formerTileSize) * tile;
+      food.x = (formerFoodCoordinates.x / formerTileSize) * tile;
+      food.y = (formerFoodCoordinates.y / formerTileSize) * tile;
 
-    snake.x = (formerSnakeCoordinates.x / formerTileSize) * tile;
-    snake.y = (formerSnakeCoordinates.y / formerTileSize) * tile;
+      snake.x = (formerSnakeCoordinates.x / formerTileSize) * tile;
+      snake.y = (formerSnakeCoordinates.y / formerTileSize) * tile;
 
-    let i;
-    for (i = 0; i < formerSnakeArray.length; i++) {
-      snake.array[i].x = (formerSnakeArray[i].x / formerTileSize) * tile;
-      snake.array[i].y = (formerSnakeArray[i].y / formerTileSize) * tile;
-    }
-    for (i = 0; i < formerSparkArray.length; i++) {
-      sparkArray[i].x = (formerSparkArray[i].x / formerTileSize) * tile;
-      sparkArray[i].y = (formerSparkArray[i].y / formerTileSize) * tile;
-    }
-    if (gameState !== "PLAY") {
-      animate();
+      let i;
+      for (i = 0; i < formerSnakeArray.length; i++) {
+        snake.array[i].x = (formerSnakeArray[i].x / formerTileSize) * tile;
+        snake.array[i].y = (formerSnakeArray[i].y / formerTileSize) * tile;
+      }
+      for (i = 0; i < formerSparkArray.length; i++) {
+        sparkArray[i].x = (formerSparkArray[i].x / formerTileSize) * tile;
+        sparkArray[i].y = (formerSparkArray[i].y / formerTileSize) * tile;
+      }
+      if (gameState !== "PLAY") {
+        animate();
+      }
     }
   },
   draw() {
@@ -345,7 +315,7 @@ let scoreBoard = {
   },
   print() {
     let highScoreAward = document.getElementById("highScoreAward");
-    
+
     highScoreAward.innerHTML = "";
 
     if (isNaN(currentHighScore) && currentScore !== 0) {
@@ -537,84 +507,7 @@ class Snake {
     this.x = this.newHead.x;
     this.y = this.newHead.y;
   }
-//   checkCollision() {
-//     for (let i = 0; i < this.array.length; i++) {
-//       if (
-//         this.newHead.x === this.array[i].x &&
-//         this.newHead.y === this.array[i].y
-//       ) {
-//         collisionDetected = true;
-//       }
-//       if (this.newHead.x > canvas.width - tile && direction === "RIGHT") {
-//         if (walls === true) {
-//           collisionDetected = true;
-//         } else {
-//           this.x = -tile;
-//         }
-//       }
-
-//       if (this.newHead.x < 0 && direction === "LEFT") {
-//         if (walls === true) {
-//           collisionDetected = true;
-//         } else {
-//           this.x = canvas.width;
-//         }
-//       }
-
-//       if (this.newHead.y > canvas.height - tile && direction === "DOWN") {
-//         if (walls === true) {
-//           collisionDetected = true;
-//         } else {
-//           this.y = 2 * tile;
-//         }
-//       }
-
-//       if (this.newHead.y < 3 * tile && direction === "UP") {
-//         if (walls === true) {
-//           collisionDetected = true;
-//         } else {
-//           this.y = canvas.height;
-//         }
-//       }
-//     }
-//   }
-//   checkAteFood() {
-//     for (let i = 0; i < this.array.length; i++) {
-//       if (food.x === this.array[i].x && food.y === this.array[i].y) {
-//         newFood(); // if food is within snake body, spawns new food
-//       }
-//     }
-//     if (this.newHead.x === food.x && this.newHead.y === food.y) {
-//       ateFood = true;
-//     } else {
-//       ateFood = false;
-//     }
-//   }
-//   advance() {
-//     if (collisionDetected) {
-//       if (gameAudio) {
-//         gameOverSound.play();
-//       }
-
-//       gameTimeInSeconds = Math.round((Date.now() - gameStartTime) / 1000);
-//       scoreBoard.update();
-//       scoreBoard.print();
-//       game.changeState("GAMEOVER");
-//     } else if (ateFood) {
-//       this.array.unshift(this.newHead);
-//       populateSparkArray();
-//       newFood();
-//       currentScore++;
-//       tileToSparkDRatio += 0.0025;
-
-//       if (gameAudio) {
-//         eatSound.play();
-//       }
-//     } else {
-//       this.array.unshift(this.newHead);
-//       this.array.pop();
-//     }
-//   }
+ 
   draw() {
     for (let i = 0; i < this.array.length; i++) {
       ctx.save();
@@ -868,7 +761,7 @@ let game = {
       }
     }
   },
-    checkAteFood() {
+  checkAteFood() {
     for (let i = 0; i < snake.array.length; i++) {
       if (food.x === snake.array[i].x && food.y === snake.array[i].y) {
         newFood(); // if food is within snake body, spawns new food
@@ -904,7 +797,7 @@ let game = {
       snake.array.unshift(snake.newHead);
       snake.array.pop();
     }
-  }
+  },
 };
 
 // Animation loop
