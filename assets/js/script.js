@@ -26,7 +26,7 @@ let food;
 let collisionDetected; // MOVE TO GAME OBJECT?
 let ateFood; // MOVE TO GAME OBJECT?
 
-let walls; // MOVE TO GAME OBJECT?
+let wallsEnabled; // MOVE TO GAME OBJECT?
 let gameAudio; // MOVE TO GAME OBJECT?
 
 const eatSound = document.getElementById("eatSound");
@@ -229,7 +229,7 @@ let gameBoard = {
     ctx.fillRect(0, tile * 3, canvas.width, canvas.height);
 
     // Walls
-    if (walls) {
+    if (wallsEnabled) {
       ctx.strokeStyle = "red";
     } else {
       ctx.strokeStyle = "green";
@@ -318,6 +318,12 @@ let scoreBoard = {
 
     highScoreAward.innerHTML = "";
 
+    function scoreRange(min,max) {
+        if(currentScore >= min && currentScore < (max + 1)) {
+            return true;
+        }
+    }
+
     if (isNaN(currentHighScore) && currentScore !== 0) {
       highScoreAward.innerHTML = `You're off the mark, so to speak. `;
     }
@@ -343,60 +349,60 @@ let scoreBoard = {
       );
     }
 
-    if (currentScore >= 10 && currentScore < 20) {
+    if (scoreRange(10,19)) {
       highScoreAward.insertAdjacentHTML("beforeend", `Double digits, is it?`);
     }
 
-    if (currentScore >= 20 && currentScore < 30) {
+    if (scoreRange(20,29)) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
         `Attempt #${gamesPlayedAllTime} and you got ${currentScore}. Speaks for itself.`
       );
     }
 
-    if (currentScore >= 30 && currentScore < 40) {
+    if (scoreRange(30,39)) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
         `Was it worth it, just to get ${currentScore}?`
       );
     }
 
-    if (currentScore >= 40 && currentScore < 50) {
+    if (scoreRange(40,49)) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
         `The Nanite Narwhal would be proud.`
       );
     }
 
-    if (currentScore >= 50 && currentScore < 60) {
+    if (scoreRange(50,59)) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
         `Maybe getting to 50 was good enough for you.`
       );
     }
 
-    if (currentScore >= 60 && currentScore < 70) {
+    if (scoreRange(60,69)) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
         `FYI this is Cyber <em>Snake</em>, not Cyber Slow Worm.`
       );
     }
 
-    if (currentScore >= 70 && currentScore < 80) {
+    if (scoreRange(70,79)) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
         `Don't tell me. You were distracted by the pretty colors.`
       );
     }
 
-    if (currentScore >= 80 && currentScore < 90) {
+    if (scoreRange(80,89)) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
         `Next time, have a vague strategy.`
       );
     }
 
-    if (currentScore >= 90 && currentScore < 100) {
+    if (scoreRange(90,99)) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
         `It would have been better if you got to 100.`
@@ -412,7 +418,7 @@ let scoreBoard = {
         "beforeend",
         `That's quite the milestone you've hit.<br>And it only took you ${gamesPlayedAllTime} attempts!`
       );
-    } else if (currentScore >= 100 && currentScore < 125) {
+    } else if (scoreRange(100,124)) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
         `It only took you ${convertSecondsToMs(
@@ -420,25 +426,25 @@ let scoreBoard = {
         )} to disappoint me on this occasion.`
       );
     }
-    if (currentScore >= 125 && currentScore < 150) {
+    if (scoreRange(125,149)) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
         `That was actually pretty good.`
       );
     }
 
-    if (currentScore >= 150 && currentScore < 200) {
+    if (scoreRange(150,199)) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
         `The Digital Mongoose has been informed of your progress.`
       );
     }
 
-    if (currentScore >= 200 && currentScore < 300) {
+    if (scoreRange(200,299)) {
       highScoreAward.insertAdjacentHTML("beforeend", `Definitely cheating.`);
     }
 
-    if (currentScore >= 300 && currentScore < 397) {
+    if (scoreRange(300,396)) {
       highScoreAward.insertAdjacentHTML(
         "beforeend",
         `Assuming you're not cheating, I'm impressed by your commitment and sorry that you have wasted your time.`
@@ -698,9 +704,9 @@ let game = {
     tileToSparkDRatio = 0.1;
 
     if (wallsCheckBox.checked) {
-      walls = true;
+      wallsEnabled = true;
     } else {
-      walls = false;
+      wallsEnabled = false;
     }
 
     if (audioCheckBox.checked) {
@@ -710,7 +716,7 @@ let game = {
     }
   },
   toggleWalls() {
-    walls = !walls;
+    wallsEnabled = !wallsEnabled;
   },
   play() {
     gameRefreshInterval = setInterval(function () {
@@ -729,7 +735,7 @@ let game = {
         collisionDetected = true;
       }
       if (snake.newHead.x > canvas.width - tile && direction === "RIGHT") {
-        if (walls === true) {
+        if (wallsEnabled) {
           collisionDetected = true;
         } else {
           snake.x = -tile;
@@ -737,7 +743,7 @@ let game = {
       }
 
       if (snake.newHead.x < 0 && direction === "LEFT") {
-        if (walls === true) {
+        if (wallsEnabled) {
           collisionDetected = true;
         } else {
           snake.x = canvas.width;
@@ -745,7 +751,7 @@ let game = {
       }
 
       if (snake.newHead.y > canvas.height - tile && direction === "DOWN") {
-        if (walls === true) {
+        if (wallsEnabled) {
           collisionDetected = true;
         } else {
           snake.y = 2 * tile;
@@ -753,7 +759,7 @@ let game = {
       }
 
       if (snake.newHead.y < 3 * tile && direction === "UP") {
-        if (walls === true) {
+        if (wallsEnabled) {
           collisionDetected = true;
         } else {
           snake.y = canvas.height;
