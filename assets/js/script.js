@@ -1,17 +1,6 @@
 // Global variables
 let gameState = "MENU"; // MOVE TO GAME OBJECT?
 
-let gamesPlayedThisSession = 0; // MOVE TO STATS OBJECT?
-let gamesPlayedAllTime = parseInt(localStorage.getItem("games")) || 0;
-
-let previousScore; // MOVE TO SCOREBOARD OBJECT?
-let currentScore; // MOVE TO SCOREBOARD OBJECT?
-let currentHighScore; // MOVE TO SCOREBOARD OBJECT?
-let highScore = parseInt(localStorage.getItem("top")) || 0; // all time high score (since reset)
-
-let gameStartTime; // MOVE TO STATS OBJECT?
-let gameTimeInSeconds; // MOVE TO STATS OBJECT?
-
 const sparkArray = [];
 
 let direction; // MOVE TO SNAKE OBJECT?
@@ -23,8 +12,8 @@ let gameRefreshInterval; // MOVE TO GAME OBJECT?
 
 let snake;
 let food;
-let collisionDetected; // MOVE TO GAME OBJECT?
-let ateFood; // MOVE TO GAME OBJECT?
+// let collisionDetected; // MOVE TO GAME OBJECT?
+// let ateFood; // MOVE TO GAME OBJECT?
 
 let wallsEnabled; // MOVE TO GAME OBJECT?
 let gameAudio; // MOVE TO GAME OBJECT?
@@ -155,8 +144,7 @@ let newGame = function () {
   game.changeState("PLAY");
   animate();
 
-  stats.updateGamesPlayed();
-  gameStartTime = Date.now();
+  game.startTime = Date.now();
 
   game.play();
 };
@@ -185,7 +173,7 @@ let gameBoard = {
     tile = canvas.width / 20;
   },
   recalculateAssets() {
-    if (gameState === "PLAY" || gamesPlayedThisSession > 0) {
+    if (gameState === "PLAY" || stats.gamesPlayedThisSession > 0) {
       let formerTileSize = tile;
       let formerFoodCoordinates = food;
       let formerSnakeCoordinates = snake;
@@ -260,10 +248,16 @@ window.addEventListener("orientationchange", gameBoard.recalculateAssets);
 // Stats object
 
 let stats = {
+  gamesPlayedThisSession: 0,
+  gamesPlayedAllTime: parseInt(localStorage.getItem("games")) || 0,
+  gameTimeInSeconds: 0,
   updateGamesPlayed() {
-    gamesPlayedThisSession++;
-    gamesPlayedAllTime += 1;
-    localStorage.setItem("games", gamesPlayedAllTime);
+    this.gamesPlayedThisSession++;
+    this.gamesPlayedAllTime += 1;
+    localStorage.setItem("games", this.gamesPlayedAllTime);
+  },
+  updateGameTimeInSeconds() {
+    this.gameTimeInSeconds = Math.round((Date.now() - game.startTime) / 1000);
   },
 };
 
@@ -271,35 +265,39 @@ let stats = {
 
 let scoreBoard = {
   array: [],
+  previousScore: 0,
+  currentScore: 0,
+  currentHighScore: 0,
+  highScore: parseInt(localStorage.getItem("top")) || 0,
   update() {
-    if (this.array.includes(currentScore) || currentScore === 0) {
+    if (this.array.includes(this.currentScore) || this.currentScore === 0) {
       return;
     } else {
-      this.array.push(currentScore);
+      this.array.push(this.currentScore);
       this.array.sort((a, b) => b - a);
     }
   },
   getCurrentHighScore() {
-    currentHighScore = parseInt(localStorage.getItem("top"));
+    this.currentHighScore = parseInt(localStorage.getItem("top"));
   },
   updateHighScore() {
-    if (currentScore > parseInt(highScore)) {
-      localStorage.setItem("top", currentScore);
-      highScore = currentScore;
+    if (this.currentScore > parseInt(this.highScore)) {
+      localStorage.setItem("top", this.currentScore);
+      this.highScore = this.currentScore;
     } else {
       return;
     }
   },
   resetArray() {
     this.array.length = 0;
-    currentScore = 0;
+    this.currentScore = 0;
     score = 0;
     this.print();
   },
   resetHighScore() {
     localStorage.removeItem("top");
-    highScore = 0;
-    if (gamesPlayedThisSession > 0) {
+    this.highScore = 0;
+    if (stats.gamesPlayedThisSession > 0) {
       animate();
     }
   },
@@ -310,99 +308,99 @@ let scoreBoard = {
   draw() {
     ctx.fillStyle = "#fff";
     ctx.font = this.getFont();
-    ctx.fillText(currentScore, tile, tile * 2);
-    ctx.fillText(`High score: ${highScore}`, canvas.width * 0.45, tile * 2);
+    ctx.fillText(this.currentScore, tile, tile * 2);
+    ctx.fillText(`High score: ${this.highScore}`, canvas.width * 0.45, tile * 2);
   },
   print() {
     let scoreAwardText = document.getElementById("score-award-text");
 
     scoreAwardText.innerHTML = "";
 
-    function scoreRange(min,max) {
-        if(currentScore >= min && currentScore < (max + 1)) {
-            return true;
-        }
+    function scoreRange(min, max) {
+      if (this.currentScore >= min && this.currentScore < max + 1) {
+        return true;
+      }
     }
 
-    if (isNaN(currentHighScore) && currentScore !== 0) {
+    if (isNaN(this.currentHighScore) && this.currentScore !== 0) {
       scoreAwardText.innerHTML = `You're off the mark, so to speak. `;
     }
 
-    if (currentScore > currentHighScore) {
+    if (this.currentScore > this.currentHighScore) {
       scoreAwardText.innerHTML = `Signs of improvement. You beat your previous high score by ${
-        currentScore - currentHighScore
+        this.currentScore - this.currentHighScore
       }.</br>`;
     }
 
-    if (currentScore === 0) {
+    if (this.currentScore === 0) {
       scoreAwardText.innerHTML = `Whoops!`;
     }
 
     if (
-      currentScore >= 1 &&
-      currentScore < 10 &&
-      currentScore < currentHighScore
+      this.currentScore >= 1 &&
+      this.currentScore < 10 &&
+      this.currentScore < this.currentHighScore
     ) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `${currentScore}... Great.`
+        `${this.currentScore}... Great.`
       );
     }
 
-    if (scoreRange(10,19)) {
+    if (scoreRange(10, 19)) {
       scoreAwardText.insertAdjacentHTML("beforeend", `Double digits, is it?`);
     }
 
-    if (scoreRange(20,29)) {
+    if (scoreRange(20, 29)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `Attempt #${gamesPlayedAllTime} and you got ${currentScore}. Speaks for itself.`
+        `Attempt #${stats.gamesPlayedAllTime} and you got ${this.currentScore}. Speaks for itself.`
       );
     }
 
-    if (scoreRange(30,39)) {
+    if (scoreRange(30, 39)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `Was it worth it, just to get ${currentScore}?`
+        `Was it worth it, just to get ${this.currentScore}?`
       );
     }
 
-    if (scoreRange(40,49)) {
+    if (scoreRange(40, 49)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
         `The Nanite Narwhal would be proud.`
       );
     }
 
-    if (scoreRange(50,59)) {
+    if (scoreRange(50, 59)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
         `Maybe getting to 50 was good enough for you.`
       );
     }
 
-    if (scoreRange(60,69)) {
+    if (scoreRange(60, 69)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
         `FYI this is Cyber <em>Snake</em>, not Cyber Slow Worm.`
       );
     }
 
-    if (scoreRange(70,79)) {
+    if (scoreRange(70, 79)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
         `Don't tell me. You were distracted by the pretty colors.`
       );
     }
 
-    if (scoreRange(80,89)) {
+    if (scoreRange(80, 89)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
         `Next time, have a vague strategy.`
       );
     }
 
-    if (scoreRange(90,99)) {
+    if (scoreRange(90, 99)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
         `It would have been better if you got to 100.`
@@ -410,59 +408,59 @@ let scoreBoard = {
     }
 
     if (
-      currentScore >= 100 &&
-      currentScore < 125 &&
-      (currentHighScore < 100 || isNaN(currentHighScore))
+      this.currentScore >= 100 &&
+      this.currentScore < 125 &&
+      (this.currentHighScore < 100 || isNaN(this.currentHighScore))
     ) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `That's quite the milestone you've hit.<br>And it only took you ${gamesPlayedAllTime} attempts!`
+        `That's quite the milestone you've hit.<br>And it only took you ${stats.gamesPlayedAllTime} attempts!`
       );
-    } else if (scoreRange(100,124)) {
+    } else if (scoreRange(100, 124)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
         `It only took you ${convertSecondsToMs(
-          gameTimeInSeconds
+          stats.gameTimeInSeconds
         )} to disappoint me on this occasion.`
       );
     }
-    if (scoreRange(125,149)) {
+    if (scoreRange(125, 149)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
         `That was actually pretty good.`
       );
     }
 
-    if (scoreRange(150,199)) {
+    if (scoreRange(150, 199)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
         `The Digital Mongoose has been informed of your progress.`
       );
     }
 
-    if (scoreRange(200,299)) {
+    if (scoreRange(200, 299)) {
       scoreAwardText.insertAdjacentHTML("beforeend", `Definitely cheating.`);
     }
 
-    if (scoreRange(300,396)) {
+    if (scoreRange(300, 396)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
         `Assuming you're not cheating, I'm impressed by your commitment and sorry that you have wasted your time.`
       );
     }
 
-    if (currentScore == 397) {
+    if (this.currentScore == 397) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
         `Congratulations.<br>You have completed the tutorial of Cyber Snake.<br>In Level 001 the food is invisible. You have 3 lives remaining.<br>Good luck.`
       );
     }
 
-    if (currentScore > 397) {
+    if (this.currentScore > 397) {
       scoreAwardText.insertAdjacentHTML("beforeend", `Is that even possible?`);
     }
 
-    if (currentScore === previousScore && currentScore !== 0) {
+    if (this.currentScore === this.previousScore && this.currentScore !== 0) {
       scoreAwardText.innerHTML = `Oops you did it again.`;
     }
 
@@ -475,7 +473,7 @@ let scoreBoard = {
     }
     let scoreLi = document.querySelectorAll("li");
     for (let i = 0; i < scoreLi.length; i++) {
-      if (scoreLi[i].textContent == currentScore && currentScore != 0) {
+      if (scoreLi[i].textContent == this.currentScore && this.currentScore != 0) {
         scoreLi[i].classList.add("special-menu-text");
       }
     }
@@ -513,7 +511,7 @@ class Snake {
     this.x = this.newHead.x;
     this.y = this.newHead.y;
   }
- 
+
   draw() {
     for (let i = 0; i < this.array.length; i++) {
       ctx.save();
@@ -663,6 +661,8 @@ let gameLoop = function () {
 };
 
 let game = {
+    collisionDetected: false,
+    ateFood: false,
   changeState(state) {
     gameState = state;
     this.showScreen(state);
@@ -694,13 +694,13 @@ let game = {
     }
   },
   loadDefaultSettings() {
-    collisionDetected = false;
-    ateFood = false;
+    this.collisionDetected = false;
+    this.AteFood = false;
     sparkArray.length = 0;
     direction = "LEFT";
     lastKey = 0;
-    previousScore = currentScore;
-    currentScore = 0;
+    scoreBoard.previousScore = scoreBoard.currentScore;
+    scoreBoard.currentScore = 0;
     tileToSparkDRatio = 0.1;
 
     if (wallsCheckBox.checked) {
@@ -732,11 +732,11 @@ let game = {
         snake.newHead.x === snake.array[i].x &&
         snake.newHead.y === snake.array[i].y
       ) {
-        collisionDetected = true;
+        this.collisionDetected = true;
       }
       if (snake.newHead.x > canvas.width - tile && direction === "RIGHT") {
         if (wallsEnabled) {
-          collisionDetected = true;
+          this.collisionDetected = true;
         } else {
           snake.x = -tile;
         }
@@ -744,7 +744,7 @@ let game = {
 
       if (snake.newHead.x < 0 && direction === "LEFT") {
         if (wallsEnabled) {
-          collisionDetected = true;
+          this.collisionDetected = true;
         } else {
           snake.x = canvas.width;
         }
@@ -752,7 +752,7 @@ let game = {
 
       if (snake.newHead.y > canvas.height - tile && direction === "DOWN") {
         if (wallsEnabled) {
-          collisionDetected = true;
+          this.collisionDetected = true;
         } else {
           snake.y = 2 * tile;
         }
@@ -760,7 +760,7 @@ let game = {
 
       if (snake.newHead.y < 3 * tile && direction === "UP") {
         if (wallsEnabled) {
-          collisionDetected = true;
+          this.collisionDetected = true;
         } else {
           snake.y = canvas.height;
         }
@@ -774,26 +774,28 @@ let game = {
       }
     }
     if (snake.newHead.x === food.x && snake.newHead.y === food.y) {
-      ateFood = true;
+      this.AteFood = true;
     } else {
-      ateFood = false;
+      this.AteFood = false;
     }
   },
   update() {
-    if (collisionDetected) {
+    if (this.collisionDetected) {
       if (gameAudio) {
         gameOverSound.play();
       }
 
-      gameTimeInSeconds = Math.round((Date.now() - gameStartTime) / 1000);
+      //   gameTimeInSeconds = Math.round((Date.now() - this.startTime) / 1000);
+      stats.updateGamesPlayed();
+      stats.updateGameTimeInSeconds();
       scoreBoard.update();
       scoreBoard.print();
       game.changeState("GAMEOVER");
-    } else if (ateFood) {
+    } else if (this.AteFood) {
       snake.array.unshift(snake.newHead);
       populateSparkArray();
       newFood();
-      currentScore++;
+      scoreBoard.currentScore++;
       tileToSparkDRatio += 0.0025;
 
       if (gameAudio) {
@@ -804,6 +806,7 @@ let game = {
       snake.array.pop();
     }
   },
+  startTime: "",
 };
 
 // Animation loop
