@@ -5,7 +5,7 @@ let gameState = "MENU"; // MOVE TO GAME OBJECT?
 
 const sparkArray = [];
 
-let direction; // MOVE TO SNAKE OBJECT?
+let direction; // MOVE TO GAME OBJECT?
 
 let lastKey; // used to store time since last keydown
 const gameSpeed = 140; // MOVE TO GAME OBJECT?
@@ -264,9 +264,9 @@ let stats = {
 
 let scoreBoard = {
   array: [],
-  previousScore: 0,
-  currentScore: 0,
-  currentHighScore: 0,
+  previousScore: undefined,
+  currentScore: undefined,
+  currentHighScore: undefined,
   highScore: parseInt(localStorage.getItem("top")) || 0,
   update() {
     if (this.array.includes(this.currentScore) || this.currentScore === 0) {
@@ -318,12 +318,12 @@ let scoreBoard = {
     let scoreAwardText = document.getElementById("score-award-text");
 
     scoreAwardText.innerHTML = "";
-// arrow function needed to prevent invalid reference to this.currentScore (thanks to robinz_alumni for tip)
-    let scoreRange = (min,max) => {
-        if (this.currentScore >= min && this.currentScore < max +1) {
-            return true;
-        }
-    }
+    // arrow function needed to prevent invalid reference to this.currentScore (thanks to robinz_alumni for tip)
+    let scoreRange = (min, max) => {
+      if (this.currentScore >= min && this.currentScore < max + 1) {
+        return true;
+      }
+    };
 
     if (isNaN(this.currentHighScore) && this.currentScore !== 0) {
       scoreAwardText.innerHTML = `You're off the mark, so to speak. `;
@@ -336,12 +336,11 @@ let scoreBoard = {
     }
 
     if (this.currentScore === 0) {
-      scoreAwardText.innerHTML = `Whoops!`;
+      scoreAwardText.innerHTML = `Oof.`;
     }
 
     if (
-      this.currentScore >= 1 &&
-      this.currentScore < 10 &&
+      scoreRange(1,4) &&
       this.currentScore < this.currentHighScore
     ) {
       scoreAwardText.insertAdjacentHTML(
@@ -350,8 +349,20 @@ let scoreBoard = {
       );
     }
 
+    if (
+      scoreRange(5,9)
+    ) {
+      scoreAwardText.insertAdjacentHTML(
+        "beforeend",
+        `Lamentably, the Universal High Scores feature has yet to be implemented.`
+      );
+    }
+
     if (scoreRange(10, 19)) {
-      scoreAwardText.insertAdjacentHTML("beforeend", `Double digits, is it?`);
+      scoreAwardText.insertAdjacentHTML(
+        "beforeend",
+        `Double digits. Your job here is done.`
+      );
     }
 
     if (scoreRange(20, 29)) {
@@ -364,14 +375,16 @@ let scoreBoard = {
     if (scoreRange(30, 39)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `${stats.gameTimeInSeconds} to score ${this.currentScore}? What a triumph.`
+        `FYI this is Cyber <em>Snake</em>, not Cyber Slow Worm.`
       );
     }
 
     if (scoreRange(40, 49)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `The Nanite Narwhal would be proud.`
+        `It only took you ${convertSecondsToMs(
+          stats.gameTimeInSeconds
+        )} to disappoint me on this occasion.`
       );
     }
 
@@ -385,14 +398,16 @@ let scoreBoard = {
     if (scoreRange(60, 69)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `FYI this is Cyber <em>Snake</em>, not Cyber Slow Worm.`
+        `${convertSecondsToMs(stats.gameTimeInSeconds)} to score ${
+          this.currentScore
+        }? What a triumph.`
       );
     }
 
     if (scoreRange(70, 79)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `Don't tell me. You were distracted by the pretty colors.`
+        `"I was distracted by the pretty colors!", I hear you wail.`
       );
     }
 
@@ -406,7 +421,7 @@ let scoreBoard = {
     if (scoreRange(90, 99)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `It would have been better if you got to 100.`
+        `Did you consider persevering and making it to 100?`
       );
     }
 
@@ -422,9 +437,7 @@ let scoreBoard = {
     } else if (scoreRange(100, 124)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `It only took you ${convertSecondsToMs(
-          stats.gameTimeInSeconds
-        )} to disappoint me on this occasion.`
+        `The Nanite Narwhal would be proud.`
       );
     }
     if (scoreRange(125, 149)) {
@@ -468,20 +481,26 @@ let scoreBoard = {
     }
 
     if (
+      this.currentScore > this.currentHighScore &&
       this.currentScore - this.currentHighScore <= 5 &&
       stats.gameTimeInSeconds > 300
     ) {
-      scoreAwardText.innerHTML = `${stats.gameTimeInSeconds} to add a measly ${
+      scoreAwardText.innerHTML = `${convertSecondsToMs(
+        stats.gameTimeInSeconds
+      )} to add a measly ${
         this.currentScore - this.currentHighScore
       } to your PB.<br> Yikes.`;
     }
 
     if (
       this.currentScore > this.previousScore &&
-      this.previousScore < 5 &&
-      this.currentScore < this.currentHighScore
+      this.previousScore === 0
     ) {
-      scoreAwardText.innerHTML = `Well anything was an improvement on last time.`;
+      scoreAwardText.innerHTML = `Well, anything was an improvement on last time. You get extra credit for testing the walls out though.`;
+    }
+
+    if ((this.previousScore - this.currentScore) > 50) {
+      scoreAwardText.insertAdjacentHTML("beforeend", `Try to remember what you did on your previous attemps. That was better.`);
     }
 
     let scoreOl = document.querySelector("ol");
@@ -827,7 +846,6 @@ let game = {
       snake.array.pop();
     }
   },
-
 };
 
 // Animation loop
