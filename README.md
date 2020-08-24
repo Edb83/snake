@@ -42,3 +42,17 @@ https://stackoverflow.com/questions/29836686/code-in-setinterval-executing-more-
 Random int (min, max):
 https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
 
+Dynamic canvas font size:
+https://stackoverflow.com/questions/22943186/html5-canvas-font-size-based-on-canvas-size
+
+Prevent scrolling on mobile:
+https://stackoverflow.com/questions/10592411/disable-scrolling-in-all-mobile-devices#:~:text=document.-,body.,behaviour%20prevented%20should%20be%20scrolling.
+
+Hammer.js:
+https://hammerjs.github.io/
+
+Glowing text:
+https://www.w3schools.com/howto/howto_css_glowing_text.asp
+
+Seconds to HMS converor:
+https://stackoverflow.com/questions/37096367/how-to-convert-seconds-to-minutes-and-hours-in-javascript/37096923

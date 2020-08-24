@@ -12,7 +12,7 @@ body {
   font-size: 16px;
 }
 
-#gameContainer {
+#game-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -33,7 +33,7 @@ body {
   flex: initial;
 }
 
-.menuScreen {
+.menu-screen {
   display: block;
   position: absolute;
   text-align: center;
