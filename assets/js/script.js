@@ -1,20 +1,22 @@
+"use strict";
+
 // Global variables
 let gameState = "MENU"; // MOVE TO GAME OBJECT?
 
 const sparkArray = [];
 
-// let direction; // MOVE TO SNAKE OBJECT?
+let direction; // MOVE TO SNAKE OBJECT?
 
-// let lastKey; // used to store time since last keydown
+let lastKey; // used to store time since last keydown
 const gameSpeed = 140; // MOVE TO GAME OBJECT?
 const safeDelay = 140; // used to add minimum interval between key presses to prevent snake eating its neck (milliseconds). Risk vs Responsiveness
-// let gameRefreshInterval; // MOVE TO GAME OBJECT?
+let gameRefreshInterval; // MOVE TO GAME OBJECT?
 
-// let snake;
-// let food;
+let snake;
+let food;
 
-// let wallsEnabled; // MOVE TO GAME OBJECT?
-// let gameAudio; // MOVE TO GAME OBJECT?
+let wallsEnabled; // MOVE TO GAME OBJECT?
+let gameAudio; // MOVE TO GAME OBJECT?
 
 const eatSound = document.getElementById("eat-sound");
 const gameOverSound = document.getElementById("gameover-sound");
@@ -114,9 +116,9 @@ const optionsScreen = document.getElementById("options-screen");
 
 const canvasHeightToWidthRatio = 20 / 23; // ie 20 wide, 23 high to account for score area
 
-// let orientationPortrait;
-// let tile;
-// let tileToSparkDRatio;
+let orientationPortrait;
+let tile;
+let tileToSparkDRatio;
 
 const canvasWidthToLineWidthRatio = 150; // used in gameBoard object
 const tileToSparkGravityRatio = 0.009; // used in spark object
@@ -306,17 +308,21 @@ let scoreBoard = {
     ctx.fillStyle = "#fff";
     ctx.font = this.getFont();
     ctx.fillText(this.currentScore, tile, tile * 2);
-    ctx.fillText(`High score: ${this.highScore}`, canvas.width * 0.45, tile * 2);
+    ctx.fillText(
+      `High score: ${this.highScore}`,
+      canvas.width * 0.45,
+      tile * 2
+    );
   },
   print() {
     let scoreAwardText = document.getElementById("score-award-text");
 
     scoreAwardText.innerHTML = "";
-
-    function scoreRange(min, max) {
-      if (this.currentScore >= min && this.currentScore < max + 1) {
-        return true;
-      }
+// arrow function needed to prevent invalid reference to this.currentScore (thanks to robinz_alumni for tip)
+    let scoreRange = (min,max) => {
+        if (this.currentScore >= min && this.currentScore < max +1) {
+            return true;
+        }
     }
 
     if (isNaN(this.currentHighScore) && this.currentScore !== 0) {
@@ -461,12 +467,21 @@ let scoreBoard = {
       scoreAwardText.innerHTML = `Oops you did it again.`;
     }
 
-    if ((this.currentScore - this.currentHighScore) <= 5 && stats.gameTimeInSeconds > 300) {
-        scoreAwardText.innerHTML = `${stats.gameTimeInSeconds} to add a measly ${this.currentScore - this.currentHighScore} to your PB.<br> Yikes.`;
+    if (
+      this.currentScore - this.currentHighScore <= 5 &&
+      stats.gameTimeInSeconds > 300
+    ) {
+      scoreAwardText.innerHTML = `${stats.gameTimeInSeconds} to add a measly ${
+        this.currentScore - this.currentHighScore
+      } to your PB.<br> Yikes.`;
     }
 
-    if (this.currentScore > this.previousScore && this.previousScore < 5 && this.currentScore < this.currentHighScore) {
-        scoreAwardText.innerHTML = `Well anything was an improvement on last time.`
+    if (
+      this.currentScore > this.previousScore &&
+      this.previousScore < 5 &&
+      this.currentScore < this.currentHighScore
+    ) {
+      scoreAwardText.innerHTML = `Well anything was an improvement on last time.`;
     }
 
     let scoreOl = document.querySelector("ol");
@@ -478,7 +493,10 @@ let scoreBoard = {
     }
     let scoreLi = document.querySelectorAll("li");
     for (let i = 0; i < scoreLi.length; i++) {
-      if (scoreLi[i].textContent == this.currentScore && this.currentScore != 0) {
+      if (
+        scoreLi[i].textContent == this.currentScore &&
+        this.currentScore != 0
+      ) {
         scoreLi[i].classList.add("special-menu-text");
       }
     }
@@ -666,8 +684,9 @@ let gameLoop = function () {
 };
 
 let game = {
-    collisionDetected: false,
-    ateFood: false,
+  collisionDetected: false,
+  ateFood: false,
+  startTime: 0,
   changeState(state) {
     gameState = state;
     this.showScreen(state);
@@ -794,7 +813,6 @@ let game = {
       if (gameAudio) {
         gameOverSound.play();
       }
-
     } else if (this.AteFood) {
       snake.array.unshift(snake.newHead);
       populateSparkArray();
@@ -804,13 +822,12 @@ let game = {
       if (gameAudio) {
         eatSound.play();
       }
-      
     } else {
       snake.array.unshift(snake.newHead);
       snake.array.pop();
     }
   },
-  startTime: "",
+
 };
 
 // Animation loop
