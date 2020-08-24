@@ -3,20 +3,18 @@ let gameState = "MENU"; // MOVE TO GAME OBJECT?
 
 const sparkArray = [];
 
-let direction; // MOVE TO SNAKE OBJECT?
+// let direction; // MOVE TO SNAKE OBJECT?
 
-let lastKey; // used to store time since last keydown
+// let lastKey; // used to store time since last keydown
 const gameSpeed = 140; // MOVE TO GAME OBJECT?
 const safeDelay = 140; // used to add minimum interval between key presses to prevent snake eating its neck (milliseconds). Risk vs Responsiveness
-let gameRefreshInterval; // MOVE TO GAME OBJECT?
+// let gameRefreshInterval; // MOVE TO GAME OBJECT?
 
-let snake;
-let food;
-// let collisionDetected; // MOVE TO GAME OBJECT?
-// let ateFood; // MOVE TO GAME OBJECT?
+// let snake;
+// let food;
 
-let wallsEnabled; // MOVE TO GAME OBJECT?
-let gameAudio; // MOVE TO GAME OBJECT?
+// let wallsEnabled; // MOVE TO GAME OBJECT?
+// let gameAudio; // MOVE TO GAME OBJECT?
 
 const eatSound = document.getElementById("eat-sound");
 const gameOverSound = document.getElementById("gameover-sound");
@@ -116,9 +114,9 @@ const optionsScreen = document.getElementById("options-screen");
 
 const canvasHeightToWidthRatio = 20 / 23; // ie 20 wide, 23 high to account for score area
 
-let orientationPortrait;
-let tile;
-let tileToSparkDRatio;
+// let orientationPortrait;
+// let tile;
+// let tileToSparkDRatio;
 
 const canvasWidthToLineWidthRatio = 150; // used in gameBoard object
 const tileToSparkGravityRatio = 0.009; // used in spark object
@@ -143,7 +141,6 @@ let newGame = function () {
   newFood();
   game.changeState("PLAY");
   animate();
-
   game.startTime = Date.now();
 
   game.play();
@@ -343,7 +340,7 @@ let scoreBoard = {
     ) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `${this.currentScore}... Great.`
+        `${this.currentScore} is a fine score.`
       );
     }
 
@@ -361,7 +358,7 @@ let scoreBoard = {
     if (scoreRange(30, 39)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `Was it worth it, just to get ${this.currentScore}?`
+        `${stats.gameTimeInSeconds} to score ${this.currentScore}? What a triumph.`
       );
     }
 
@@ -462,6 +459,14 @@ let scoreBoard = {
 
     if (this.currentScore === this.previousScore && this.currentScore !== 0) {
       scoreAwardText.innerHTML = `Oops you did it again.`;
+    }
+
+    if ((this.currentScore - this.currentHighScore) <= 5 && stats.gameTimeInSeconds > 300) {
+        scoreAwardText.innerHTML = `${stats.gameTimeInSeconds} to add a measly ${this.currentScore - this.currentHighScore} to your PB.<br> Yikes.`;
+    }
+
+    if (this.currentScore > this.previousScore && this.previousScore < 5 && this.currentScore < this.currentHighScore) {
+        scoreAwardText.innerHTML = `Well anything was an improvement on last time.`
     }
 
     let scoreOl = document.querySelector("ol");
@@ -781,26 +786,25 @@ let game = {
   },
   update() {
     if (this.collisionDetected) {
-      if (gameAudio) {
-        gameOverSound.play();
-      }
-
-      //   gameTimeInSeconds = Math.round((Date.now() - this.startTime) / 1000);
       stats.updateGamesPlayed();
       stats.updateGameTimeInSeconds();
       scoreBoard.update();
       scoreBoard.print();
       game.changeState("GAMEOVER");
+      if (gameAudio) {
+        gameOverSound.play();
+      }
+
     } else if (this.AteFood) {
       snake.array.unshift(snake.newHead);
       populateSparkArray();
       newFood();
       scoreBoard.currentScore++;
       tileToSparkDRatio += 0.0025;
-
       if (gameAudio) {
         eatSound.play();
       }
+      
     } else {
       snake.array.unshift(snake.newHead);
       snake.array.pop();
