@@ -12,7 +12,7 @@ body {
   font-size: 16px;
 }
 
-#gameContainer {
+#game-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -26,14 +26,14 @@ body {
   position: relative;
 }
 
-#gameBoard {
+#canvas {
   z-index: 0;
   -webkit-box-flex: initial;
   -ms-flex: initial;
   flex: initial;
 }
 
-.menuScreen {
+.menu-screen {
   display: block;
   position: absolute;
   text-align: center;
@@ -101,11 +101,11 @@ h1 {
   text-shadow: 0 0 1rem;
 }
 
-#highScoreAward {
+#score-award-text {
   text-align: center;
 }
 
-#highScores {
+#session-scores-container {
   padding: 0 25%;
 }
 
@@ -135,14 +135,14 @@ h1 {
 }
 
 @media (orientation: portrait) {
-  #gameBoard {
+  #canvas {
     width: 100vw;
     height: auto;
   }
 }
 
 @media (orientation: landscape) {
-  #gameBoard {
+  #canvas {
     width: auto;
     height: 100vh;
   }

@@ -12,9 +12,9 @@
     <title>Cyber Snake</title>
   </head>
   <body>
-    <audio id="eatSound" class="audio" src="assets/audio/eat.wav"></audio>
+    <audio id="eat-sound" class="audio" src="assets/audio/eat.wav"></audio>
     <audio
-      id="gameoverSound"
+      id="gameover-sound"
       class="audio"
       src="assets/audio/gameover.wav"
     ></audio>
@@ -25,8 +25,8 @@
       loop = "true"
     ></audio> -->
 
-    <div id="gameContainer">
-      <div id="startScreen" class="visible menuScreen">
+    <div id="game-container">
+      <div id="start-screen" class="visible menu-screen">
         <h1>Cyber Snake</h1>
         <p>
           Use the <span class="desktop-controls-text">ARROW keys</span> or
@@ -48,11 +48,11 @@
         </div>
       </div>
 
-      <div id="scoresScreen" class="hidden menuScreen">
+      <div id="scores-screen" class="hidden menu-screen">
         <h1>Score Board</h1>
-        <p id="highScoreAward"></p>
+        <p id="score-award-text"></p>
         <h3>Top session scores</h3>
-        <div id="highScores">
+        <div id="session-scores-container">
           <ol></ol>
         </div>
         <div class="menu-buttons-container">
@@ -61,11 +61,11 @@
           <button onclick="game.changeState('MENU')">Instructions</button>
         </div>
       </div>
-      <div id="optionsScreen" class="hidden menuScreen">
+      <div id="options-screen" class="hidden menu-screen">
         <h1>Options</h1>
         <div>
-          <p>Sound<input id="audioCheckBox" type="checkbox" checked /></p>
-          <p>Walls<input id="wallsCheckBox" type="checkbox" /></p>
+          <p>Sound<input id="audio-checkbox" type="checkbox" checked /></p>
+          <p>Walls<input id="walls-checkbox" type="checkbox" /></p>
           <div class="menu-buttons-container">
             <!-- <button onclick="scoreBoard.resetArray()">
               Reset session scores
@@ -79,7 +79,7 @@
           </div>
         </div>
       </div>
-      <canvas id="gameBoard"></canvas>
+      <canvas id="canvas"></canvas>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     <script type="text/javascript" src="assets/js/script.js"></script>
