@@ -8,7 +8,7 @@ const sparkArray = [];
 let direction; // MOVE TO GAME OBJECT?
 
 let lastKey; // used to store time since last keydown
-const gameSpeed = 140; // MOVE TO GAME OBJECT?
+const gameSpeed = 2000; // MOVE TO GAME OBJECT?
 const safeDelay = 140; // used to add minimum interval between key presses to prevent snake eating its neck (milliseconds). Risk vs Responsiveness
 let gameRefreshInterval; // MOVE TO GAME OBJECT?
 
@@ -74,12 +74,16 @@ function keyboardHandler(e) {
   }
 }
 
+
+
 document.addEventListener("keydown", keyboardHandler);
 
 // Hammertime event listener
 let hammertime = new Hammer.Manager(document.querySelector("body"));
 
-hammertime.add(new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 20 }));
+hammertime.add(
+  new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 10 })
+);
 hammertime.add(new Hammer.Tap({ event: "doubletap", taps: 2 }));
 hammertime.get("pan");
 hammertime.get("doubletap");
@@ -339,43 +343,38 @@ let scoreBoard = {
       scoreAwardText.innerHTML = `Oof.`;
     }
 
-    if (
-      scoreRange(1,4) &&
-      this.currentScore < this.currentHighScore
-    ) {
+    if (scoreRange(1, 4) && this.currentScore < this.currentHighScore) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `${this.currentScore} is a fine score.`
+        `${this.currentScore} is a fine score. `
       );
     }
 
-    if (
-      scoreRange(5,9)
-    ) {
+    if (scoreRange(5, 9)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `Lamentably, the Universal High Scores feature has yet to be implemented.`
+        `Lamentably, the Universal High Scores feature has yet to be implemented. `
       );
     }
 
     if (scoreRange(10, 19)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `Double digits. Your job here is done.`
+        `Double digits. Your job here is done. `
       );
     }
 
     if (scoreRange(20, 29)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `Attempt #${stats.gamesPlayedAllTime} and you got ${this.currentScore}. Speaks for itself.`
+        `Attempt #${stats.gamesPlayedAllTime} and you got ${this.currentScore}. Speaks for itself. `
       );
     }
 
     if (scoreRange(30, 39)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `FYI this is Cyber <em>Snake</em>, not Cyber Slow Worm.`
+        `FYI this is Cyber <span style="text-decoration: underline;">Snake</span>, not Cyber Slow Worm. `
       );
     }
 
@@ -384,14 +383,14 @@ let scoreBoard = {
         "beforeend",
         `It only took you ${convertSecondsToMs(
           stats.gameTimeInSeconds
-        )} to disappoint me on this occasion.`
+        )} to disappoint me this time. `
       );
     }
 
     if (scoreRange(50, 59)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `Maybe getting to 50 was good enough for you.`
+        `Maybe getting to 50 was good enough for you. `
       );
     }
 
@@ -400,28 +399,28 @@ let scoreBoard = {
         "beforeend",
         `${convertSecondsToMs(stats.gameTimeInSeconds)} to score ${
           this.currentScore
-        }? What a triumph.`
+        }? What a triumph. `
       );
     }
 
     if (scoreRange(70, 79)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `"I was distracted by the pretty colors!", I hear you wail.`
+        `"I was distracted by the pretty colors!", I hear you wail. `
       );
     }
 
     if (scoreRange(80, 89)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `Next time, have a vague strategy.`
+        `Next time, have a vague strategy. `
       );
     }
 
     if (scoreRange(90, 99)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `Did you consider persevering and making it to 100?`
+        `Did you consider persevering and making it to 100? `
       );
     }
 
@@ -432,52 +431,52 @@ let scoreBoard = {
     ) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `That's quite the milestone you've hit.<br>And it only took you ${stats.gamesPlayedAllTime} attempts!`
+        `That's quite the milestone you've hit.<br>And it only took you ${stats.gamesPlayedAllTime} attempts! `
       );
     } else if (scoreRange(100, 124)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `The Nanite Narwhal would be proud.`
+        `The Nanite Narwhal would be proud. `
       );
     }
     if (scoreRange(125, 149)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `That was actually pretty good.`
+        `That was actually pretty good. `
       );
     }
 
     if (scoreRange(150, 199)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `The Digital Mongoose has been informed of your progress.`
+        `The Digital Mongoose has been informed of your progress. `
       );
     }
 
     if (scoreRange(200, 299)) {
-      scoreAwardText.insertAdjacentHTML("beforeend", `Definitely cheating.`);
+      scoreAwardText.insertAdjacentHTML("beforeend", `Definitely cheating. `);
     }
 
     if (scoreRange(300, 396)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `Assuming you're not cheating, I'm impressed by your commitment and sorry that you have wasted your time.`
+        `Assuming you're not cheating, I'm impressed by your commitment and sorry that you have wasted your time. `
       );
     }
 
     if (this.currentScore == 397) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `Congratulations.<br>You have completed the tutorial of Cyber Snake.<br>In Level 001 the food is invisible. You have 3 lives remaining.<br>Good luck.`
+        `Congratulations.<br>You have completed the tutorial of Cyber Snake.<br>In Level 001 the food is invisible. You have 3 lives remaining.<br>Good luck. `
       );
     }
 
     if (this.currentScore > 397) {
-      scoreAwardText.insertAdjacentHTML("beforeend", `Is that even possible?`);
+      scoreAwardText.insertAdjacentHTML("beforeend", `Is that even possible? `);
     }
 
     if (this.currentScore === this.previousScore && this.currentScore !== 0) {
-      scoreAwardText.innerHTML = `Oops you did it again.`;
+      scoreAwardText.innerHTML = `Oops you did it again. `;
     }
 
     if (
@@ -492,15 +491,15 @@ let scoreBoard = {
       } to your PB.<br> Yikes.`;
     }
 
-    if (
-      this.currentScore > this.previousScore &&
-      this.previousScore === 0
-    ) {
-      scoreAwardText.innerHTML = `Well, anything was an improvement on last time. You get extra credit for testing the walls out though.`;
+    if (this.currentScore > this.previousScore && this.previousScore === 0) {
+      scoreAwardText.innerHTML = `Well, anything was an improvement on last time. Extra credit for testing the walls out though. `;
     }
 
-    if ((this.previousScore - this.currentScore) > 50) {
-      scoreAwardText.insertAdjacentHTML("beforeend", `Try to remember what you did on your previous attemps. That was better.`);
+    if (this.previousScore - this.currentScore > 50) {
+      scoreAwardText.insertAdjacentHTML(
+        "beforeend",
+        `Try to remember what you did on your previous attemps. That was better. `
+      );
     }
 
     let scoreOl = document.querySelector("ol");
@@ -549,6 +548,19 @@ class Snake {
       return { x: this.x, y: this.y + tile };
     }
   }
+
+  lastMove() {
+    if (this.array[0].x < this.array[1].x) {
+      return "LEFT";
+    } else if (this.array[0].x > this.array[1].x) {
+      return "RIGHT";
+    } else if (this.array[0].y < this.array[1].y) {
+      return "UP";
+    } else if (this.array[0].y > this.array[1].y) {
+      return "DOWN";
+    }
+  }
+
   update() {
     this.x = this.newHead.x;
     this.y = this.newHead.y;
@@ -689,28 +701,16 @@ function populateSparkArray() {
   }
 }
 
-// let movingVertically;
-// let moveIsValid;
-
 // Game loop with conditions for which functions are called depending on game state
 let gameLoop = function () {
   if (gameState === "PLAY") {
-    //   let oldSnakeX;
-    //   let newSnakeX;
-    //   oldSnakeX = snake.x;
+
     game.checkSnakeCollision();
     game.checkAteFood();
     game.update();
     snake.update();
-    // newSnakeX = snake.x;
+    console.log(snake.lastMove());
     scoreBoard.updateHighScore();
-
-    // if (newSnakeX !== oldSnakeX) {
-    //     movingVertically = false }
-    // else {
-    //     movingVertically = true
-    // }
-
   } else {
     game.stop();
   }
