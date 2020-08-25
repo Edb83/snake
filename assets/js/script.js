@@ -79,19 +79,19 @@ document.addEventListener("keydown", keyboardHandler);
 // Hammertime event listener
 let hammertime = new Hammer.Manager(document.querySelector("body"));
 
-hammertime.add(new Hammer.Swipe({ direction: Hammer.DIRECTION_ALL, threshold: 2, velocity: 0.01 }));
+hammertime.add(new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 20 }));
 hammertime.add(new Hammer.Tap({ event: "doubletap", taps: 2 }));
-hammertime.get("swipe");
+hammertime.get("pan");
 hammertime.get("doubletap");
-hammertime.on(`swipeleft swiperight swipeup swipedown doubletap`, function (e) {
+hammertime.on(`panleft panright panup pandown doubletap`, function (e) {
   if (Date.now() - lastKey > safeDelay) {
-    if (e.type === `swipeleft` && direction !== "RIGHT") {
+    if (e.type === `panleft` && direction !== "RIGHT") {
       direction = "LEFT";
-    } else if (e.type === `swipeup` && direction !== "DOWN") {
+    } else if (e.type === `panup` && direction !== "DOWN") {
       direction = "UP";
-    } else if (e.type === `swiperight` && direction !== "LEFT") {
+    } else if (e.type === `panright` && direction !== "LEFT") {
       direction = "RIGHT";
-    } else if (e.type === `swipedown` && direction !== "UP") {
+    } else if (e.type === `pandown` && direction !== "UP") {
       direction = "DOWN";
     }
   }
