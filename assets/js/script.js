@@ -86,18 +86,18 @@ hammertime.add(new Hammer.Tap({ event: "doubletap", taps: 2 }));
 hammertime.get("pan");
 hammertime.get("doubletap");
 hammertime.on(`panleft panright panup pandown doubletap`, function (e) {
-  if (Date.now() - lastKey > safeDelay) {
-    if (e.type === `panleft` && direction !== 1) {
+//   if (Date.now() - lastKey > safeDelay) {
+    if (e.type === `panleft` && game.moveIsValid(-1)) {
       direction = -1;
-    } else if (e.type === `panup` && direction !== 2) {
+    } else if (e.type === `panup` && game.moveIsValid(-2)) {
       direction = -2;
-    } else if (e.type === `panright` && direction !== -1) {
+    } else if (e.type === `panright` && game.moveIsValid(1)) {
       direction = 1;
-    } else if (e.type === `pandown` && direction !== -2) {
+    } else if (e.type === `pandown` && game.moveIsValid(2)) {
       direction = 2;
     }
-  }
-  lastKey = Date.now();
+//   }
+//   lastKey = Date.now();
   if (e.type == "doubletap" && gameState === "PLAY") {
     game.changeState("PAUSE");
     game.stop();
