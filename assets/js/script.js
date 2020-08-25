@@ -1,26 +1,43 @@
 "use strict";
 
-// Global variables
+// GLOBAL VARIABLES
 let gameState = "MENU"; // MOVE TO GAME OBJECT?
-
-const sparkArray = [];
-
 let direction; // MOVE TO GAME OBJECT?
-
-const gameSpeed = 140; // MOVE TO GAME OBJECT?
-
-let gameRefreshInterval; // MOVE TO GAME OBJECT?
-
 let snake;
 let food;
-
 let wallsEnabled; // MOVE TO GAME OBJECT?
 let gameAudio; // MOVE TO GAME OBJECT?
+let gameRefreshInterval; // MOVE TO GAME OBJECT?
+let orientationPortrait;
+let tile;
+let tileToSparkDRatio;
 
+const sparkArray = [];
+const gameSpeed = 140; // MOVE TO GAME OBJECT?
+
+const startScreen = document.getElementById("start-screen");
+const scoresScreen = document.getElementById("scores-screen");
+const optionsScreen = document.getElementById("options-screen");
+const canvas = document.getElementById("canvas");
 const eatSound = document.getElementById("eat-sound");
 const gameOverSound = document.getElementById("gameover-sound");
 const wallsCheckBox = document.querySelector("#walls-checkbox");
 const audioCheckBox = document.querySelector("#audio-checkbox");
+const ctx = canvas.getContext("2d");
+
+const canvasHeightToWidthRatio = 20 / 23; // ie 20 wide, 23 high to account for score area
+const canvasWidthToLineWidthRatio = 150; // used in gameBoard object
+const tileToSparkGravityRatio = 0.009; // used in spark object
+const fontRatio = 0.058; // used in scoreBoard object
+
+const colorArray = [
+  "rgba(128,255,0,1)", // green
+  "rgba(252,243,64,1)", // yellow
+  "rgba(255,191,0,1)", // orange
+  "rgba(226,0,0,1)", // red
+  "rgba(125,249,255,1)", // blue
+  "rgba(254,1,154,1)", // pink
+];
 
 // Random number generator
 function randomNumber(min, max) {
@@ -38,19 +55,8 @@ function convertSecondsToMs(d) {
   return mDisplay + sDisplay;
 }
 
-// Color array
-const colorArray = [
-  "rgba(128,255,0,1)", // green
-  "rgba(252,243,64,1)", // yellow
-  "rgba(255,191,0,1)", // orange
-  "rgba(226,0,0,1)", // red
-  "rgba(125,249,255,1)", // blue
-  "rgba(254,1,154,1)", // pink
-];
-
 // Keydown event listener
 function keyboardHandler(e) {
-
   if (e.keyCode === 38 && game.moveIsValid(-2)) {
     direction = -2;
   } else if (e.keyCode === 40 && game.moveIsValid(2)) {
@@ -70,7 +76,6 @@ function keyboardHandler(e) {
     animate();
   }
 }
-
 document.addEventListener("keydown", keyboardHandler);
 
 // Hammertime event listener
@@ -83,15 +88,15 @@ hammertime.add(new Hammer.Tap({ event: "doubletap", taps: 2 }));
 hammertime.get("pan");
 hammertime.get("doubletap");
 hammertime.on(`panleft panright panup pandown doubletap`, function (e) {
-    if (e.type === `panleft` && game.moveIsValid(-1)) {
-      direction = -1;
-    } else if (e.type === `panup` && game.moveIsValid(-2)) {
-      direction = -2;
-    } else if (e.type === `panright` && game.moveIsValid(1)) {
-      direction = 1;
-    } else if (e.type === `pandown` && game.moveIsValid(2)) {
-      direction = 2;
-    }
+  if (e.type === `panleft` && game.moveIsValid(-1)) {
+    direction = -1;
+  } else if (e.type === `panup` && game.moveIsValid(-2)) {
+    direction = -2;
+  } else if (e.type === `panright` && game.moveIsValid(1)) {
+    direction = 1;
+  } else if (e.type === `pandown` && game.moveIsValid(2)) {
+    direction = 2;
+  }
 
   if (e.type == "doubletap" && gameState === "PLAY") {
     game.changeState("PAUSE");
@@ -104,23 +109,6 @@ hammertime.on(`panleft panright panup pandown doubletap`, function (e) {
 });
 
 // GAME INITIALISATION
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-
-const startScreen = document.getElementById("start-screen");
-const scoresScreen = document.getElementById("scores-screen");
-const optionsScreen = document.getElementById("options-screen");
-
-const canvasHeightToWidthRatio = 20 / 23; // ie 20 wide, 23 high to account for score area
-
-let orientationPortrait;
-let tile;
-let tileToSparkDRatio;
-
-const canvasWidthToLineWidthRatio = 150; // used in gameBoard object
-const tileToSparkGravityRatio = 0.009; // used in spark object
-const fontRatio = 0.058; // used in scoreBoard object
-
 let newSnake = function () {
   snake = new Snake(15 * tile, 15 * tile, "rgba(223,0,254,1)");
 };
@@ -145,7 +133,41 @@ let newGame = function () {
   game.play();
 };
 
-// Game area object
+// GAME LOOP
+let gameLoop = function () {
+  if (gameState === "PLAY") {
+    game.checkSnakeCollision();
+    game.checkAteFood();
+    game.update();
+    snake.update();
+    snake.lastMove();
+    scoreBoard.updateHighScore();
+  } else {
+    game.stop();
+  }
+};
+
+// ANIMATION LOOP
+function animate() {
+  gameBoard.draw();
+  food.draw();
+  scoreBoard.draw();
+  snake.draw();
+  sparkArray.forEach((spark, index) => {
+    spark.update();
+    if (spark.ttl === 0) {
+      sparkArray.splice(index, 1);
+    }
+  });
+
+  if (gameState === "PLAY") {
+    requestAnimationFrame(animate);
+  } else {
+    return;
+  }
+}
+
+// GAME BOARD
 let gameBoard = {
   checkOrientation() {
     if (window.innerWidth <= window.innerHeight) {
@@ -241,8 +263,342 @@ let gameBoard = {
 window.addEventListener("resize", gameBoard.recalculateAssets);
 window.addEventListener("orientationchange", gameBoard.recalculateAssets);
 
-// Stats object
+// SNAKE
+class Snake {
+  constructor(x, y, color) {
+    this.x = x;
+    this.y = y;
+    this.color = color;
+    this.array = [
+      { x: this.x, y: this.y },
+      { x: this.x + tile, y: this.y },
+      { x: this.x + tile * 2, y: this.y },
+    ];
+  }
 
+  get newHead() {
+    if (direction === -1) {
+      return { x: this.x - tile, y: this.y };
+    }
+    if (direction === -2) {
+      return { x: this.x, y: this.y - tile };
+    }
+    if (direction === 1) {
+      return { x: this.x + tile, y: this.y };
+    }
+    if (direction === 2) {
+      return { x: this.x, y: this.y + tile };
+    }
+  }
+
+  lastMove() {
+    if (this.array[0].x < this.array[1].x) {
+      game.lastMove = -1;
+    } else if (this.array[0].x > this.array[1].x) {
+      game.lastMove = 1;
+    } else if (this.array[0].y < this.array[1].y) {
+      game.lastMove = -2;
+    } else if (this.array[0].y > this.array[1].y) {
+      game.lastMove = 2;
+    }
+  }
+
+  update() {
+    this.x = this.newHead.x;
+    this.y = this.newHead.y;
+  }
+
+  draw() {
+    for (let i = 0; i < this.array.length; i++) {
+      ctx.save();
+      ctx.fillStyle = this.color;
+      ctx.shadowColor = this.color;
+      ctx.shadowBlur = tile / 2;
+      ctx.fillRect(this.array[i].x, this.array[i].y, tile, tile); // fills tiles occupied by snake array's coordinates
+
+      ctx.restore();
+      ctx.strokeStyle = "#001437";
+      ctx.strokeRect(this.array[i].x, this.array[i].y, tile, tile);
+    }
+  }
+}
+
+// FOOD
+class Food {
+  constructor(color) {
+    this.x = Math.floor(Math.random() * 20) * tile;
+    this.y = Math.floor(Math.random() * 20 + 3) * tile; // taking account of the score area
+    this.color = color;
+  }
+
+  draw() {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(
+      this.x + (tile - 3) / 2,
+      this.y + (tile - 3) / 2,
+      tile / 2,
+      0,
+      2 * Math.PI,
+      false
+    );
+    ctx.fillStyle = this.color;
+
+    ctx.shadowColor = this.color;
+    ctx.strokeStyle = "#000";
+    ctx.shadowBlur = tile / 2;
+    ctx.fill();
+    ctx.stroke();
+    ctx.closePath();
+    ctx.restore();
+  }
+}
+
+// SPARK
+class Spark {
+  constructor(x, y, dx, dy) {
+    this.x = x;
+    this.y = y;
+    this.dx = dx;
+    this.dy = dy;
+    this.radius = randomNumber(tile / 10, tile / 4);
+    this.color = food.color;
+    this.gravity = randomNumber(
+      dynamicSparkGravity(),
+      dynamicSparkGravity() * 2
+    );
+    this.friction = randomNumber(0.4, 0.6);
+    this.ttl = 25; // time to live ticks
+    this.opacity = 1;
+  }
+  draw() {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+    ctx.fillStyle =
+      this.color.substring(0, this.color.length - 2) + this.opacity + ")";
+    ctx.shadowColor = this.color;
+    ctx.shadowBlur = this.radius / 2;
+    ctx.fill();
+    ctx.closePath();
+    ctx.restore();
+  }
+}
+
+Spark.prototype.update = function () {
+  this.draw();
+
+  if (
+    this.x + this.dx > canvas.width - this.radius ||
+    this.x + this.dx < this.radius
+  ) {
+    this.dx = -this.dx * this.friction;
+  }
+  this.x += this.dx;
+
+  if (this.y + this.dy > canvas.height - this.radius) {
+    this.dy = -this.dy * this.friction;
+    this.dx = this.dx * (this.friction + 0.35); // ensures sparks stop rolling but prevents them stopping too soon
+    this.ttl -= 1;
+    this.opacity -= 1 / this.ttl;
+  } else {
+    this.dy += this.gravity;
+  }
+  this.y += this.dy;
+};
+
+function dynamicSparkGravity() {
+  return tile * tileToSparkGravityRatio;
+}
+
+function dynamicSparkD() {
+  return tile * tileToSparkDRatio;
+}
+
+function populateSparkArray() {
+  for (let i = 0; i < snake.array.length && i < 150; i++) {
+    let dx;
+    let dy;
+    let x = snake.array[0].x + tile / 2;
+    let y = snake.array[0].y + tile / 2;
+    if (direction === -2) {
+      dx = randomNumber(-dynamicSparkD(), dynamicSparkD());
+      dy = randomNumber(-dynamicSparkD(), -dynamicSparkD() / 2);
+    }
+    if (direction === 2) {
+      dx = randomNumber(-dynamicSparkD(), dynamicSparkD());
+      dy = randomNumber(dynamicSparkD(), dynamicSparkD() * 2);
+    }
+    if (direction === -1) {
+      dx = randomNumber(-dynamicSparkD() * 2, -dynamicSparkD());
+      dy = randomNumber(-dynamicSparkD(), dynamicSparkD());
+    }
+    if (direction === 1) {
+      dx = randomNumber(dynamicSparkD(), dynamicSparkD() * 2);
+      dy = randomNumber(-dynamicSparkD(), dynamicSparkD());
+    }
+
+    sparkArray.push(new Spark(x, y, dx, dy));
+  }
+}
+
+// GAME
+let game = {
+  collisionDetected: false,
+  ateFood: false,
+  lastMove: "",
+  startTime: 0,
+  changeState(state) {
+    gameState = state;
+    this.showScreen(state);
+  },
+  makeVisible(screen) {
+    screen.style.visibility = "visible";
+  },
+  makeHidden(screen) {
+    screen.style.visibility = "hidden";
+  },
+  showScreen(state) {
+    if (state === "PLAY") {
+      this.makeHidden(startScreen);
+      this.makeHidden(scoresScreen);
+    }
+    if (state === "GAMEOVER") {
+      this.makeHidden(optionsScreen);
+      this.makeVisible(scoresScreen);
+    }
+    if (state === "OPTIONS") {
+      this.makeHidden(startScreen);
+      this.makeHidden(scoresScreen);
+      this.makeVisible(optionsScreen);
+    }
+    if (state === "MENU") {
+      this.makeHidden(scoresScreen);
+      this.makeHidden(optionsScreen);
+      this.makeVisible(startScreen);
+    }
+  },
+  loadDefaultSettings() {
+    this.collisionDetected = false;
+    this.AteFood = false;
+    sparkArray.length = 0;
+    direction = -1;
+    scoreBoard.previousScore = scoreBoard.currentScore;
+    scoreBoard.currentScore = 0;
+    tileToSparkDRatio = 0.1;
+
+    if (wallsCheckBox.checked) {
+      wallsEnabled = true;
+    } else {
+      wallsEnabled = false;
+    }
+
+    if (audioCheckBox.checked) {
+      gameAudio = true;
+    } else {
+      gameAudio = false;
+    }
+  },
+  toggleWalls() {
+    wallsEnabled = !wallsEnabled;
+  },
+  play() {
+    gameRefreshInterval = setInterval(function () {
+      gameLoop();
+    }, gameSpeed);
+  },
+  stop() {
+    clearInterval(gameRefreshInterval);
+  },
+  checkSnakeCollision() {
+    for (let i = 0; i < snake.array.length; i++) {
+      if (
+        snake.newHead.x === snake.array[i].x &&
+        snake.newHead.y === snake.array[i].y
+      ) {
+        this.collisionDetected = true;
+      }
+      if (snake.newHead.x > canvas.width - tile && direction === 1) {
+        if (wallsEnabled) {
+          this.collisionDetected = true;
+        } else {
+          snake.x = -tile;
+        }
+      }
+
+      if (snake.newHead.x < 0 && direction === -1) {
+        if (wallsEnabled) {
+          this.collisionDetected = true;
+        } else {
+          snake.x = canvas.width;
+        }
+      }
+
+      if (snake.newHead.y > canvas.height - tile && direction === 2) {
+        if (wallsEnabled) {
+          this.collisionDetected = true;
+        } else {
+          snake.y = 2 * tile;
+        }
+      }
+
+      if (snake.newHead.y < 3 * tile && direction === -2) {
+        if (wallsEnabled) {
+          this.collisionDetected = true;
+        } else {
+          snake.y = canvas.height;
+        }
+      }
+    }
+  },
+  checkAteFood() {
+    for (let i = 0; i < snake.array.length; i++) {
+      if (food.x === snake.array[i].x && food.y === snake.array[i].y) {
+        newFood(); // if food is within snake body, spawns new food
+      }
+    }
+    if (snake.newHead.x === food.x && snake.newHead.y === food.y) {
+      this.AteFood = true;
+    } else {
+      this.AteFood = false;
+    }
+  },
+  moveIsValid(newDir) {
+    if (this.lastMove === -newDir && direction !== newDir) {
+      return false;
+    } else if (this.lastMove === newDir && direction !== -newDir) {
+      return false;
+    } else {
+      return true;
+    }
+  },
+  update() {
+    if (this.collisionDetected) {
+      stats.updateGamesPlayed();
+      stats.updateGameTimeInSeconds();
+      scoreBoard.update();
+      scoreBoard.print();
+      game.changeState("GAMEOVER");
+      if (gameAudio) {
+        gameOverSound.play();
+      }
+    } else if (this.AteFood) {
+      snake.array.unshift(snake.newHead);
+      populateSparkArray();
+      newFood();
+      scoreBoard.currentScore++;
+      tileToSparkDRatio += 0.0025;
+      if (gameAudio) {
+        eatSound.play();
+      }
+    } else {
+      snake.array.unshift(snake.newHead);
+      snake.array.pop();
+    }
+  },
+};
+
+// STATS
 let stats = {
   gamesPlayedThisSession: 0,
   gamesPlayedAllTime: parseInt(localStorage.getItem("games")) || 0,
@@ -257,8 +613,7 @@ let stats = {
   },
 };
 
-// Scoreboard object
-
+// SCOREBOARD
 let scoreBoard = {
   array: [],
   previousScore: undefined,
@@ -513,375 +868,3 @@ let scoreBoard = {
     }
   },
 };
-
-// Snake constructor
-class Snake {
-  constructor(x, y, color) {
-    this.x = x;
-    this.y = y;
-    this.color = color;
-    this.array = [
-      { x: this.x, y: this.y },
-      { x: this.x + tile, y: this.y },
-      { x: this.x + tile * 2, y: this.y },
-    ];
-  }
-
-  get newHead() {
-    if (direction === -1) {
-      return { x: this.x - tile, y: this.y };
-    }
-    if (direction === -2) {
-      return { x: this.x, y: this.y - tile };
-    }
-    if (direction === 1) {
-      return { x: this.x + tile, y: this.y };
-    }
-    if (direction === 2) {
-      return { x: this.x, y: this.y + tile };
-    }
-  }
-
-  lastMove() {
-    if (this.array[0].x < this.array[1].x) {
-      game.lastMove = -1;
-    } else if (this.array[0].x > this.array[1].x) {
-      game.lastMove = 1;
-    } else if (this.array[0].y < this.array[1].y) {
-      game.lastMove = -2;
-    } else if (this.array[0].y > this.array[1].y) {
-      game.lastMove = 2;
-    }
-  }
-
-  update() {
-    this.x = this.newHead.x;
-    this.y = this.newHead.y;
-  }
-
-  draw() {
-    for (let i = 0; i < this.array.length; i++) {
-      ctx.save();
-      ctx.fillStyle = this.color;
-      ctx.shadowColor = this.color;
-      ctx.shadowBlur = tile / 2;
-      ctx.fillRect(this.array[i].x, this.array[i].y, tile, tile); // fills tiles occupied by snake array's coordinates
-
-      ctx.restore();
-      ctx.strokeStyle = "#001437";
-      ctx.strokeRect(this.array[i].x, this.array[i].y, tile, tile);
-    }
-  }
-}
-
-// Food constructor
-class Food {
-  constructor(color) {
-    this.x = Math.floor(Math.random() * 20) * tile;
-    this.y = Math.floor(Math.random() * 20 + 3) * tile; // taking account of the score area
-    this.color = color;
-  }
-
-  draw() {
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(
-      this.x + (tile - 3) / 2,
-      this.y + (tile - 3) / 2,
-      tile / 2,
-      0,
-      2 * Math.PI,
-      false
-    );
-    ctx.fillStyle = this.color;
-
-    ctx.shadowColor = this.color;
-    ctx.strokeStyle = "#000";
-    ctx.shadowBlur = tile / 2;
-    ctx.fill();
-    ctx.stroke();
-    ctx.closePath();
-    ctx.restore();
-  }
-}
-
-function dynamicSparkGravity() {
-  return tile * tileToSparkGravityRatio;
-}
-
-// Spark constructor
-class Spark {
-  constructor(x, y, dx, dy) {
-    this.x = x;
-    this.y = y;
-    this.dx = dx;
-    this.dy = dy;
-    this.radius = randomNumber(tile / 10, tile / 4);
-    this.color = food.color;
-    this.gravity = randomNumber(
-      dynamicSparkGravity(),
-      dynamicSparkGravity() * 2
-    );
-    this.friction = randomNumber(0.4, 0.6);
-    this.ttl = 25; // time to live ticks
-    this.opacity = 1;
-  }
-  draw() {
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
-    ctx.fillStyle =
-      this.color.substring(0, this.color.length - 2) + this.opacity + ")";
-    ctx.shadowColor = this.color;
-    ctx.shadowBlur = this.radius / 2;
-    ctx.fill();
-    ctx.closePath();
-    ctx.restore();
-  }
-}
-
-Spark.prototype.update = function () {
-  this.draw();
-
-  if (
-    this.x + this.dx > canvas.width - this.radius ||
-    this.x + this.dx < this.radius
-  ) {
-    this.dx = -this.dx * this.friction;
-  }
-  this.x += this.dx;
-
-  if (this.y + this.dy > canvas.height - this.radius) {
-    this.dy = -this.dy * this.friction;
-    this.dx = this.dx * (this.friction + 0.35); // ensures sparks stop rolling but prevents them stopping too soon
-    this.ttl -= 1;
-    this.opacity -= 1 / this.ttl;
-  } else {
-    this.dy += this.gravity;
-  }
-  this.y += this.dy;
-};
-
-function dynamicSparkD() {
-  return tile * tileToSparkDRatio;
-}
-
-// Spark array
-function populateSparkArray() {
-  for (let i = 0; i < snake.array.length && i < 150; i++) {
-    let dx;
-    let dy;
-    let x = snake.array[0].x + tile / 2;
-    let y = snake.array[0].y + tile / 2;
-    if (direction === -2) {
-      dx = randomNumber(-dynamicSparkD(), dynamicSparkD());
-      dy = randomNumber(-dynamicSparkD(), -dynamicSparkD() / 2);
-    }
-    if (direction === 2) {
-      dx = randomNumber(-dynamicSparkD(), dynamicSparkD());
-      dy = randomNumber(dynamicSparkD(), dynamicSparkD() * 2);
-    }
-    if (direction === -1) {
-      dx = randomNumber(-dynamicSparkD() * 2, -dynamicSparkD());
-      dy = randomNumber(-dynamicSparkD(), dynamicSparkD());
-    }
-    if (direction === 1) {
-      dx = randomNumber(dynamicSparkD(), dynamicSparkD() * 2);
-      dy = randomNumber(-dynamicSparkD(), dynamicSparkD());
-    }
-
-    sparkArray.push(new Spark(x, y, dx, dy));
-  }
-}
-
-// Game loop with conditions for which functions are called depending on game state
-let gameLoop = function () {
-  if (gameState === "PLAY") {
-
-    game.checkSnakeCollision();
-    game.checkAteFood();
-    game.update();
-    snake.update();
-    snake.lastMove();
-    scoreBoard.updateHighScore();
-  } else {
-    game.stop();
-  }
-};
-
-let game = {
-  collisionDetected: false,
-  ateFood: false,
-  lastMove: "",
-  startTime: 0,
-  changeState(state) {
-    gameState = state;
-    this.showScreen(state);
-  },
-  makeVisible(screen) {
-    screen.style.visibility = "visible";
-  },
-  makeHidden(screen) {
-    screen.style.visibility = "hidden";
-  },
-  showScreen(state) {
-    if (state === "PLAY") {
-      this.makeHidden(startScreen);
-      this.makeHidden(scoresScreen);
-    }
-    if (state === "GAMEOVER") {
-      this.makeHidden(optionsScreen);
-      this.makeVisible(scoresScreen);
-    }
-    if (state === "OPTIONS") {
-      this.makeHidden(startScreen);
-      this.makeHidden(scoresScreen);
-      this.makeVisible(optionsScreen);
-    }
-    if (state === "MENU") {
-      this.makeHidden(scoresScreen);
-      this.makeHidden(optionsScreen);
-      this.makeVisible(startScreen);
-    }
-  },
-  loadDefaultSettings() {
-    this.collisionDetected = false;
-    this.AteFood = false;
-    sparkArray.length = 0;
-    direction = -1;
-    scoreBoard.previousScore = scoreBoard.currentScore;
-    scoreBoard.currentScore = 0;
-    tileToSparkDRatio = 0.1;
-
-    if (wallsCheckBox.checked) {
-      wallsEnabled = true;
-    } else {
-      wallsEnabled = false;
-    }
-
-    if (audioCheckBox.checked) {
-      gameAudio = true;
-    } else {
-      gameAudio = false;
-    }
-  },
-  toggleWalls() {
-    wallsEnabled = !wallsEnabled;
-  },
-  play() {
-    gameRefreshInterval = setInterval(function () {
-      gameLoop();
-    }, gameSpeed);
-  },
-  stop() {
-    clearInterval(gameRefreshInterval);
-  },
-  checkSnakeCollision() {
-    for (let i = 0; i < snake.array.length; i++) {
-      if (
-        snake.newHead.x === snake.array[i].x &&
-        snake.newHead.y === snake.array[i].y
-      ) {
-        this.collisionDetected = true;
-      }
-      if (snake.newHead.x > canvas.width - tile && direction === 1) {
-        if (wallsEnabled) {
-          this.collisionDetected = true;
-        } else {
-          snake.x = -tile;
-        }
-      }
-
-      if (snake.newHead.x < 0 && direction === -1) {
-        if (wallsEnabled) {
-          this.collisionDetected = true;
-        } else {
-          snake.x = canvas.width;
-        }
-      }
-
-      if (snake.newHead.y > canvas.height - tile && direction === 2) {
-        if (wallsEnabled) {
-          this.collisionDetected = true;
-        } else {
-          snake.y = 2 * tile;
-        }
-      }
-
-      if (snake.newHead.y < 3 * tile && direction === -2) {
-        if (wallsEnabled) {
-          this.collisionDetected = true;
-        } else {
-          snake.y = canvas.height;
-        }
-      }
-    }
-  },
-  checkAteFood() {
-    for (let i = 0; i < snake.array.length; i++) {
-      if (food.x === snake.array[i].x && food.y === snake.array[i].y) {
-        newFood(); // if food is within snake body, spawns new food
-      }
-    }
-    if (snake.newHead.x === food.x && snake.newHead.y === food.y) {
-      this.AteFood = true;
-    } else {
-      this.AteFood = false;
-    }
-  },
-  moveIsValid(newDir) {
-    if (this.lastMove === -newDir && direction !== newDir) {
-      return false;
-    }
-    else if (this.lastMove === newDir && direction !== -newDir) {
-      return false;
-    } else {
-      return true;
-    }
-  },
-  update() {
-    if (this.collisionDetected) {
-      stats.updateGamesPlayed();
-      stats.updateGameTimeInSeconds();
-      scoreBoard.update();
-      scoreBoard.print();
-      game.changeState("GAMEOVER");
-      if (gameAudio) {
-        gameOverSound.play();
-      }
-    } else if (this.AteFood) {
-      snake.array.unshift(snake.newHead);
-      populateSparkArray();
-      newFood();
-      scoreBoard.currentScore++;
-      tileToSparkDRatio += 0.0025;
-      if (gameAudio) {
-        eatSound.play();
-      }
-    } else {
-      snake.array.unshift(snake.newHead);
-      snake.array.pop();
-    }
-  },
-};
-
-// Animation loop
-function animate() {
-  gameBoard.draw();
-  food.draw();
-  scoreBoard.draw();
-  snake.draw();
-
-  sparkArray.forEach((spark, index) => {
-    spark.update();
-    if (spark.ttl === 0) {
-      sparkArray.splice(index, 1);
-    }
-  });
-
-  if (gameState === "PLAY") {
-    requestAnimationFrame(animate);
-  } else {
-    return;
-  }
-}
