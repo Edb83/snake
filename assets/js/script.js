@@ -47,12 +47,14 @@ function randomNumber(min, max) {
 // Time convertor
 function convertSecondsToMs(d) {
   d = Number(d);
+  var h = Math.floor(d / 3600);
   var m = Math.floor((d % 3600) / 60);
   var s = Math.floor((d % 3600) % 60);
 
-  var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
+  var hDisplay = h > 0 ? h + (h == 1 ? " hour " : " hours ") : "";
+  var mDisplay = m > 0 ? m + (m == 1 ? " minute " : " minutes ") : "";
   var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
-  return mDisplay + sDisplay;
+  return hDisplay + mDisplay + sDisplay;
 }
 
 // Keydown event listener
@@ -82,7 +84,7 @@ document.addEventListener("keydown", keyboardHandler);
 let hammertime = new Hammer.Manager(document.querySelector("body"));
 
 hammertime.add(
-  new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 20 })
+  new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 30 })
 );
 hammertime.add(new Hammer.Tap({ event: "doubletap", taps: 2 }));
 hammertime.get("pan");
@@ -576,6 +578,7 @@ let game = {
     if (this.collisionDetected) {
       stats.updateGamesPlayed();
       stats.updateGameTimeInSeconds();
+      stats.updatePointsAllTime();
       scoreBoard.update();
       scoreBoard.print();
       game.changeState("GAMEOVER");
@@ -603,6 +606,8 @@ let stats = {
   gamesPlayedThisSession: 0,
   gamesPlayedAllTime: parseInt(localStorage.getItem("games")) || 0,
   gameTimeInSeconds: 0,
+  gameTimeAllTime: parseInt(localStorage.getItem("time")) || 0,
+  pointsAllTime: parseInt(localStorage.getItem("points")) || 0,
   updateGamesPlayed() {
     this.gamesPlayedThisSession++;
     this.gamesPlayedAllTime += 1;
@@ -610,6 +615,12 @@ let stats = {
   },
   updateGameTimeInSeconds() {
     this.gameTimeInSeconds = Math.round((Date.now() - game.startTime) / 1000);
+    this.gameTimeAllTime += this.gameTimeInSeconds;
+    localStorage.setItem("time", this.gameTimeAllTime);
+  },
+  updatePointsAllTime() {
+    this.pointsAllTime += scoreBoard.currentScore;
+    localStorage.setItem("points", this.pointsAllTime);
   },
 };
 
@@ -619,7 +630,7 @@ let scoreBoard = {
   previousScore: undefined,
   currentScore: undefined,
   currentHighScore: undefined,
-  highScore: parseInt(localStorage.getItem("top")) || 0,
+  highScore: parseInt(localStorage.getItem("highScore")) || 0,
   update() {
     if (this.array.includes(this.currentScore) || this.currentScore === 0) {
       return;
@@ -629,11 +640,11 @@ let scoreBoard = {
     }
   },
   getCurrentHighScore() {
-    this.currentHighScore = parseInt(localStorage.getItem("top"));
+    this.currentHighScore = parseInt(localStorage.getItem("highScore"));
   },
   updateHighScore() {
     if (this.currentScore > parseInt(this.highScore)) {
-      localStorage.setItem("top", this.currentScore);
+      localStorage.setItem("highScore", this.currentScore);
       this.highScore = this.currentScore;
     } else {
       return;
@@ -646,7 +657,7 @@ let scoreBoard = {
     this.print();
   },
   resetHighScore() {
-    localStorage.removeItem("top");
+    localStorage.removeItem("highScore");
     this.highScore = 0;
     if (stats.gamesPlayedThisSession > 0) {
       animate();
@@ -668,8 +679,8 @@ let scoreBoard = {
   },
   print() {
     let scoreAwardText = document.getElementById("score-award-text");
-
     scoreAwardText.innerHTML = "";
+
     // arrow function needed to prevent invalid reference to this.currentScore (thanks to robinz_alumni for tip)
     let scoreRange = (min, max) => {
       if (this.currentScore >= min && this.currentScore < max + 1) {
