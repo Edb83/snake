@@ -7,9 +7,8 @@ const sparkArray = [];
 
 let direction; // MOVE TO GAME OBJECT?
 
-let lastKey; // used to store time since last keydown
 const gameSpeed = 140; // MOVE TO GAME OBJECT?
-const safeDelay = 140; // used to add minimum interval between key presses to prevent snake eating its neck (milliseconds). Risk vs Responsiveness
+
 let gameRefreshInterval; // MOVE TO GAME OBJECT?
 
 let snake;
@@ -51,8 +50,7 @@ const colorArray = [
 
 // Keydown event listener
 function keyboardHandler(e) {
-  //   if (Date.now() - lastKey > safeDelay) {
-  // checks time since last key press to prevent multiple presses causing snake to eat its neck
+
   if (e.keyCode === 38 && game.moveIsValid(-2)) {
     direction = -2;
   } else if (e.keyCode === 40 && game.moveIsValid(2)) {
@@ -62,8 +60,7 @@ function keyboardHandler(e) {
   } else if (e.keyCode === 39 && game.moveIsValid(1)) {
     direction = 1;
   }
-  //   }
-  //   lastKey = Date.now();
+
   if (e.keyCode == 32 && gameState === "PLAY") {
     game.changeState("PAUSE");
     game.stop();
@@ -80,13 +77,12 @@ document.addEventListener("keydown", keyboardHandler);
 let hammertime = new Hammer.Manager(document.querySelector("body"));
 
 hammertime.add(
-  new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 10 })
+  new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 20 })
 );
 hammertime.add(new Hammer.Tap({ event: "doubletap", taps: 2 }));
 hammertime.get("pan");
 hammertime.get("doubletap");
 hammertime.on(`panleft panright panup pandown doubletap`, function (e) {
-//   if (Date.now() - lastKey > safeDelay) {
     if (e.type === `panleft` && game.moveIsValid(-1)) {
       direction = -1;
     } else if (e.type === `panup` && game.moveIsValid(-2)) {
@@ -96,8 +92,7 @@ hammertime.on(`panleft panright panup pandown doubletap`, function (e) {
     } else if (e.type === `pandown` && game.moveIsValid(2)) {
       direction = 2;
     }
-//   }
-//   lastKey = Date.now();
+
   if (e.type == "doubletap" && gameState === "PLAY") {
     game.changeState("PAUSE");
     game.stop();
@@ -754,7 +749,6 @@ let game = {
     this.AteFood = false;
     sparkArray.length = 0;
     direction = -1;
-    lastKey = 0;
     scoreBoard.previousScore = scoreBoard.currentScore;
     scoreBoard.currentScore = 0;
     tileToSparkDRatio = 0.1;
