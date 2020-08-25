@@ -79,19 +79,19 @@ document.addEventListener("keydown", keyboardHandler);
 // Hammertime event listener
 let hammertime = new Hammer.Manager(document.querySelector("body"));
 
-hammertime.add(new Hammer.Pan({ direction: Hammer.DIRECTION_ALL }));
+hammertime.add(new Hammer.Swipe({ direction: Hammer.DIRECTION_ALL, threshold: 2, velocity: 0.01 }));
 hammertime.add(new Hammer.Tap({ event: "doubletap", taps: 2 }));
-hammertime.get("pan");
+hammertime.get("swipe");
 hammertime.get("doubletap");
-hammertime.on(`panleft panright panup pandown doubletap`, function (e) {
+hammertime.on(`swipeleft swiperight swipeup swipedown doubletap`, function (e) {
   if (Date.now() - lastKey > safeDelay) {
-    if (e.type === `panleft` && direction !== "RIGHT") {
+    if (e.type === `swipeleft` && direction !== "RIGHT") {
       direction = "LEFT";
-    } else if (e.type === `panup` && direction !== "DOWN") {
+    } else if (e.type === `swipeup` && direction !== "DOWN") {
       direction = "UP";
-    } else if (e.type === `panright` && direction !== "LEFT") {
+    } else if (e.type === `swiperight` && direction !== "LEFT") {
       direction = "RIGHT";
-    } else if (e.type === `pandown` && direction !== "UP") {
+    } else if (e.type === `swipedown` && direction !== "UP") {
       direction = "DOWN";
     }
   }
@@ -689,14 +689,28 @@ function populateSparkArray() {
   }
 }
 
+// let movingVertically;
+// let moveIsValid;
+
 // Game loop with conditions for which functions are called depending on game state
 let gameLoop = function () {
   if (gameState === "PLAY") {
+    //   let oldSnakeX;
+    //   let newSnakeX;
+    //   oldSnakeX = snake.x;
     game.checkSnakeCollision();
     game.checkAteFood();
     game.update();
     snake.update();
+    // newSnakeX = snake.x;
     scoreBoard.updateHighScore();
+
+    // if (newSnakeX !== oldSnakeX) {
+    //     movingVertically = false }
+    // else {
+    //     movingVertically = true
+    // }
+
   } else {
     game.stop();
   }
