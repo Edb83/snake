@@ -8,7 +8,7 @@ const sparkArray = [];
 let direction; // MOVE TO GAME OBJECT?
 
 let lastKey; // used to store time since last keydown
-const gameSpeed = 2000; // MOVE TO GAME OBJECT?
+const gameSpeed = 140; // MOVE TO GAME OBJECT?
 const safeDelay = 140; // used to add minimum interval between key presses to prevent snake eating its neck (milliseconds). Risk vs Responsiveness
 let gameRefreshInterval; // MOVE TO GAME OBJECT?
 
@@ -51,19 +51,19 @@ const colorArray = [
 
 // Keydown event listener
 function keyboardHandler(e) {
-  if (Date.now() - lastKey > safeDelay) {
-    // checks time since last key press to prevent multiple presses causing snake to eat its neck
-    if (e.keyCode === 38 && direction !== "DOWN") {
-      direction = "UP";
-    } else if (e.keyCode === 40 && direction !== "UP") {
-      direction = "DOWN";
-    } else if (e.keyCode === 37 && direction !== "RIGHT") {
-      direction = "LEFT";
-    } else if (e.keyCode === 39 && direction !== "LEFT") {
-      direction = "RIGHT";
-    }
+  //   if (Date.now() - lastKey > safeDelay) {
+  // checks time since last key press to prevent multiple presses causing snake to eat its neck
+  if (e.keyCode === 38 && game.moveIsValid(-2)) {
+    direction = -2;
+  } else if (e.keyCode === 40 && game.moveIsValid(2)) {
+    direction = 2;
+  } else if (e.keyCode === 37 && game.moveIsValid(-1)) {
+    direction = -1;
+  } else if (e.keyCode === 39 && game.moveIsValid(1)) {
+    direction = 1;
   }
-  lastKey = Date.now();
+  //   }
+  //   lastKey = Date.now();
   if (e.keyCode == 32 && gameState === "PLAY") {
     game.changeState("PAUSE");
     game.stop();
@@ -73,8 +73,6 @@ function keyboardHandler(e) {
     animate();
   }
 }
-
-
 
 document.addEventListener("keydown", keyboardHandler);
 
@@ -89,14 +87,14 @@ hammertime.get("pan");
 hammertime.get("doubletap");
 hammertime.on(`panleft panright panup pandown doubletap`, function (e) {
   if (Date.now() - lastKey > safeDelay) {
-    if (e.type === `panleft` && direction !== "RIGHT") {
-      direction = "LEFT";
-    } else if (e.type === `panup` && direction !== "DOWN") {
-      direction = "UP";
-    } else if (e.type === `panright` && direction !== "LEFT") {
-      direction = "RIGHT";
-    } else if (e.type === `pandown` && direction !== "UP") {
-      direction = "DOWN";
+    if (e.type === `panleft` && direction !== 1) {
+      direction = -1;
+    } else if (e.type === `panup` && direction !== 2) {
+      direction = -2;
+    } else if (e.type === `panright` && direction !== -1) {
+      direction = 1;
+    } else if (e.type === `pandown` && direction !== -2) {
+      direction = 2;
     }
   }
   lastKey = Date.now();
@@ -535,29 +533,29 @@ class Snake {
   }
 
   get newHead() {
-    if (direction === "LEFT") {
+    if (direction === -1) {
       return { x: this.x - tile, y: this.y };
     }
-    if (direction === "UP") {
+    if (direction === -2) {
       return { x: this.x, y: this.y - tile };
     }
-    if (direction === "RIGHT") {
+    if (direction === 1) {
       return { x: this.x + tile, y: this.y };
     }
-    if (direction === "DOWN") {
+    if (direction === 2) {
       return { x: this.x, y: this.y + tile };
     }
   }
 
   lastMove() {
     if (this.array[0].x < this.array[1].x) {
-      return "LEFT";
+      game.lastMove = -1;
     } else if (this.array[0].x > this.array[1].x) {
-      return "RIGHT";
+      game.lastMove = 1;
     } else if (this.array[0].y < this.array[1].y) {
-      return "UP";
+      game.lastMove = -2;
     } else if (this.array[0].y > this.array[1].y) {
-      return "DOWN";
+      game.lastMove = 2;
     }
   }
 
@@ -680,19 +678,19 @@ function populateSparkArray() {
     let dy;
     let x = snake.array[0].x + tile / 2;
     let y = snake.array[0].y + tile / 2;
-    if (direction === "UP") {
+    if (direction === -2) {
       dx = randomNumber(-dynamicSparkD(), dynamicSparkD());
       dy = randomNumber(-dynamicSparkD(), -dynamicSparkD() / 2);
     }
-    if (direction === "DOWN") {
+    if (direction === 2) {
       dx = randomNumber(-dynamicSparkD(), dynamicSparkD());
       dy = randomNumber(dynamicSparkD(), dynamicSparkD() * 2);
     }
-    if (direction === "LEFT") {
+    if (direction === -1) {
       dx = randomNumber(-dynamicSparkD() * 2, -dynamicSparkD());
       dy = randomNumber(-dynamicSparkD(), dynamicSparkD());
     }
-    if (direction === "RIGHT") {
+    if (direction === 1) {
       dx = randomNumber(dynamicSparkD(), dynamicSparkD() * 2);
       dy = randomNumber(-dynamicSparkD(), dynamicSparkD());
     }
@@ -709,7 +707,7 @@ let gameLoop = function () {
     game.checkAteFood();
     game.update();
     snake.update();
-    console.log(snake.lastMove());
+    snake.lastMove();
     scoreBoard.updateHighScore();
   } else {
     game.stop();
@@ -719,6 +717,7 @@ let gameLoop = function () {
 let game = {
   collisionDetected: false,
   ateFood: false,
+  lastMove: "",
   startTime: 0,
   changeState(state) {
     gameState = state;
@@ -754,7 +753,7 @@ let game = {
     this.collisionDetected = false;
     this.AteFood = false;
     sparkArray.length = 0;
-    direction = "LEFT";
+    direction = -1;
     lastKey = 0;
     scoreBoard.previousScore = scoreBoard.currentScore;
     scoreBoard.currentScore = 0;
@@ -791,7 +790,7 @@ let game = {
       ) {
         this.collisionDetected = true;
       }
-      if (snake.newHead.x > canvas.width - tile && direction === "RIGHT") {
+      if (snake.newHead.x > canvas.width - tile && direction === 1) {
         if (wallsEnabled) {
           this.collisionDetected = true;
         } else {
@@ -799,7 +798,7 @@ let game = {
         }
       }
 
-      if (snake.newHead.x < 0 && direction === "LEFT") {
+      if (snake.newHead.x < 0 && direction === -1) {
         if (wallsEnabled) {
           this.collisionDetected = true;
         } else {
@@ -807,7 +806,7 @@ let game = {
         }
       }
 
-      if (snake.newHead.y > canvas.height - tile && direction === "DOWN") {
+      if (snake.newHead.y > canvas.height - tile && direction === 2) {
         if (wallsEnabled) {
           this.collisionDetected = true;
         } else {
@@ -815,7 +814,7 @@ let game = {
         }
       }
 
-      if (snake.newHead.y < 3 * tile && direction === "UP") {
+      if (snake.newHead.y < 3 * tile && direction === -2) {
         if (wallsEnabled) {
           this.collisionDetected = true;
         } else {
@@ -834,6 +833,16 @@ let game = {
       this.AteFood = true;
     } else {
       this.AteFood = false;
+    }
+  },
+  moveIsValid(newDir) {
+    if (this.lastMove === -newDir && direction !== newDir) {
+      return false;
+    }
+    else if (this.lastMove === newDir && direction !== -newDir) {
+      return false;
+    } else {
+      return true;
     }
   },
   update() {
