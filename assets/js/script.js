@@ -455,10 +455,10 @@ let game = {
     this.showScreen(state);
   },
   makeVisible(screen) {
-    screen.style.visibility = "visible";
+    screen.style.display = "inline-block";
   },
   makeHidden(screen) {
-    screen.style.visibility = "hidden";
+    screen.style.display = "none";
   },
   showScreen(state) {
     if (state === "PLAY") {
@@ -716,10 +716,17 @@ let scoreBoard = {
       );
     }
 
-    if (scoreRange(10, 19)) {
+    if (scoreRange(10, 19) && this.currentScore !== 13) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
         `Double digits. Your job here is done. `
+      );
+    }
+
+    if (this.currentScore === 13 && this.currentScore <= this.currentHighScore) {
+      scoreAwardText.insertAdjacentHTML(
+        "beforeend",
+        `Unlucky for some. Like you. `
       );
     }
 
@@ -795,13 +802,13 @@ let scoreBoard = {
     } else if (scoreRange(100, 124)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `The Nanite Narwhal would be proud. `
+        `Overall you have smashed ${stats.pointsAllTime} blobs to smithereens. The Nanite Narwhal would be proud. `
       );
     }
     if (scoreRange(125, 149)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `That was actually pretty good. `
+        `After ${convertSecondsToMs(stats.gameTimeAllTime)} of total play time, things have clicked. `
       );
     }
 

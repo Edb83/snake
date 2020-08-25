@@ -56,3 +56,7 @@ https://www.w3schools.com/howto/howto_css_glowing_text.asp
 
 Seconds to HMS converor:
 https://stackoverflow.com/questions/37096367/how-to-convert-seconds-to-minutes-and-hours-in-javascript/37096923
+
+Arrow functions and this:
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions#No_separate_this
+

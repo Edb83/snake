@@ -9,7 +9,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #001437;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 #game-container {
@@ -22,8 +22,28 @@ body {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  min-height: 100vh;
+  height: 100vh;
   position: relative;
+}
+
+.menu-screen {
+  display: inline-block;
+  position: absolute;
+  text-align: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 1rem;
+  background-color: #001437;
+  border: solid 1px #fff;
+  color: #fff;
+  font-family: "Orbitron", sans-serif;
+  z-index: 1;
+  width: 90vw;
+  overflow: auto;
 }
 
 #canvas {
@@ -33,24 +53,6 @@ body {
   flex: initial;
 }
 
-.menu-screen {
-  display: block;
-  position: absolute;
-  text-align: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding: 15px;
-  background-color: #001437;
-  border: solid 1px #fff;
-  color: #fff;
-  font-family: "Orbitron", sans-serif;
-  z-index: 1;
-  width: 90vw;
-}
 
 /* https://www.w3schools.com/howto/howto_css_glowing_text.asp */
 
@@ -101,20 +103,21 @@ h1 {
   text-shadow: 0 0 1rem;
 }
 
-#score-award-text {
+/* #score-award-text {
   text-align: center;
-}
+} */
 
 #session-scores-container {
-  padding: 0 25%;
+    display: inline-block;
+    min-width: 20%;
 }
 
 .visible {
-  visibility: visible;
+  display: inline-block;
 }
 
 .hidden {
-  visibility: hidden;
+  display: none;
 }
 
 .menu-buttons-container button {
@@ -148,7 +151,7 @@ h1 {
   }
 }
 
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 1024px) and (min-height: 475px) {
     .menu-screen {
         font-size: 1.5rem;
     }
