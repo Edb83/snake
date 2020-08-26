@@ -22,7 +22,7 @@
     <div id="game-container">
       <div id="start-screen" class="visible menu-screen">
         <h1>Cyber Snake</h1>
-        <div id="instructions-container">
+        <div id="instructions-container" class="menu-content-container">
           <p>
             Use the <span class="desktop-controls-text">ARROW keys</span> or
             <span class="mobile-controls-text">SWIPE</span> anywhere to change
@@ -46,11 +46,13 @@
       </div>
       <div id="scores-screen" class="hidden menu-screen">
         <h1>Score Board</h1>
-        <p id="score-award-text">
-          You haven't achieved anything yet. Once you do, your top 5 scores of
-          the session will be displayed here.
-        </p>
-        <div id="session-scores-container" class="hidden">
+        <div id="score-award-container" class="menu-content-container">
+          <p id="score-award-text">
+            You haven't achieved anything yet. Once you do, your top 5 scores of
+            the session will be displayed here.
+          </p>
+        </div>
+        <div id="session-scores-container" class="hidden menu-content-container">
           <ol></ol>
         </div>
         <div class="menu-buttons-container">
@@ -61,7 +63,7 @@
       </div>
       <div id="options-screen" class="hidden menu-screen">
         <h1>Options</h1>
-        <div class="radio-buttons-container">
+        <div id="radio-buttons-container" class="menu-content-container">
           <label class="checkbox">
             <input id="audio-checkbox" type="checkbox" checked />
             <span>Sound</span>
@@ -81,7 +83,8 @@
               Reset ALL scores
             </button> -->
           <button
-            id="resume-button" class="hidden"
+            id="resume-button"
+            class="hidden"
             onclick="game.changeState('PLAY'); game.play();animateLoop()"
           >
             Resume

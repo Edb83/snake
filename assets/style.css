@@ -53,15 +53,15 @@ body {
   flex: initial;
 }
 
-#instructions-container {
-padding: 0 0 1rem;
-  margin: 1rem 0;
+.menu-content-container {
+  margin: 1.5rem 0;
 }
 
 /* https://www.w3schools.com/howto/howto_css_glowing_text.asp */
 
 h1 {
   color: #fff;
+  margin: 1rem 0;
   -webkit-animation: glow 1s ease-in-out infinite alternate;
   animation: glow 1s ease-in-out infinite alternate;
 }
@@ -107,27 +107,22 @@ h1 {
   text-shadow: 0 0 1rem;
 }
 
-/* #score-award-text {
-  text-align: center;
-} */
-
 #session-scores-container {
-  /* display: none; */
   min-width: 20%;
-  padding: 0 0 1rem;
-  margin: 1rem 0;
+  /* padding: 0 0 1rem;
+  margin: 1rem 0; */
 }
 
 .visible {
   display: inline-block;
 }
 
-.transparent-background {
-    background-color: #00143766;
-}
-
 .hidden {
   display: none;
+}
+
+.transparent-background {
+  background-color: #00143766;
 }
 
 .menu-buttons-container {
@@ -135,18 +130,19 @@ h1 {
 }
 
 .menu-buttons-container button {
-    display: inline-block;
-    min-width: 5rem;
-    -webkit-touch-callout: none;
-    margin: 0.5rem 1rem;
-    background-color: #001437;
-    border: solid 1px #fff;
-    border-radius: 5%;
-    color: #fff;
-    font-size: 1.1rem;
-    font-family: "Orbitron", sans-serif;
-    padding: 0.5rem;
-    box-sizing: content-box;
+  display: inline-block;
+  min-width: 5rem;
+  -webkit-touch-callout: none;
+  margin: 0.5rem 1rem;
+  background-color: #001437;
+  border: solid 1px #fff;
+  border-radius: 5%;
+  color: #fff;
+  font-size: 1.1rem;
+  font-family: "Orbitron", sans-serif;
+  padding: 0.5rem;
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
 }
 
 .menu-buttons-container button:hover {
@@ -155,23 +151,27 @@ h1 {
   border: solid 1px #fff;
 }
 
-/* #resume-button {
-    display: none;
-} */
-
-/* .radio-buttons-container {
-  margin: 0 1rem;
-} */
+#radio-buttons-container {
+    display: inline-block;
+    margin: 0;
+}
 
 .checkbox {
-    display: flex;
-    cursor: pointer;
-    position: relative;
-    align-items: center;
-    justify-content: center;
-    left: 45%;
-    padding: 0.5rem 0;
-    width: max-content;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  cursor: pointer;
+  position: relative;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 0.5rem 0;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
 }
 
 .checkbox > span {
@@ -189,7 +189,9 @@ h1 {
   border: 2px solid #fff;
   border-radius: 5%;
   outline: none;
-  transition-duration: 0.3s;
+  -webkit-transition-duration: 0.3s;
+       -o-transition-duration: 0.3s;
+          transition-duration: 0.3s;
   background-color: #001437;
   cursor: pointer;
 }
@@ -229,10 +231,16 @@ h1 {
   .menu-screen {
     font-size: 1.5rem;
   }
+  .menu-content-container {
+    margin: 3rem 0;
+  }
 }
 
 @media screen and (min-width: 1280px) {
   .menu-screen {
     font-size: 2rem;
+  }
+  .menu-content-container {
+    margin: 4rem 0;
   }
 }
