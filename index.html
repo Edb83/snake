@@ -51,7 +51,7 @@
       <div id="scores-screen" class="hidden menu-screen">
         <h1>Score Board</h1>
         <p id="score-award-text"></p>
-        <h3>Top session scores</h3>
+        <!-- <h3>Top session scores</h3> -->
         <div id="session-scores-container">
           <ol></ol>
         </div>
@@ -64,8 +64,14 @@
       <div id="options-screen" class="hidden menu-screen">
         <h1>Options</h1>
         <div>
-          <p>Sound<input id="audio-checkbox" type="checkbox" checked /></p>
-          <p>Walls<input id="walls-checkbox" type="checkbox" /></p>
+          <label class="checkbox">
+            <span>Sound</span>
+            <input id="audio-checkbox" type="checkbox" checked />
+          </label>
+          <label class="checkbox">
+            <span>Walls</span>
+            <input id="walls-checkbox" type="checkbox"
+          /></label>
           <div class="menu-buttons-container">
             <!-- <button onclick="scoreBoard.resetArray()">
               Reset session scores

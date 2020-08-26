@@ -60,3 +60,5 @@ https://stackoverflow.com/questions/37096367/how-to-convert-seconds-to-minutes-a
 Arrow functions and this:
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions#No_separate_this
 
+Checkbox restyling:
+https://dev.to/proticm/styling-html-checkboxes-is-super-easy-302o

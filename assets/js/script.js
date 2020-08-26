@@ -21,8 +21,8 @@ const optionsScreen = document.getElementById("options-screen");
 const canvas = document.getElementById("canvas");
 const eatSound = document.getElementById("eat-sound");
 const gameOverSound = document.getElementById("gameover-sound");
-const wallsCheckBox = document.querySelector("#walls-checkbox");
-const audioCheckBox = document.querySelector("#audio-checkbox");
+const wallsCheckBox = document.getElementById("walls-checkbox");
+const audioCheckBox = document.getElementById("audio-checkbox");
 const ctx = canvas.getContext("2d");
 
 const canvasHeightToWidthRatio = 20 / 23; // ie 20 wide, 23 high to account for score area
