@@ -128,17 +128,18 @@ h1 {
 }
 
 .menu-buttons-container button {
-  display: inline-block;
-  height: 30px;
-  min-width: 90px;
-  -webkit-touch-callout: none;
-  margin: 0.5rem 1rem;
-  background-color: #001437;
-  border: solid 1px #fff;
-  border-radius: 5%;
-  color: #fff;
-  font-size: 1.1rem;
-  font-family: "Orbitron", sans-serif;
+    display: inline-block;
+    min-width: 5rem;
+    -webkit-touch-callout: none;
+    margin: 0.5rem 1rem;
+    background-color: #001437;
+    border: solid 1px #fff;
+    border-radius: 5%;
+    color: #fff;
+    font-size: 1.1rem;
+    font-family: "Orbitron", sans-serif;
+    padding: 0.5rem;
+    box-sizing: content-box;
 }
 
 .menu-buttons-container button:hover {
