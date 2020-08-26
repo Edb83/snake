@@ -54,7 +54,7 @@ body {
 }
 
 #instructions-container {
-    margin: 0.5rem 0;
+  margin: 0.5rem 0;
 }
 
 /* https://www.w3schools.com/howto/howto_css_glowing_text.asp */
@@ -124,28 +124,31 @@ h1 {
 }
 
 .menu-buttons-container {
-    margin: 1rem;
+  margin: 1rem;
 }
 
 .menu-buttons-container button {
   display: inline-block;
-  height: 25px;
+  height: 30px;
   min-width: 90px;
   -webkit-touch-callout: none;
-  margin: 0 1rem;
-  background-color: #fff;
-  border-style: none;
+  margin: 0.5rem 1rem;
+  background-color: #001437;
+  border: solid 1px #fff;
   border-radius: 5%;
+  color: #fff;
+  font-size: 1.1rem;
+  font-family: "Orbitron", sans-serif;
 }
 
 .menu-buttons-container button:hover {
-  background-color: #3e9485;
-  color: #fff;
+  background-color: #fff;
+  color: #001437;
   border: solid 1px #fff;
 }
 
 .radio-buttons-container {
-    margin: 0 1rem;
+  margin: 0 1rem;
 }
 
 .checkbox {
