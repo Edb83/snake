@@ -468,9 +468,12 @@ let game = {
     if (state === "PLAY") {
       this.makeHidden(startScreen);
       this.makeHidden(scoresScreen);
+      this.makeHidden(scoresContainer);
+      this.makeHidden(optionsScreen);
     }
     if (state === "GAMEOVER") {
       this.makeHidden(optionsScreen);
+      this.makeHidden(startScreen);
       this.makeVisible(scoresScreen);
     }
     if (state === "GAMEOVER" && stats.gamesPlayedThisSession > 0) {
@@ -485,6 +488,7 @@ let game = {
     if (state === "MENU") {
       this.makeHidden(scoresScreen);
       this.makeHidden(scoresContainer);
+      this.makeHidden(optionsScreen);
       this.makeHidden(optionsScreen);
       this.makeVisible(startScreen);
     }
@@ -714,21 +718,21 @@ let scoreBoard = {
     if (scoreRange(1, 4) && this.currentScore < this.currentHighScore) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `${this.currentScore} is a fine score. `
+        `${this.currentScore} is a fantastic score. `
       );
     }
 
     if (scoreRange(5, 9)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `Lamentably, the Universal High Scores feature has yet to be implemented. `
+        `Lamentably, the Galactic High Scores feature has yet to be implemented. `
       );
     }
 
     if (scoreRange(10, 19) && this.currentScore !== 13) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `Double digits. Your job here is done. `
+        `Double digits. Mission accomplished. `
       );
     }
 

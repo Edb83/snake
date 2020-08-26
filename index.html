@@ -47,13 +47,14 @@
         <div class="menu-buttons-container">
           <button onclick="newGame()">Play</button>
           <button onclick="game.changeState('OPTIONS')">Options</button>
+          <button onclick="game.changeState('GAMEOVER')">Scores</button>
         </div>
       </div>
       <div id="scores-screen" class="hidden menu-screen">
         <h1>Score Board</h1>
         <p id="score-award-text">
-          You haven't done anything yet. Once you do, your top 5 scores of the
-          session will be displayed here, gloriously.
+          You haven't achieved anything yet. Once you do, your top 5 scores of the
+          session will be displayed here.
         </p>
         <div id="session-scores-container">
           <ol></ol>
@@ -85,7 +86,9 @@
             >
               Reset ALL scores
             </button> -->
-          <button onclick="game.changeState('GAMEOVER')">Back</button>
+          <button onclick="newGame()">Play</button>
+          <button onclick="game.changeState('GAMEOVER')">Scores</button>
+          <button onclick="game.changeState('MENU')">Instructions</button>
         </div>
       </div>
       <canvas id="canvas"></canvas>
