@@ -53,6 +53,10 @@ body {
   flex: initial;
 }
 
+#instructions-container {
+    margin: 0.5rem 0;
+}
+
 /* https://www.w3schools.com/howto/howto_css_glowing_text.asp */
 
 h1 {
@@ -107,7 +111,7 @@ h1 {
 } */
 
 #session-scores-container {
-  display: inline-block;
+  display: none;
   min-width: 20%;
 }
 
@@ -119,12 +123,16 @@ h1 {
   display: none;
 }
 
+.menu-buttons-container {
+    margin: 1rem;
+}
+
 .menu-buttons-container button {
   display: inline-block;
   height: 25px;
   min-width: 90px;
   -webkit-touch-callout: none;
-  margin: 15px;
+  margin: 0 1rem;
   background-color: #fff;
   border-style: none;
   border-radius: 5%;
@@ -136,6 +144,10 @@ h1 {
   border: solid 1px #fff;
 }
 
+.radio-buttons-container {
+    margin: 0 1rem;
+}
+
 .checkbox {
   display: flex;
   cursor: pointer;
@@ -143,6 +155,7 @@ h1 {
   align-items: center;
   justify-content: center;
   left: auto;
+  padding: 0.5rem 0;
 }
 
 .checkbox > span {
@@ -159,7 +172,7 @@ h1 {
   -o-appearance: none;
   appearance: none;
   border: 2px solid #fff;
-  border-radius: 4px;
+  border-radius: 5%;
   outline: none;
   transition-duration: 0.3s;
   background-color: #001437;

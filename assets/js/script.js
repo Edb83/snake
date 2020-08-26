@@ -17,6 +17,7 @@ const gameSpeed = 140; // MOVE TO GAME OBJECT?
 
 const startScreen = document.getElementById("start-screen");
 const scoresScreen = document.getElementById("scores-screen");
+const scoresContainer = document.getElementById("session-scores-container");
 const optionsScreen = document.getElementById("options-screen");
 const canvas = document.getElementById("canvas");
 const eatSound = document.getElementById("eat-sound");
@@ -86,6 +87,9 @@ let hammertime = new Hammer.Manager(document.querySelector("body"));
 hammertime.add(
   new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 20 })
 );
+
+// Add Hammer.Swipe too?
+
 hammertime.add(new Hammer.Tap({ event: "doubletap", taps: 2 }));
 hammertime.get("pan");
 hammertime.get("doubletap");
@@ -469,13 +473,18 @@ let game = {
       this.makeHidden(optionsScreen);
       this.makeVisible(scoresScreen);
     }
+    if (state === "GAMEOVER" && stats.gamesPlayedThisSession > 0) {
+      this.makeVisible(scoresContainer);
+    }
     if (state === "OPTIONS") {
       this.makeHidden(startScreen);
       this.makeHidden(scoresScreen);
+      this.makeHidden(scoresContainer);
       this.makeVisible(optionsScreen);
     }
     if (state === "MENU") {
       this.makeHidden(scoresScreen);
+      this.makeHidden(scoresContainer);
       this.makeHidden(optionsScreen);
       this.makeVisible(startScreen);
     }
@@ -723,7 +732,10 @@ let scoreBoard = {
       );
     }
 
-    if (this.currentScore === 13 && this.currentScore <= this.currentHighScore) {
+    if (
+      this.currentScore === 13 &&
+      this.currentScore <= this.currentHighScore
+    ) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
         `Unlucky for some. Like you. `
@@ -808,7 +820,9 @@ let scoreBoard = {
     if (scoreRange(125, 149)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `After ${convertSecondsToMs(stats.gameTimeAllTime)} of total play time, things have clicked. `
+        `After ${convertSecondsToMs(
+          stats.gameTimeAllTime
+        )} of total play time, things have clicked. `
       );
     }
 

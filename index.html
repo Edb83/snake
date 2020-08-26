@@ -28,33 +28,33 @@
     <div id="game-container">
       <div id="start-screen" class="visible menu-screen">
         <h1>Cyber Snake</h1>
-        <p>
-          Use the <span class="desktop-controls-text">ARROW keys</span> or
-          <span class="mobile-controls-text">SWIPE</span> anywhere to change
-          direction
-        </p>
-        <p>
-          Press <span class="desktop-controls-text">SPACE</span> or
-          <span class="mobile-controls-text">DOUBLE TAP</span> to pause
-        </p>
-        <p>
-          The more you eat, the bigger you grow and the
-          <span class="special-menu-text">messier</span> things become
-        </p>
-        <p>Don't eat yourself</p>
+        <div id="instructions-container">
+          <p>
+            Use the <span class="desktop-controls-text">ARROW keys</span> or
+            <span class="mobile-controls-text">SWIPE</span> anywhere to change
+            direction
+          </p>
+          <p>
+            Press <span class="desktop-controls-text">SPACE</span> or
+            <span class="mobile-controls-text">DOUBLE TAP</span> to pause
+          </p>
+          <p>
+            The more you eat, the bigger you grow and the
+            <span class="special-menu-text">messier</span> things become
+          </p>
+          <p>Don't eat yourself</p>
+        </div>
         <div class="menu-buttons-container">
           <button onclick="newGame()">Play</button>
           <button onclick="game.changeState('OPTIONS')">Options</button>
         </div>
       </div>
-
       <div id="scores-screen" class="hidden menu-screen">
         <h1>Score Board</h1>
-        <p id="score-award-text"></p>
-        <h3>
-          You haven't scored yet. Once you do, your top 5 of the session will be
-          displayed here, gloriously.
-        </h3>
+        <p id="score-award-text">
+          You haven't done anything yet. Once you do, your top 5 scores of the
+          session will be displayed here, gloriously.
+        </p>
         <div id="session-scores-container">
           <ol></ol>
         </div>
@@ -66,7 +66,7 @@
       </div>
       <div id="options-screen" class="hidden menu-screen">
         <h1>Options</h1>
-        <div>
+        <div class="radio-buttons-container">
           <label class="checkbox">
             <span>Sound</span>
             <input id="audio-checkbox" type="checkbox" checked />
@@ -75,8 +75,9 @@
             <span>Walls</span>
             <input id="walls-checkbox" type="checkbox"
           /></label>
-          <div class="menu-buttons-container">
-            <!-- <button onclick="scoreBoard.resetArray()">
+        </div>
+        <div class="menu-buttons-container">
+          <!-- <button onclick="scoreBoard.resetArray()">
               Reset session scores
             </button>
             <button
@@ -84,8 +85,7 @@
             >
               Reset ALL scores
             </button> -->
-            <button onclick="game.changeState('GAMEOVER')">Back</button>
-          </div>
+          <button onclick="game.changeState('GAMEOVER')">Back</button>
         </div>
       </div>
       <canvas id="canvas"></canvas>
