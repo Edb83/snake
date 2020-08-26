@@ -882,7 +882,7 @@ let scoreBoard = {
     if (this.previousScore - this.currentScore > 50) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `Try to remember what you did on your previous attemps. That was better. `
+        `Try to remember what you did on your previous attempt. That was better. `
       );
     }
 
