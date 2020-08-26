@@ -47,8 +47,8 @@
       <div id="scores-screen" class="hidden menu-screen">
         <h1>Score Board</h1>
         <p id="score-award-text">
-          You haven't achieved anything yet. Once you do, your top 5 scores of the
-          session will be displayed here.
+          You haven't achieved anything yet. Once you do, your top 5 scores of
+          the session will be displayed here.
         </p>
         <div id="session-scores-container">
           <ol></ol>
@@ -80,9 +80,16 @@
             >
               Reset ALL scores
             </button> -->
-          <button onclick="newGame()">Play</button>
-          <button onclick="game.changeState('GAMEOVER')">Scores</button>
-          <button onclick="game.changeState('MENU')">Main</button>
+          <button
+            id="resume-button"
+            onclick="game.changeState('PLAY'); game.play();animateLoop()">
+            Resume
+          </button>
+          <div id="options-to-hide">
+            <button onclick="newGame()">Play</button>
+            <button onclick="game.changeState('GAMEOVER')">Scores</button>
+            <button onclick="game.changeState('MENU')">Main</button>
+          </div>
         </div>
       </div>
       <canvas id="canvas"></canvas>

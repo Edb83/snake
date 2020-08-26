@@ -22,6 +22,8 @@ const startScreen = document.getElementById("start-screen");
 const scoresScreen = document.getElementById("scores-screen");
 const scoresContainer = document.getElementById("session-scores-container");
 const optionsScreen = document.getElementById("options-screen");
+const resumeButton = document.getElementById("resume-button");
+const optionsToHide = document.getElementById("options-to-hide");
 const canvas = document.getElementById("canvas");
 // const eatSound = document.getElementById("eatWav");
 // const gameOverSound = document.getElementById("gameOverWav");
@@ -94,7 +96,7 @@ function keyboardHandler(e) {
   } else if (e.keyCode == 32 && gameState === "PAUSE") {
     game.changeState("PLAY");
     game.play();
-    animate();
+    animateLoop();
   }
 }
 document.addEventListener("keydown", keyboardHandler);
@@ -128,7 +130,7 @@ hammertime.on(`panleft panright panup pandown doubletap`, function (e) {
   } else if (e.type == "doubletap" && gameState === "PAUSE") {
     game.changeState("PLAY");
     game.play();
-    animate();
+    animateLoop();
   }
 });
 
@@ -153,7 +155,7 @@ let newGame = function () {
   newSnake();
   newFood();
   game.changeState("PLAY");
-  animate();
+  animateLoop();
   game.startTime = Date.now();
 
   game.play();
@@ -174,7 +176,7 @@ let gameLoop = function () {
 };
 
 // ANIMATION LOOP
-function animate() {
+function animateLoop() {
   gameBoard.draw();
   food.draw();
   scoreBoard.draw();
@@ -187,7 +189,7 @@ function animate() {
   });
 
   if (gameState === "PLAY") {
-    requestAnimationFrame(animate);
+    requestAnimationFrame(animateLoop);
   } else {
     return;
   }
@@ -244,7 +246,7 @@ let gameBoard = {
         sparkArray[i].y = (formerSparkArray[i].y / formerTileSize) * tile;
       }
       if (gameState !== "PLAY") {
-        animate();
+        animateLoop();
       }
     }
   },
@@ -477,6 +479,7 @@ let game = {
   changeState(state) {
     gameState = state;
     this.showScreen(state);
+    this.checkSettings();
   },
   makeVisible(screen) {
     screen.style.display = "inline-block";
@@ -491,6 +494,12 @@ let game = {
       this.makeHidden(scoresContainer);
       this.makeHidden(optionsScreen);
     }
+    if (state === "PAUSE") {
+      optionsScreen.classList.add("transparent-background");
+      this.makeHidden(optionsToHide);
+      this.makeVisible(resumeButton);
+      this.makeVisible(optionsScreen);
+    }
     if (state === "GAMEOVER") {
       this.makeHidden(optionsScreen);
       this.makeHidden(startScreen);
@@ -500,6 +509,9 @@ let game = {
       this.makeVisible(scoresContainer);
     }
     if (state === "OPTIONS") {
+        optionsScreen.classList.remove("transparent-background");
+        this.makeVisible(optionsToHide);
+      this.makeHidden(resumeButton);
       this.makeHidden(startScreen);
       this.makeHidden(scoresScreen);
       this.makeHidden(scoresContainer);
@@ -521,7 +533,8 @@ let game = {
     scoreBoard.previousScore = scoreBoard.currentScore;
     scoreBoard.currentScore = 0;
     tileToSparkDRatio = 0.1;
-
+  },
+  checkSettings() {
     if (wallsCheckBox.checked) {
       wallsEnabled = true;
     } else {
@@ -609,24 +622,24 @@ let game = {
   },
   update() {
     if (this.collisionDetected) {
+      if (gameAudio) {
+        gameOverWav.play();
+      }
       stats.updateGamesPlayed();
       stats.updateGameTimeInSeconds();
       stats.updatePointsAllTime();
       scoreBoard.update();
       scoreBoard.print();
-      game.changeState("GAMEOVER");
-      if (gameAudio) {
-        gameOverWav.play();
-      }
+      this.changeState("GAMEOVER");
     } else if (this.AteFood) {
+      if (gameAudio) {
+        eatWav.play();
+      }
       snake.array.unshift(snake.newHead);
       populateSparkArray();
       newFood();
       scoreBoard.currentScore++;
       tileToSparkDRatio += 0.0025;
-      if (gameAudio) {
-        eatWav.play();
-      }
     } else {
       snake.array.unshift(snake.newHead);
       snake.array.pop();
@@ -693,7 +706,7 @@ let scoreBoard = {
     localStorage.removeItem("highScore");
     this.highScore = 0;
     if (stats.gamesPlayedThisSession > 0) {
-      animate();
+      animateLoop();
     }
   },
   getFont() {

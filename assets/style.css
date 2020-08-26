@@ -119,6 +119,10 @@ h1 {
   display: inline-block;
 }
 
+.transparent-background {
+    background-color: #00143766;
+}
+
 .hidden {
   display: none;
 }
@@ -146,6 +150,10 @@ h1 {
   background-color: #fff;
   color: #001437;
   border: solid 1px #fff;
+}
+
+#resume-button {
+    display: none;
 }
 
 .radio-buttons-container {
