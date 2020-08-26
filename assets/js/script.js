@@ -12,6 +12,9 @@ let orientationPortrait;
 let tile;
 let tileToSparkDRatio;
 
+let eatWav;
+let gameOverWav;
+
 const sparkArray = [];
 const gameSpeed = 140; // MOVE TO GAME OBJECT?
 
@@ -20,8 +23,8 @@ const scoresScreen = document.getElementById("scores-screen");
 const scoresContainer = document.getElementById("session-scores-container");
 const optionsScreen = document.getElementById("options-screen");
 const canvas = document.getElementById("canvas");
-const eatSound = document.getElementById("eat-sound");
-const gameOverSound = document.getElementById("gameover-sound");
+// const eatSound = document.getElementById("eatWav");
+// const gameOverSound = document.getElementById("gameOverWav");
 const wallsCheckBox = document.getElementById("walls-checkbox");
 const audioCheckBox = document.getElementById("audio-checkbox");
 const ctx = canvas.getContext("2d");
@@ -39,6 +42,21 @@ const colorArray = [
   "rgba(125,249,255,1)", // blue
   "rgba(254,1,154,1)", // pink
 ];
+
+function sound(src) {
+  this.sound = document.createElement("audio");
+  this.sound.src = src;
+  this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute("controls", "none");
+  this.sound.style.display = "none";
+  document.body.appendChild(this.sound);
+  this.play = function () {
+    this.sound.play();
+  };
+  this.stop = function () {
+    this.sound.pause();
+  };
+}
 
 // Random number generator
 function randomNumber(min, max) {
@@ -124,6 +142,8 @@ let newFood = function () {
 };
 
 let newGame = function () {
+  eatWav = new sound("assets/audio/eat.wav");
+  gameOverWav = new sound("assets/audio/gameover.wav");
   gameBoard.checkOrientation(); // could refactor?
   gameBoard.setCanvasSize();
   gameBoard.setTileSize();
@@ -596,7 +616,7 @@ let game = {
       scoreBoard.print();
       game.changeState("GAMEOVER");
       if (gameAudio) {
-        gameOverSound.play();
+        gameOverWav.play();
       }
     } else if (this.AteFood) {
       snake.array.unshift(snake.newHead);
@@ -605,7 +625,7 @@ let game = {
       scoreBoard.currentScore++;
       tileToSparkDRatio += 0.0025;
       if (gameAudio) {
-        eatSound.play();
+        eatWav.play();
       }
     } else {
       snake.array.unshift(snake.newHead);
