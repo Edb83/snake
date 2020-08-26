@@ -25,10 +25,9 @@ const optionsScreen = document.getElementById("options-screen");
 const resumeButton = document.getElementById("resume-button");
 const optionsToHide = document.getElementById("options-to-hide");
 const canvas = document.getElementById("canvas");
-// const eatSound = document.getElementById("eatWav");
-// const gameOverSound = document.getElementById("gameOverWav");
 const wallsCheckBox = document.getElementById("walls-checkbox");
 const audioCheckBox = document.getElementById("audio-checkbox");
+
 const ctx = canvas.getContext("2d");
 
 const canvasHeightToWidthRatio = 20 / 23; // ie 20 wide, 23 high to account for score area
@@ -210,13 +209,13 @@ let gameBoard = {
     } else {
       canvas.height = window.innerHeight;
     }
-    while (canvas.height % 23 > 0) {
+    while (canvas.height % 23 > 0) { // convert to global variable?
       canvas.height--;
     }
     canvas.width = Math.ceil(canvas.height * canvasHeightToWidthRatio);
   },
   setTileSize() {
-    tile = canvas.width / 20;
+    tile = canvas.width / 20; // convert to global variable?
   },
   recalculateAssets() {
     if (gameState === "PLAY" || stats.gamesPlayedThisSession > 0) {
@@ -255,18 +254,18 @@ let gameBoard = {
     ctx.save();
     ctx.beginPath();
 
-    ctx.fillStyle = "#001437";
-    ctx.fillRect(0, 0, canvas.width, tile * 3);
+    ctx.fillStyle = "#001437"; // convert to global variable?
+    ctx.fillRect(0, 0, canvas.width, tile * 3); // convert to global variable?
 
     // GameBoard Background
-    ctx.fillStyle = "#001437";
-    ctx.fillRect(0, tile * 3, canvas.width, canvas.height);
+    ctx.fillStyle = "#001437"; // convert to global variable?
+    ctx.fillRect(0, tile * 3, canvas.width, canvas.height); // convert to global variable?
 
     // Walls
     if (wallsEnabled) {
-      ctx.strokeStyle = "red";
+      ctx.strokeStyle = "red"; // convert to global variable?
     } else {
-      ctx.strokeStyle = "green";
+      ctx.strokeStyle = "green"; // convert to global variable?
     }
     ctx.lineWidth = canvas.width / canvasWidthToLineWidthRatio;
     ctx.strokeRect(
@@ -279,7 +278,7 @@ let gameBoard = {
       ctx.lineWidth / 2,
       tile * 3 + ctx.lineWidth / 2,
       canvas.width - ctx.lineWidth,
-      canvas.height - 3 * tile - ctx.lineWidth
+      canvas.height - 3 * tile - ctx.lineWidth // convert to global variable?
     );
 
     ctx.closePath();
@@ -343,9 +342,8 @@ class Snake {
       ctx.shadowColor = this.color;
       ctx.shadowBlur = tile / 2;
       ctx.fillRect(this.array[i].x, this.array[i].y, tile, tile); // fills tiles occupied by snake array's coordinates
-
       ctx.restore();
-      ctx.strokeStyle = "#001437";
+      ctx.strokeStyle = "#001437"; // convert to global variable?
       ctx.strokeRect(this.array[i].x, this.array[i].y, tile, tile);
     }
   }
@@ -354,8 +352,8 @@ class Snake {
 // FOOD
 class Food {
   constructor(color) {
-    this.x = Math.floor(Math.random() * 20) * tile;
-    this.y = Math.floor(Math.random() * 20 + 3) * tile; // taking account of the score area
+    this.x = Math.floor(Math.random() * 20) * tile;  // convert to global variable?
+    this.y = Math.floor(Math.random() * 20 + 3) * tile; //  // convert to global variable?
     this.color = color;
   }
 
@@ -373,7 +371,7 @@ class Food {
     ctx.fillStyle = this.color;
 
     ctx.shadowColor = this.color;
-    ctx.strokeStyle = "#000";
+    ctx.strokeStyle = "#000"; // convert to global variable?
     ctx.shadowBlur = tile / 2;
     ctx.fill();
     ctx.stroke();
@@ -389,14 +387,14 @@ class Spark {
     this.y = y;
     this.dx = dx;
     this.dy = dy;
-    this.radius = randomNumber(tile / 10, tile / 4);
+    this.radius = randomNumber(tile / 10, tile / 4); // convert to global variable?
     this.color = food.color;
     this.gravity = randomNumber(
       dynamicSparkGravity(),
-      dynamicSparkGravity() * 2
+      dynamicSparkGravity() * 2 // convert to global variable?
     );
-    this.friction = randomNumber(0.4, 0.6);
-    this.ttl = 25; // time to live ticks
+    this.friction = randomNumber(0.4, 0.6); // convert to global variable?
+    this.ttl = 25; // convert to global variable?
     this.opacity = 1;
   }
   draw() {
@@ -444,25 +442,25 @@ function dynamicSparkD() {
 }
 
 function populateSparkArray() {
-  for (let i = 0; i < snake.array.length && i < 150; i++) {
+  for (let i = 0; i < snake.array.length && i < 150; i++) { // convert to global variable?
     let dx;
     let dy;
     let x = snake.array[0].x + tile / 2;
     let y = snake.array[0].y + tile / 2;
     if (direction === -2) {
       dx = randomNumber(-dynamicSparkD(), dynamicSparkD());
-      dy = randomNumber(-dynamicSparkD(), -dynamicSparkD() / 2);
+      dy = randomNumber(-dynamicSparkD(), -dynamicSparkD() / 2); // convert to global variable?
     }
     if (direction === 2) {
       dx = randomNumber(-dynamicSparkD(), dynamicSparkD());
-      dy = randomNumber(dynamicSparkD(), dynamicSparkD() * 2);
+      dy = randomNumber(dynamicSparkD(), dynamicSparkD() * 2); // convert to global variable?
     }
     if (direction === -1) {
-      dx = randomNumber(-dynamicSparkD() * 2, -dynamicSparkD());
+      dx = randomNumber(-dynamicSparkD() * 2, -dynamicSparkD()); // convert to global variable?
       dy = randomNumber(-dynamicSparkD(), dynamicSparkD());
     }
     if (direction === 1) {
-      dx = randomNumber(dynamicSparkD(), dynamicSparkD() * 2);
+      dx = randomNumber(dynamicSparkD(), dynamicSparkD() * 2); // convert to global variable?
       dy = randomNumber(-dynamicSparkD(), dynamicSparkD());
     }
 
@@ -532,7 +530,7 @@ let game = {
     direction = -1;
     scoreBoard.previousScore = scoreBoard.currentScore;
     scoreBoard.currentScore = 0;
-    tileToSparkDRatio = 0.1;
+    tileToSparkDRatio = 0.1; // convert to global variable?
   },
   checkSettings() {
     if (wallsCheckBox.checked) {
@@ -639,7 +637,7 @@ let game = {
       populateSparkArray();
       newFood();
       scoreBoard.currentScore++;
-      tileToSparkDRatio += 0.0025;
+      tileToSparkDRatio += 0.0025; // convert to global variable?
     } else {
       snake.array.unshift(snake.newHead);
       snake.array.pop();
@@ -719,7 +717,7 @@ let scoreBoard = {
     ctx.fillText(this.currentScore, tile, tile * 2);
     ctx.fillText(
       `High score: ${this.highScore}`,
-      canvas.width * 0.45,
+      canvas.width * 0.45, // convert to global variable?
       tile * 2
     );
   },
@@ -775,7 +773,7 @@ let scoreBoard = {
     ) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `Unlucky for some. Like you. `
+        `Unlucky for some. And you. `
       );
     }
 
@@ -789,7 +787,7 @@ let scoreBoard = {
     if (scoreRange(30, 39)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `FYI this is Cyber <span style="text-decoration: underline;">Snake</span>, not Cyber Slow Worm. `
+        `FYI this is Cyber <em>Snake</em>, not Cyber Slow Worm. `
       );
     }
 
