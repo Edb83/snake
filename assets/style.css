@@ -54,7 +54,8 @@ body {
 }
 
 #instructions-container {
-  margin: 0.5rem 0;
+padding: 0 0 1rem;
+  margin: 1rem 0;
 }
 
 /* https://www.w3schools.com/howto/howto_css_glowing_text.asp */
@@ -111,8 +112,10 @@ h1 {
 } */
 
 #session-scores-container {
-  display: none;
+  /* display: none; */
   min-width: 20%;
+  padding: 0 0 1rem;
+  margin: 1rem 0;
 }
 
 .visible {
@@ -152,28 +155,28 @@ h1 {
   border: solid 1px #fff;
 }
 
-#resume-button {
+/* #resume-button {
     display: none;
-}
+} */
 
-.radio-buttons-container {
+/* .radio-buttons-container {
   margin: 0 1rem;
-}
+} */
 
 .checkbox {
-  display: flex;
-  cursor: pointer;
-  position: relative;
-  align-items: center;
-  justify-content: center;
-  left: auto;
-  padding: 0.5rem 0;
+    display: flex;
+    cursor: pointer;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    left: 45%;
+    padding: 0.5rem 0;
+    width: max-content;
 }
 
 .checkbox > span {
   color: #fff;
   padding: 0 1rem;
-  width: 15%;
 }
 
 .checkbox > input {
@@ -197,7 +200,7 @@ h1 {
 }
 
 .checkbox > input:checked + span::before {
-  content: "\2713";
+  content: "";
   display: block;
   text-align: center;
   color: #41b883;

@@ -50,7 +50,7 @@
           You haven't achieved anything yet. Once you do, your top 5 scores of
           the session will be displayed here.
         </p>
-        <div id="session-scores-container">
+        <div id="session-scores-container" class="hidden">
           <ol></ol>
         </div>
         <div class="menu-buttons-container">
@@ -63,13 +63,13 @@
         <h1>Options</h1>
         <div class="radio-buttons-container">
           <label class="checkbox">
-            <span>Sound</span>
             <input id="audio-checkbox" type="checkbox" checked />
+            <span>Sound</span>
           </label>
           <label class="checkbox">
+            <input id="walls-checkbox" type="checkbox" />
             <span>Walls</span>
-            <input id="walls-checkbox" type="checkbox"
-          /></label>
+          </label>
         </div>
         <div class="menu-buttons-container">
           <!-- <button onclick="scoreBoard.resetArray()">
@@ -81,8 +81,9 @@
               Reset ALL scores
             </button> -->
           <button
-            id="resume-button"
-            onclick="game.changeState('PLAY'); game.play();animateLoop()">
+            id="resume-button" class="hidden"
+            onclick="game.changeState('PLAY'); game.play();animateLoop()"
+          >
             Resume
           </button>
           <div id="options-to-hide">
