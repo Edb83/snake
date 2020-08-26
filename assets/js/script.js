@@ -84,7 +84,7 @@ document.addEventListener("keydown", keyboardHandler);
 let hammertime = new Hammer.Manager(document.querySelector("body"));
 
 hammertime.add(
-  new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 100 })
+  new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 20 })
 );
 hammertime.add(new Hammer.Tap({ event: "doubletap", taps: 2 }));
 hammertime.get("pan");
