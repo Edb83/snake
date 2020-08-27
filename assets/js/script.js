@@ -32,6 +32,7 @@ const audioCheckBox = document.getElementById("audio-checkbox");
 // Canvas
 const ctx = canvas.getContext("2d");
 const numberOfTilesPerAxis = 20; // this can be changed but the game is built on a base-20 tileset
+const heightOfScoreBoardInTiles = 2; // this can be changed but the game was build expecting height of 2 tiles
 const canvasWidthToLineWidthRatio = 150; // used to scale width of outer border walls according to window size (higher is thinner walls)
 const fontRatio = 0.058; // used by scoreBoard to scale size of text according to window size (higher is bigger text)
 
@@ -50,9 +51,11 @@ const scoreBoardColor = "#001437"; // dark blue
 const gameBoardColor = "#001437"; // dark blue
 const wallsOnColor = "#FF0000"; // red
 const wallsOffColor = "#008000"; // green
+const snakeColor = "#DF00FE"; // psychedelic purple
 const snakeStrokeColor = "#001437"; // dark blue
 const foodStrokeColor = "#000"; // white
-const colorArray = [ // RGB used so that alpha can be adjusted as sparks' ttl decreases on collision with floor
+const colorArray = [
+    // RGB used so that alpha can be adjusted as sparks' ttl decreases on collision with floor
   "rgba(128,255,0,1)", // green
   "rgba(252,243,64,1)", // yellow
   "rgba(255,191,0,1)", // orange
@@ -159,11 +162,11 @@ hammertime.on(`panleft panright panup pandown doubletap`, function (e) {
 // GAME INITIALISATION
 
 let newSnake = function () {
-  snake = new Snake(15 * tile, 15 * tile, "rgba(223,0,254,1)", left);
+  snake = new Snake(15 * tile, 15 * tile, snakeColor, left);
 };
 
 let newFood = function () {
-  food = new Food(colorArray[Math.floor(Math.random() * colorArray.length)]); // picks random color from colorArray
+  food = new Food(colorArray[Math.floor(Math.random() * colorArray.length)]) // picks random color from colorArray)
 };
 
 let newGame = function () {
@@ -233,13 +236,13 @@ let gameBoard = {
   },
   setCanvasSize() {
     let canvasHeightToWidthRatio =
-      numberOfTilesPerAxis / (numberOfTilesPerAxis + 3); // 3 to account for score area
+      numberOfTilesPerAxis / (numberOfTilesPerAxis + heightOfScoreBoardInTiles); // 3 to account for score area
     if (this.orientationPortrait) {
       canvas.height = window.innerWidth;
     } else {
       canvas.height = window.innerHeight;
     }
-    while (canvas.height % (numberOfTilesPerAxis + 3) > 0) { // 3 to account for score area
+    while (canvas.height % (numberOfTilesPerAxis + heightOfScoreBoardInTiles) > 0) { // 3 to account for score area
       canvas.height--;
     }
     canvas.width = Math.ceil(canvas.height * canvasHeightToWidthRatio);
@@ -285,11 +288,11 @@ let gameBoard = {
     ctx.beginPath();
 
     ctx.fillStyle = scoreBoardColor;
-    ctx.fillRect(0, 0, canvas.width, tile * 3);
+    ctx.fillRect(0, 0, canvas.width, tile * heightOfScoreBoardInTiles);
 
     // GameBoard Background
     ctx.fillStyle = gameBoardColor;
-    ctx.fillRect(0, tile * 3, canvas.width, canvas.height);
+    ctx.fillRect(0, tile * heightOfScoreBoardInTiles, canvas.width, canvas.height);
 
     // Walls
     if (game.wallsEnabled) {
@@ -302,13 +305,13 @@ let gameBoard = {
       ctx.lineWidth / 2,
       ctx.lineWidth / 2,
       canvas.width - ctx.lineWidth,
-      3 * tile
+      heightOfScoreBoardInTiles * tile
     );
     ctx.strokeRect(
       ctx.lineWidth / 2,
-      tile * 3 + ctx.lineWidth / 2,
+      tile * heightOfScoreBoardInTiles + ctx.lineWidth / 2,
       canvas.width - ctx.lineWidth,
-      canvas.height - 3 * tile - ctx.lineWidth
+      canvas.height - heightOfScoreBoardInTiles * tile - ctx.lineWidth
     );
 
     ctx.closePath();
@@ -384,7 +387,7 @@ class Snake {
 class Food {
   constructor(color) {
     this.x = Math.floor(Math.random() * numberOfTilesPerAxis) * tile;
-    this.y = Math.floor(Math.random() * numberOfTilesPerAxis + 3) * tile;
+    this.y = Math.floor(Math.random() * numberOfTilesPerAxis + heightOfScoreBoardInTiles) * tile;
     this.color = color;
   }
 
@@ -631,11 +634,11 @@ let game = {
         if (this.wallsEnabled) {
           this.collisionDetected = true;
         } else {
-          snake.y = 2 * tile;
+          snake.y = (heightOfScoreBoardInTiles - 1) * tile;
         }
       }
 
-      if (snake.newHead.y < 3 * tile && snake.direction === up) {
+      if (snake.newHead.y < heightOfScoreBoardInTiles * tile && snake.direction === up) {
         if (this.wallsEnabled) {
           this.collisionDetected = true;
         } else {

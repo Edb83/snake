@@ -45,9 +45,9 @@ let scoreBoard = {
     draw() {
         ctx.fillStyle = "#fff";
         ctx.font = this.getFont();
-        ctx.fillText(this.currentScore, tile, tile * 2);
+        ctx.fillText(this.currentScore, tile, ((tile / 2) * heightOfScoreBoardInTiles) + (tile / 2));
         ctx.fillText(`High score: ${this.highScore}`, canvas.width * 0.45, // convert to global variable?
-            tile * 2);
+            ((tile / 2) * heightOfScoreBoardInTiles) + (tile / 2));
     },
     print() {
         let scoreAwardText = document.getElementById("score-award-text");
