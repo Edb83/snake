@@ -36,13 +36,13 @@ body {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  padding: 1rem;
+  padding: 2rem;
   background-color: #001437;
   border: solid 1px #fff;
   color: #fff;
   font-family: "Orbitron", sans-serif;
   z-index: 1;
-  width: 90vw;
+  width: auto;;
   overflow: auto;
 }
 
@@ -109,8 +109,6 @@ h1 {
 
 #session-scores-container {
   min-width: 20%;
-  /* padding: 0 0 1rem;
-  margin: 1rem 0; */
 }
 
 .visible {
