@@ -28,7 +28,7 @@ let scoreBoard = {
     resetArray() {
         this.array.length = 0;
         this.currentScore = 0;
-        score = 0;
+        this.score = 0;
         this.print();
     },
     resetHighScore() {
@@ -40,7 +40,7 @@ let scoreBoard = {
     },
     getFont() {
         let fontSize = canvas.width * fontRatio;
-        return (fontSize | 0) + "px Orbitron";
+        return (fontSize || 0) + "px Orbitron";
     },
     draw() {
         ctx.fillStyle = "#fff";
