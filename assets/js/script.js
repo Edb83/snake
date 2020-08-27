@@ -1,8 +1,8 @@
 "use strict";
 
-// GLOBAL DECLARATIONS
+// GLOBAL VARIABLES
 
-let gameState = "MENU"; // MOVE TO GAME OBJECT?
+// Declarations
 let direction; // MOVE TO GAME OBJECT?
 let snake;
 let food;
@@ -18,7 +18,7 @@ let gameOverWav;
 // Gameplay
 const gameSpeed = 140; // milliseconds per game update
 
-// Elements
+// DOM Elements
 const startScreen = document.getElementById("start-screen");
 const scoresScreen = document.getElementById("scores-screen");
 const scoresContainer = document.getElementById("session-scores-container");
@@ -112,10 +112,10 @@ function keyboardHandler(e) {
     direction = 1;
   }
 
-  if (e.keyCode == 32 && gameState === "PLAY") {
+  if (e.keyCode == 32 && game.state === "PLAY") {
     game.changeState("PAUSE");
     game.stop();
-  } else if (e.keyCode == 32 && gameState === "PAUSE") {
+  } else if (e.keyCode == 32 && game.state === "PAUSE") {
     game.changeState("PLAY");
     game.play();
     animateLoop();
@@ -146,10 +146,10 @@ hammertime.on(`panleft panright panup pandown doubletap`, function (e) {
     direction = 2;
   }
 
-  if (e.type == "doubletap" && gameState === "PLAY") {
+  if (e.type == "doubletap" && game.state === "PLAY") {
     game.changeState("PAUSE");
     game.stop();
-  } else if (e.type == "doubletap" && gameState === "PAUSE") {
+  } else if (e.type == "doubletap" && game.state === "PAUSE") {
     game.changeState("PLAY");
     game.play();
     animateLoop();
@@ -185,7 +185,7 @@ let newGame = function () {
 // GAME LOOP
 
 let gameLoop = function () {
-  if (gameState === "PLAY") {
+  if (game.state === "PLAY") {
     game.checkSnakeCollision();
     game.checkAteFood();
     game.update();
@@ -211,7 +211,7 @@ function animateLoop() {
     }
   });
 
-  if (gameState === "PLAY") {
+  if (game.state === "PLAY") {
     requestAnimationFrame(animateLoop);
   } else {
     return;
@@ -246,7 +246,7 @@ let gameBoard = {
     tile = canvas.width / numberOfTilesPerAxis;
   },
   recalculateAssets() {
-    if (gameState === "PLAY" || stats.gamesPlayedThisSession > 0) {
+    if (game.state === "PLAY" || stats.gamesPlayedThisSession > 0) {
       let formerTileSize = tile;
       let formerFoodCoordinates = food;
       let formerSnakeCoordinates = snake;
@@ -272,7 +272,7 @@ let gameBoard = {
         sparkArray[i].x = (formerSparkArray[i].x / formerTileSize) * tile;
         sparkArray[i].y = (formerSparkArray[i].y / formerTileSize) * tile;
       }
-      if (gameState !== "PLAY") {
+      if (game.state !== "PLAY") {
         animateLoop();
       }
     }
@@ -515,8 +515,9 @@ let game = {
   ateFood: false,
   lastMove: "",
   startTime: 0,
+  state: "MENU",
   changeState(state) {
-    gameState = state;
+    this.state = state;
     this.showScreen(state);
     this.checkSettings();
   },
