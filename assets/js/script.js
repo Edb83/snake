@@ -5,10 +5,8 @@
 // Declarations
 let snake;
 let food;
-// let gameRefreshInterval; // MOVE TO GAME OBJECT?
-// let orientationPortrait;
 let tile;
-let tileToSparkDRatio;
+// let tileToSparkDRatio;
 let eatWav;
 let gameOverWav;
 
@@ -220,6 +218,7 @@ function animateLoop() {
 // Game board
 let gameBoard = {
     orientationPortrait: "",
+    tileToSparkDRatio: "",
   checkOrientation() {
     if (window.innerWidth <= window.innerHeight) {
       this.orientationPortrait = true;
@@ -465,7 +464,7 @@ function dynamicSparkGravity() {
 }
 
 function dynamicSparkD() {
-  return tile * tileToSparkDRatio;
+  return tile * gameBoard.tileToSparkDRatio;
 }
 
 function populateSparkArray() {
@@ -574,7 +573,7 @@ let game = {
     // direction = -1;
     scoreBoard.previousScore = scoreBoard.currentScore;
     scoreBoard.currentScore = 0;
-    tileToSparkDRatio = initialTileToSparkDRatio;
+    gameBoard.tileToSparkDRatio = initialTileToSparkDRatio;
   },
   checkSettings() {
     if (wallsCheckBox.checked) {
@@ -681,7 +680,7 @@ let game = {
       populateSparkArray();
       newFood();
       scoreBoard.currentScore++;
-      tileToSparkDRatio += tileToSparkDRatioIncrement; // convert to global variable?
+      gameBoard.tileToSparkDRatio += tileToSparkDRatioIncrement; // convert to global variable?
     } else {
       snake.array.unshift(snake.newHead);
       snake.array.pop();
