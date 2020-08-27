@@ -11,7 +11,9 @@ let gameOverWav;
 
 // Gameplay
 const gameSpeed = 140; // milliseconds per game update
-const left = -1;
+
+// Controls
+const left = -1; // directions have been converted to numbers so that conditional statements can be negated to find the opposite direction
 const right = 1;
 const up = -2;
 const down = 2;
@@ -30,17 +32,17 @@ const audioCheckBox = document.getElementById("audio-checkbox");
 // Canvas
 const ctx = canvas.getContext("2d");
 const numberOfTilesPerAxis = 20; // this can be changed but the game is built on a base-20 tileset
-const canvasWidthToLineWidthRatio = 150;
-const fontRatio = 0.058;
+const canvasWidthToLineWidthRatio = 150; // used to scale width of outer border walls according to window size (higher is thinner walls)
+const fontRatio = 0.058; // used by scoreBoard to scale size of text according to window size (higher is bigger text)
 
 // Spark
-const tileToSparkGravityRatio = 0.009;
-const dynmicSparkGravityMultiplier = 2;
-const sparkTimeToLive = 100;
+const tileToSparkGravityRatio = 0.009; // used to scale gravity of sparks according to window size (higher is more increased gravity)
+const dynmicSparkGravityMultiplier = 2; // used to increase upper range of random gravity assigned to individual sparks on creation
+const dynamicSparkDMultiplier = 2; // used to increase upper range of random velocity assigned to individual sparks on creation
+const initialTileToSparkDRatio = 0.1; // the velocity of sparks at the start of each game
+const tileToSparkDRatioIncrement = 0.0025; // the increment to spark velocity each time food is eaten
+const sparkTimeToLive = 100; 
 const maxSparksPerEat = 150;
-const dynamicSparkDMultiplier = 2;
-const initialTileToSparkDRatio = 0.1;
-const tileToSparkDRatioIncrement = 0.0025;
 const sparkArray = [];
 
 // Colors
@@ -50,8 +52,7 @@ const wallsOnColor = "#FF0000"; // red
 const wallsOffColor = "#008000"; // green
 const snakeStrokeColor = "#001437"; // dark blue
 const foodStrokeColor = "#000"; // white
-
-const colorArray = [ // RGB used so that alpha can be adjusted
+const colorArray = [ // RGB used so that alpha can be adjusted as sparks' ttl decreases on collision with floor
   "rgba(128,255,0,1)", // green
   "rgba(252,243,64,1)", // yellow
   "rgba(255,191,0,1)", // orange
@@ -89,7 +90,6 @@ function convertSecondsToHms(d) {
   var h = Math.floor(d / 3600);
   var m = Math.floor((d % 3600) / 60);
   var s = Math.floor((d % 3600) % 60);
-
   var hDisplay = h > 0 ? h + (h == 1 ? " hour " : " hours ") : "";
   var mDisplay = m > 0 ? m + (m == 1 ? " minute " : " minutes ") : "";
   var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
@@ -128,7 +128,9 @@ hammertime.add(
   new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 20 })
 );
 
-// Add Hammer.Swipe too?
+hammertime.add(
+  new Hammer.Swipe({ direction: Hammer.DIRECTION_ALL, threshold: 20 })
+);
 
 hammertime.add(new Hammer.Tap({ event: "doubletap", taps: 2 }));
 hammertime.get("pan");
@@ -237,7 +239,7 @@ let gameBoard = {
     } else {
       canvas.height = window.innerHeight;
     }
-    while (canvas.height % (numberOfTilesPerAxis + 3) > 0) {
+    while (canvas.height % (numberOfTilesPerAxis + 3) > 0) { // 3 to account for score area
       canvas.height--;
     }
     canvas.width = Math.ceil(canvas.height * canvasHeightToWidthRatio);
@@ -481,7 +483,7 @@ function populateSparkArray() {
       dx = randomNumber(-dynamicSparkD(), dynamicSparkD());
       dy = randomNumber(
         -dynamicSparkD(),
-        -dynamicSparkD() / dynamicSparkDMultiplier
+        -dynamicSparkD() * dynamicSparkDMultiplier
       );
     }
     if (snake.direction === down) {
