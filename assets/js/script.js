@@ -17,6 +17,7 @@ const left = -1; // directions have been converted to numbers so that conditiona
 const right = 1;
 const up = -2;
 const down = 2;
+const hammertime = new Hammer.Manager(document.querySelector("body")); // new instance of hammer.js touch gesture manager. Configured in EVENT LISTENERS
 
 // DOM Elements
 const startScreen = document.getElementById("start-screen");
@@ -125,16 +126,9 @@ function keyboardHandler(e) {
 document.addEventListener("keydown", keyboardHandler);
 
 // Hammertime touch gestures
-let hammertime = new Hammer.Manager(document.querySelector("body"));
-
 hammertime.add(
   new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 20 })
 );
-
-hammertime.add(
-  new Hammer.Swipe({ direction: Hammer.DIRECTION_ALL, threshold: 20 })
-);
-
 hammertime.add(new Hammer.Tap({ event: "doubletap", taps: 2 }));
 hammertime.get("pan");
 hammertime.get("doubletap");
@@ -148,7 +142,6 @@ hammertime.on(`panleft panright panup pandown doubletap`, function (e) {
   } else if (e.type === `pandown` && game.moveIsValid(down)) {
     snake.direction = down;
   }
-
   if (e.type == "doubletap" && game.state === "PLAY") {
     game.changeState("PAUSE");
     game.stop();
