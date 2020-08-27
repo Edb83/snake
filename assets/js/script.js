@@ -3,10 +3,9 @@
 // GLOBAL VARIABLES
 
 // Declarations
-// let direction; // MOVE TO GAME OBJECT?
 let snake;
 let food;
-let wallsEnabled; // MOVE TO GAME OBJECT?
+// let wallsEnabled; // MOVE TO GAME OBJECT?
 let gameAudio; // MOVE TO GAME OBJECT?
 let gameRefreshInterval; // MOVE TO GAME OBJECT?
 let orientationPortrait;
@@ -290,7 +289,7 @@ let gameBoard = {
     ctx.fillRect(0, tile * 3, canvas.width, canvas.height);
 
     // Walls
-    if (wallsEnabled) {
+    if (game.wallsEnabled) {
       ctx.strokeStyle = wallsOnColor;
     } else {
       ctx.strokeStyle = wallsOffColor;
@@ -517,6 +516,7 @@ let game = {
   lastMove: "",
   startTime: 0,
   state: "MENU",
+  wallsEnabled: "",
   changeState(state) {
     this.state = state;
     this.showScreen(state);
@@ -577,9 +577,9 @@ let game = {
   },
   checkSettings() {
     if (wallsCheckBox.checked) {
-      wallsEnabled = true;
+      this.wallsEnabled = true;
     } else {
-      wallsEnabled = false;
+      this.wallsEnabled = false;
     }
 
     if (audioCheckBox.checked) {
@@ -589,7 +589,7 @@ let game = {
     }
   },
   toggleWalls() {
-    wallsEnabled = !wallsEnabled;
+    this.wallsEnabled = !this.wallsEnabled;
   },
   play() {
     gameRefreshInterval = setInterval(function () {
@@ -608,7 +608,7 @@ let game = {
         this.collisionDetected = true;
       }
       if (snake.newHead.x > canvas.width - tile && snake.direction === 1) {
-        if (wallsEnabled) {
+        if (this.wallsEnabled) {
           this.collisionDetected = true;
         } else {
           snake.x = -tile;
@@ -616,7 +616,7 @@ let game = {
       }
 
       if (snake.newHead.x < 0 && snake.direction === -1) {
-        if (wallsEnabled) {
+        if (this.wallsEnabled) {
           this.collisionDetected = true;
         } else {
           snake.x = canvas.width;
@@ -624,7 +624,7 @@ let game = {
       }
 
       if (snake.newHead.y > canvas.height - tile && snake.direction === 2) {
-        if (wallsEnabled) {
+        if (this.wallsEnabled) {
           this.collisionDetected = true;
         } else {
           snake.y = 2 * tile;
@@ -632,7 +632,7 @@ let game = {
       }
 
       if (snake.newHead.y < 3 * tile && snake.direction === -2) {
-        if (wallsEnabled) {
+        if (this.wallsEnabled) {
           this.collisionDetected = true;
         } else {
           snake.y = canvas.height;
