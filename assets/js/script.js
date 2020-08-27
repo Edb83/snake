@@ -3,7 +3,7 @@
 // GLOBAL VARIABLES
 
 // Declarations
-let direction; // MOVE TO GAME OBJECT?
+// let direction; // MOVE TO GAME OBJECT?
 let snake;
 let food;
 let wallsEnabled; // MOVE TO GAME OBJECT?
@@ -103,13 +103,13 @@ function convertSecondsToHms(d) {
 // Keydown
 function keyboardHandler(e) {
   if (e.keyCode === 38 && game.moveIsValid(-2)) {
-    direction = -2;
+    snake.direction = -2;
   } else if (e.keyCode === 40 && game.moveIsValid(2)) {
-    direction = 2;
+    snake.direction = 2;
   } else if (e.keyCode === 37 && game.moveIsValid(-1)) {
-    direction = -1;
+    snake.direction = -1;
   } else if (e.keyCode === 39 && game.moveIsValid(1)) {
-    direction = 1;
+    snake.direction = 1;
   }
 
   if (e.keyCode == 32 && game.state === "PLAY") {
@@ -137,13 +137,13 @@ hammertime.get("pan");
 hammertime.get("doubletap");
 hammertime.on(`panleft panright panup pandown doubletap`, function (e) {
   if (e.type === `panleft` && game.moveIsValid(-1)) {
-    direction = -1;
+    snake.direction = -1;
   } else if (e.type === `panup` && game.moveIsValid(-2)) {
-    direction = -2;
+    snake.direction = -2;
   } else if (e.type === `panright` && game.moveIsValid(1)) {
-    direction = 1;
+    snake.direction = 1;
   } else if (e.type === `pandown` && game.moveIsValid(2)) {
-    direction = 2;
+    snake.direction = 2;
   }
 
   if (e.type == "doubletap" && game.state === "PLAY") {
@@ -159,7 +159,7 @@ hammertime.on(`panleft panright panup pandown doubletap`, function (e) {
 // GAME INITIALISATION
 
 let newSnake = function () {
-  snake = new Snake(15 * tile, 15 * tile, "rgba(223,0,254,1)");
+  snake = new Snake(15 * tile, 15 * tile, "rgba(223,0,254,1)", -1);
 };
 
 let newFood = function () {
@@ -320,10 +320,11 @@ window.addEventListener("orientationchange", gameBoard.recalculateAssets);
 
 // Snake
 class Snake {
-  constructor(x, y, color) {
+  constructor(x, y, color, direction) {
     this.x = x;
     this.y = y;
     this.color = color;
+    this.direction = direction;
     this.array = [
       { x: this.x, y: this.y },
       { x: this.x + tile, y: this.y },
@@ -332,16 +333,16 @@ class Snake {
   }
 
   get newHead() {
-    if (direction === -1) {
+    if (this.direction === -1) {
       return { x: this.x - tile, y: this.y };
     }
-    if (direction === -2) {
+    if (this.direction === -2) {
       return { x: this.x, y: this.y - tile };
     }
-    if (direction === 1) {
+    if (this.direction === 1) {
       return { x: this.x + tile, y: this.y };
     }
-    if (direction === 2) {
+    if (this.direction === 2) {
       return { x: this.x, y: this.y + tile };
     }
   }
@@ -476,28 +477,28 @@ function populateSparkArray() {
     let dy;
     let x = snake.array[0].x + tile / 2;
     let y = snake.array[0].y + tile / 2;
-    if (direction === -2) {
+    if (snake.direction === -2) {
       dx = randomNumber(-dynamicSparkD(), dynamicSparkD());
       dy = randomNumber(
         -dynamicSparkD(),
         -dynamicSparkD() / dynamicSparkDMultiplier
       );
     }
-    if (direction === 2) {
+    if (snake.direction === 2) {
       dx = randomNumber(-dynamicSparkD(), dynamicSparkD());
       dy = randomNumber(
         dynamicSparkD(),
         dynamicSparkD() * dynamicSparkDMultiplier
       );
     }
-    if (direction === -1) {
+    if (snake.direction === -1) {
       dx = randomNumber(
         -dynamicSparkD() * dynamicSparkDMultiplier,
         -dynamicSparkD()
       );
       dy = randomNumber(-dynamicSparkD(), dynamicSparkD());
     }
-    if (direction === 1) {
+    if (snake.direction === 1) {
       dx = randomNumber(
         dynamicSparkD(),
         dynamicSparkD() * dynamicSparkDMultiplier
@@ -569,7 +570,7 @@ let game = {
     this.collisionDetected = false;
     this.AteFood = false;
     sparkArray.length = 0;
-    direction = -1;
+    // direction = -1;
     scoreBoard.previousScore = scoreBoard.currentScore;
     scoreBoard.currentScore = 0;
     tileToSparkDRatio = initialTileToSparkDRatio;
@@ -606,7 +607,7 @@ let game = {
       ) {
         this.collisionDetected = true;
       }
-      if (snake.newHead.x > canvas.width - tile && direction === 1) {
+      if (snake.newHead.x > canvas.width - tile && snake.direction === 1) {
         if (wallsEnabled) {
           this.collisionDetected = true;
         } else {
@@ -614,7 +615,7 @@ let game = {
         }
       }
 
-      if (snake.newHead.x < 0 && direction === -1) {
+      if (snake.newHead.x < 0 && snake.direction === -1) {
         if (wallsEnabled) {
           this.collisionDetected = true;
         } else {
@@ -622,7 +623,7 @@ let game = {
         }
       }
 
-      if (snake.newHead.y > canvas.height - tile && direction === 2) {
+      if (snake.newHead.y > canvas.height - tile && snake.direction === 2) {
         if (wallsEnabled) {
           this.collisionDetected = true;
         } else {
@@ -630,7 +631,7 @@ let game = {
         }
       }
 
-      if (snake.newHead.y < 3 * tile && direction === -2) {
+      if (snake.newHead.y < 3 * tile && snake.direction === -2) {
         if (wallsEnabled) {
           this.collisionDetected = true;
         } else {
@@ -652,9 +653,9 @@ let game = {
     }
   },
   moveIsValid(newDir) {
-    if (this.lastMove === -newDir && direction !== newDir) {
+    if (this.lastMove === -newDir && snake.direction !== newDir) {
       return false;
-    } else if (this.lastMove === newDir && direction !== -newDir) {
+    } else if (this.lastMove === newDir && snake.direction !== -newDir) {
       return false;
     } else {
       return true;
