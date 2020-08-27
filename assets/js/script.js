@@ -5,8 +5,7 @@
 // Declarations
 let snake;
 let food;
-// let wallsEnabled; // MOVE TO GAME OBJECT?
-let gameAudio; // MOVE TO GAME OBJECT?
+// let gameAudio; // MOVE TO GAME OBJECT?
 let gameRefreshInterval; // MOVE TO GAME OBJECT?
 let orientationPortrait;
 let tile;
@@ -517,6 +516,7 @@ let game = {
   startTime: 0,
   state: "MENU",
   wallsEnabled: "",
+  audio: "",
   changeState(state) {
     this.state = state;
     this.showScreen(state);
@@ -583,9 +583,9 @@ let game = {
     }
 
     if (audioCheckBox.checked) {
-      gameAudio = true;
+      this.audio = true;
     } else {
-      gameAudio = false;
+      this.audio = false;
     }
   },
   toggleWalls() {
@@ -663,7 +663,7 @@ let game = {
   },
   update() {
     if (this.collisionDetected) {
-      if (gameAudio) {
+      if (this.audio) {
         gameOverWav.play();
       }
       stats.updateGamesPlayed();
@@ -673,7 +673,7 @@ let game = {
       scoreBoard.print();
       this.changeState("GAMEOVER");
     } else if (this.AteFood) {
-      if (gameAudio) {
+      if (this.audio) {
         eatWav.play();
       }
       snake.array.unshift(snake.newHead);
