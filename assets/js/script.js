@@ -11,6 +11,10 @@ let gameOverWav;
 
 // Gameplay
 const gameSpeed = 140; // milliseconds per game update
+const left = -1;
+const right = 1;
+const up = -2;
+const down = 2;
 
 // DOM Elements
 const startScreen = document.getElementById("start-screen");
@@ -96,14 +100,14 @@ function convertSecondsToHms(d) {
 
 // Keydown
 function keyboardHandler(e) {
-  if (e.keyCode === 38 && game.moveIsValid(-2)) {
-    snake.direction = -2;
-  } else if (e.keyCode === 40 && game.moveIsValid(2)) {
-    snake.direction = 2;
-  } else if (e.keyCode === 37 && game.moveIsValid(-1)) {
-    snake.direction = -1;
-  } else if (e.keyCode === 39 && game.moveIsValid(1)) {
-    snake.direction = 1;
+  if (e.keyCode === 38 && game.moveIsValid(up)) {
+    snake.direction = up;
+  } else if (e.keyCode === 40 && game.moveIsValid(down)) {
+    snake.direction = down;
+  } else if (e.keyCode === 37 && game.moveIsValid(left)) {
+    snake.direction = left;
+  } else if (e.keyCode === 39 && game.moveIsValid(right)) {
+    snake.direction = right;
   }
 
   if (e.keyCode == 32 && game.state === "PLAY") {
@@ -130,14 +134,14 @@ hammertime.add(new Hammer.Tap({ event: "doubletap", taps: 2 }));
 hammertime.get("pan");
 hammertime.get("doubletap");
 hammertime.on(`panleft panright panup pandown doubletap`, function (e) {
-  if (e.type === `panleft` && game.moveIsValid(-1)) {
-    snake.direction = -1;
-  } else if (e.type === `panup` && game.moveIsValid(-2)) {
-    snake.direction = -2;
-  } else if (e.type === `panright` && game.moveIsValid(1)) {
-    snake.direction = 1;
-  } else if (e.type === `pandown` && game.moveIsValid(2)) {
-    snake.direction = 2;
+  if (e.type === `panleft` && game.moveIsValid(left)) {
+    snake.direction = left;
+  } else if (e.type === `panup` && game.moveIsValid(up)) {
+    snake.direction = up;
+  } else if (e.type === `panright` && game.moveIsValid(right)) {
+    snake.direction = right;
+  } else if (e.type === `pandown` && game.moveIsValid(down)) {
+    snake.direction = down;
   }
 
   if (e.type == "doubletap" && game.state === "PLAY") {
@@ -153,7 +157,7 @@ hammertime.on(`panleft panright panup pandown doubletap`, function (e) {
 // GAME INITIALISATION
 
 let newSnake = function () {
-  snake = new Snake(15 * tile, 15 * tile, "rgba(223,0,254,1)", -1);
+  snake = new Snake(15 * tile, 15 * tile, "rgba(223,0,254,1)", left);
 };
 
 let newFood = function () {
@@ -216,8 +220,8 @@ function animateLoop() {
 
 // Game board
 let gameBoard = {
-    orientationPortrait: "",
-    tileToSparkDRatio: "",
+    orientationPortrait: undefined,
+    tileToSparkDRatio: undefined,
   checkOrientation() {
     if (window.innerWidth <= window.innerHeight) {
       this.orientationPortrait = true;
@@ -329,29 +333,29 @@ class Snake {
   }
 
   get newHead() {
-    if (this.direction === -1) {
+    if (this.direction === left) {
       return { x: this.x - tile, y: this.y };
     }
-    if (this.direction === -2) {
+    if (this.direction === up) {
       return { x: this.x, y: this.y - tile };
     }
-    if (this.direction === 1) {
+    if (this.direction === right) {
       return { x: this.x + tile, y: this.y };
     }
-    if (this.direction === 2) {
+    if (this.direction === down) {
       return { x: this.x, y: this.y + tile };
     }
   }
 
   lastMove() {
     if (this.array[0].x < this.array[1].x) {
-      game.lastMove = -1;
+      game.lastMove = left;
     } else if (this.array[0].x > this.array[1].x) {
-      game.lastMove = 1;
+      game.lastMove = right;
     } else if (this.array[0].y < this.array[1].y) {
-      game.lastMove = -2;
+      game.lastMove = up;
     } else if (this.array[0].y > this.array[1].y) {
-      game.lastMove = 2;
+      game.lastMove = down;
     }
   }
 
@@ -473,28 +477,28 @@ function populateSparkArray() {
     let dy;
     let x = snake.array[0].x + tile / 2;
     let y = snake.array[0].y + tile / 2;
-    if (snake.direction === -2) {
+    if (snake.direction === up) {
       dx = randomNumber(-dynamicSparkD(), dynamicSparkD());
       dy = randomNumber(
         -dynamicSparkD(),
         -dynamicSparkD() / dynamicSparkDMultiplier
       );
     }
-    if (snake.direction === 2) {
+    if (snake.direction === down) {
       dx = randomNumber(-dynamicSparkD(), dynamicSparkD());
       dy = randomNumber(
         dynamicSparkD(),
         dynamicSparkD() * dynamicSparkDMultiplier
       );
     }
-    if (snake.direction === -1) {
+    if (snake.direction === left) {
       dx = randomNumber(
         -dynamicSparkD() * dynamicSparkDMultiplier,
         -dynamicSparkD()
       );
       dy = randomNumber(-dynamicSparkD(), dynamicSparkD());
     }
-    if (snake.direction === 1) {
+    if (snake.direction === right) {
       dx = randomNumber(
         dynamicSparkD(),
         dynamicSparkD() * dynamicSparkDMultiplier
@@ -510,12 +514,12 @@ function populateSparkArray() {
 let game = {
   collisionDetected: false,
   ateFood: false,
-  lastMove: "",
+  lastMove: undefined,
   startTime: 0,
   state: "MENU",
-  wallsEnabled: "",
-  audio: "",
-  refreshInterval: "",
+  wallsEnabled: undefined,
+  audio: undefined,
+  refreshInterval: undefined,
   changeState(state) {
     this.state = state;
     this.showScreen(state);
@@ -569,7 +573,6 @@ let game = {
     this.collisionDetected = false;
     this.AteFood = false;
     sparkArray.length = 0;
-    // direction = -1;
     scoreBoard.previousScore = scoreBoard.currentScore;
     scoreBoard.currentScore = 0;
     gameBoard.tileToSparkDRatio = initialTileToSparkDRatio;
@@ -606,7 +609,7 @@ let game = {
       ) {
         this.collisionDetected = true;
       }
-      if (snake.newHead.x > canvas.width - tile && snake.direction === 1) {
+      if (snake.newHead.x > canvas.width - tile && snake.direction === right) {
         if (this.wallsEnabled) {
           this.collisionDetected = true;
         } else {
@@ -614,7 +617,7 @@ let game = {
         }
       }
 
-      if (snake.newHead.x < 0 && snake.direction === -1) {
+      if (snake.newHead.x < 0 && snake.direction === left) {
         if (this.wallsEnabled) {
           this.collisionDetected = true;
         } else {
@@ -622,7 +625,7 @@ let game = {
         }
       }
 
-      if (snake.newHead.y > canvas.height - tile && snake.direction === 2) {
+      if (snake.newHead.y > canvas.height - tile && snake.direction === down) {
         if (this.wallsEnabled) {
           this.collisionDetected = true;
         } else {
@@ -630,7 +633,7 @@ let game = {
         }
       }
 
-      if (snake.newHead.y < 3 * tile && snake.direction === -2) {
+      if (snake.newHead.y < 3 * tile && snake.direction === up) {
         if (this.wallsEnabled) {
           this.collisionDetected = true;
         } else {
