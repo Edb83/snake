@@ -5,9 +5,8 @@
 // Declarations
 let snake;
 let food;
-// let gameAudio; // MOVE TO GAME OBJECT?
-let gameRefreshInterval; // MOVE TO GAME OBJECT?
-let orientationPortrait;
+// let gameRefreshInterval; // MOVE TO GAME OBJECT?
+// let orientationPortrait;
 let tile;
 let tileToSparkDRatio;
 let eatWav;
@@ -220,17 +219,18 @@ function animateLoop() {
 
 // Game board
 let gameBoard = {
+    orientationPortrait: "",
   checkOrientation() {
     if (window.innerWidth <= window.innerHeight) {
-      orientationPortrait = true;
+      this.orientationPortrait = true;
     } else {
-      orientationPortrait = false;
+      this.orientationPortrait = false;
     }
   },
   setCanvasSize() {
     let canvasHeightToWidthRatio =
       numberOfTilesPerAxis / (numberOfTilesPerAxis + 3); // 3 to account for score area
-    if (orientationPortrait) {
+    if (this.orientationPortrait) {
       canvas.height = window.innerWidth;
     } else {
       canvas.height = window.innerHeight;
@@ -517,6 +517,7 @@ let game = {
   state: "MENU",
   wallsEnabled: "",
   audio: "",
+  refreshInterval: "",
   changeState(state) {
     this.state = state;
     this.showScreen(state);
@@ -592,12 +593,12 @@ let game = {
     this.wallsEnabled = !this.wallsEnabled;
   },
   play() {
-    gameRefreshInterval = setInterval(function () {
+    this.refreshInterval = setInterval(function () {
       gameLoop();
     }, gameSpeed);
   },
   stop() {
-    clearInterval(gameRefreshInterval);
+    clearInterval(this.refreshInterval);
   },
   checkSnakeCollision() {
     for (let i = 0; i < snake.array.length; i++) {
