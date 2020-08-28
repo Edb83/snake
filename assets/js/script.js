@@ -20,7 +20,7 @@ const down = 2;
 const hammertime = new Hammer.Manager(document.querySelector("body")); // new instance of hammer.js touch gesture manager. Configured in EVENT LISTENERS
 
 // DOM Elements
-const startScreen = document.getElementById("start-screen");
+const mainScreen = document.getElementById("main-screen");
 const scoresScreen = document.getElementById("scores-screen");
 const scoresContainer = document.getElementById("session-scores-container");
 const optionsScreen = document.getElementById("options-screen");
@@ -514,7 +514,7 @@ let game = {
   ateFood: false,
   lastMove: undefined,
   startTime: 0,
-  state: "MENU",
+  state: "MAIN",
   wallsEnabled: undefined,
   audio: undefined,
   refreshInterval: undefined,
@@ -531,7 +531,7 @@ let game = {
   },
   showScreen(state) {
     if (state === "PLAY") {
-      this.makeHidden(startScreen);
+      this.makeHidden(mainScreen);
       this.makeHidden(scoresScreen);
       this.makeHidden(scoresContainer);
       this.makeHidden(optionsScreen);
@@ -544,7 +544,7 @@ let game = {
     }
     if (state === "GAMEOVER") {
       this.makeHidden(optionsScreen);
-      this.makeHidden(startScreen);
+      this.makeHidden(mainScreen);
       this.makeVisible(scoresScreen);
     }
     if (state === "GAMEOVER" && stats.gamesPlayedThisSession > 0) {
@@ -554,17 +554,17 @@ let game = {
       optionsScreen.classList.remove("transparent-background");
       this.makeVisible(optionsToHide);
       this.makeHidden(resumeButton);
-      this.makeHidden(startScreen);
+      this.makeHidden(mainScreen);
       this.makeHidden(scoresScreen);
       this.makeHidden(scoresContainer);
       this.makeVisible(optionsScreen);
     }
-    if (state === "MENU") {
+    if (state === "MAIN") {
       this.makeHidden(scoresScreen);
       this.makeHidden(scoresContainer);
       this.makeHidden(optionsScreen);
       this.makeHidden(optionsScreen);
-      this.makeVisible(startScreen);
+      this.makeVisible(mainScreen);
     }
   },
   loadDefaultSettings() {
