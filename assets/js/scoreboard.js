@@ -67,7 +67,7 @@ let scoreBoard = {
         if (this.currentScore === 0) {
             scoreAwardText.innerHTML = `Oof.`;
         }
-        if (scoreRange(1, 4) && this.currentScore < this.currentHighScore) {
+        if (scoreRange(1, 4)) {
             scoreAwardText.insertAdjacentHTML("beforeend", `${this.currentScore} is a fantastic score. `);
         }
         if (scoreRange(5, 9)) {
