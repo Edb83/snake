@@ -43,7 +43,7 @@ const dynmicSparkGravityMultiplier = 2; // used to increase upper range of rando
 const dynamicSparkDMultiplier = 2; // used to increase upper range of random velocity assigned to individual sparks on creation
 const initialTileToSparkDRatio = 0.1; // the velocity of sparks at the start of each game
 const tileToSparkDRatioIncrement = 0.0025; // the increment to spark velocity each time food is eaten
-const sparkTimeToLive = 100; 
+const sparkTimeToLive = 100;
 const maxSparksPerEat = 150;
 const sparkArray = [];
 
@@ -56,7 +56,8 @@ const snakeColor = "#DF00FE"; // psychedelic purple
 const snakeStrokeColor = "#001437"; // dark blue
 const foodStrokeColor = "#000"; // white
 const colorArray = [
-    // RGB used so that alpha can be adjusted as sparks' ttl decreases on collision with floor
+  // Food color is picked at random from this array
+  // RGB used so that alpha can be adjusted with each spark's time to live
   "rgba(128,255,0,1)", // green
   "rgba(252,243,64,1)", // yellow
   "rgba(255,191,0,1)", // orange
@@ -100,7 +101,16 @@ function convertSecondsToHms(d) {
   return hDisplay + mDisplay + sDisplay;
 }
 
-// EVENT LISTENERS
+// Spark gravity calculator (depending on window/tile size)
+function dynamicSparkGravity() {
+  return tile * tileToSparkGravityRatio;
+}
+
+function dynamicSparkD() {
+  return tile * gameBoard.tileToSparkDRatio;
+}
+
+// EVENT HANDLERS
 
 // Keydown
 function keyboardHandler(e) {
@@ -123,7 +133,6 @@ function keyboardHandler(e) {
     animateLoop();
   }
 }
-document.addEventListener("keydown", keyboardHandler);
 
 // Hammertime touch gestures
 hammertime.add(
@@ -154,15 +163,15 @@ hammertime.on(`panleft panright panup pandown doubletap`, function (e) {
 
 // GAME INITIALISATION
 
-let newSnake = function () {
+function newSnake() {
   snake = new Snake(15 * tile, 15 * tile, snakeColor, left);
-};
+}
 
-let newFood = function () {
-  food = new Food(colorArray[Math.floor(Math.random() * colorArray.length)]) // picks random color from colorArray)
-};
+function newFood() {
+  food = new Food(colorArray[Math.floor(Math.random() * colorArray.length)]); // picks random color from colorArray)
+}
 
-let newGame = function () {
+function newGame() {
   eatWav = new sound("assets/audio/eat.wav");
   gameOverWav = new sound("assets/audio/gameover.wav");
   gameBoard.checkOrientation(); // could refactor?
@@ -176,11 +185,11 @@ let newGame = function () {
   animateLoop();
   game.startTime = Date.now();
   game.play();
-};
+}
 
 // GAME LOOP
 
-let gameLoop = function () {
+function gameLoop() {
   if (game.state === "PLAY") {
     game.checkSnakeCollision();
     game.checkAteFood();
@@ -191,7 +200,7 @@ let gameLoop = function () {
   } else {
     game.stop();
   }
-};
+}
 
 // ANIMATION LOOP
 
@@ -218,8 +227,8 @@ function animateLoop() {
 
 // Game board
 let gameBoard = {
-    orientationPortrait: undefined,
-    tileToSparkDRatio: undefined,
+  orientationPortrait: undefined,
+  tileToSparkDRatio: undefined,
   checkOrientation() {
     if (window.innerWidth <= window.innerHeight) {
       this.orientationPortrait = true;
@@ -235,7 +244,10 @@ let gameBoard = {
     } else {
       canvas.height = window.innerHeight;
     }
-    while (canvas.height % (numberOfTilesPerAxis + heightOfScoreBoardInTiles) > 0) { // 3 to account for score area
+    while (
+      canvas.height % (numberOfTilesPerAxis + heightOfScoreBoardInTiles) >
+      0
+    ) {
       canvas.height--;
     }
     canvas.width = Math.ceil(canvas.height * canvasHeightToWidthRatio);
@@ -285,7 +297,12 @@ let gameBoard = {
 
     // GameBoard Background
     ctx.fillStyle = gameBoardColor;
-    ctx.fillRect(0, tile * heightOfScoreBoardInTiles, canvas.width, canvas.height);
+    ctx.fillRect(
+      0,
+      tile * heightOfScoreBoardInTiles,
+      canvas.width,
+      canvas.height
+    );
 
     // Walls
     if (game.wallsEnabled) {
@@ -311,10 +328,6 @@ let gameBoard = {
     ctx.restore();
   },
 };
-
-// Window resize and orientationchange event listeners
-window.addEventListener("resize", gameBoard.recalculateAssets);
-window.addEventListener("orientationchange", gameBoard.recalculateAssets);
 
 // Snake
 class Snake {
@@ -380,7 +393,10 @@ class Snake {
 class Food {
   constructor(color) {
     this.x = Math.floor(Math.random() * numberOfTilesPerAxis) * tile;
-    this.y = Math.floor(Math.random() * numberOfTilesPerAxis + heightOfScoreBoardInTiles) * tile;
+    this.y =
+      Math.floor(
+        Math.random() * numberOfTilesPerAxis + heightOfScoreBoardInTiles
+      ) * tile;
     this.color = color;
   }
 
@@ -460,14 +476,6 @@ Spark.prototype.update = function () {
   this.y += this.dy;
 };
 
-function dynamicSparkGravity() {
-  return tile * tileToSparkGravityRatio;
-}
-
-function dynamicSparkD() {
-  return tile * gameBoard.tileToSparkDRatio;
-}
-
 function populateSparkArray() {
   for (let i = 0; i < snake.array.length && i < maxSparksPerEat; i++) {
     // spawns sparks equal to snake length
@@ -510,11 +518,11 @@ function populateSparkArray() {
 
 // Game
 let game = {
-  collisionDetected: false,
-  ateFood: false,
+  collisionDetected: undefined,
+  ateFood: undefined,
   lastMove: undefined,
-  startTime: 0,
-  state: "MAIN",
+  startTime: undefined,
+  state: undefined,
   wallsEnabled: undefined,
   audio: undefined,
   refreshInterval: undefined,
@@ -588,9 +596,6 @@ let game = {
       this.audio = false;
     }
   },
-  toggleWalls() {
-    this.wallsEnabled = !this.wallsEnabled;
-  },
   play() {
     this.refreshInterval = setInterval(function () {
       gameLoop();
@@ -631,7 +636,10 @@ let game = {
         }
       }
 
-      if (snake.newHead.y < heightOfScoreBoardInTiles * tile && snake.direction === up) {
+      if (
+        snake.newHead.y < heightOfScoreBoardInTiles * tile &&
+        snake.direction === up
+      ) {
         if (this.wallsEnabled) {
           this.collisionDetected = true;
         } else {
@@ -709,4 +717,20 @@ let stats = {
     this.pointsAllTime += scoreBoard.currentScore;
     localStorage.setItem("points", this.pointsAllTime);
   },
+  resetLocalStorage() {
+    localStorage.removeItem("highScore");
+    localStorage.removeItem("time");
+    localStorage.removeItem("games");
+    localStorage.removeItem("points");
+    scoreBoard.highScore = 0;
+    this.gameTimeAllTime = 0;
+    this.gamesPlayedAllTime = 0;
+    this.pointsAllTime = 0;
+  },
 };
+
+// EVENT LISTENERS
+
+document.addEventListener("keydown", keyboardHandler);
+window.addEventListener("resize", gameBoard.recalculateAssets);
+window.addEventListener("orientationchange", gameBoard.recalculateAssets);

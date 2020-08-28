@@ -25,19 +25,6 @@ let scoreBoard = {
             return;
         }
     },
-    resetArray() {
-        this.array.length = 0;
-        this.currentScore = 0;
-        this.score = 0;
-        this.print();
-    },
-    resetHighScore() {
-        localStorage.removeItem("highScore");
-        this.highScore = 0;
-        if (stats.gamesPlayedThisSession > 0) {
-            animateLoop();
-        }
-    },
     getFont() {
         let fontSize = canvas.width * fontRatio;
         return (fontSize || 0) + "px Orbitron";
