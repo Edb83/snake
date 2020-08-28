@@ -105,7 +105,7 @@ let scoreBoard = {
             scoreAwardText.insertAdjacentHTML("beforeend", `Did you consider persevering and making it to 100? `);
         }
         if (scoreRange(100, 124) &&
-            (this.currentScore > this.currentHighScore) {
+            (this.currentScore > this.currentHighScore)) {
             scoreAwardText.innerHTML = `That's quite the milestone you've hit.<br>And it only took you ${stats.gamesPlayedAllTime} attempts! `;
         }
         else if (scoreRange(100, 124)) {
@@ -118,7 +118,7 @@ let scoreBoard = {
             scoreAwardText.insertAdjacentHTML("beforeend", `The Digital Mongoose has been informed of your progress. `);
         }
         if (scoreRange(200, 299)) {
-            scoreAwardText.innerHTML = `Definitely cheating. `;
+            scoreAwardText.insertAdjacentHTML("beforeend", `Definitely cheating. `);
         }
         if (scoreRange(300, 396)) {
             scoreAwardText.innerHTML = `Assuming you're not cheating, I'm impressed by your commitment and sorry that you have wasted your time. `;
