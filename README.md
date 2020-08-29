@@ -24,9 +24,6 @@ https://www.youtube.com/watch?v=EO6OkltgudE&list=PLpPnRKq7eNW3We9VdCfx9fprhqXHwT
 Color wheel:
 https://color.adobe.com/create/color-wheel
 
-Layered canvases (could use this):
-https://html5.litten.com/using-multiple-html5-canvases-as-layers/
-
 Sorting scores:
 https://www.javascripttutorial.net/javascript-array-sort/
 
@@ -98,7 +95,9 @@ https://dev.to/proticm/styling-html-checkboxes-is-super-easy-302o
 
 ## Context
 
-Text
+Cyber Snake is an attempt to recreate the Nokia version of a game, which many will remember fondly from the advent of mobile gaming. While Nokia's monochrome version wasn't released until 1998, the Snake game concept dates back to 1976 when [Blockade](<https://en.wikipedia.org/wiki/Blockade_(video_game)>) first appeared in arcades. Since then there have been hundreds of versions released, and for good reason. It is considered a classic in terms of design and even appears in New York's Museum of Modern Art alongside the likes of Minecraft, Pong and Tetris.
+
+This version offers classic Snake gameplay, a clean interface, satisfying graphical feedback, and the kind of 'personality' typified by games of the 90s. If you feel any pangs of nostalgia then it has achieved its aim!
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 <span id="ux"></span>
@@ -107,7 +106,12 @@ Text
 
 ### Overview
 
-Text
+Simplicity
+Easy to navigate
+Crisp controls
+Visual feedback
+Replayability
+Engagement / dialogue
 
 <span id="ux-stories"></span>
 
@@ -115,29 +119,36 @@ Text
 
 For ease of reference, the means by which a user's expectations have been met are summarised in the tables below:
 
-| As a **client** I want | How this is achieved |
-| :--------------------- | :------------------- |
-| Text                   | Text                 |
+| As a **site owner** I want                                   | How this is achieved                                                                                                    |
+| :----------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------- |
+| To be able to customise the look and feel of the game easily | Core variables can be manipulated easily to change both look and feel, e.g. colors, particle physics, speed, board size |
 
-| As a **visitor** I want | How this is achieved |
-| :---------------------- | :------------------- |
-| Text                    | Text                 |  |
+| As a **user** I want                            | How this is achieved                                                                                                                                             |
+| :---------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| To know how well I am doing                     | Session scoreboard, highscore in local storage                                                                                                                   |
+| To have some gameplay options                   | Walls toggle                                                                                                                                                     |
+| To have satisfying visual feedback when playing | Well-constructed particle effect system                                                                                                                          |
+| To have a reason to keep playing                | Beyond simply beating highscores, there are increasing particle effects for scoring higher and a catty score commentary with a large number of possible outcomes |
+| To be able to play on any device                | Hammer js touch controls allow for responsive play on mobile                                                                                                     |
 
-Seven individuals contributed to testing the site and provided feedback on its layout, responsiveness and styling at various points in development.
+Several individuals contributed to testing the game and provided feedback on its gameplay, responsiveness and aesthetics at various points in development.
 
 <span id="ux-wireframes"></span>
 
 ### Wireframes
 
-Overall the wireframes were successfully converted into a functioning website, however there were some deviations from the plan. These were:
+Overall the wireframes were successfully converted into a functioning application, however there were some deviations from the plan. These were:
 
-1. Details
+1. Statistics menu
+2. Advanced image manipulation via the canvas
 
 The full suite of wireframes for **desktop**, **tablet** and **mobile** devices, plus a **sitemap**, can be accessed [here](wireframes/).
 
-### Site theme
+### Theme
 
-Text
+Retro
+Cyber
+Neon
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
@@ -157,9 +168,12 @@ Text
 
 ### Features left to implement
 
-- Example 1
+- Global leaderboard
 
   _Details_
+
+- Gameplay customisations
+  _Beyond the classic implementation: Difficulty levels, special food, obstacles, graphical options_
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
