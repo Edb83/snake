@@ -44,7 +44,6 @@ body {
   z-index: 1;
   width: auto;;
   overflow: auto;
-  touch-action: manipulation;
 }
 
 #canvas {
@@ -148,6 +147,11 @@ h1 {
   background-color: #fff;
   color: #001437;
   border: solid 1px #fff;
+}
+
+
+#options-screen {
+      touch-action: manipulation;
 }
 
 #radio-buttons-container {
