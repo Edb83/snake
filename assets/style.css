@@ -44,6 +44,7 @@ body {
   z-index: 1;
   width: auto;;
   overflow: auto;
+  touch-action: manipulation;
 }
 
 #canvas {
