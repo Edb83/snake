@@ -31,6 +31,7 @@
           </p>
           <p>Don't eat yourself</p>
         </div>
+    <!-- Need to work out giving IDs for the 'same' button on different menu screens -->
         <div class="menu-buttons-container">
           <button onclick="newGame()">Play</button>
           <button onclick="game.changeState('OPTIONS')">Options</button>
@@ -54,9 +55,9 @@
           <button onclick="game.changeState('MAIN')">Main</button>
         </div>
       </div>
-      <div id="options-screen" class="hidden menu-screen">
+      <div id="options-screen" class="hidden menu-screen disable-touch-zoom">
         <h1>Options</h1>
-        <div id="radio-buttons-container" class="menu-content-container">
+        <div id="radio-buttons-container" class="menu-content-container disable-touch-zoom">
           <label class="checkbox">
             <input id="audio-checkbox" type="checkbox" checked />
             <span>Sound</span>
@@ -77,7 +78,7 @@
             </button> -->
           <button
             id="resume-button"
-            class="hidden"
+            class="hidden disable-touch-zoom"
             onclick="game.changeState('PLAY'); game.play();animateLoop()"
           >
             Resume
