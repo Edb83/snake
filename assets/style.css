@@ -149,11 +149,6 @@ h1 {
   border: solid 1px #fff;
 }
 
-
-.disable-touch-zoom {
-      touch-action: manipulation;
-}
-
 #radio-buttons-container {
     display: inline-block;
 }

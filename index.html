@@ -55,19 +55,19 @@
           <button onclick="game.changeState('MAIN')">Main</button>
         </div>
       </div>
-      <div id="options-screen" class="hidden menu-screen disable-touch-zoom">
-        <h1 class="disable-touch-zoom">Options</h1>
-        <div id="radio-buttons-container" class="menu-content-container disable-touch-zoom">
-          <label class="checkbox disable-touch-zoom">
-            <input id="audio-checkbox" class="disable-touch-zoom" type="checkbox" checked />
-            <span class="disable-touch-zoom">Sound</span>
+      <div id="options-screen" class="hidden menu-screen">
+        <h1>Options</h1>
+        <div id="radio-buttons-container" class="menu-content-container">
+          <label class="checkbox">
+            <input id="audio-checkbox" type="checkbox" checked />
+            <span>Sound</span>
           </label>
-          <label class="checkbox disable-touch-zoom">
-            <input id="walls-checkbox" class="disable-touch-zoom" type="checkbox" />
-            <span class="disable-touch-zoom">Walls</span>
+          <label class="checkbox">
+            <input id="walls-checkbox" type="checkbox" />
+            <span>Walls</span>
           </label>
         </div>
-        <div class="menu-buttons-container disable-touch-zoom">
+        <div class="menu-buttons-container">
           <!-- <button onclick="scoreBoard.resetArray()">
               Reset session scores
             </button>
@@ -78,7 +78,7 @@
             </button> -->
           <button
             id="resume-button"
-            class="hidden disable-touch-zoom"
+            class="hidden"
             onclick="game.changeState('PLAY'); game.play();animateLoop()"
           >
             Resume
