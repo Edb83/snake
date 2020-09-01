@@ -40,7 +40,7 @@ const fontRatio = 0.058; // used by scoreBoard to scale size of text according t
 // Spark
 const tileToSparkGravityRatio = 0.009; // used to scale gravity of sparks according to window size (higher is more increased gravity)
 const dynmicSparkGravityMultiplier = 2; // used to increase upper range of random gravity assigned to individual sparks on creation
-const dynamicSparkDMultiplier = 2; // used to increase upper range of random velocity assigned to individual sparks on creation
+const dynamicOutputMultiplier = 2; // used to increase upper range of random velocity assigned to individual sparks on creation
 const initialTileToSparkDRatio = 0.1; // the velocity of sparks at the start of each game
 const tileToSparkDRatioIncrement = 0.0025; // the increment to spark velocity each time food is eaten
 const sparkTimeToLive = 100;
@@ -69,26 +69,25 @@ const colorArray = [
 // FUNCTIONS
 // Sound constructor
 class sound {
-    constructor(src) {
-        this.sound = document.createElement("audio");
-        this.sound.src = src;
-        this.sound.setAttribute("preload", "auto");
-        this.sound.setAttribute("controls", "none");
-        this.sound.style.display = "none";
-        document.body.appendChild(this.sound);
-        this.play = () => {
-            this.sound.play();
-        };
-        this.stop = () => {
-            this.sound.pause();
-        };
-    }
+  constructor(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = () => {
+      this.sound.play();
+    };
+    this.stop = () => {
+      this.sound.pause();
+    };
+  }
 }
 
 // Random number generator
-const randomNumber = (min, max) => {
-  return Math.random() * (max - min) + min;
-}
+const randomNumber = (min, max) => 
+  Math.random() * (max - min) + min;
 
 // Time convertor
 const convertSecondsToHms = (d) => {
@@ -100,14 +99,10 @@ const convertSecondsToHms = (d) => {
   var mDisplay = m > 0 ? m + (m == 1 ? " minute " : " minutes ") : "";
   var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
   return hDisplay + mDisplay + sDisplay;
-}
+};
 
 // Spark gravity calculator (depending on window/tile size)
-const dynamicSparkGravity = () => 
-  tile * tileToSparkGravityRatio;
-
-const dynamicSparkD =() => 
-  tile * gameBoard.tileToSparkDRatio;
+const dynamicOutput = (ratio) => tile * ratio;
 
 // EVENT HANDLERS
 
@@ -131,7 +126,7 @@ const keyboardHandler = (e) => {
     game.play();
     animateLoop();
   }
-}
+};
 
 // Hammertime touch gestures
 hammertime.add(
@@ -140,7 +135,7 @@ hammertime.add(
 hammertime.add(new Hammer.Tap({ event: "doubletap", taps: 2 }));
 hammertime.get("pan");
 hammertime.get("doubletap");
-hammertime.on(`panleft panright panup pandown doubletap`, e => {
+hammertime.on(`panleft panright panup pandown doubletap`, (e) => {
   if (e.type === `panleft` && game.moveIsValid(left)) {
     snake.direction = left;
   } else if (e.type === `panup` && game.moveIsValid(up)) {
@@ -164,11 +159,11 @@ hammertime.on(`panleft panright panup pandown doubletap`, e => {
 
 const newSnake = () => {
   snake = new Snake(15 * tile, 15 * tile, snakeColor, left);
-}
+};
 
 const newFood = () => {
   food = new Food(colorArray[Math.floor(Math.random() * colorArray.length)]); // picks random color from colorArray)
-}
+};
 
 const newGame = () => {
   eatWav = new sound("assets/audio/eat.wav");
@@ -184,7 +179,7 @@ const newGame = () => {
   animateLoop();
   game.startTime = Date.now();
   game.play();
-}
+};
 
 // GAME LOOP
 
@@ -199,7 +194,7 @@ const gameLoop = () => {
   } else {
     game.stop();
   }
-}
+};
 
 // ANIMATION LOOP
 
@@ -220,7 +215,7 @@ const animateLoop = () => {
   } else {
     return;
   }
-}
+};
 
 // OBJECTS
 
@@ -432,8 +427,8 @@ class Spark {
     this.radius = randomNumber(tile / 10, tile / 4); // convert to global variable?
     this.color = food.color;
     this.gravity = randomNumber(
-      dynamicSparkGravity(),
-      dynamicSparkGravity() * dynmicSparkGravityMultiplier
+      dynamicOutput(tileToSparkGravityRatio),
+      dynamicOutput(tileToSparkGravityRatio) * dynmicSparkGravityMultiplier
     );
     this.friction = randomNumber(0.4, 0.6); // convert to global variable?
     this.ttl = sparkTimeToLive;
@@ -483,37 +478,37 @@ const populateSparkArray = () => {
     let x = snake.array[0].x + tile / 2;
     let y = snake.array[0].y + tile / 2;
     if (snake.direction === up) {
-      dx = randomNumber(-dynamicSparkD(), dynamicSparkD());
+      dx = randomNumber(-dynamicOutput(gameBoard.tileToSparkDRatio), dynamicOutput(gameBoard.tileToSparkDRatio));
       dy = randomNumber(
-        -dynamicSparkD(),
-        -dynamicSparkD() * dynamicSparkDMultiplier
+        -dynamicOutput(gameBoard.tileToSparkDRatio),
+        -dynamicOutput(gameBoard.tileToSparkDRatio) * dynamicOutputMultiplier
       );
     }
     if (snake.direction === down) {
-      dx = randomNumber(-dynamicSparkD(), dynamicSparkD());
+      dx = randomNumber(-dynamicOutput(gameBoard.tileToSparkDRatio), dynamicOutput(gameBoard.tileToSparkDRatio));
       dy = randomNumber(
-        dynamicSparkD(),
-        dynamicSparkD() * dynamicSparkDMultiplier
+        dynamicOutput(gameBoard.tileToSparkDRatio),
+        dynamicOutput(gameBoard.tileToSparkDRatio) * dynamicOutputMultiplier
       );
     }
     if (snake.direction === left) {
       dx = randomNumber(
-        -dynamicSparkD() * dynamicSparkDMultiplier,
-        -dynamicSparkD()
+        -dynamicOutput(gameBoard.tileToSparkDRatio) * dynamicOutputMultiplier,
+        -dynamicOutput(gameBoard.tileToSparkDRatio)
       );
-      dy = randomNumber(-dynamicSparkD(), dynamicSparkD());
+      dy = randomNumber(-dynamicOutput(gameBoard.tileToSparkDRatio), dynamicOutput(gameBoard.tileToSparkDRatio));
     }
     if (snake.direction === right) {
       dx = randomNumber(
-        dynamicSparkD(),
-        dynamicSparkD() * dynamicSparkDMultiplier
+        dynamicOutput(gameBoard.tileToSparkDRatio),
+        dynamicOutput(gameBoard.tileToSparkDRatio) * dynamicOutputMultiplier
       );
-      dy = randomNumber(-dynamicSparkD(), dynamicSparkD());
+      dy = randomNumber(-dynamicOutput(gameBoard.tileToSparkDRatio), dynamicOutput(gameBoard.tileToSparkDRatio));
     }
 
     sparkArray.push(new Spark(x, y, dx, dy));
   }
-}
+};
 
 // Game
 let game = {
