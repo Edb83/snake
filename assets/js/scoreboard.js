@@ -37,12 +37,15 @@ let scoreBoard = {
     );
     ctx.fillText(
       `High score: ${this.highScore}`,
-      canvas.width * 0.45, // convert to global variable?
+      canvas.width * 0.45,
       (tile / 2) * heightOfScoreBoardInTiles + tile / 2
     );
   },
   print() {
     let scoreAwardText = document.getElementById("score-award-text");
+    scoreAwardText.innerHTML = "";
+
+    // arrow function needed to prevent invalid reference to this.currentScore (thanks to robinz_alumni for tip)
     let scoreRange = (min, max) => {
       if (this.currentScore >= min && this.currentScore < max + 1) {
         return true;
@@ -53,9 +56,6 @@ let scoreBoard = {
         return true;
       }
     };
-
-    scoreAwardText.innerHTML = "";
-    // arrow function needed to prevent invalid reference to this.currentScore (thanks to robinz_alumni for tip)
 
     if (isNaN(this.currentHighScore) && this.currentScore !== 0) {
       scoreAwardText.innerHTML = `You're off the mark, so to speak. `;
@@ -92,7 +92,7 @@ let scoreBoard = {
     ) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `Unlucky for some. And you. `
+        `Unlucky for some. Especially for you. `
       );
     }
     if (scoreRange(20, 29)) {
@@ -104,7 +104,7 @@ let scoreBoard = {
     if (scoreRange(30, 39)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `FYI this is Cyber <em>Snake</em>, not Cyber Slow Worm. `
+        `FYI this is Cyber Snake, not Cyber Slow Worm. `
       );
     }
     if (scoreRange(40, 49)) {
