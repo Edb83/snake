@@ -165,7 +165,7 @@ const newFood = () => {
 };
 
 const newGame = () => {
-  eatWav = new sound("assets/audio/eat.flac");
+  eatWav = new sound("assets/audio/eat.wav");
   gameOverWav = new sound("assets/audio/gameover.wav");
   gameBoard.checkOrientation(); // could refactor?
   gameBoard.setCanvasSize();
