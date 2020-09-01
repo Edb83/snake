@@ -17,7 +17,7 @@ const left = -1; // directions have been converted to numbers so that conditiona
 const right = 1;
 const up = -2;
 const down = 2;
-const hammertime = new Hammer.Manager(document.querySelector("body")); // new instance of hammer.js touch gesture manager. Configured in EVENT LISTENERS
+const hammertime = new Hammer.Manager(document.querySelector("body")); // new instance of hammer.js touch gesture manager. Configured in EVENT HANDLERS
 
 // DOM Elements
 const mainScreen = document.getElementById("main-screen");
@@ -86,8 +86,7 @@ class sound {
 }
 
 // Random number generator
-const randomNumber = (min, max) => 
-  Math.random() * (max - min) + min;
+const randomNumber = (min, max) => Math.random() * (max - min) + min;
 
 // Time convertor
 const convertSecondsToHms = (d) => {
@@ -101,7 +100,7 @@ const convertSecondsToHms = (d) => {
   return hDisplay + mDisplay + sDisplay;
 };
 
-// Spark gravity calculator (depending on window/tile size)
+// Spark calculator for direction and gravity (depending on window/tile size)
 const dynamicOutput = (ratio) => tile * ratio;
 
 // EVENT HANDLERS
@@ -478,14 +477,20 @@ const populateSparkArray = () => {
     let x = snake.array[0].x + tile / 2;
     let y = snake.array[0].y + tile / 2;
     if (snake.direction === up) {
-      dx = randomNumber(-dynamicOutput(gameBoard.tileToSparkDRatio), dynamicOutput(gameBoard.tileToSparkDRatio));
+      dx = randomNumber(
+        -dynamicOutput(gameBoard.tileToSparkDRatio),
+        dynamicOutput(gameBoard.tileToSparkDRatio)
+      );
       dy = randomNumber(
         -dynamicOutput(gameBoard.tileToSparkDRatio),
         -dynamicOutput(gameBoard.tileToSparkDRatio) * dynamicOutputMultiplier
       );
     }
     if (snake.direction === down) {
-      dx = randomNumber(-dynamicOutput(gameBoard.tileToSparkDRatio), dynamicOutput(gameBoard.tileToSparkDRatio));
+      dx = randomNumber(
+        -dynamicOutput(gameBoard.tileToSparkDRatio),
+        dynamicOutput(gameBoard.tileToSparkDRatio)
+      );
       dy = randomNumber(
         dynamicOutput(gameBoard.tileToSparkDRatio),
         dynamicOutput(gameBoard.tileToSparkDRatio) * dynamicOutputMultiplier
@@ -496,14 +501,20 @@ const populateSparkArray = () => {
         -dynamicOutput(gameBoard.tileToSparkDRatio) * dynamicOutputMultiplier,
         -dynamicOutput(gameBoard.tileToSparkDRatio)
       );
-      dy = randomNumber(-dynamicOutput(gameBoard.tileToSparkDRatio), dynamicOutput(gameBoard.tileToSparkDRatio));
+      dy = randomNumber(
+        -dynamicOutput(gameBoard.tileToSparkDRatio),
+        dynamicOutput(gameBoard.tileToSparkDRatio)
+      );
     }
     if (snake.direction === right) {
       dx = randomNumber(
         dynamicOutput(gameBoard.tileToSparkDRatio),
         dynamicOutput(gameBoard.tileToSparkDRatio) * dynamicOutputMultiplier
       );
-      dy = randomNumber(-dynamicOutput(gameBoard.tileToSparkDRatio), dynamicOutput(gameBoard.tileToSparkDRatio));
+      dy = randomNumber(
+        -dynamicOutput(gameBoard.tileToSparkDRatio),
+        dynamicOutput(gameBoard.tileToSparkDRatio)
+      );
     }
 
     sparkArray.push(new Spark(x, y, dx, dy));
