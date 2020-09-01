@@ -67,30 +67,31 @@ const colorArray = [
 ];
 
 // FUNCTIONS
-
 // Sound constructor
-function sound(src) {
-  this.sound = document.createElement("audio");
-  this.sound.src = src;
-  this.sound.setAttribute("preload", "auto");
-  this.sound.setAttribute("controls", "none");
-  this.sound.style.display = "none";
-  document.body.appendChild(this.sound);
-  this.play = function () {
-    this.sound.play();
-  };
-  this.stop = function () {
-    this.sound.pause();
-  };
+class sound {
+    constructor(src) {
+        this.sound = document.createElement("audio");
+        this.sound.src = src;
+        this.sound.setAttribute("preload", "auto");
+        this.sound.setAttribute("controls", "none");
+        this.sound.style.display = "none";
+        document.body.appendChild(this.sound);
+        this.play = () => {
+            this.sound.play();
+        };
+        this.stop = () => {
+            this.sound.pause();
+        };
+    }
 }
 
 // Random number generator
-function randomNumber(min, max) {
+const randomNumber = (min, max) => {
   return Math.random() * (max - min) + min;
 }
 
 // Time convertor
-function convertSecondsToHms(d) {
+const convertSecondsToHms = (d) => {
   d = Number(d);
   var h = Math.floor(d / 3600);
   var m = Math.floor((d % 3600) / 60);
@@ -102,18 +103,16 @@ function convertSecondsToHms(d) {
 }
 
 // Spark gravity calculator (depending on window/tile size)
-function dynamicSparkGravity() {
-  return tile * tileToSparkGravityRatio;
-}
+const dynamicSparkGravity = () => 
+  tile * tileToSparkGravityRatio;
 
-function dynamicSparkD() {
-  return tile * gameBoard.tileToSparkDRatio;
-}
+const dynamicSparkD =() => 
+  tile * gameBoard.tileToSparkDRatio;
 
 // EVENT HANDLERS
 
 // Keydown
-function keyboardHandler(e) {
+const keyboardHandler = (e) => {
   if (e.keyCode === 38 && game.moveIsValid(up)) {
     snake.direction = up;
   } else if (e.keyCode === 40 && game.moveIsValid(down)) {
@@ -141,7 +140,7 @@ hammertime.add(
 hammertime.add(new Hammer.Tap({ event: "doubletap", taps: 2 }));
 hammertime.get("pan");
 hammertime.get("doubletap");
-hammertime.on(`panleft panright panup pandown doubletap`, function (e) {
+hammertime.on(`panleft panright panup pandown doubletap`, e => {
   if (e.type === `panleft` && game.moveIsValid(left)) {
     snake.direction = left;
   } else if (e.type === `panup` && game.moveIsValid(up)) {
@@ -163,15 +162,15 @@ hammertime.on(`panleft panright panup pandown doubletap`, function (e) {
 
 // GAME INITIALISATION
 
-function newSnake() {
+const newSnake = () => {
   snake = new Snake(15 * tile, 15 * tile, snakeColor, left);
 }
 
-function newFood() {
+const newFood = () => {
   food = new Food(colorArray[Math.floor(Math.random() * colorArray.length)]); // picks random color from colorArray)
 }
 
-function newGame() {
+const newGame = () => {
   eatWav = new sound("assets/audio/eat.wav");
   gameOverWav = new sound("assets/audio/gameover.wav");
   gameBoard.checkOrientation(); // could refactor?
@@ -189,7 +188,7 @@ function newGame() {
 
 // GAME LOOP
 
-function gameLoop() {
+const gameLoop = () => {
   if (game.state === "PLAY") {
     game.checkSnakeCollision();
     game.checkAteFood();
@@ -204,7 +203,7 @@ function gameLoop() {
 
 // ANIMATION LOOP
 
-function animateLoop() {
+const animateLoop = () => {
   gameBoard.draw();
   food.draw();
   scoreBoard.draw();
@@ -476,7 +475,7 @@ Spark.prototype.update = function () {
   this.y += this.dy;
 };
 
-function populateSparkArray() {
+const populateSparkArray = () => {
   for (let i = 0; i < snake.array.length && i < maxSparksPerEat; i++) {
     // spawns sparks equal to snake length
     let dx;
@@ -597,7 +596,7 @@ let game = {
     }
   },
   play() {
-    this.refreshInterval = setInterval(function () {
+    this.refreshInterval = setInterval(() => {
       gameLoop();
     }, gameSpeed);
   },
