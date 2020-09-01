@@ -5,7 +5,7 @@
 // Declarations
 let snake;
 let food;
-let tile;
+let tile; // the based unit of measurement used (e.g. snake/food parts are tile * tile)
 let eatWav;
 let gameOverWav;
 
@@ -13,7 +13,7 @@ let gameOverWav;
 const gameSpeed = 140; // milliseconds per game update
 
 // Controls
-const left = -1; // directions have been converted to numbers so that conditional statements can be negated to find the opposite direction
+const left = -1; // directions have been converted to numbers so that conditional statements can be negated mathematically
 const right = 1;
 const up = -2;
 const down = 2;
@@ -165,7 +165,7 @@ const newFood = () => {
 };
 
 const newGame = () => {
-  eatWav = new sound("assets/audio/eat.wav");
+  eatWav = new sound("assets/audio/eat.flac");
   gameOverWav = new sound("assets/audio/gameover.wav");
   gameBoard.checkOrientation(); // could refactor?
   gameBoard.setCanvasSize();
