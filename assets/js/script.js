@@ -231,7 +231,11 @@ let gameBoard = {
   },
   setCanvasSize() {
     let canvasHeightToWidthRatio =
-      numberOfTilesPerAxis / (numberOfTilesPerAxis + heightOfScoreBoardInTiles); // 3 to account for score area
+      numberOfTilesPerAxis / (numberOfTilesPerAxis + heightOfScoreBoardInTiles);
+
+    let innerHTMLHeightToWidthRatio = 
+        window.innerHeight / window.innerWidth;
+
     if (this.orientationPortrait) {
       canvas.height = window.innerWidth;
     } else {
@@ -244,6 +248,11 @@ let gameBoard = {
       canvas.height--;
     }
     canvas.width = Math.ceil(canvas.height * canvasHeightToWidthRatio);
+        // this fixes an issue with near square innerHTML height/width by reducing the height of the canvas accordingly
+    if (innerHTMLHeightToWidthRatio >= 1 && innerHTMLHeightToWidthRatio <= 1.1) {
+        canvas.height *= canvasHeightToWidthRatio;
+    }
+
   },
   setTileSize() {
     tile = canvas.width / numberOfTilesPerAxis;
