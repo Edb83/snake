@@ -560,7 +560,7 @@ let game = {
       this.makeHidden(optionsScreen);
     }
     if (state === "PAUSE") {
-      optionsScreen.classList.add("transparent-background");
+    //   optionsScreen.classList.add("transparent-background");
       this.makeHidden(optionsToHide);
       this.makeVisible(resumeButton);
       this.makeVisible(optionsScreen);
@@ -574,8 +574,8 @@ let game = {
       this.makeVisible(scoresContainer);
     }
     if (state === "OPTIONS") {
-      optionsScreen.classList.remove("transparent-background");
-      this.makeVisible(optionsToHide);
+    //   optionsScreen.classList.remove("transparent-background");
+      optionsToHide.style.display = "block";
       this.makeHidden(resumeButton);
       this.makeHidden(mainScreen);
       this.makeHidden(scoresScreen);
