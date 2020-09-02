@@ -132,8 +132,6 @@ hammertime.add(
   new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 20 })
 );
 hammertime.add(new Hammer.Tap({ event: "twofingertap", taps: 1, pointers: 2 }));
-hammertime.get("pan");
-hammertime.get("twofingertap");
 hammertime.on(`panleft panright panup pandown twofingertap`, (e) => {
   if (e.type === `panleft` && game.moveIsValid(left)) {
     snake.direction = left;
@@ -167,7 +165,7 @@ hammertime.on(`panleft panright panup pandown twofingertap`, (e) => {
 //   e.target.click();
 // }
 
-// document.querySelector("body").addEventListener('touchstart', preventZoom); 
+// document.querySelector("body").addEventListener('touchstart', preventZoom);
 
 // GAME INITIALISATION
 
@@ -193,7 +191,8 @@ const newGame = () => {
   animateLoop();
   game.startTime = Date.now();
   game.play();
-  hammertime.set({enable: true})
+  hammertime.get("pan").set({ enable: true });
+  hammertime.get("twofingertap").set({ enable: true });
 };
 
 // GAME LOOP
@@ -249,8 +248,7 @@ let gameBoard = {
     let canvasHeightToWidthRatio =
       numberOfTilesPerAxis / (numberOfTilesPerAxis + heightOfScoreBoardInTiles);
 
-    let innerHTMLHeightToWidthRatio = 
-        window.innerHeight / window.innerWidth;
+    let innerHTMLHeightToWidthRatio = window.innerHeight / window.innerWidth;
 
     if (this.orientationPortrait) {
       canvas.height = window.innerWidth;
@@ -264,11 +262,13 @@ let gameBoard = {
       canvas.height--;
     }
     canvas.width = Math.ceil(canvas.height * canvasHeightToWidthRatio);
-        // this fixes an issue with near square innerHTML height/width by reducing the height of the canvas accordingly
-    if (innerHTMLHeightToWidthRatio >= 1 && innerHTMLHeightToWidthRatio <= 1.1) {
-        canvas.height *= canvasHeightToWidthRatio;
+    // this fixes an issue with near square innerHTML height/width by reducing the height of the canvas accordingly
+    if (
+      innerHTMLHeightToWidthRatio >= 1 &&
+      innerHTMLHeightToWidthRatio <= 1.1
+    ) {
+      canvas.height *= canvasHeightToWidthRatio;
     }
-
   },
   setTileSize() {
     tile = canvas.width / numberOfTilesPerAxis;
@@ -576,7 +576,7 @@ let game = {
       this.makeHidden(optionsScreen);
     }
     if (state === "PAUSE") {
-    //   optionsScreen.classList.add("transparent-background");
+      //   optionsScreen.classList.add("transparent-background");
       this.makeHidden(optionsToHide);
       this.makeVisible(resumeButton);
       this.makeVisible(optionsScreen);
@@ -590,7 +590,7 @@ let game = {
       this.makeVisible(scoresContainer);
     }
     if (state === "OPTIONS") {
-    //   optionsScreen.classList.remove("transparent-background");
+      //   optionsScreen.classList.remove("transparent-background");
       optionsToHide.style.display = "block";
       this.makeHidden(resumeButton);
       this.makeHidden(mainScreen);
