@@ -203,7 +203,7 @@ const gameLoop = () => {
     game.checkAteFood();
     game.update();
     snake.update();
-    snake.lastMove();
+    snake.getLastMove();
     scoreBoard.updateHighScore();
   } else {
     game.stop();
@@ -376,14 +376,14 @@ class Snake {
     }
   }
 
-  lastMove() {
-    if (this.array[0].x < this.array[1].x) {
+  getLastMove() { // extra conditionals needed for when snake crosses wall to prevent eating self
+    if (this.array[0].x - this.array[1].x === -tile || (this.array[0].x - this.array[1].x) > tile) {
       game.lastMove = left;
-    } else if (this.array[0].x > this.array[1].x) {
+    } else if (this.array[0].x > this.array[1].x || (this.array[0].x - this.array[1].x) < -tile) {
       game.lastMove = right;
-    } else if (this.array[0].y < this.array[1].y) {
+    } else if (this.array[0].y - this.array[1].y === -tile || (this.array[0].y - this.array[1].y) > tile) {
       game.lastMove = up;
-    } else if (this.array[0].y > this.array[1].y) {
+    } else if (this.array[0].y > this.array[1].y || (this.array[0].y - this.array[1].y) < -tile) {
       game.lastMove = down;
     }
   }
@@ -608,7 +608,7 @@ let game = {
   },
   loadDefaultSettings() {
     this.collisionDetected = false;
-    this.AteFood = false;
+    this.ateFood = false;
     sparkArray.length = 0;
     scoreBoard.previousScore = scoreBoard.currentScore;
     scoreBoard.currentScore = 0;
@@ -686,9 +686,9 @@ let game = {
       }
     }
     if (snake.newHead.x === food.x && snake.newHead.y === food.y) {
-      this.AteFood = true;
+      this.ateFood = true;
     } else {
-      this.AteFood = false;
+      this.ateFood = false;
     }
   },
   moveIsValid(newDir) {
@@ -711,7 +711,7 @@ let game = {
       scoreBoard.update();
       scoreBoard.print();
       this.changeState("GAMEOVER");
-    } else if (this.AteFood) {
+    } else if (this.ateFood) {
       if (this.audio) {
         eatWav.play();
       }
