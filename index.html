@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <link
       href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap"
@@ -31,7 +34,7 @@
           </p>
           <p>Don't eat yourself</p>
         </div>
-    <!-- Need to work out giving IDs for the 'same' button on different menu screens -->
+        <!-- Need to work out giving IDs for the 'same' button on different menu screens -->
         <div class="menu-buttons-container">
           <button onclick="newGame()">Play</button>
           <button onclick="game.changeState('OPTIONS')">Options</button>
@@ -92,8 +95,11 @@
       </div>
       <canvas id="canvas"></canvas>
     </div>
+    <div class="control-area">
+      <div class="glowing-food"></div>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     <script type="text/javascript" src="assets/js/script.js"></script>
-        <script type="text/javascript" src="assets/js/scoreboard.js"></script>
+    <script type="text/javascript" src="assets/js/scoreboard.js"></script>
   </body>
 </html>
