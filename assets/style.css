@@ -52,7 +52,8 @@ body {
   -webkit-box-flex: initial;
   -ms-flex: initial;
   flex: initial;
-  margin-bottom: auto;
+  position: absolute;
+  top: 0;
 }
 
 .menu-content-container {
