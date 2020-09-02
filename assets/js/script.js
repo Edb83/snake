@@ -131,10 +131,10 @@ const keyboardHandler = (e) => {
 hammertime.add(
   new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 20 })
 );
-hammertime.add(new Hammer.Tap({ event: "doubletap", taps: 2 }));
+hammertime.add(new Hammer.Tap({ event: "twofingertap", taps: 1, pointers: 2 }));
 hammertime.get("pan");
-hammertime.get("doubletap");
-hammertime.on(`panleft panright panup pandown doubletap`, (e) => {
+hammertime.get("twofingertap");
+hammertime.on(`panleft panright panup pandown twofingertap`, (e) => {
   if (e.type === `panleft` && game.moveIsValid(left)) {
     snake.direction = left;
   } else if (e.type === `panup` && game.moveIsValid(up)) {
@@ -144,30 +144,30 @@ hammertime.on(`panleft panright panup pandown doubletap`, (e) => {
   } else if (e.type === `pandown` && game.moveIsValid(down)) {
     snake.direction = down;
   }
-  if (e.type == "doubletap" && game.state === "PLAY") {
+  if (e.type == "twofingertap" && game.state === "PLAY") {
     game.changeState("PAUSE");
     game.stop();
-  } else if (e.type == "doubletap" && game.state === "PAUSE") {
+  } else if (e.type == "twofingertap" && game.state === "PAUSE") {
     game.changeState("PLAY");
     game.play();
     animateLoop();
   }
 });
 
-function preventZoom(e) {
-  var t2 = e.timeStamp;
-  var t1 = e.currentTarget.dataset.lastTouch || t2;
-  var dt = t2 - t1;
-  var fingers = e.touches.length;
-  e.currentTarget.dataset.lastTouch = t2;
+// function preventZoom(e) {
+//   var t2 = e.timeStamp;
+//   var t1 = e.currentTarget.dataset.lastTouch || t2;
+//   var dt = t2 - t1;
+//   var fingers = e.touches.length;
+//   e.currentTarget.dataset.lastTouch = t2;
 
-  if (!dt || dt > 500 || fingers > 1) return; // not double-tap
+//   if (!dt || dt > 500 || fingers > 1) return; // not double-tap
 
-  e.preventDefault();
-  e.target.click();
-}
+//   e.preventDefault();
+//   e.target.click();
+// }
 
-document.querySelector("body").addEventListener('touchstart', preventZoom); 
+// document.querySelector("body").addEventListener('touchstart', preventZoom); 
 
 // GAME INITIALISATION
 
@@ -193,6 +193,7 @@ const newGame = () => {
   animateLoop();
   game.startTime = Date.now();
   game.play();
+  hammertime.set({enable: true})
 };
 
 // GAME LOOP
