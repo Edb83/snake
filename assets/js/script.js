@@ -17,7 +17,7 @@ const left = -1; // directions have been converted to numbers so that conditiona
 const right = 1;
 const up = -2;
 const down = 2;
-const hammertime = new Hammer.Manager(document.querySelector("body")); // new instance of hammer.js touch gesture manager. Configured in EVENT HANDLERS
+let hammertime = new Hammer.Manager(document.querySelector("body")); // new instance of hammer.js touch gesture manager. Configured in EVENT HANDLERS
 
 // DOM Elements
 const mainScreen = document.getElementById("main-screen");
@@ -153,6 +153,21 @@ hammertime.on(`panleft panright panup pandown doubletap`, (e) => {
     animateLoop();
   }
 });
+
+function preventZoom(e) {
+  var t2 = e.timeStamp;
+  var t1 = e.currentTarget.dataset.lastTouch || t2;
+  var dt = t2 - t1;
+  var fingers = e.touches.length;
+  e.currentTarget.dataset.lastTouch = t2;
+
+  if (!dt || dt > 500 || fingers > 1) return; // not double-tap
+
+  e.preventDefault();
+  e.target.click();
+}
+
+optionsScreen.addEventListener('touchstart', preventZoom); 
 
 // GAME INITIALISATION
 
