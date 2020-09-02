@@ -546,7 +546,8 @@ let game = {
     this.checkSettings();
   },
   makeVisible(screen) {
-    screen.style.display = "inline-block";
+    screen.style.display = "flex";
+    screen.style.flexDirection = "column";
   },
   makeHidden(screen) {
     screen.style.display = "none";
