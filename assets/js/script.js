@@ -167,7 +167,7 @@ function preventZoom(e) {
   e.target.click();
 }
 
-optionsScreen.addEventListener('touchstart', preventZoom); 
+document.querySelector("body").addEventListener('touchstart', preventZoom); 
 
 // GAME INITIALISATION
 
