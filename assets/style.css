@@ -38,7 +38,7 @@ body {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  background-color: #001437;
+  background-color: #001437a6;
   color: #fff;
   font-family: "Orbitron", sans-serif;
   z-index: 1;
@@ -55,15 +55,16 @@ body {
   margin-block-end: auto;
 }
 
-/* .menu-content-container {
-  margin: 1.5rem 0;
-} */
+.menu-content-container {
+  padding: 1rem 2rem;
+  min-height: 50vh;
+}
 
 /* https://www.w3schools.com/howto/howto_css_glowing_text.asp */
 
 h1 {
   color: #fff;
-  /* margin: 1rem 0; */
+  margin: 0;
   -webkit-animation: glow 1s ease-in-out infinite alternate;
   animation: glow 1s ease-in-out infinite alternate;
 }
@@ -122,26 +123,26 @@ h1 {
   display: none;
 }
 
-.transparent-background {
+/* .transparent-background {
   background-color: #00143766;
-}
-
-/* .menu-buttons-container {
-  margin: 1rem;
 } */
+
+.menu-buttons-container {
+    
+}
 
 .menu-buttons-container button {
   display: inline-block;
   min-width: 5rem;
   -webkit-touch-callout: none;
-  /* margin: 0.5rem 1rem; */
+  margin: 0.5rem;
   background-color: #001437;
   border: solid 1px #fff;
   border-radius: 5%;
   color: #fff;
   font-size: 1.1rem;
   font-family: "Orbitron", sans-serif;
-  /* padding: 0.5rem; */
+  padding: 0.5rem;
   -webkit-box-sizing: content-box;
           box-sizing: content-box;
 }
@@ -176,7 +177,7 @@ h1 {
 
 .checkbox > span {
   color: #fff;
-  /* padding: 0 1rem; */
+  padding: 0 1rem;
 }
 
 .checkbox > input {
