@@ -142,9 +142,7 @@ hammertime.on(`panleft panright panup pandown twofingertap`, (e) => {
   if (e.type == "twofingertap" && game.state === "PLAY") {
     game.changeState("PAUSE");
     game.stop();
-    hammertime.get("pan").set({ enable: false });
   } else if (e.type == "twofingertap" && game.state === "PAUSE") {
-    hammertime.get("pan").set({ enable: true });
     game.changeState("PLAY");
     game.play();
     animateLoop();
