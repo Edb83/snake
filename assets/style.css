@@ -225,17 +225,13 @@ h1 {
 @media (orientation: portrait) {
   #canvas {
     width: 100vw;
-    height: -webkit-min-content;
-    height: -moz-min-content;
-    height: min-content;
+    height: auto;
   }
 }
 
 @media (orientation: landscape) {
   #canvas {
-    width: -webkit-min-content;
-    width: -moz-min-content;
-    width: min-content;
+    width: auto;
     height: 100vh;
   }
 }
