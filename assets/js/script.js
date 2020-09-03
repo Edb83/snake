@@ -85,7 +85,7 @@ const colorArray = [
 //     };
 //   }
 // }
-
+var AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioPlay = async url => {
   const context = new AudioContext();
   const source = context.createBufferSource();
