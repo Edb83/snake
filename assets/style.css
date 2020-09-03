@@ -14,7 +14,7 @@ body {
   padding: 0;
   box-sizing: border-box;
   background-color: #001437;
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.1rem;
 }
 
@@ -211,22 +211,16 @@ h1 {
   border: 2px solid #34495e;
 }
 
-.control-area {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 @media (orientation: portrait) {
   #canvas {
     width: 100vw;
-    height: auto;
+    height: fit-content;
   }
 }
 
 @media (orientation: landscape) {
   #canvas {
-    width: auto;
+    width: fit-content;
     height: 100vh;
   }
 }
