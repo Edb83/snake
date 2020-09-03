@@ -559,7 +559,7 @@ let game = {
   refreshInterval: undefined,
   changeState(state) {
     this.state = state;
-    this.showScreen(state);
+    this.setElementStyle(state);
     this.checkSettings();
   },
   makeVisible(screen) {
@@ -569,7 +569,7 @@ let game = {
   makeHidden(screen) {
     screen.style.display = "none";
   },
-  showScreen(state) {
+  setElementStyle(state) {
     if (state === "PLAY") {
       this.makeHidden(mainScreen);
       this.makeHidden(scoresScreen);
@@ -577,7 +577,6 @@ let game = {
       this.makeHidden(optionsScreen);
     }
     if (state === "PAUSE") {
-      //   optionsScreen.classList.add("transparent-background");
       this.makeHidden(optionsToHide);
       this.makeVisible(resumeButton);
       this.makeVisible(optionsScreen);
@@ -591,7 +590,6 @@ let game = {
       this.makeVisible(scoresContainer);
     }
     if (state === "OPTIONS") {
-      //   optionsScreen.classList.remove("transparent-background");
       optionsToHide.style.display = "block";
       this.makeHidden(resumeButton);
       this.makeHidden(mainScreen);
