@@ -6,8 +6,8 @@
 let snake;
 let food;
 let tile; // the based unit of measurement used (e.g. snake/food parts are tile * tile)
-// let eatWav;
-// let gameOverWav;
+let eatWav;
+let gameOverWav;
 
 // Gameplay
 const gameSpeed = 140; // milliseconds per game update
@@ -68,37 +68,22 @@ const colorArray = [
 
 // FUNCTIONS
 // Sound constructor
-// class Sound {
-//   constructor(src) {
-//     this.sound = document.createElement("audio");
-//     this.sound.src = src;
-//     this.sound.setAttribute("preload", "auto");
-//     this.sound.setAttribute("controls", "none");
-//     this.sound.style.display = "none";
-//     document.body.appendChild(this.sound);
-//     this.play = () => {
-//       this.currentTime = 0;
-//       this.sound.play();
-//     };
-//     this.stop = () => {
-//       this.sound.pause();
-//     };
-//   }
-// }
-var AudioContext = window.AudioContext || window.webkitAudioContext;
-const audioPlay = async url => {
-  const context = new AudioContext();
-  const source = context.createBufferSource();
-  const audioBuffer = await fetch(url)
-    .then(res => res.arrayBuffer())
-    .then(ArrayBuffer => context.decodeAudioData(ArrayBuffer));
-
-  source.buffer = audioBuffer;
-  source.connect(context.destination);
-  source.start();
-};
-
-
+class Sound {
+  constructor(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = () => {
+      this.sound.play();
+    };
+    this.stop = () => {
+      this.sound.pause();
+    };
+  }
+}
 
 // Random number generator
 const randomNumber = (min, max) => Math.random() * (max - min) + min;
@@ -175,8 +160,8 @@ const newFood = () => {
 };
 
 const newGame = () => {
-//   eatWav = new Sound("assets/audio/eat.wav");
-//   gameOverWav = new Sound("assets/audio/gameover.wav");
+  eatWav = new Sound("assets/audio/eat.wav");
+  gameOverWav = new Sound("assets/audio/gameover.wav");
   gameBoard.checkOrientation(); // could refactor?
   gameBoard.setCanvasSize();
   gameBoard.setTileSize();
@@ -727,7 +712,7 @@ let game = {
       this.changeState("GAMEOVER");
     } else if (this.ateFood) {
       if (this.audio) {
-        audioPlay("assets/audio/eat.wav");
+        eatWav.play();
       }
       snake.array.unshift(snake.newHead);
       populateSparkArray();
