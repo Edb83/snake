@@ -68,7 +68,7 @@ const colorArray = [
 
 // FUNCTIONS
 // Sound constructor
-class sound {
+class Sound {
   constructor(src) {
     this.sound = document.createElement("audio");
     this.sound.src = src;
@@ -142,7 +142,9 @@ hammertime.on(`panleft panright panup pandown twofingertap`, (e) => {
   if (e.type == "twofingertap" && game.state === "PLAY") {
     game.changeState("PAUSE");
     game.stop();
+    hammertime.get("pan").set({ enable: false });
   } else if (e.type == "twofingertap" && game.state === "PAUSE") {
+    hammertime.get("pan").set({ enable: true });
     game.changeState("PLAY");
     game.play();
     animateLoop();
@@ -160,8 +162,8 @@ const newFood = () => {
 };
 
 const newGame = () => {
-  eatWav = new sound("assets/audio/eat.wav");
-  gameOverWav = new sound("assets/audio/gameover.wav");
+  eatWav = new Sound("assets/audio/eat.wav");
+  gameOverWav = new Sound("assets/audio/gameover.wav");
   gameBoard.checkOrientation(); // could refactor?
   gameBoard.setCanvasSize();
   gameBoard.setTileSize();
