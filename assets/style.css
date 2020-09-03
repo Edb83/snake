@@ -68,7 +68,7 @@ body {
 }
 
 .menu-content-container {
-  padding: 2rem;
+  padding: 1rem;
 }
 
 /* https://www.w3schools.com/howto/howto_css_glowing_text.asp */
@@ -151,8 +151,8 @@ h1 {
   font-size: 1.1rem;
   font-family: "Orbitron", sans-serif;
   padding: 0.5rem;
-  -webkit-box-sizing: content-box;
-  box-sizing: content-box;
+  /* -webkit-box-sizing: content-box;
+  box-sizing: content-box; */
 }
 
 .menu-buttons-container button:hover {
