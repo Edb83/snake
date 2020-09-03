@@ -17,7 +17,7 @@ const left = -1; // directions have been converted to numbers so that conditiona
 const right = 1;
 const up = -2;
 const down = 2;
-let hammertime = new Hammer.Manager(document.querySelector("body")); // new instance of hammer.js touch gesture manager. Configured in EVENT HANDLERS
+const hammertime = new Hammer.Manager(document.querySelector("body")); // new instance of hammer.js touch gesture manager. Configured in EVENT HANDLERS
 
 // DOM Elements
 const mainScreen = document.getElementById("main-screen");
@@ -32,13 +32,13 @@ const audioCheckBox = document.getElementById("audio-checkbox");
 
 // Canvas
 const ctx = canvas.getContext("2d");
-const numberOfTilesPerAxis = 20; // this can be changed but the game is built on a base-20 tileset
-const heightOfScoreBoardInTiles = 2; // this can be changed but the game was build expecting height of 2 tiles
+const numberOfTilesPerAxis = 20; // this can be changed but the game is built on a base-20 tileset. Must be an integer
+const heightOfScoreBoardInTiles = 2; // this can be changed but the game was built expecting height of 2 tiles
 const canvasWidthToLineWidthRatio = 150; // used to scale width of outer border walls according to window size (higher is thinner walls)
 const fontRatio = 0.058; // used by scoreBoard to scale size of text according to window size (higher is bigger text)
 
 // Spark
-const tileToSparkGravityRatio = 0.009; // used to scale gravity of sparks according to window size (higher is more increased gravity)
+const tileToSparkGravityRatio = 0.009; // used to scale gravity of sparks according to window size (higher is increased gravity)
 const dynmicSparkGravityMultiplier = 2; // used to increase upper range of random gravity assigned to individual sparks on creation
 const dynamicOutputMultiplier = 2; // used to increase upper range of random velocity assigned to individual sparks on creation
 const initialTileToSparkDRatio = 0.1; // the velocity of sparks at the start of each game
@@ -128,10 +128,7 @@ const keyboardHandler = (e) => {
 };
 
 // Hammertime touch gestures
-hammertime.add(
-  new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 20 })
-);
-hammertime.add(new Hammer.Tap({ event: "twofingertap", taps: 1, pointers: 2 }));
+
 hammertime.on(`panleft panright panup pandown twofingertap`, (e) => {
   if (e.type === `panleft` && game.moveIsValid(left)) {
     snake.direction = left;
@@ -151,21 +148,6 @@ hammertime.on(`panleft panright panup pandown twofingertap`, (e) => {
     animateLoop();
   }
 });
-
-// function preventZoom(e) {
-//   var t2 = e.timeStamp;
-//   var t1 = e.currentTarget.dataset.lastTouch || t2;
-//   var dt = t2 - t1;
-//   var fingers = e.touches.length;
-//   e.currentTarget.dataset.lastTouch = t2;
-
-//   if (!dt || dt > 500 || fingers > 1) return; // not double-tap
-
-//   e.preventDefault();
-//   e.target.click();
-// }
-
-// document.querySelector("body").addEventListener('touchstart', preventZoom);
 
 // GAME INITIALISATION
 
@@ -191,6 +173,12 @@ const newGame = () => {
   animateLoop();
   game.startTime = Date.now();
   game.play();
+  hammertime.add(
+    new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 20 })
+  );
+  hammertime.add(
+    new Hammer.Tap({ event: "twofingertap", taps: 1, pointers: 2 })
+  );
   hammertime.get("pan").set({ enable: true });
   hammertime.get("twofingertap").set({ enable: true });
 };
@@ -376,14 +364,27 @@ class Snake {
     }
   }
 
-  getLastMove() { // extra conditionals needed for when snake crosses wall to prevent eating self
-    if (this.array[0].x - this.array[1].x === -tile || (this.array[0].x - this.array[1].x) > tile) {
+  getLastMove() {
+    // extra conditionals needed for when snake crosses wall to prevent eating self
+    if (
+      this.array[0].x - this.array[1].x === -tile ||
+      this.array[0].x - this.array[1].x > tile
+    ) {
       game.lastMove = left;
-    } else if (this.array[0].x > this.array[1].x || (this.array[0].x - this.array[1].x) < -tile) {
+    } else if (
+      this.array[0].x > this.array[1].x ||
+      this.array[0].x - this.array[1].x < -tile
+    ) {
       game.lastMove = right;
-    } else if (this.array[0].y - this.array[1].y === -tile || (this.array[0].y - this.array[1].y) > tile) {
+    } else if (
+      this.array[0].y - this.array[1].y === -tile ||
+      this.array[0].y - this.array[1].y > tile
+    ) {
       game.lastMove = up;
-    } else if (this.array[0].y > this.array[1].y || (this.array[0].y - this.array[1].y) < -tile) {
+    } else if (
+      this.array[0].y > this.array[1].y ||
+      this.array[0].y - this.array[1].y < -tile
+    ) {
       game.lastMove = down;
     }
   }
@@ -719,7 +720,7 @@ let game = {
       populateSparkArray();
       newFood();
       scoreBoard.currentScore++;
-      gameBoard.tileToSparkDRatio += tileToSparkDRatioIncrement; // convert to global variable?
+      gameBoard.tileToSparkDRatio += tileToSparkDRatioIncrement;
     } else {
       snake.array.unshift(snake.newHead);
       snake.array.pop();
@@ -736,7 +737,7 @@ let stats = {
   pointsAllTime: parseInt(localStorage.getItem("points")) || 0,
   updateGamesPlayed() {
     this.gamesPlayedThisSession++;
-    this.gamesPlayedAllTime += 1;
+    this.gamesPlayedAllTime++;
     localStorage.setItem("games", this.gamesPlayedAllTime);
   },
   updateGameTimeInSeconds() {
