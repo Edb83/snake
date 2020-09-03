@@ -6,7 +6,7 @@
 */
 
 html {
-    -webkit-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
 }
 
 body {
@@ -14,7 +14,7 @@ body {
   padding: 0;
   box-sizing: border-box;
   background-color: #001437;
-  font-size: 14px;
+  font-size: 12px;
   letter-spacing: 0.1rem;
 }
 
@@ -128,9 +128,6 @@ h1 {
   display: none;
 }
 
-.menu-buttons-container {
-}
-
 .menu-buttons-container button {
   display: inline-block;
   min-width: 5rem;
@@ -234,20 +231,28 @@ h1 {
   }
 }
 
-/* @media screen and (min-width: 1024px) and (min-height: 475px) {
+/* @media (min-width: 576px) {
+}
+
+@media (min-width: 768px) {
   .menu-screen {
-    font-size: 1.5rem;
+    font-size: 1rem;
   }
-  .menu-content-container {
-    margin: 3rem 0;
+
+  h1 {
+    font-size: 2.75rem;
+  }
+
+  .menu-buttons-container button {
+    min-width: 5rem;
+    margin: 0.5rem;
+    font-size: 1.1rem;
+    padding: 0.5rem;
   }
 }
 
-@media screen and (min-width: 1280px) {
-  .menu-screen {
-    font-size: 2rem;
-  }
-  .menu-content-container {
-    margin: 4rem 0;
-  }
+@media (min-width: 992px) {
+}
+
+@media (min-width: 1200px) {
 } */
