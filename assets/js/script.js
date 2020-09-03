@@ -77,6 +77,7 @@ class Sound {
     this.sound.style.display = "none";
     document.body.appendChild(this.sound);
     this.play = () => {
+      this.currentTime = 0;
       this.sound.play();
     };
     this.stop = () => {
