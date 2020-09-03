@@ -12,6 +12,7 @@ html {
 body {
   margin: 0;
   padding: 0;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   background-color: #001437;
   font-size: 13px;
@@ -33,7 +34,12 @@ body {
 }
 
 .menu-screen {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
   position: absolute;
   text-align: center;
@@ -120,7 +126,12 @@ h1 {
 }
 
 .visible {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
 }
 
@@ -214,13 +225,17 @@ h1 {
 @media (orientation: portrait) {
   #canvas {
     width: 100vw;
-    height: fit-content;
+    height: -webkit-min-content;
+    height: -moz-min-content;
+    height: min-content;
   }
 }
 
 @media (orientation: landscape) {
   #canvas {
-    width: fit-content;
+    width: -webkit-min-content;
+    width: -moz-min-content;
+    width: min-content;
     height: 100vh;
   }
 }
