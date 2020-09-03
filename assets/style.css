@@ -11,6 +11,7 @@ body {
   box-sizing: border-box;
   background-color: #001437;
   font-size: 14px;
+  letter-spacing: 0.1rem;
 }
 
 #game-container {
@@ -57,7 +58,7 @@ body {
 }
 
 .menu-content-container {
-  padding: 1rem 2rem;
+  padding: 2rem;
 }
 
 /* https://www.w3schools.com/howto/howto_css_glowing_text.asp */
@@ -123,10 +124,6 @@ h1 {
   display: none;
 }
 
-/* .transparent-background {
-  background-color: #00143766;
-} */
-
 .menu-buttons-container {
 }
 
@@ -168,7 +165,7 @@ h1 {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
-  /* padding: 0.5rem 0; */
+  padding: 0.5rem 0;
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
