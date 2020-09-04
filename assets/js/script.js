@@ -76,10 +76,10 @@ class Sound {
     this.sound.setAttribute("controls", "none");
     this.sound.style.display = "none";
     document.body.appendChild(this.sound);
-    this.play = () => {
+    this.play = function () {
       this.sound.play();
     };
-    this.stop = () => {
+    this.stop = function () {
       this.sound.pause();
     };
     this.sound.currentTime = 0;
