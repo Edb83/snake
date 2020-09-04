@@ -79,9 +79,9 @@ class Sound {
     this.play = () => {
       this.sound.play();
     };
-    this.stop = () => {
-      this.sound.pause();
-    };
+    // this.stop = () => {
+    //   this.sound.pause();
+    // };
   }
 }
 
