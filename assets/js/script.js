@@ -712,8 +712,8 @@ let game = {
       this.changeState("GAMEOVER");
     } else if (this.ateFood) {
       if (this.audio) {
-        eatWav = new Sound("assets/audio/eat.wav");
         eatWav.play();
+        eatWav = new Sound("assets/audio/eat.wav");
       }
       snake.array.unshift(snake.newHead);
       populateSparkArray();
