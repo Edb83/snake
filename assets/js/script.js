@@ -160,6 +160,8 @@ const newFood = () => {
 };
 
 const newGame = () => {
+  eatWav = new Sound("assets/audio/eat.wav");
+  gameOverWav = new Sound("assets/audio/gameover.wav");
   gameBoard.checkOrientation(); // could refactor?
   gameBoard.setCanvasSize();
   gameBoard.setTileSize();
@@ -700,7 +702,6 @@ let game = {
   update() {
     if (this.collisionDetected) {
       if (this.audio) {
-        gameOverWav = new Sound("assets/audio/gameover.wav");
         gameOverWav.play();
       }
       stats.updateGamesPlayed();
