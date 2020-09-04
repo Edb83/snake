@@ -79,9 +79,9 @@ class Sound {
     this.play = () => {
       this.sound.play();
     };
-    // this.stop = () => {
-    //   this.sound.pause();
-    // };
+    this.stop = () => {
+      this.sound.pause();
+    };
   }
 }
 
@@ -563,7 +563,7 @@ let game = {
     this.checkSettings();
   },
   makeVisible(screen) {
-    screen.style.display = "flex";
+    screen.style.display = "inline-flex";
     screen.style.flexDirection = "column";
   },
   makeHidden(screen) {
@@ -575,6 +575,7 @@ let game = {
       this.makeHidden(scoresScreen);
       this.makeHidden(scoresContainer);
       this.makeHidden(optionsScreen);
+      this.makeVisible(canvas);
     }
     if (state === "PAUSE") {
       this.makeHidden(optionsToHide);
@@ -713,7 +714,6 @@ let game = {
     } else if (this.ateFood) {
       if (this.audio) {
         eatWav.play();
-        eatWav = new Sound("assets/audio/eat.wav");
       }
       snake.array.unshift(snake.newHead);
       populateSparkArray();
