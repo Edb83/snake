@@ -24,7 +24,7 @@ const left = -1; // directions have been converted to numbers so that conditiona
 const right = 1;
 const up = -2;
 const down = 2;
-const hammertime = new Hammer.Manager(document.querySelector("*")); // new instance of hammer.js touch gesture manager. Configured in EVENT HANDLERS
+const hammertime = new Hammer.Manager(document.querySelector("body")); // new instance of hammer.js touch gesture manager. Configured in EVENT HANDLERS
 
 // DOM Elements
 const mainScreen = document.getElementById("main-screen");

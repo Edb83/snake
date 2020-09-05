@@ -19,7 +19,7 @@ body {
   letter-spacing: 0.1rem;
 }
 
-/* #game-container {
+#game-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -31,7 +31,7 @@ body {
   align-items: center;
   height: 100vh;
   position: relative;
-} */
+}
 
 .menu-screen {
   display: -webkit-box;
@@ -59,13 +59,11 @@ body {
 
 #canvas {
   z-index: 0;
-  /* -webkit-box-flex: initial;
+  -webkit-box-flex: initial;
   -ms-flex: initial;
-  flex: initial; */
+  flex: initial;
   position: absolute;
   top: 0;
-    left: 50%;
-    transform: translate(-50%, 0);
 }
 
 .menu-content-container {
