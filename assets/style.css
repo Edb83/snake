@@ -54,7 +54,7 @@ body {
   z-index: 1;
   width: 100vw;
   height: 100vh;
-    letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
 }
 
 #canvas {
@@ -64,6 +64,8 @@ body {
   flex: initial;
   position: absolute;
   top: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
 }
 
 .menu-content-container {
