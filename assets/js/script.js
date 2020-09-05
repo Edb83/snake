@@ -756,6 +756,8 @@ document.addEventListener("keydown", keyboardHandler);
 window.addEventListener("resize", gameBoard.recalculateAssets);
 window.addEventListener("orientationchange", gameBoard.recalculateAssets);
 window.addEventListener("blur", function () {
-  game.changeState("PAUSE");
-  game.stop();
+  if (game.state === "PLAY") {
+    game.changeState("PAUSE");
+    game.stop();
+  }
 });
