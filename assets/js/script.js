@@ -6,19 +6,19 @@
 let snake;
 let food;
 let tile; // the based unit of measurement used (e.g. snake/food parts are tile * tile)
-// let eatWav;
-// let gameOverWav;
 
-let eatWav = new Howl({
-  src: ['assets/audio/eat.wav']
-});
-
-let gameOverWav = new Howl({
-  src: ['assets/audio/gameover.wav']
-});
 
 // Gameplay
 const gameSpeed = 140; // milliseconds per game update
+
+// Audio
+let eatWav = new Howl({
+  src: ["assets/audio/eat.wav"],
+});
+
+let gameOverWav = new Howl({
+  src: ["assets/audio/gameover.wav"],
+});
 
 // Controls
 const left = -1; // directions have been converted to numbers so that conditional statements can be negated mathematically
@@ -75,24 +75,6 @@ const colorArray = [
 ];
 
 // FUNCTIONS
-// Sound constructor
-class Sound {
-  constructor(src) {
-    this.sound = document.createElement("audio");
-    this.sound.src = src;
-    this.sound.setAttribute("preload", "auto");
-    this.sound.setAttribute("controls", "none");
-    this.sound.style.display = "none";
-    document.body.appendChild(this.sound);
-    this.play = function () {
-      this.sound.play();
-    };
-    this.stop = function () {
-      this.sound.pause();
-    };
-    this.sound.currentTime = 0;
-  }
-}
 
 // Random number generator
 const randomNumber = (min, max) => Math.random() * (max - min) + min;
@@ -169,8 +151,8 @@ const newFood = () => {
 };
 
 const newGame = () => {
-//   eatWav = new Sound("assets/audio/eat.wav");
-//   gameOverWav = new Sound("assets/audio/gameover.wav");
+  //   eatWav = new Sound("assets/audio/eat.wav");
+  //   gameOverWav = new Sound("assets/audio/gameover.wav");
   gameBoard.checkOrientation(); // could refactor?
   gameBoard.setCanvasSize();
   gameBoard.setTileSize();
