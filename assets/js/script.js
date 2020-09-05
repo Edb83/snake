@@ -545,7 +545,7 @@ let game = {
     this.checkSettings();
   },
   makeVisible(screen) {
-    screen.style.display = "inline-flex";
+    screen.style.display = "inline-block";
     screen.style.flexDirection = "column";
   },
   makeHidden(screen) {
@@ -709,12 +709,6 @@ let game = {
       snake.array.pop();
     }
   },
-  //   checkHasFocus() {
-  //     if (!document.hasFocus()) {
-  //       game.changeState("PAUSE");
-  //       game.stop();
-  //     }
-  //   },
 };
 
 // Stats
