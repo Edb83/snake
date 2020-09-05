@@ -111,9 +111,7 @@ const keyboardHandler = (e) => {
     game.changeState("PAUSE");
     game.stop();
   } else if (e.keyCode == 32 && game.state === "PAUSE") {
-    game.changeState("PLAY");
     game.play();
-    animateLoop();
   }
 };
 
@@ -133,9 +131,7 @@ hammertime.on(`panleft panright panup pandown twofingertap`, (e) => {
     game.changeState("PAUSE");
     game.stop();
   } else if (e.type == "twofingertap" && game.state === "PAUSE") {
-    game.changeState("PLAY");
     game.play();
-    animateLoop();
   }
 });
 
@@ -157,10 +153,8 @@ const newGame = () => {
   game.loadDefaultSettings();
   newSnake();
   newFood();
-  game.changeState("PLAY");
-  animateLoop();
-  game.startTime = Date.now();
   game.play();
+  game.startTime = Date.now();
   hammertime.add(
     new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 20 })
   );
@@ -175,7 +169,6 @@ const newGame = () => {
 
 const gameLoop = () => {
   if (game.state === "PLAY") {
-    // game.checkHasFocus();
     game.checkSnakeCollision();
     game.checkAteFood();
     game.update();
@@ -617,9 +610,11 @@ let game = {
     }
   },
   play() {
+    this.changeState("PLAY");
     this.refreshInterval = setInterval(() => {
       gameLoop();
     }, gameSpeed);
+    animateLoop();
   },
   stop() {
     clearInterval(this.refreshInterval);
