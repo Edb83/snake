@@ -33,11 +33,6 @@
           </p>
           <p>Don't eat yourself</p>
         </div>
-        <div class="menu-buttons-container">
-          <button onclick="newGame()">Play</button>
-          <button onclick="game.changeState('OPTIONS')">Options</button>
-          <button onclick="game.changeState('GAMEOVER')">Scores</button>
-        </div>
       </div>
       <div id="scores-screen" class="hidden menu-screen">
         <h1>Score Board</h1>
@@ -49,11 +44,6 @@
           <div id="session-scores-container" class="hidden">
             <ol></ol>
           </div>
-        </div>
-        <div class="menu-buttons-container">
-          <button onclick="newGame()">Play</button>
-          <button onclick="game.changeState('OPTIONS')">Options</button>
-          <button onclick="game.changeState('MAIN')">Main</button>
         </div>
       </div>
       <div id="options-screen" class="hidden menu-screen">
@@ -68,20 +58,15 @@
             <span>Walls</span>
           </label>
         </div>
-        <div class="menu-buttons-container">
-          <button
-            id="resume-button"
-            class="hidden"
-            onclick="game.play()"
-          >
-            Resume
-          </button>
-          <div id="options-to-hide" class="menu-buttons-container">
-            <button onclick="newGame()">Play</button>
-            <button onclick="game.changeState('GAMEOVER')">Scores</button>
-            <button onclick="game.changeState('MAIN')">Main</button>
-          </div>
-        </div>
+      </div>
+      <div class="menu-buttons-container">
+        <button onclick="newGame()">Play</button>
+        <button onclick="game.changeState('OPTIONS')">Options</button>
+        <button onclick="game.changeState('GAMEOVER')">Scores</button>
+        <button onclick="game.changeState('MAIN')">Main</button>
+        <button id="resume-button" class="hidden" onclick="game.play()">
+          Resume
+        </button>
       </div>
       <canvas id="canvas" class="hidden"></canvas>
     </div>
