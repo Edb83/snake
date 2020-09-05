@@ -16,7 +16,6 @@ body {
   box-sizing: border-box;
   background-color: #001437;
   font-size: 13px;
-  letter-spacing: 0.1rem;
 }
 
 #game-container {
@@ -55,6 +54,7 @@ body {
   z-index: 1;
   width: 100vw;
   height: 100vh;
+    letter-spacing: 0.1rem;
 }
 
 #canvas {
