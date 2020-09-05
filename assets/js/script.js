@@ -6,8 +6,16 @@
 let snake;
 let food;
 let tile; // the based unit of measurement used (e.g. snake/food parts are tile * tile)
-let eatWav;
-let gameOverWav;
+// let eatWav;
+// let gameOverWav;
+
+let eatWav = new Howl({
+  src: ['assets/audio/eat.wav']
+});
+
+let gameOverWav = new Howl({
+  src: ['assets/audio/gameover.wav']
+});
 
 // Gameplay
 const gameSpeed = 140; // milliseconds per game update
@@ -161,8 +169,8 @@ const newFood = () => {
 };
 
 const newGame = () => {
-  eatWav = new Sound("assets/audio/eat.wav");
-  gameOverWav = new Sound("assets/audio/gameover.wav");
+//   eatWav = new Sound("assets/audio/eat.wav");
+//   gameOverWav = new Sound("assets/audio/gameover.wav");
   gameBoard.checkOrientation(); // could refactor?
   gameBoard.setCanvasSize();
   gameBoard.setTileSize();
