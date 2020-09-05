@@ -175,7 +175,7 @@ const newGame = () => {
 
 const gameLoop = () => {
   if (game.state === "PLAY") {
-    game.checkHasFocus();
+    // game.checkHasFocus();
     game.checkSnakeCollision();
     game.checkAteFood();
     game.update();
@@ -714,12 +714,12 @@ let game = {
       snake.array.pop();
     }
   },
-  checkHasFocus() {
-    if (!document.hasFocus()) {
-      game.changeState("PAUSE");
-      game.stop();
-    }
-  },
+  //   checkHasFocus() {
+  //     if (!document.hasFocus()) {
+  //       game.changeState("PAUSE");
+  //       game.stop();
+  //     }
+  //   },
 };
 
 // Stats
@@ -760,3 +760,7 @@ let stats = {
 document.addEventListener("keydown", keyboardHandler);
 window.addEventListener("resize", gameBoard.recalculateAssets);
 window.addEventListener("orientationchange", gameBoard.recalculateAssets);
+window.addEventListener("blur", function () {
+  game.changeState("PAUSE");
+  game.stop();
+});
