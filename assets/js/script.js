@@ -7,16 +7,15 @@ let snake;
 let food;
 let tile; // the based unit of measurement used (e.g. snake/food parts are tile * tile)
 
-
 // Gameplay
 const gameSpeed = 140; // milliseconds per game update
 
 // Audio
-let eatWav = new Howl({
+let eatAudio = new Howl({
   src: ["assets/audio/eat.wav"],
 });
 
-let gameOverWav = new Howl({
+let gameOverAudio = new Howl({
   src: ["assets/audio/gameover.wav"],
 });
 
@@ -151,8 +150,6 @@ const newFood = () => {
 };
 
 const newGame = () => {
-  //   eatWav = new Sound("assets/audio/eat.wav");
-  //   gameOverWav = new Sound("assets/audio/gameover.wav");
   gameBoard.checkOrientation(); // could refactor?
   gameBoard.setCanvasSize();
   gameBoard.setTileSize();
@@ -178,6 +175,7 @@ const newGame = () => {
 
 const gameLoop = () => {
   if (game.state === "PLAY") {
+    game.checkHasFocus();
     game.checkSnakeCollision();
     game.checkAteFood();
     game.update();
@@ -694,7 +692,7 @@ let game = {
   update() {
     if (this.collisionDetected) {
       if (this.audio) {
-        gameOverWav.play();
+        gameOverAudio.play();
       }
       stats.updateGamesPlayed();
       stats.updateGameTimeInSeconds();
@@ -704,7 +702,7 @@ let game = {
       this.changeState("GAMEOVER");
     } else if (this.ateFood) {
       if (this.audio) {
-        eatWav.play();
+        eatAudio.play();
       }
       snake.array.unshift(snake.newHead);
       populateSparkArray();
@@ -714,6 +712,12 @@ let game = {
     } else {
       snake.array.unshift(snake.newHead);
       snake.array.pop();
+    }
+  },
+  checkHasFocus() {
+    if (!document.hasFocus()) {
+      game.changeState("PAUSE");
+      game.stop();
     }
   },
 };
