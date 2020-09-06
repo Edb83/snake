@@ -552,7 +552,7 @@ let game = {
       document
         .querySelectorAll(".menu-screen, #menu-buttons-container, button")
         .forEach((el) => el.classList.add("hidden"));
-      canvas.classList.remove("hidden", "magic");
+      canvas.classList.remove("hidden", "paused-effect");
     }
     if (state === "PAUSE") {
       document
@@ -560,7 +560,7 @@ let game = {
           "#options-screen, #menu-buttons-container, #resume-button"
         )
         .forEach((el) => el.classList.remove("hidden"));
-      canvas.classList.add("magic");
+        canvas.classList.add("paused-effect");
     }
     if (state === "GAMEOVER") {
       document
@@ -571,7 +571,7 @@ let game = {
           "#scores-screen, #session-scores-container, #menu-buttons-container, #play-button, #options-button, #main-button"
         )
         .forEach((el) => el.classList.remove("hidden"));
-      canvas.classList.add("magic");
+      canvas.classList.add("paused-effect");
     }
     if (state === "OPTIONS") {
       document
@@ -582,7 +582,7 @@ let game = {
           "#options-screen, #play-button, #scores-button, #main-button"
         )
         .forEach((el) => el.classList.remove("hidden"));
-      canvas.classList.add("magic");
+      canvas.classList.add("paused-effect");
     }
     if (state === "MAIN") {
       document
@@ -593,7 +593,7 @@ let game = {
           "#main-screen, #play-button, #scores-button, #options-button"
         )
         .forEach((el) => el.classList.remove("hidden"));
-      canvas.classList.add("magic");
+      canvas.classList.add("paused-effect");
     }
   },
   loadDefaultSettings() {
