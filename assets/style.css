@@ -228,6 +228,14 @@ h1 {
     height: auto;
   }
 }
+@media (orientation: portrait) and (min-height: 568px)  {
+  h1 {
+      font-size: 2rem;
+  }
+  .menu-content-container {
+      font-size: 1.1rem;
+  }
+}
 
 @media (orientation: landscape) {
   #canvas {
