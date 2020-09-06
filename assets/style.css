@@ -206,7 +206,7 @@ h1 {
 }
 
 #options-buttons-container {
-  display: inline-block;
+  display: inline-flex;
 }
 
 .checkbox {
