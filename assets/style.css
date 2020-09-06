@@ -66,9 +66,9 @@ body {
   letter-spacing: 0.1rem;
 } */
 
-#main-screen {
+/* #main-screen {
     display: block;
-}
+} */
 
 .menu-screen {
   color: #fff;
@@ -76,7 +76,7 @@ body {
   width: 100vw;
   letter-spacing: 0.1rem;
   z-index: 1;
-  display: none;
+  display: block;
 }
 
 #canvas {
@@ -85,7 +85,6 @@ body {
   left: 50%;
   transform: translate(-50%, 0);
   z-index: -1;
-  display: none;
 }
 
 .menu-content-container {
@@ -163,9 +162,9 @@ h1 {
   flex-direction: column;
 } */
 
-/* .hidden {
+.hidden {
   display: none;
-} */
+}
 
 #menu-buttons-container button {
   min-width: 6rem;
@@ -187,13 +186,13 @@ h1 {
   border: solid 1px #fff;
 }
 
-#main-button {
+/* #main-button {
     display: none;
 }
 
 #resume-button {
     display: none;
-}
+} */
 
 #radio-buttons-container {
   display: inline-block;
