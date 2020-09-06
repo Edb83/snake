@@ -8,7 +8,9 @@ let food;
 let tile; // the based unit of measurement used (e.g. snake/food parts are tile * tile)
 
 // Gameplay
-const gameSpeed = 140; // milliseconds per game update
+const slow = 200;
+const medium = 140;
+const fast = 80;
 
 // Audio
 let eatAudio = new Howl({
@@ -39,6 +41,9 @@ const optionsButton = document.getElementById("options-button");
 const canvas = document.getElementById("canvas");
 const wallsCheckBox = document.getElementById("walls-checkbox");
 const audioCheckBox = document.getElementById("audio-checkbox");
+const slowRadioButton = document.getElementById("slow-radio");
+const mediumRadioButton = document.getElementById("medium-radio");
+const fastRadioButton = document.getElementById("fast-radio");
 
 // Canvas
 const ctx = canvas.getContext("2d");
@@ -541,6 +546,7 @@ let game = {
   state: undefined,
   wallsEnabled: undefined,
   audio: undefined,
+  speed: undefined,
   refreshInterval: undefined,
   changeState(state) {
     this.state = state;
@@ -560,7 +566,7 @@ let game = {
           "#options-screen, #menu-buttons-container, #resume-button"
         )
         .forEach((el) => el.classList.remove("hidden"));
-        canvas.classList.add("paused-effect");
+      canvas.classList.add("paused-effect");
     }
     if (state === "GAMEOVER") {
       document
@@ -616,12 +622,19 @@ let game = {
     } else {
       this.audio = false;
     }
+    if (slowRadioButton.checked) {
+        this.speed = slow;
+    } else if (mediumRadioButton.checked) {
+        this.speed = medium;
+    } else if (fastRadioButton.checked) {
+        this.speed = fast;
+    }
   },
   play() {
     this.changeState("PLAY");
     this.refreshInterval = setInterval(() => {
       gameLoop();
-    }, gameSpeed);
+    }, this.speed);
     animateLoop();
   },
   stop() {
