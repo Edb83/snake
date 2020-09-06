@@ -66,12 +66,17 @@ body {
   letter-spacing: 0.1rem;
 } */
 
+#main-screen {
+    display: block;
+}
+
 .menu-screen {
   color: #fff;
   font-family: "Orbitron", sans-serif;
   width: 100vw;
   letter-spacing: 0.1rem;
   z-index: 1;
+  display: none;
 }
 
 #canvas {
@@ -79,7 +84,8 @@ body {
   top: 0;
   left: 50%;
   transform: translate(-50%, 0);
-  z-index: 0;
+  z-index: -1;
+  display: none;
 }
 
 .menu-content-container {
@@ -145,7 +151,7 @@ h1 {
   padding-inline-start: inherit;
 }
 
-.visible {
+/* .visible {
   display: -webkit-box;
   display: -ms-flexbox;
   display: -webkit-inline-box;
@@ -155,14 +161,13 @@ h1 {
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-}
+} */
 
-.hidden {
+/* .hidden {
   display: none;
-}
+} */
 
-.menu-buttons-container button {
-  display: inline-block;
+#menu-buttons-container button {
   min-width: 6rem;
   -webkit-touch-callout: none;
   margin: 0.65rem;
@@ -173,12 +178,21 @@ h1 {
   font-size: 1.1rem;
   font-family: "Orbitron", sans-serif;
   padding: 0.5rem;
+  z-index: 1;
 }
 
-.menu-buttons-container button:hover {
+#menu-buttons-container button:hover {
   background-color: #fff;
   color: #001437;
   border: solid 1px #fff;
+}
+
+#main-button {
+    display: none;
+}
+
+#resume-button {
+    display: none;
 }
 
 #radio-buttons-container {
@@ -269,7 +283,7 @@ h1 {
   .menu-content-container {
     padding: 3rem;
   }
-  .menu-buttons-container button {
+  #menu-buttons-container button {
     min-width: 10rem;
     margin: 1rem;
     font-size: 2rem;
@@ -280,7 +294,7 @@ h1 {
   .menu-content-container {
     padding: 5rem;
   }
-  .menu-buttons-container button {
+  #menu-buttons-container button {
     padding: 1rem;
   }
 }
