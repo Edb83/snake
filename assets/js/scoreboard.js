@@ -215,7 +215,7 @@ let scoreBoard = {
         scoreLi[i].textContent == this.currentScore &&
         this.currentScore != 0
       ) {
-        scoreLi[i].classList.add("special-menu-text");
+        scoreLi[i].classList.add("blinking");
       }
     }
   },
