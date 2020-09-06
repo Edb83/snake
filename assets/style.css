@@ -18,20 +18,6 @@ body {
   font-size: 13px;
 }
 
-/* #game-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  height: 100vh;
-  position: relative;
-} */
-
 #game-container {
   display: flex;
   flex-flow: column;
@@ -40,35 +26,6 @@ body {
   position: relative;
   text-align: center;
 }
-
-/* .menu-screen {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  position: absolute;
-  text-align: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  background-color: #001437a6;
-  color: #fff;
-  font-family: "Orbitron", sans-serif;
-  z-index: 1;
-  width: 100vw;
-  height: 100vh;
-  letter-spacing: 0.1rem;
-} */
-
-/* #main-screen {
-    display: block;
-} */
 
 .menu-screen {
   color: #fff;
@@ -150,21 +107,36 @@ h1 {
   padding-inline-start: inherit;
 }
 
-/* .visible {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-} */
-
 .hidden {
   display: none;
 }
+
+.reduced-opacity {
+    filter: opacity(0.3);
+}
+
+.magic {
+  animation: filter-animation 1s forwards;
+}
+
+/* .magic-off? {
+  animation: filter-animation 1s forwards reverse;
+} */
+
+@keyframes filter-animation {
+  0% {
+    filter: opacity(1);
+  }
+  
+  50% {
+    filter: opacity(0.5);
+  }
+  
+  100% {
+    filter: opacity(0);
+  }
+}
+
 
 #menu-buttons-container button {
   min-width: 6rem;
@@ -185,14 +157,6 @@ h1 {
   color: #001437;
   border: solid 1px #fff;
 }
-
-/* #main-button {
-    display: none;
-}
-
-#resume-button {
-    display: none;
-} */
 
 #radio-buttons-container {
   display: inline-block;
