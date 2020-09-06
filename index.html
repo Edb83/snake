@@ -48,14 +48,30 @@
       <div id="options-screen" class="hidden menu-screen">
         <h1>Options</h1>
         <div id="options-buttons-container" class="menu-content-container">
-          <label class="checkbox">
-            <input id="audio-checkbox" type="checkbox" checked />
-            <span>Sound</span>
-          </label>
-          <label class="checkbox">
-            <input id="walls-checkbox" type="checkbox" />
-            <span>Walls</span>
-          </label>
+          <div id="checkbox-container">
+            <label class="checkbox">
+              <input id="audio-checkbox" type="checkbox" checked />
+              <span>Sound</span>
+            </label>
+            <label class="checkbox">
+              <input id="walls-checkbox" type="checkbox" />
+              <span>Walls</span>
+            </label>
+          </div>
+          <div id="radio-container">
+            <label class="checkbox" for="slow-radio">
+              <input id="slow-radio" type="radio" name="difficulty" />
+              <span>Slow</span>
+            </label>
+            <label class="checkbox" for="medium-radio">
+              <input id="medium-radio" type="radio" name="difficulty" checked />
+              <span>Medium</span>
+            </label>
+            <label class="checkbox" for="fast-radio">
+              <input id="fast-radio" type="radio" name="difficulty" />
+              <span>Fast</span>
+            </label>
+          </div>
         </div>
       </div>
       <div id="menu-buttons-container">
