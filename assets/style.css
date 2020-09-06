@@ -111,32 +111,35 @@ h1 {
   display: none;
 }
 
-.reduced-opacity {
-    filter: opacity(0.3);
+.paused-effect {
+  filter: opacity(0.3);
 }
 
-.magic {
-  animation: filter-animation 1s forwards;
+.blinking {
+  animation: filter-animation linear 1.5s 2s forwards infinite;
 }
-
-/* .magic-off? {
-  animation: filter-animation 1s forwards reverse;
-} */
 
 @keyframes filter-animation {
   0% {
     filter: opacity(1);
   }
-  
-  50% {
+
+  25% {
     filter: opacity(0.5);
   }
-  
-  100% {
+
+  50% {
     filter: opacity(0);
   }
-}
 
+  75% {
+    filter: opacity(0.5);
+  }
+
+  100% {
+    filter: opacity(1);
+  }
+}
 
 #menu-buttons-container button {
   min-width: 6rem;
