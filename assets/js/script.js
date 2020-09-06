@@ -36,7 +36,6 @@ const playButton = document.getElementById("play-button");
 const resumeButton = document.getElementById("resume-button");
 const scoresButton = document.getElementById("scores-button");
 const optionsButton = document.getElementById("options-button");
-// const optionsToHide = document.getElementById("options-to-hide");
 const canvas = document.getElementById("canvas");
 const wallsCheckBox = document.getElementById("walls-checkbox");
 const audioCheckBox = document.getElementById("audio-checkbox");
@@ -548,64 +547,53 @@ let game = {
     this.setElementStyle(state);
     this.checkSettings();
   },
-  //   makeVisible(screen) {
-  //     screen.style.display = "inline-block";
-  //     screen.style.flexDirection = "column";
-  //   },
-  //   makeHidden(screen) {
-  //     screen.style.display = "none";
-  //   },
   setElementStyle(state) {
     if (state === "PLAY") {
-        // $(".menu-screen, #menu-buttons-container, button").hide();
-        // $("canvas").show();
-      //   this.makeHidden(mainScreen);
-      //   this.makeHidden(scoresScreen);
-      //   this.makeHidden(scoresContainer);
-      //   this.makeHidden(optionsScreen);
-      document.querySelectorAll(".menu-screen, #menu-buttons-container, button").forEach(el => el.classList.add("hidden"));
-      canvas.classList.remove("hidden");
+      document
+        .querySelectorAll(".menu-screen, #menu-buttons-container, button")
+        .forEach((el) => el.classList.add("hidden"));
+      canvas.classList.remove("hidden", "magic");
     }
     if (state === "PAUSE") {
-        // $("#options-screen, #menu-buttons-container, #resume-button").show();
-      //   this.makeHidden(optionsToHide);
-      //   this.makeVisible(resumeButton);
-      //   this.makeVisible(optionsScreen);
-      document.querySelectorAll("#options-screen, #menu-buttons-container, #resume-button").forEach(el => el.classList.remove("hidden"));
+      document
+        .querySelectorAll(
+          "#options-screen, #menu-buttons-container, #resume-button"
+        )
+        .forEach((el) => el.classList.remove("hidden"));
+      canvas.classList.add("magic");
     }
     if (state === "GAMEOVER") {
-        // $(".menu-screen, button").hide();
-        // $("#scores-screen, #menu-buttons-container, #play-button, #options-button, #main-button").show();
-      //   this.makeHidden(optionsScreen);
-      //   this.makeHidden(mainScreen);
-      //   this.makeVisible(scoresScreen);
-      document.querySelectorAll(".menu-screen, button").forEach(el => el.classList.add("hidden"));
-      document.querySelectorAll("#scores-screen, #session-scores-container, #menu-buttons-container, #play-button, #options-button, #main-button").forEach(el => el.classList.remove("hidden"));
+      document
+        .querySelectorAll(".menu-screen, button")
+        .forEach((el) => el.classList.add("hidden"));
+      document
+        .querySelectorAll(
+          "#scores-screen, #session-scores-container, #menu-buttons-container, #play-button, #options-button, #main-button"
+        )
+        .forEach((el) => el.classList.remove("hidden"));
+      canvas.classList.add("magic");
     }
-    // if (state === "GAMEOVER" && stats.gamesPlayedThisSession > 0) {
-    //     this.makeVisible(scoresContainer);
-    // }
     if (state === "OPTIONS") {
-    //   $(".menu-screen, button").hide();
-    //   $("#options-screen, #play-button, #scores-button, #main-button").show();
-      //   this.makeVisible(optionsToHide);
-      //   this.makeHidden(resumeButton);
-      //   this.makeHidden(mainScreen);
-      //   this.makeHidden(scoresScreen);
-      //   this.makeHidden(scoresContainer);
-      //   this.makeVisible(optionsScreen);
-      document.querySelectorAll(".menu-screen, button").forEach(el => el.classList.add("hidden"));
-      document.querySelectorAll("#options-screen, #play-button, #scores-button, #main-button").forEach(el => el.classList.remove("hidden"));
+      document
+        .querySelectorAll(".menu-screen, button")
+        .forEach((el) => el.classList.add("hidden"));
+      document
+        .querySelectorAll(
+          "#options-screen, #play-button, #scores-button, #main-button"
+        )
+        .forEach((el) => el.classList.remove("hidden"));
+      canvas.classList.add("magic");
     }
     if (state === "MAIN") {
-    //   $(".menu-screen, button").hide();
-    //   $("#main-screen, #play-button, #scores-button, #options-button").show();
-      //   this.makeHidden(scoresScreen);
-      //   this.makeHidden(scoresContainer);
-      //   this.makeHidden(optionsScreen);
-      //   this.makeVisible(mainScreen);
-      document.querySelectorAll(".menu-screen, button").forEach(el => el.classList.add("hidden"));
-      document.querySelectorAll("#main-screen, #play-button, #scores-button, #options-button").forEach(el => el.classList.remove("hidden"));
+      document
+        .querySelectorAll(".menu-screen, button")
+        .forEach((el) => el.classList.add("hidden"));
+      document
+        .querySelectorAll(
+          "#main-screen, #play-button, #scores-button, #options-button"
+        )
+        .forEach((el) => el.classList.remove("hidden"));
+      canvas.classList.add("magic");
     }
   },
   loadDefaultSettings() {
@@ -769,32 +757,22 @@ let stats = {
 document.addEventListener("keydown", keyboardHandler);
 window.addEventListener("resize", gameBoard.recalculateAssets);
 window.addEventListener("orientationchange", gameBoard.recalculateAssets);
-window.addEventListener("blur", function () {
-  if (game.state === "PLAY") {
-    game.changeState("PAUSE");
-    game.stop();
-  }
-});
-// $("#play-button").click(function () {
-//   newGame();
+// window.addEventListener("blur", function () {
+//   if (game.state === "PLAY") {
+//     game.changeState("PAUSE");
+//     game.stop();
+//   }
 // });
 playButton.addEventListener("click", newGame);
-
-// $("#resume-button").click(function () {
-//     game.play();
-// })
-resumeButton.addEventListener("click", function() {game.play()});
-
-// $("#scores-button").click(function () {
-//     game.changeState('GAMEOVER');
-// })
-scoresButton.addEventListener("click", function() {game.changeState("GAMEOVER")});
-
-// $("#main-button").click(function() {
-//     game.changeState('MAIN');
-// })
-mainButton.addEventListener("click", function() {game.changeState("MAIN")});
-// $("#options-button").click(function() {
-//     game.changeState('OPTIONS');
-// })
-optionsButton.addEventListener("click", function() {game.changeState("OPTIONS")});
+resumeButton.addEventListener("click", function () {
+  game.play();
+});
+scoresButton.addEventListener("click", function () {
+  game.changeState("GAMEOVER");
+});
+mainButton.addEventListener("click", function () {
+  game.changeState("MAIN");
+});
+optionsButton.addEventListener("click", function () {
+  game.changeState("OPTIONS");
+});
