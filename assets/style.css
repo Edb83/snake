@@ -19,9 +19,16 @@ body {
 }
 
 #game-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-flow: column;
-  justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column wrap;
+          flex-flow: column wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   height: 100vh;
   position: relative;
   text-align: center;
@@ -40,7 +47,9 @@ body {
   position: absolute;
   top: 0;
   left: 50%;
-  transform: translate(-50%, 0);
+  -webkit-transform: translate(-50%, 0);
+      -ms-transform: translate(-50%, 0);
+          transform: translate(-50%, 0);
   z-index: -1;
 }
 
@@ -104,7 +113,8 @@ h1 {
 
 #session-scores-container ol {
   list-style-type: none;
-  padding-inline-start: inherit;
+  -webkit-padding-start: inherit;
+          padding-inline-start: inherit;
 }
 
 .hidden {
@@ -112,32 +122,66 @@ h1 {
 }
 
 .paused-effect {
-  filter: opacity(0.3);
+  -webkit-filter: opacity(0.3);
+          filter: opacity(0.3);
 }
 
 .blinking {
-  animation: filter-animation linear 1.5s 2s forwards infinite;
+  -webkit-animation: filter-animation linear 1.5s 2s forwards infinite;
+          animation: filter-animation linear 1.5s 2s forwards infinite;
+}
+
+@-webkit-keyframes filter-animation {
+  0% {
+    -webkit-filter: opacity(1);
+            filter: opacity(1);
+  }
+
+  25% {
+    -webkit-filter: opacity(0.5);
+            filter: opacity(0.5);
+  }
+
+  50% {
+    -webkit-filter: opacity(0);
+            filter: opacity(0);
+  }
+
+  75% {
+    -webkit-filter: opacity(0.5);
+            filter: opacity(0.5);
+  }
+
+  100% {
+    -webkit-filter: opacity(1);
+            filter: opacity(1);
+  }
 }
 
 @keyframes filter-animation {
   0% {
-    filter: opacity(1);
+    -webkit-filter: opacity(1);
+            filter: opacity(1);
   }
 
   25% {
-    filter: opacity(0.5);
+    -webkit-filter: opacity(0.5);
+            filter: opacity(0.5);
   }
 
   50% {
-    filter: opacity(0);
+    -webkit-filter: opacity(0);
+            filter: opacity(0);
   }
 
   75% {
-    filter: opacity(0.5);
+    -webkit-filter: opacity(0.5);
+            filter: opacity(0.5);
   }
 
   100% {
-    filter: opacity(1);
+    -webkit-filter: opacity(1);
+            filter: opacity(1);
   }
 }
 
