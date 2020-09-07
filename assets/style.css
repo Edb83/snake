@@ -131,7 +131,7 @@ h1 {
 
 .paused-effect {
   -webkit-filter: opacity(0.3);
-  filter: opacity(0.3) blur(0.2rem);
+  filter: opacity(0.3) blur(0.1rem);
 }
 
 .blinking {
