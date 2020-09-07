@@ -9,7 +9,7 @@ let tile; // the based unit of measurement used (e.g. snake/food parts are tile 
 
 // Gameplay
 const slow = 200;
-const medium = 140;
+const medium = 140;  // milliseconds per game update (higher is slower). Game was built on 140ms refresh rate
 const fast = 80;
 
 // Audio
