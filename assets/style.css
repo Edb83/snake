@@ -209,6 +209,10 @@ h1 {
   display: inline-flex;
 }
 
+#checkbox-container label {
+  margin: 0 1rem 1rem 0;
+}
+
 .checkbox {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -267,8 +271,20 @@ h1 {
 }
 
 .checkbox > input:disabled {
-    border: dotted #fff;
-    cursor: default;
+  border: dotted #fff;
+  cursor: default;
+}
+
+@media (orientation: portrait) and (max-width: 420px) {
+  #checkbox-container {
+    border-bottom: solid;
+  }
+  #options-buttons-container {
+    display: inline-block;
+  }
+  #radio-container {
+    margin-top: 1rem;
+  }
 }
 
 @media (orientation: portrait) {
