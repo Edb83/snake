@@ -34,13 +34,19 @@ body {
   text-align: center;
 }
 
+/* #instructions-container, #score-award-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+} */
+
 .menu-screen {
   color: #fff;
   font-family: "Orbitron", sans-serif;
   width: 100vw;
   letter-spacing: 0.1rem;
   z-index: 1;
-  display: block;  
+  display: block;
 }
 
 #canvas {
@@ -55,8 +61,8 @@ body {
 
 .menu-content-container {
   padding: 1.3rem 1rem;
-    -webkit-animation: fade-in ease-out 0.5s 1 ;
-            animation: fade-in ease-out 0.5s 1 ;
+  -webkit-animation: fade-in ease-out 0.5s 1;
+  animation: fade-in ease-out 0.5s 1;
 }
 
 /* https://www.w3schools.com/howto/howto_css_glowing_text.asp */
@@ -190,30 +196,30 @@ h1 {
 @-webkit-keyframes fade-in {
   0% {
     -webkit-filter: opacity(0);
-            filter: opacity(0);
+    filter: opacity(0);
     -webkit-transform: scale(0.75);
-            transform: scale(0.75);
+    transform: scale(0.75);
   }
 
   100% {
     -webkit-filter: opacity(1);
-            filter: opacity(1);
-            -webkit-transform: scale(1);
-            transform: scale(1);
+    filter: opacity(1);
+    -webkit-transform: scale(1);
+    transform: scale(1);
   }
 }
 
 @keyframes fade-in {
   0% {
     -webkit-filter: opacity(0);
-            filter: opacity(0);
+    filter: opacity(0);
     -webkit-transform: scale(0.75);
-            transform: scale(0.75);
+    transform: scale(0.75);
   }
 
   100% {
     -webkit-filter: opacity(1);
-            filter: opacity(1);
+    filter: opacity(1);
   }
 }
 
@@ -249,8 +255,8 @@ h1 {
 }
 
 #radio-container {
-    border-left: solid;
-    padding-left: 2rem;
+  border-left: solid;
+  padding-left: 2rem;
 }
 
 .checkbox {
@@ -320,10 +326,10 @@ h1 {
     border-bottom: solid;
   }
   #options-buttons-container {
-    display: inline-block;
+    display: inline-grid;
   }
   #radio-container {
-      padding-left: 1rem;
+    padding-left: 1rem;
     margin-top: 1rem;
     border-left: none;
   }
@@ -359,14 +365,14 @@ h1 {
 
 @media (min-width: 768px) {
   .menu-screen {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
   .menu-content-container {
     padding: 2rem;
   }
   #menu-buttons-container button {
     min-width: 7rem;
-    margin: 1rem;
+    margin: 0 1rem;
     font-size: 1.25rem;
   }
 }
@@ -388,5 +394,8 @@ h1 {
 @media (min-width: 1200px) {
   .menu-screen {
     font-size: 2.25rem;
+  }
+    .menu-content-container {
+    padding: 4rem;
   }
 }
