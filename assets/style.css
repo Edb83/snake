@@ -54,9 +54,9 @@ body {
 }
 
 .menu-content-container {
-  padding: 1rem;
-    -webkit-animation: fade-in linear 0.5s 1 ;
-            animation: fade-in linear 0.5s 1 ;
+  padding: 1.3rem 1rem;
+    -webkit-animation: fade-in ease-out 0.5s 1 ;
+            animation: fade-in ease-out 0.5s 1 ;
 }
 
 /* https://www.w3schools.com/howto/howto_css_glowing_text.asp */
@@ -198,6 +198,8 @@ h1 {
   100% {
     -webkit-filter: opacity(1);
             filter: opacity(1);
+            -webkit-transform: scale(1);
+            transform: scale(1);
   }
 }
 
