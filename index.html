@@ -49,11 +49,11 @@
         <h1>Options</h1>
         <div id="options-buttons-container" class="menu-content-container">
           <div id="checkbox-container">
-            <label class="checkbox">
+            <label class="checkbox" for="audio-checkbox">
               <input id="audio-checkbox" type="checkbox" checked />
               <span>Sound</span>
             </label>
-            <label class="checkbox">
+            <label class="checkbox" for="walls-checkbox">
               <input id="walls-checkbox" type="checkbox" />
               <span>Walls</span>
             </label>
@@ -78,8 +78,8 @@
         <button id="play-button">Play</button>
         <button id="resume-button" class="hidden">Resume</button>
         <button id="options-button">Options</button>
-        <button id="scores-button">Scores</button>
         <button id="main-button" class="hidden">Main</button>
+        <button id="scores-button">Scores</button>
       </div>
       <canvas id="canvas" class="hidden paused-effect"></canvas>
     </div>
