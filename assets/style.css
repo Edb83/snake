@@ -247,7 +247,9 @@ h1 {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 #checkbox-container label {
@@ -326,6 +328,7 @@ h1 {
     border-bottom: solid;
   }
   #options-buttons-container {
+    display: -ms-inline-grid;
     display: inline-grid;
   }
   #radio-container {
