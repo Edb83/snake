@@ -241,10 +241,16 @@ h1 {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  align-items: center;
 }
 
 #checkbox-container label {
-  margin: 0 1rem 1rem 0;
+  padding: 1rem;
+}
+
+#radio-container {
+    border-left: solid;
+    padding-left: 2rem;
 }
 
 .checkbox {
@@ -317,7 +323,9 @@ h1 {
     display: inline-block;
   }
   #radio-container {
+      padding-left: 1rem;
     margin-top: 1rem;
+    border-left: none;
   }
 }
 
