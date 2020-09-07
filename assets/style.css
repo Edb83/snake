@@ -246,7 +246,7 @@ h1 {
   -o-transition-duration: 0.3s;
   transition-duration: 0.3s;
   background-color: #001437;
-  cursor: pointer;
+  cursor: default;
 }
 
 .checkbox > input:checked {
@@ -264,6 +264,11 @@ h1 {
 
 .checkbox > input:active {
   border: 2px solid #34495e;
+}
+
+.checkbox > input:disabled {
+    border: dotted #fff;
+    cursor: default;
 }
 
 @media (orientation: portrait) {
