@@ -9,14 +9,13 @@ let tile; // the based unit of measurement used (e.g. snake/food parts are tile 
 
 // Gameplay
 const slow = 200;
-const medium = 140;  // milliseconds per game update (higher is slower). Game was built on 140ms refresh rate
+const medium = 140; // milliseconds per game update (higher is slower). Game was built on 140ms refresh rate
 const fast = 80;
 
 // Audio
 let eatAudio = new Howl({
   src: ["assets/audio/eat.wav"],
 });
-
 let gameOverAudio = new Howl({
   src: ["assets/audio/gameover.wav"],
 });
@@ -33,23 +32,20 @@ const mainScreen = document.getElementById("main-screen");
 const scoresScreen = document.getElementById("scores-screen");
 const scoresContainer = document.getElementById("session-scores-container");
 const optionsScreen = document.getElementById("options-screen");
+
 const mainButton = document.getElementById("main-button");
 const playButton = document.getElementById("play-button");
 const resumeButton = document.getElementById("resume-button");
 const scoresButton = document.getElementById("scores-button");
 const optionsButton = document.getElementById("options-button");
-const canvas = document.getElementById("canvas");
+
 const wallsCheckBox = document.getElementById("walls-checkbox");
 const audioCheckBox = document.getElementById("audio-checkbox");
 const slowRadioButton = document.getElementById("slow-radio");
 const mediumRadioButton = document.getElementById("medium-radio");
 const fastRadioButton = document.getElementById("fast-radio");
-const optionsToDisable = [
-  wallsCheckBox,
-  slowRadioButton,
-  mediumRadioButton,
-  fastRadioButton,
-];
+
+const canvas = document.getElementById("canvas");
 
 // Canvas
 const ctx = canvas.getContext("2d");
@@ -64,8 +60,8 @@ const dynmicSparkGravityMultiplier = 2; // used to increase upper range of rando
 const dynamicOutputMultiplier = 2; // used to increase upper range of random velocity assigned to individual sparks on creation
 const initialTileToSparkDRatio = 0.1; // the velocity of sparks at the start of each game
 const tileToSparkDRatioIncrement = 0.0025; // the increment to spark velocity each time food is eaten
-const sparkTimeToLive = 100;
-const maxSparksPerEat = 150;
+const sparkTimeToLive = 100; // reduced on hitting floor
+const maxSparksPerEat = 150; // capped to prevent lag issues
 const sparkArray = [];
 
 // Colors
@@ -208,7 +204,7 @@ const animateLoop = () => {
     }
   });
 
-  if (game.state === "PLAY") {
+  if (game.state === "PLAY") { // this conditional allows for a single frame to be displayed rather than looping through
     requestAnimationFrame(animateLoop);
   } else {
     return;
@@ -560,6 +556,12 @@ let game = {
     this.checkSettings();
   },
   setElementStyle(state) {
+    const optionsToDisable = [
+      wallsCheckBox,
+      slowRadioButton,
+      mediumRadioButton,
+      fastRadioButton,
+    ];
     if (state === "PLAY") {
       document
         .querySelectorAll(".menu-screen, #menu-buttons-container, button")
