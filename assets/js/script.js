@@ -44,6 +44,12 @@ const audioCheckBox = document.getElementById("audio-checkbox");
 const slowRadioButton = document.getElementById("slow-radio");
 const mediumRadioButton = document.getElementById("medium-radio");
 const fastRadioButton = document.getElementById("fast-radio");
+const optionsToDisable = [
+  wallsCheckBox,
+  slowRadioButton,
+  mediumRadioButton,
+  fastRadioButton,
+];
 
 // Canvas
 const ctx = canvas.getContext("2d");
@@ -566,6 +572,7 @@ let game = {
           "#options-screen, #menu-buttons-container, #resume-button"
         )
         .forEach((el) => el.classList.remove("hidden"));
+      optionsToDisable.forEach((el) => (el.disabled = true));
       canvas.classList.add("paused-effect");
     }
     if (state === "GAMEOVER") {
@@ -588,6 +595,7 @@ let game = {
           "#options-screen, #play-button, #scores-button, #main-button"
         )
         .forEach((el) => el.classList.remove("hidden"));
+      optionsToDisable.forEach((el) => (el.disabled = false));
       canvas.classList.add("paused-effect");
     }
     if (state === "MAIN") {
@@ -623,11 +631,11 @@ let game = {
       this.audio = false;
     }
     if (slowRadioButton.checked) {
-        this.speed = slow;
+      this.speed = slow;
     } else if (mediumRadioButton.checked) {
-        this.speed = medium;
+      this.speed = medium;
     } else if (fastRadioButton.checked) {
-        this.speed = fast;
+      this.speed = fast;
     }
   },
   play() {
