@@ -315,7 +315,7 @@ h1 {
   background-color: #001437;
   cursor: default;
   margin-right: 1rem;
-  margin-left: 2px;
+  margin-left: 1rem;
 }
 
 .checkbox > input:checked {
