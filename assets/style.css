@@ -394,12 +394,6 @@ h1 {
   }
 }
 
-/* @media (min-width: 667px) and (min-height: 375px) {
-  .menu-screen {
-    font-size: 1rem;
-  }
-} */
-
 @media (min-width: 768px) and (min-height: 375px) {
   .menu-screen {
     font-size: 1rem;
@@ -422,9 +416,9 @@ h1 {
     padding: 3rem;
   }
   #menu-buttons-container button {
-    padding: 0.5rem;
     min-width: 10rem;
-    font-size: 1.5rem;
+    padding: 0.7rem;
+    font-size: 1.8rem;
   }
 }
 
@@ -432,7 +426,9 @@ h1 {
   .menu-screen {
     font-size: 2.25rem;
   }
-  .menu-content-container {
-    padding: 4rem;
+  #menu-buttons-container button {
+    padding: 1rem;
+    min-width: 14rem;
+    font-size: 2.1rem;
   }
 }
