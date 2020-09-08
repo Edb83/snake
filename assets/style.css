@@ -272,7 +272,6 @@ h1 {
 
 #checkbox-container {
   border-bottom: solid;
-  margin-right: 10px;
 }
 
 #checkbox-container, #radio-container {
@@ -315,8 +314,7 @@ h1 {
   transition-duration: 0.3s;
   background-color: #001437;
   cursor: default;
-  margin-right: 1rem;
-  margin-left: 10px;
+  margin: 0 1rem 0 0;
 }
 
 .checkbox > input:checked {
