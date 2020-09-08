@@ -63,7 +63,7 @@ body {
 }
 
 .menu-content-container {
-  padding: 1.3rem 1rem;
+  padding: 1rem;
   -webkit-animation: fade-in ease-out 0.5s 1;
   animation: fade-in ease-out 0.5s 1;
 }
@@ -126,7 +126,7 @@ h1 {
 
 #session-scores-container {
   min-width: 20%;
-    /* border-left: solid; */
+  /* border-left: solid; */
 }
 
 /* #score-award-text {
@@ -239,6 +239,10 @@ h1 {
   }
 }
 
+#menu-buttons-container {
+    padding: 0 0.5rem;
+}
+
 #menu-buttons-container button {
   min-width: 6rem;
   -webkit-touch-callout: none;
@@ -260,21 +264,24 @@ h1 {
 }
 
 #options-buttons-container {
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
+  display: -ms-inline-grid;
+  display: inline-grid;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-#checkbox-container label {
+  -ms-flex-align: center;
+  align-items: center;
   padding: 1rem;
 }
 
+#checkbox-container {
+  border-bottom: solid;
+}
+
 #radio-container {
-  border-left: solid;
-  padding-left: 2rem;
+  border-left: none;
+}
+
+#checkbox-container, #radio-container {
+    padding: 1rem;
 }
 
 .checkbox {
@@ -288,16 +295,14 @@ h1 {
   align-items: center;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
-  justify-content: center;
-  padding: 0.5rem 0;
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
+  padding: 0.5rem
 }
 
 .checkbox > span {
   color: #fff;
-  padding: 0 1rem;
 }
 
 .checkbox > input {
@@ -315,6 +320,7 @@ h1 {
   transition-duration: 0.3s;
   background-color: #001437;
   cursor: default;
+  margin-right: 1rem;
 }
 
 .checkbox > input:checked {
@@ -358,18 +364,17 @@ h1 {
 
 */
 
-@media (orientation: portrait) and (max-width: 420px) {
+@media (orientation: landscape) and (min-width: 420px) {
   #checkbox-container {
-    border-bottom: solid;
+    border: none;
   }
   #options-buttons-container {
-    display: -ms-inline-grid;
-    display: inline-grid;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
   }
   #radio-container {
-    padding-left: 1rem;
-    margin-top: 1rem;
-    border-left: none;
+    border-left: solid;
   }
 }
 
@@ -433,7 +438,7 @@ h1 {
   .menu-screen {
     font-size: 2.25rem;
   }
-    .menu-content-container {
+  .menu-content-container {
     padding: 4rem;
   }
 }
