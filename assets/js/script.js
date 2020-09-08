@@ -81,6 +81,7 @@ const colorArray = [
   "rgba(226,0,0,1)", // red
   "rgba(125,249,255,1)", // blue
   "rgba(254,1,154,1)", // pink
+  "rgba(255,255,255,1)" // white
 ];
 
 // FUNCTIONS
@@ -458,7 +459,7 @@ class Spark {
     ctx.fillStyle =
       this.color.substring(0, this.color.length - 2) + this.opacity + ")";
     ctx.shadowColor = this.color;
-    ctx.shadowBlur = this.radius / 2;
+    ctx.shadowBlur = this.radius * 0.75;
     ctx.fill();
     ctx.closePath();
     ctx.restore();
