@@ -274,10 +274,6 @@ h1 {
   border-bottom: solid;
 }
 
-#radio-container {
-  border-left: none;
-}
-
 #checkbox-container, #radio-container {
     padding: 1rem;
 }
