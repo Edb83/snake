@@ -12,6 +12,8 @@ html {
 body {
   margin: 0;
   padding: 0;
+  height: 100vh;
+  width: 100vw;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   background-color: #001437;
@@ -29,7 +31,8 @@ body {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
-  height: 100vh;
+  height: 100%;
+  width: 100%;
   position: relative;
   text-align: center;
 }
@@ -115,9 +118,22 @@ h1 {
   text-shadow: 0 0 1rem;
 }
 
+/* For possible change to layout on landscape orientation? */
+
+/* #score-award-container {
+    display: flex;
+} */
+
 #session-scores-container {
   min-width: 20%;
+    /* border-left: solid; */
 }
+
+/* #score-award-text {
+    padding: 0 1rem;
+    text-align: left;
+    align-self: center;
+} */
 
 #session-scores-container ol {
   list-style-type: none;
@@ -130,7 +146,7 @@ h1 {
 }
 
 .paused-effect {
-  -webkit-filter: opacity(0.3);
+  -webkit-filter: opacity(0.3) blur(0.1rem);
   filter: opacity(0.3) blur(0.1rem);
 }
 
@@ -323,6 +339,25 @@ h1 {
   cursor: default;
 }
 
+/* Reverse the query below to be by default? Mob 1st pov should be portrait and include the following for SCORES too:
+
+#score-award-container {
+    display: flex;
+}
+
+#session-scores-container {
+  min-width: 20%;
+    border-left: solid;
+}
+
+#score-award-text {
+    padding: 0 1rem;
+    text-align: left;
+    align-self: center;
+}
+
+*/
+
 @media (orientation: portrait) and (max-width: 420px) {
   #checkbox-container {
     border-bottom: solid;
@@ -366,7 +401,7 @@ h1 {
   }
 } */
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (min-height: 375px) {
   .menu-screen {
     font-size: 1rem;
   }
@@ -380,7 +415,7 @@ h1 {
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1024px) and (min-height: 568px) {
   .menu-screen {
     font-size: 1.5rem;
   }
@@ -388,13 +423,13 @@ h1 {
     padding: 3rem;
   }
   #menu-buttons-container button {
-    padding: 1rem;
-    min-width: 12rem;
-    font-size: 2rem;
+    padding: 0.5rem;
+    min-width: 10rem;
+    font-size: 1.5rem;
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1200px) and (min-height: 800px) {
   .menu-screen {
     font-size: 2.25rem;
   }
