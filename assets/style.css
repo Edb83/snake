@@ -61,7 +61,7 @@ body {
 }
 
 .menu-content-container {
-  padding: 1rem;
+  padding: 1.5rem;
   -webkit-animation: fade-in ease-out 0.5s 1;
   animation: fade-in ease-out 0.5s 1;
 }
