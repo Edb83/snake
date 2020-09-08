@@ -58,15 +58,15 @@ let scoreBoard = {
     };
 
     if (isNaN(this.currentHighScore) && this.currentScore !== 0) {
-      scoreAwardText.innerHTML = `You're off the mark, so to speak. `;
+      scoreAwardText.innerHTML = `<p>You're off the mark, so to speak.</p>`;
     }
     if (isNewHighScore()) {
-      scoreAwardText.innerHTML = `Signs of improvement. You beat your previous high score by ${
+      scoreAwardText.innerHTML = `<p>Signs of improvement. You beat your previous high score by ${
         this.currentScore - this.currentHighScore
-      }.</br>`;
+      }.</p>`;
     }
     if (this.currentScore === 0) {
-      scoreAwardText.innerHTML = `Oof.`;
+      scoreAwardText.innerHTML = `<p>Oof.</p>`;
     }
     if (scoreRange(1, 4)) {
       scoreAwardText.insertAdjacentHTML(
@@ -79,6 +79,9 @@ let scoreBoard = {
         "beforeend",
         `Lamentably, the Galactic High Scores feature has yet to be implemented. `
       );
+    }
+    if (scoreRange(5, 9) && !isNewHighScore() && game.speed === fast) {
+      scoreAwardText.innerHTML = `<p>That can happen if you play fast...</p>`;
     }
     if (scoreRange(10, 19) && this.currentScore !== 13) {
       scoreAwardText.insertAdjacentHTML(
@@ -146,7 +149,7 @@ let scoreBoard = {
       );
     }
     if (scoreRange(100, 124) && isNewHighScore()) {
-      scoreAwardText.innerHTML = `That's quite the milestone you've hit.<br>And it only took you ${stats.gamesPlayedAllTime} attempts! `;
+      scoreAwardText.innerHTML = `<p>That's quite the milestone you've hit.</p><p>And it only took you ${stats.gamesPlayedAllTime} attempts!</p>`;
     } else if (scoreRange(100, 124)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
@@ -187,19 +190,19 @@ let scoreBoard = {
       this.currentScore - this.currentHighScore <= 5 &&
       stats.gameTimeInSeconds > 300
     ) {
-      scoreAwardText.innerHTML = `${convertSecondsToHms(
+      scoreAwardText.innerHTML = `<p>${convertSecondsToHms(
         stats.gameTimeInSeconds
       )} to add a measly ${
         this.currentScore - this.currentHighScore
-      } to your PB.<br> Yikes.`;
+      } to your PB.</p><p>Yikes.</p>`;
     }
     if (this.currentScore > this.previousScore && this.previousScore === 0) {
-      scoreAwardText.innerHTML = `Well, anything was an improvement on last time. Kudos for testing the collision detection out though. `;
+      scoreAwardText.innerHTML = `</p>Well, anything was an improvement on last time. Kudos for testing the collision detection out though.</p>`;
     }
     if (this.previousScore - this.currentScore > 50) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `Try to remember what you did on your previous attempt. That was better. `
+        `<p>Try to remember what you did on your previous attempt. That was better.</p>`
       );
     }
     let scoreOl = document.querySelector("ol");
