@@ -12,8 +12,6 @@ html {
 body {
   margin: 0;
   padding: 0;
-  height: 100vh;
-  width: 100vw;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   background-color: #001437;
@@ -31,8 +29,8 @@ body {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   position: relative;
   text-align: center;
 }
@@ -46,7 +44,7 @@ body {
 .menu-screen {
   color: #fff;
   font-family: "Orbitron", sans-serif;
-  width: 100vw;
+  width: 100%;
   letter-spacing: 0.1rem;
   z-index: 1;
   display: block;
@@ -380,7 +378,7 @@ h1 {
 
 @media (orientation: portrait) {
   #canvas {
-    width: 100vw;
+    width: 100%;
     height: auto;
   }
 }
@@ -396,7 +394,7 @@ h1 {
 @media (orientation: landscape) {
   #canvas {
     width: auto;
-    height: 100vh;
+    height: 100%;
   }
 }
 
