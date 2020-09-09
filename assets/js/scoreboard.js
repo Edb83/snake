@@ -80,13 +80,18 @@ let scoreBoard = {
         `Lamentably, the Galactic High Scores feature has yet to be implemented. `
       );
     }
-    if (scoreRange(5, 9) && !isNewHighScore() && game.speed === fast) {
-      scoreAwardText.innerHTML = `<p>That can happen if you play fast...</p>`;
+    if (
+      scoreRange(5, 9) &&
+      !isNewHighScore() &&
+      game.speed === fast &&
+      game.wallsEnabled
+    ) {
+      scoreAwardText.innerHTML = `<p>'Fast' and 'Walls' was a brave choice. Know your limits.</p>`;
     }
     if (scoreRange(10, 19) && this.currentScore !== 13) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `Double digits. Mission accomplished. `
+        `Double digits. Magnificent. `
       );
     }
     if (
@@ -98,16 +103,25 @@ let scoreBoard = {
         `Unlucky for some. Especially for you. `
       );
     }
+    if (scoreRange(20, 29) && stats.gamesPlayedAllTime > 100) {
+      scoreAwardText.innerHTML = `<p>They say practice makes perfect, and yet... here you are on attempt #${stats.gamesPlayedAllTime}.`;
+    }
     if (scoreRange(20, 29)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `Attempt #${stats.gamesPlayedAllTime} and you got ${this.currentScore}. Speaks for itself. `
+        `Over-promise, under-deliver. `
+      );
+    }
+    if (scoreRange(30, 39) && game.speed === slow) {
+      scoreAwardText.insertAdjacentHTML(
+        "beforeend",
+        `FYI this is Cyber Snake, not Cyber Slow Worm. `
       );
     }
     if (scoreRange(30, 39)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `FYI this is Cyber Snake, not Cyber Slow Worm. `
+        `Thrifty with the thrills, frugal with the finesse. `
       );
     }
     if (scoreRange(40, 49)) {
@@ -177,7 +191,7 @@ let scoreBoard = {
       scoreAwardText.innerHTML = `Assuming you're not cheating, I'm impressed by your commitment and sorry that you have wasted your time. `;
     }
     if (this.currentScore == 397) {
-      scoreAwardText.innerHTML = `Congratulations.<br>You have completed the tutorial of Cyber Snake.<br>In Level 001 the food is invisible. You have 3 lives remaining.<br>Good luck. `;
+      scoreAwardText.innerHTML = `<p>Congratulations. You have completed the tutorial of Cyber Snake.</p><p>In Level 001 the food is invisible. You have 3 lives remaining.</p><p>Good luck.</p>`;
     }
     if (this.currentScore > 397) {
       scoreAwardText.innerHTML = `Is that even possible? `;
@@ -197,7 +211,7 @@ let scoreBoard = {
       } to your PB.</p><p>Yikes.</p>`;
     }
     if (this.currentScore > this.previousScore && this.previousScore === 0) {
-      scoreAwardText.innerHTML = `</p>Well, anything was an improvement on last time. Kudos for testing the collision detection out though.</p>`;
+      scoreAwardText.innerHTML = `<p>Well, anything was an improvement on last time. Kudos for testing the collision detection out though.</p>`;
     }
     if (this.previousScore - this.currentScore > 50) {
       scoreAwardText.insertAdjacentHTML(
