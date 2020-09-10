@@ -35,21 +35,6 @@ body {
   text-align: center;
 }
 
-/* #instructions-container, #score-award-container {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-} */
-
-.menu-screen {
-  color: #fff;
-  font-family: "Orbitron", sans-serif;
-  width: 100%;
-  letter-spacing: 0.1rem;
-  z-index: 1;
-  display: block;
-}
-
 #canvas {
   position: absolute;
   top: 0;
@@ -58,6 +43,15 @@ body {
   -ms-transform: translate(-50%, 0);
   transform: translate(-50%, 0);
   z-index: -1;
+}
+
+.menu-screen {
+  color: #fff;
+  font-family: "Orbitron", sans-serif;
+  width: 100%;
+  letter-spacing: 0.1rem;
+  z-index: 1;
+  display: block;
 }
 
 .menu-content-container {
@@ -237,6 +231,8 @@ h1 {
   }
 }
 
+/* MENU SCREEN */
+
 #menu-buttons-container {
     padding: 0 0.5rem;
 }
@@ -260,6 +256,8 @@ h1 {
   color: #001437;
   border: solid 1px #fff;
 }
+
+/* OPTIONS SCREEN */
 
 #options-buttons-container {
   display: -ms-inline-grid;
@@ -338,24 +336,7 @@ h1 {
   cursor: default;
 }
 
-/* Reverse the query below to be by default? Mob 1st pov should be portrait and include the following for SCORES too:
-
-#score-award-container {
-    display: flex;
-}
-
-#session-scores-container {
-  min-width: 20%;
-    border-left: solid;
-}
-
-#score-award-text {
-    padding: 0 1rem;
-    text-align: left;
-    align-self: center;
-}
-
-*/
+/* MEDIA QUERIES */
 
 @media (orientation: landscape) and (min-width: 420px) {
   #checkbox-container {
@@ -382,7 +363,8 @@ h1 {
     font-size: 2rem;
   }
   .menu-content-container {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    min-height: 19rem;
   }
 }
 
@@ -405,6 +387,9 @@ h1 {
     margin: 0 1rem;
     font-size: 1.25rem;
   }
+  #checkbox-container, #radio-container {
+    padding: 0 2rem;
+}
 }
 
 @media (min-width: 1024px) and (min-height: 568px) {
@@ -419,6 +404,9 @@ h1 {
     padding: 0.7rem;
     font-size: 1.8rem;
   }
+   #checkbox-container, #radio-container {
+    padding: 0 3rem;
+}
 }
 
 @media (min-width: 1200px) and (min-height: 800px) {
@@ -430,4 +418,7 @@ h1 {
     min-width: 14rem;
     font-size: 2.1rem;
   }
+   #checkbox-container, #radio-container {
+    padding: 0 4rem;
+}
 }
