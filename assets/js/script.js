@@ -14,7 +14,7 @@ const fast = 80;
 
 // Audio
 let eatAudio = new Howl({
-  src: ["assets/audio/eat.wav"],
+  src: ["assets/audio/eat.mp3"],
 });
 let gameOverAudio = new Howl({
   src: ["assets/audio/gameover.wav"],
