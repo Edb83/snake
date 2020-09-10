@@ -381,6 +381,7 @@ h1 {
   }
   .menu-content-container {
     padding: 2.5rem;
+    min-height: 34vh;
   }
   #menu-buttons-container button {
     min-width: 7rem;
@@ -398,6 +399,7 @@ h1 {
   }
   .menu-content-container {
     padding: 3rem;
+    min-height: 37vh;
   }
   #menu-buttons-container button {
     min-width: 10rem;
