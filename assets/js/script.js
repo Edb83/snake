@@ -19,6 +19,12 @@ let eatAudio = new Howl({
 let gameOverAudio = new Howl({
   src: ["assets/audio/gameover.wav"],
 });
+let clickAudio = new Howl({
+  src: ["assets/audio/click.wav"],
+});
+// let startAudio = new Howl({
+//   src: ["assets/audio/start.wav"],
+// });
 
 // Controls
 const left = -1; // directions have been converted to numbers so that conditional statements can be negated mathematically
@@ -66,14 +72,15 @@ const sparkArray = [];
 
 // Colors
 const scoreBoardColor = "#001437"; // dark blue
+const scoreBoardTextColor = "#FFF"; // white
 const gameBoardColor = "#001437"; // dark blue
 const wallsOnColor = "#FF0000"; // red
 const wallsOffColor = "#008000"; // green
 const snakeColor = "#DF00FE"; // psychedelic purple
 const snakeStrokeColor = "#001437"; // dark blue
-const foodStrokeColor = "#000"; // white
+const foodStrokeColor = "#000"; // black
 const colorArray = [
-  // Food color is picked at random from this array
+  // Food color is picked at random from this array & sparks have the same color as food eaten
   // RGB used so that alpha can be adjusted with each spark's time to live
   "rgba(128,255,0,1)", // green
   "rgba(252,243,64,1)", // yellow
@@ -81,7 +88,7 @@ const colorArray = [
   "rgba(226,0,0,1)", // red
   "rgba(125,249,255,1)", // blue
   "rgba(254,1,154,1)", // pink
-  "rgba(255,255,255,1)" // white
+  "rgba(255,255,255,1)", // white
 ];
 
 // FUNCTIONS
@@ -205,7 +212,8 @@ const animateLoop = () => {
     }
   });
 
-  if (game.state === "PLAY") { // this conditional allows for a single frame to be displayed rather than looping through
+  if (game.state === "PLAY") {
+    // this conditional allows for a single frame to be displayed rather than looping through
     requestAnimationFrame(animateLoop);
   } else {
     return;
@@ -781,13 +789,16 @@ let stats = {
 document.addEventListener("keydown", keyboardHandler);
 window.addEventListener("resize", gameBoard.recalculateAssets);
 window.addEventListener("orientationchange", gameBoard.recalculateAssets);
-// window.addEventListener("blur", function () {
-//   if (game.state === "PLAY") {
-//     game.changeState("PAUSE");
-//     game.stop();
-//   }
-// });
-playButton.addEventListener("click", newGame);
+window.addEventListener("blur", function () {
+  if (game.state === "PLAY") {
+    game.changeState("PAUSE");
+    game.stop();
+  }
+});
+playButton.addEventListener("click", function () {
+  newGame();
+  //   startAudio.play();
+});
 resumeButton.addEventListener("click", function () {
   game.play();
 });
@@ -800,3 +811,10 @@ mainButton.addEventListener("click", function () {
 optionsButton.addEventListener("click", function () {
   game.changeState("OPTIONS");
 });
+document
+  .querySelectorAll("#main-button, #scores-button, #options-button")
+  .forEach((el) =>
+    el.addEventListener("click", function () {
+      clickAudio.play();
+    })
+  );
