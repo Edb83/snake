@@ -28,7 +28,7 @@ let scoreBoard = {
     return (fontSize || 0) + "px Orbitron";
   },
   draw() {
-    ctx.fillStyle = "#fff";
+    ctx.fillStyle = scoreBoardTextColor;
     ctx.font = this.getFont();
     ctx.fillText(
       this.currentScore,
@@ -45,7 +45,6 @@ let scoreBoard = {
     let scoreAwardText = document.getElementById("score-award-text");
     scoreAwardText.innerHTML = "";
 
-    // arrow function needed to prevent invalid reference to this.currentScore (thanks to robinz_alumni for tip)
     let scoreRange = (min, max) => {
       if (this.currentScore >= min && this.currentScore < max + 1) {
         return true;
@@ -100,7 +99,7 @@ let scoreBoard = {
     ) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `Unlucky for some. Especially for you. `
+        `If the cyberophidiophobia doesn't get you, the triskaidekaphobia will. `
       );
     }
     if (scoreRange(20, 29) && stats.gamesPlayedAllTime > 100) {
@@ -162,7 +161,7 @@ let scoreBoard = {
         `Did you consider persevering and making it to 100? `
       );
     }
-    if (scoreRange(100, 124) && isNewHighScore()) {
+    if (this.currentScore > 100 && isNewHighScore()) {
       scoreAwardText.innerHTML = `<p>That's quite the milestone you've hit.</p><p>And it only took you ${stats.gamesPlayedAllTime} attempts!</p>`;
     } else if (scoreRange(100, 124)) {
       scoreAwardText.insertAdjacentHTML(
@@ -173,9 +172,7 @@ let scoreBoard = {
     if (scoreRange(125, 149)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `After ${convertSecondsToHms(
-          stats.gameTimeAllTime
-        )} of total play time, things have clicked. `
+        `Your average score per game is decidedly average: ${(stats.pointsAllTime / stats.gamesPlayedAllTime).toFixed(2)}. `
       );
     }
     if (scoreRange(150, 199)) {
@@ -185,10 +182,10 @@ let scoreBoard = {
       );
     }
     if (scoreRange(200, 299)) {
-      scoreAwardText.insertAdjacentHTML("beforeend", `Definitely cheating. `);
+      scoreAwardText.insertAdjacentHTML("beforeend", `<p>If not for your epic score of ${this.previousScore} last time, some might call shenanigans.</p>`);
     }
     if (scoreRange(300, 396)) {
-      scoreAwardText.innerHTML = `Assuming you're not cheating, I'm impressed by your commitment and sorry that you have wasted your time. `;
+      scoreAwardText.innerHTML = `<p>Your commitment is admirable but your time (all ${convertSecondsToHms(stats.gameTimeAllTime)} of it), irretrievable.</p>`;
     }
     if (this.currentScore == 397) {
       scoreAwardText.innerHTML = `<p>Congratulations. You have completed the tutorial of Cyber Snake.</p><p>In Level 001 the food is invisible. You have 3 lives remaining.</p><p>Good luck.</p>`;
@@ -211,7 +208,7 @@ let scoreBoard = {
       } to your PB.</p><p>Yikes.</p>`;
     }
     if (this.currentScore > this.previousScore && this.previousScore === 0) {
-      scoreAwardText.innerHTML = `<p>Well, anything was an improvement on last time. Kudos for testing the collision detection out though.</p>`;
+      scoreAwardText.innerHTML = `<p>Well, anything was an improvement on last time. </p>`;
     }
     if (this.previousScore - this.currentScore > 50) {
       scoreAwardText.insertAdjacentHTML(
