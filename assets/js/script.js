@@ -635,15 +635,12 @@ let game = {
   },
   setHammerGestures() {
     if (game.state === "PLAY") {
-      hammertime.get("pan").set({ enable: true, prevent_default: false });
+      hammertime.get("pan").set({ enable: true, prevent_default: false, touchAction: "none" });
       hammertime
         .get("twofingertap")
         .set({ enable: true, prevent_default: false });
     } else {
-      hammertime.get("pan").set({ enable: false, prevent_default: true });
-      hammertime
-        .get("twofingertap")
-        .set({ enable: true, prevent_default: true });
+      hammertime.get("pan").set({ enable: false, prevent_default: true, touchAction: "manipulation" });
     }
   },
   loadDefaultSettings() {
