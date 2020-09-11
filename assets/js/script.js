@@ -191,8 +191,8 @@ const newGame = () => {
 //   hammertime.add(
 //     new Hammer.Tap({ event: "twofingertap", taps: 1, pointers: 2 })
 //   );
-  hammertime.get("pan").set({ enable: true });
-  hammertime.get("twofingertap").set({ enable: true });
+  hammertime.get("pan").set({ enable: true, prevent_default: false });
+  hammertime.get("twofingertap").set({ enable: true, prevent_default: false });
   document.body.style.transform = "scale(1)";
 };
 
