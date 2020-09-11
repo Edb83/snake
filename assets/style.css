@@ -56,6 +56,7 @@ body {
   letter-spacing: 0.1rem;
   z-index: 1;
   display: block;
+  min-height: 15rem;
 }
 
 .menu-content-container {
@@ -372,6 +373,9 @@ h1 {
   .menu-content-container {
     font-size: 1.1rem;
   }
+  .menu-screen {
+    min-height: 25rem;
+  }
 }
 
 @media (orientation: landscape) {
@@ -384,6 +388,7 @@ h1 {
 @media (min-width: 768px) and (min-height: 375px) {
   .menu-screen {
     font-size: 1rem;
+    min-height: 19rem;
   }
   .menu-content-container {
     padding: 2.5rem;
@@ -402,6 +407,7 @@ h1 {
 @media (min-width: 1024px) and (min-height: 568px) {
   .menu-screen {
     font-size: 1.5rem;
+    min-height: 27rem;
   }
   .menu-content-container {
     padding: 3rem;
@@ -420,6 +426,7 @@ h1 {
 @media (min-width: 1200px) and (min-height: 800px) {
   .menu-screen {
     font-size: 2.25rem;
+    min-height: 40rem;
   }
   #menu-buttons-container button {
     padding: 1rem;
