@@ -45,6 +45,10 @@ body {
   z-index: -1;
 }
 
+.avoid-clicks {
+  pointer-events: none;
+}
+
 .menu-screen {
   color: #fff;
   font-family: "Orbitron", sans-serif;
@@ -249,6 +253,7 @@ h1 {
   font-family: "Orbitron", sans-serif;
   padding: 0.5rem;
   z-index: 1;
+  pointer-events: auto;
 }
 
 #menu-buttons-container button:hover {
@@ -313,6 +318,7 @@ h1 {
   background-color: #001437;
   cursor: default;
   margin: 0 1rem 0 0;
+  pointer-events: auto;
 }
 
 .checkbox > input:checked {
