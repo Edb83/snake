@@ -40,7 +40,7 @@ const hammertime = new Hammer.Manager(document.querySelector("body"), {
 		[Hammer.Pan, { direction: Hammer.DIRECTION_ALL, threshold: 20 }],
         [Hammer.Tap,{  event: "twofingertap", taps: 1, pointers: 2  }],
     ],
-    prevent_default: true,
+    prevent_default: false,
     touchAction: "none"
 });
 
