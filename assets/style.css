@@ -58,6 +58,7 @@ body {
   padding: 1.5rem;
   -webkit-animation: fade-in ease-out 0.5s 1;
   animation: fade-in ease-out 0.5s 1;
+  min-height: 50vh;
 }
 
 /* https://www.w3schools.com/howto/howto_css_glowing_text.asp */
@@ -364,7 +365,7 @@ h1 {
   }
   .menu-content-container {
     font-size: 1rem;
-    min-height: 19rem;
+    /* min-height: 19rem; */
   }
 }
 
@@ -381,7 +382,7 @@ h1 {
   }
   .menu-content-container {
     padding: 2.5rem;
-    min-height: 34vh;
+    /* min-height: 42vh; */
   }
   #menu-buttons-container button {
     min-width: 7rem;
@@ -399,7 +400,6 @@ h1 {
   }
   .menu-content-container {
     padding: 3rem;
-    min-height: 37vh;
   }
   #menu-buttons-container button {
     min-width: 10rem;
