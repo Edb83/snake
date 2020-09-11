@@ -213,9 +213,10 @@ const gameLoop = () => {
 // ANIMATION LOOP
 
 const animateLoop = () => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);  
   gameBoard.draw();
-  food.draw();
   scoreBoard.draw();
+  food.draw();
   snake.draw();
   sparkArray.forEach((spark, index) => {
     spark.update();
