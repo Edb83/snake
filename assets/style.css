@@ -58,7 +58,7 @@ body {
   padding: 1.5rem;
   -webkit-animation: fade-in ease-out 0.5s 1;
   animation: fade-in ease-out 0.5s 1;
-  min-height: 50vh;
+  min-height: 47vh;
 }
 
 /* https://www.w3schools.com/howto/howto_css_glowing_text.asp */
