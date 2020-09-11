@@ -32,7 +32,18 @@ const left = -1; // directions have been converted to numbers so that conditiona
 const right = 1;
 const up = -2;
 const down = 2;
-const hammertime = new Hammer.Manager(document.querySelector("body")); // new instance of hammer.js touch gesture manager. Configured in EVENT HANDLERS
+// const hammertime = new Hammer.Manager(document.querySelector("body")); // new instance of hammer.js touch gesture manager. Configured in EVENT HANDLERS
+
+const hammertime = new Hammer.Manager(document.querySelector("body"), {
+	recognizers: [
+		// RecognizerClass, [options], [recognizeWith, ...], [requireFailure, ...]
+		[Hammer.Pan, { direction: Hammer.DIRECTION_ALL, threshold: 20 }],
+        [Hammer.Tap,{  event: "twofingertap", taps: 1, pointers: 2  }],
+    ],
+    prevent_default: true,
+    touchAction: "none"
+});
+
 
 // DOM Elements
 const mainScreen = document.getElementById("main-screen");
@@ -174,14 +185,15 @@ const newGame = () => {
   newFood();
   game.play();
   game.startTime = Date.now();
-  hammertime.add(
-    new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 20 })
-  );
-  hammertime.add(
-    new Hammer.Tap({ event: "twofingertap", taps: 1, pointers: 2 })
-  );
+//   hammertime.add(
+//     new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 20 })
+//   );
+//   hammertime.add(
+//     new Hammer.Tap({ event: "twofingertap", taps: 1, pointers: 2 })
+//   );
   hammertime.get("pan").set({ enable: true });
   hammertime.get("twofingertap").set({ enable: true });
+  document.body.style.transform = "scale(1)";
 };
 
 // GAME LOOP
