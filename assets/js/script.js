@@ -35,11 +35,11 @@ const down = 2;
 // const hammertime = new Hammer.Manager(document.querySelector("body")); // new instance of hammer.js touch gesture manager. Configured in EVENT HANDLERS
 
 const hammertime = new Hammer.Manager(document.querySelector("body"), {
-	recognizers: [
-		// RecognizerClass, [options], [recognizeWith, ...], [requireFailure, ...]
-		[Hammer.Pan, { direction: Hammer.DIRECTION_ALL, threshold: 20 }],
-        [Hammer.Tap,{  event: "twofingertap", taps: 1, pointers: 2  }],
-    ],
+	// recognizers: [
+	// 	// RecognizerClass, [options], [recognizeWith, ...], [requireFailure, ...]
+	// 	[Hammer.Pan, { direction: Hammer.DIRECTION_ALL, threshold: 20 }],
+    //     [Hammer.Tap,{  event: "twofingertap", taps: 1, pointers: 2  }],
+    // ],
     prevent_default: true,
     touchAction: "none"
 });
