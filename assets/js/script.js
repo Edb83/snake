@@ -35,15 +35,14 @@ const down = 2;
 // const hammertime = new Hammer.Manager(document.querySelector("body")); // new instance of hammer.js touch gesture manager. Configured in EVENT HANDLERS
 
 const hammertime = new Hammer.Manager(document.querySelector("body"), {
-	recognizers: [
-		// RecognizerClass, [options], [recognizeWith, ...], [requireFailure, ...]
-		[Hammer.Pan, { direction: Hammer.DIRECTION_ALL, threshold: 20 }],
-        [Hammer.Tap,{  event: "twofingertap", taps: 1, pointers: 2  }],
-    ],
-    prevent_default: true,
-    // touchAction: "none"
+  recognizers: [
+    // RecognizerClass, [options], [recognizeWith, ...], [requireFailure, ...]
+    [Hammer.Pan, { direction: Hammer.DIRECTION_ALL, threshold: 20 }],
+    [Hammer.Tap, { event: "twofingertap", taps: 1, pointers: 2 }],
+  ],
+  prevent_default: true,
+  // touchAction: "none"
 });
-
 
 // DOM Elements
 const mainScreen = document.getElementById("main-screen");
@@ -185,15 +184,14 @@ const newGame = () => {
   newFood();
   game.play();
   game.startTime = Date.now();
-//   hammertime.add(
-//     new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 20 })
-//   );
-//   hammertime.add(
-//     new Hammer.Tap({ event: "twofingertap", taps: 1, pointers: 2 })
-//   );
+  //   hammertime.add(
+  //     new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 20 })
+  //   );
+  //   hammertime.add(
+  //     new Hammer.Tap({ event: "twofingertap", taps: 1, pointers: 2 })
+  //   );
   hammertime.get("pan").set({ enable: true, prevent_default: false });
   hammertime.get("twofingertap").set({ enable: true, prevent_default: false });
-  document.body.style.transform = "scale(1)";
 };
 
 // GAME LOOP
@@ -576,6 +574,7 @@ let game = {
     this.state = state;
     this.setElementStyle(state);
     this.checkSettings();
+    this.setHammerGestures();
   },
   setElementStyle(state) {
     const optionsToDisable = [
@@ -632,6 +631,19 @@ let game = {
         )
         .forEach((el) => el.classList.remove("hidden"));
       canvas.classList.add("paused-effect");
+    }
+  },
+  setHammerGestures() {
+    if (game.state === "PLAY") {
+      hammertime.get("pan").set({ enable: true, prevent_default: false });
+      hammertime
+        .get("twofingertap")
+        .set({ enable: true, prevent_default: false });
+    } else {
+      hammertime.get("pan").set({ enable: false, prevent_default: true });
+      hammertime
+        .get("twofingertap")
+        .set({ enable: true, prevent_default: true });
     }
   },
   loadDefaultSettings() {
