@@ -58,7 +58,6 @@ body {
   padding: 1.5rem;
   -webkit-animation: fade-in ease-out 0.5s 1;
   animation: fade-in ease-out 0.5s 1;
-  min-height: 47vh;
 }
 
 /* https://www.w3schools.com/howto/howto_css_glowing_text.asp */
@@ -235,7 +234,7 @@ h1 {
 /* MENU SCREEN */
 
 #menu-buttons-container {
-    padding: 0 0.5rem;
+  padding: 0 0.5rem;
 }
 
 #menu-buttons-container button {
@@ -272,8 +271,9 @@ h1 {
   border-bottom: solid;
 }
 
-#checkbox-container, #radio-container {
-    padding: 1rem;
+#checkbox-container,
+#radio-container {
+  padding: 1rem;
 }
 
 .checkbox {
@@ -290,7 +290,7 @@ h1 {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
-  padding: 0.5rem
+  padding: 0.5rem;
 }
 
 .checkbox > span {
@@ -364,8 +364,7 @@ h1 {
     font-size: 2rem;
   }
   .menu-content-container {
-    font-size: 1rem;
-    /* min-height: 19rem; */
+    font-size: 1.1rem;
   }
 }
 
@@ -382,16 +381,16 @@ h1 {
   }
   .menu-content-container {
     padding: 2.5rem;
-    /* min-height: 42vh; */
   }
   #menu-buttons-container button {
     min-width: 7rem;
     margin: 0 1rem;
     font-size: 1.25rem;
   }
-  #checkbox-container, #radio-container {
+  #checkbox-container,
+  #radio-container {
     padding: 0 2rem;
-}
+  }
 }
 
 @media (min-width: 1024px) and (min-height: 568px) {
@@ -406,9 +405,10 @@ h1 {
     padding: 0.7rem;
     font-size: 1.8rem;
   }
-   #checkbox-container, #radio-container {
+  #checkbox-container,
+  #radio-container {
     padding: 0 3rem;
-}
+  }
 }
 
 @media (min-width: 1200px) and (min-height: 800px) {
@@ -420,7 +420,8 @@ h1 {
     min-width: 14rem;
     font-size: 2.1rem;
   }
-   #checkbox-container, #radio-container {
+  #checkbox-container,
+  #radio-container {
     padding: 0 4rem;
-}
+  }
 }
