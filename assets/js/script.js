@@ -41,7 +41,7 @@ const hammertime = new Hammer.Manager(document.querySelector("body"), {
         [Hammer.Tap,{  event: "twofingertap", taps: 1, pointers: 2  }],
     ],
     prevent_default: true,
-    // touchAction: "none"
+    touchAction: "manipulation"
 });
 
 
