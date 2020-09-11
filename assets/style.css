@@ -16,6 +16,7 @@ body {
   box-sizing: border-box;
   background-color: #001437;
   font-size: 13px;
+  touch-action: none !important;
 }
 
 #game-container {
@@ -33,7 +34,6 @@ body {
   width: 100vw;
   position: relative;
   text-align: center;
-  touch-action: none;
   user-select: none;
   -webkit-user-drag: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
