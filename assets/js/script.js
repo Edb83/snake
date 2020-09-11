@@ -640,7 +640,7 @@ let game = {
         .get("twofingertap")
         .set({ enable: true, prevent_default: false });
     } else {
-      hammertime.get("pan").set({ enable: false, prevent_default: true, touchAction: "manipulation" });
+      hammertime.get("pan").set({ enable: false, prevent_default: true });
     }
   },
   loadDefaultSettings() {
