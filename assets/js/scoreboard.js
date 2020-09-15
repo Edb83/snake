@@ -102,14 +102,14 @@ let scoreBoard = {
         `If the cyberophidiophobia doesn't get you, the triskaidekaphobia will. `
       );
     }
-    if (scoreRange(20, 29) && stats.gamesPlayedAllTime > 100) {
-      scoreAwardText.innerHTML = `<p>They say practice makes perfect, and yet... here you are on attempt #${stats.gamesPlayedAllTime}.`;
-    }
     if (scoreRange(20, 29)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
         `Over-promise, under-deliver. `
       );
+    }
+    if (scoreRange(20, 29) && stats.gamesPlayedAllTime > 100) {
+      scoreAwardText.innerHTML = `<p>They say practice makes perfect, and yet... here you are on attempt #${stats.gamesPlayedAllTime}.`;
     }
     if (scoreRange(30, 39) && game.speed === slow) {
       scoreAwardText.insertAdjacentHTML(
