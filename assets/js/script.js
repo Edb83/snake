@@ -15,7 +15,7 @@ const fast = 80;
 // Audio
 let eatAudio = new Howl({
   src: ["assets/audio/eat.wav"],
-  volume: 0.1,
+  volume: 0.075,
 });
 let gameOverAudio = new Howl({
   src: ["assets/audio/gameover.wav"],
@@ -32,25 +32,13 @@ const left = -1; // directions have been converted to numbers so that conditiona
 const right = 1;
 const up = -2;
 const down = 2;
-// const hammertime = new Hammer.Manager(document.querySelector("body")); // new instance of hammer.js touch gesture manager. Configured in EVENT HANDLERS
-
 const hammertime = new Hammer.Manager(document.querySelector("body"), {
-	// recognizers: [
-	// 	// RecognizerClass, [options], [recognizeWith, ...], [requireFailure, ...]
-	// 	[Hammer.Pan, { direction: Hammer.DIRECTION_ALL, threshold: 20 }],
-    //     [Hammer.Tap,{  event: "twofingertap", taps: 1, pointers: 2  }],
-    // ],
     prevent_default: true,
     touchAction: "none"
 });
 
 
 // DOM Elements
-const mainScreen = document.getElementById("main-screen");
-const scoresScreen = document.getElementById("scores-screen");
-const scoresContainer = document.getElementById("session-scores-container");
-const optionsScreen = document.getElementById("options-screen");
-
 const mainButton = document.getElementById("main-button");
 const playButton = document.getElementById("play-button");
 const resumeButton = document.getElementById("resume-button");
@@ -586,14 +574,14 @@ let game = {
     ];
     if (state === "PLAY") {
       document
-        .querySelectorAll(".menu-screen, #menu-buttons-container, button")
+        .querySelectorAll(".menu-heading-container, .menu-content-container, #menu-buttons-container, button")
         .forEach((el) => el.classList.add("hidden"));
       canvas.classList.remove("hidden", "paused-effect");
     }
     if (state === "PAUSE") {
       document
         .querySelectorAll(
-          "#options-screen, #menu-buttons-container, #resume-button"
+          "#options-heading, #options-container, #menu-buttons-container, #resume-button"
         )
         .forEach((el) => el.classList.remove("hidden"));
       optionsToDisable.forEach((el) => (el.disabled = true));
@@ -601,22 +589,22 @@ let game = {
     }
     if (state === "GAMEOVER") {
       document
-        .querySelectorAll(".menu-screen, button")
+        .querySelectorAll(".menu-heading-container, .menu-content-container, button")
         .forEach((el) => el.classList.add("hidden"));
       document
         .querySelectorAll(
-          "#scores-screen, #session-scores-container, #menu-buttons-container, #play-button, #options-button, #main-button"
+          "#scores-heading, #scores-container, #session-scores-container, #menu-buttons-container, #play-button, #options-button, #main-button"
         )
         .forEach((el) => el.classList.remove("hidden"));
       canvas.classList.add("paused-effect");
     }
     if (state === "OPTIONS") {
       document
-        .querySelectorAll(".menu-screen, button")
+        .querySelectorAll(".menu-heading-container, .menu-content-container, button")
         .forEach((el) => el.classList.add("hidden"));
       document
         .querySelectorAll(
-          "#options-screen, #play-button, #scores-button, #main-button"
+          "#options-heading, #options-container, #play-button, #scores-button, #main-button"
         )
         .forEach((el) => el.classList.remove("hidden"));
       optionsToDisable.forEach((el) => (el.disabled = false));
@@ -624,11 +612,11 @@ let game = {
     }
     if (state === "MAIN") {
       document
-        .querySelectorAll(".menu-screen, button")
+        .querySelectorAll(".menu-heading-container, .menu-content-container, button")
         .forEach((el) => el.classList.add("hidden"));
       document
         .querySelectorAll(
-          "#main-screen, #play-button, #scores-button, #options-button"
+          "#instructions-heading, #instructions-container, #play-button, #scores-button, #options-button"
         )
         .forEach((el) => el.classList.remove("hidden"));
       canvas.classList.add("paused-effect");

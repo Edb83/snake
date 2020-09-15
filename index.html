@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta
+      name="viewport"
+      content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap"
       rel="stylesheet"
@@ -12,68 +15,81 @@
     <link rel="stylesheet" href="assets/style.css" type="text/css" />
     <title>Cyber Snake</title>
   </head>
+
   <body>
+
+    <!-- Game container -->
     <div id="game-container" class="avoid-clicks">
-      <div id="main-screen" class="menu-screen">
+
+      <!-- Modal headings -->
+      <div id="instructions-heading" class="menu-heading-container">
         <h1>Cyber Snake</h1>
-        <div id="instructions-container" class="menu-content-container">
-          <p>
-            Use the <span class="desktop-controls-text">ARROW keys</span> or
-            <span class="mobile-controls-text">SWIPE</span> anywhere to change
-            direction
-          </p>
-          <p>
-            Press <span class="desktop-controls-text">SPACE</span> or
-            <span class="mobile-controls-text">TWO-FINGER TAP</span> to pause
-          </p>
-          <p>
-            The more you eat, the bigger you grow and the
-            <span class="special-menu-text">messier</span> things become
-          </p>
-          <p>Don't eat yourself</p>
-        </div>
       </div>
-      <div id="scores-screen" class="hidden menu-screen">
+      <div id="scores-heading" class="menu-heading-container hidden">
         <h1>Score Board</h1>
-        <div id="score-award-container" class="menu-content-container">
-          <p id="score-award-text">
-            You haven't achieved anything yet. Once you do, your top 5 scores of
-            the session will be displayed here.
-          </p>
-          <div id="session-scores-container" class="hidden">
-            <ol></ol>
-          </div>
-        </div>
       </div>
-      <div id="options-screen" class="hidden menu-screen">
+      <div id="options-heading" class="menu-heading-container hidden">
         <h1>Options</h1>
-        <div id="options-buttons-container" class="menu-content-container">
-          <div id="checkbox-container">
-            <label class="checkbox" for="audio-checkbox">
-              <input id="audio-checkbox" type="checkbox" checked />
-              <span>Sound</span>
-            </label>
-            <label class="checkbox" for="walls-checkbox">
-              <input id="walls-checkbox" type="checkbox" />
-              <span>Walls</span>
-            </label>
-          </div>
-          <div id="radio-container">
-            <label class="checkbox" for="slow-radio">
-              <input id="slow-radio" type="radio" name="difficulty" />
-              <span>Slow</span>
-            </label>
-            <label class="checkbox" for="medium-radio">
-              <input id="medium-radio" type="radio" name="difficulty" checked />
-              <span>Medium</span>
-            </label>
-            <label class="checkbox" for="fast-radio">
-              <input id="fast-radio" type="radio" name="difficulty" />
-              <span>Fast</span>
-            </label>
-          </div>
+      </div>
+
+      <!-- Instructions -->
+      <div id="instructions-container" class="menu-content-container">
+        <p>
+          Use the <span class="desktop-controls-text">ARROW keys</span> or
+          <span class="mobile-controls-text">SWIPE</span> anywhere to change
+          direction
+        </p>
+        <p>
+          Press <span class="desktop-controls-text">SPACE</span> or
+          <span class="mobile-controls-text">TWO-FINGER TAP</span> to pause
+        </p>
+        <p>
+          The more you eat, the bigger you grow and the
+          <span class="special-menu-text">messier</span> things become
+        </p>
+        <p>Don't eat yourself</p>
+      </div>
+
+      <!-- Scores -->
+      <div id="scores-container" class="menu-content-container hidden">
+        <p id="scores-award-text">
+          You haven't achieved anything yet. Once you do, your top 5 scores of
+          the session will be displayed here.
+        </p>
+        <div id="session-scores-container" class="hidden">
+          <ol></ol>
         </div>
       </div>
+
+      <!-- Options -->
+      <div id="options-container" class="menu-content-container hidden">
+        <div id="checkbox-container">
+          <label class="options-choice-button" for="audio-checkbox">
+            <input id="audio-checkbox" type="checkbox" checked />
+            <span>Sound</span>
+          </label>
+          <label class="options-choice-button" for="walls-checkbox">
+            <input id="walls-checkbox" type="checkbox" />
+            <span>Walls</span>
+          </label>
+        </div>
+        <div id="radio-container">
+          <label class="options-choice-button" for="slow-radio">
+            <input id="slow-radio" type="radio" name="difficulty" />
+            <span>Slow</span>
+          </label>
+          <label class="options-choice-button" for="medium-radio">
+            <input id="medium-radio" type="radio" name="difficulty" checked />
+            <span>Medium</span>
+          </label>
+          <label class="options-choice-button" for="fast-radio">
+            <input id="fast-radio" type="radio" name="difficulty" />
+            <span>Fast</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Menu buttons -->
       <div id="menu-buttons-container">
         <button id="play-button">Play</button>
         <button id="resume-button" class="hidden">Resume</button>
@@ -81,11 +97,16 @@
         <button id="main-button" class="hidden">Main</button>
         <button id="scores-button">Scores</button>
       </div>
-      <canvas id="canvas" class="hidden paused-effect"></canvas>
     </div>
+
+    <!-- Canvas -->
+    <canvas id="canvas" class="hidden paused-effect"></canvas>
+
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.0/howler.min.js"></script>
     <script src="assets/js/script.js"></script>
     <script src="assets/js/scoreboard.js"></script>
+    
   </body>
 </html>

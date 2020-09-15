@@ -42,7 +42,7 @@ let scoreBoard = {
     );
   },
   print() {
-    let scoreAwardText = document.getElementById("score-award-text");
+    let scoreAwardText = document.getElementById("scores-award-text");
     scoreAwardText.innerHTML = "";
 
     let scoreRange = (min, max) => {

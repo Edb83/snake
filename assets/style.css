@@ -5,6 +5,8 @@
 * Browsers: last 4 version
 */
 
+/* TOP LEVEL DOM ELEMENTS */
+
 html {
   -webkit-text-size-adjust: none;
 }
@@ -45,27 +47,24 @@ body {
   z-index: -1;
 }
 
-.avoid-clicks {
-  pointer-events: none;
-}
-
-.menu-screen {
+.menu-content-container {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  z-index: 1;
+  min-height: 10rem;
+  padding: 1.5rem;
   color: #fff;
   font-family: "Orbitron", sans-serif;
-  width: 100%;
   letter-spacing: 0.1rem;
-  z-index: 1;
-  display: block;
-  min-height: 15rem;
-}
-
-.menu-content-container {
-  padding: 1.5rem;
   -webkit-animation: fade-in ease-out 0.5s 1;
   animation: fade-in ease-out 0.5s 1;
 }
 
-/* https://www.w3schools.com/howto/howto_css_glowing_text.asp */
+/* HEADINGS */
 
 h1 {
   color: #fff;
@@ -74,6 +73,156 @@ h1 {
   animation: glow 1s ease-in-out infinite alternate;
 }
 
+/* TEXT STYLES */
+
+.desktop-controls-text {
+  color: #ffb329;
+}
+
+.mobile-controls-text {
+  color: #36da34;
+}
+
+.special-menu-text {
+  color: #ff31e6;
+  text-shadow: 0 0 1rem;
+}
+
+.blinking {
+  -webkit-animation: blink linear 1.5s 2s forwards infinite;
+  animation: blink linear 1.5s 2s forwards infinite;
+}
+
+/* DOM MANIPULATION */
+
+.avoid-clicks {
+  pointer-events: none;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.paused-effect {
+  -webkit-filter: opacity(0.3) blur(0.1rem);
+  filter: opacity(0.3) blur(0.1rem);
+}
+
+/* MENU SELECTION BUTTONS */
+
+#menu-buttons-container {
+  padding: 0 0.5rem;
+}
+
+#menu-buttons-container button {
+  min-width: 6rem;
+  -webkit-touch-callout: none;
+  margin: 0.65rem;
+  background-color: #001437;
+  border: solid 1px #fff;
+  border-radius: 5%;
+  color: #fff;
+  font-size: 1.1rem;
+  font-family: "Orbitron", sans-serif;
+  padding: 0.5rem;
+  z-index: 1;
+  pointer-events: auto;
+}
+
+#menu-buttons-container button:hover {
+  background-color: #fff;
+  color: #001437;
+  border: solid 1px #fff;
+}
+
+/* SCORES SCREEN */
+
+#session-scores-container {
+  min-width: 20%;
+}
+
+#session-scores-container ol {
+  list-style-type: none;
+  -webkit-padding-start: inherit;
+  padding-inline-start: inherit;
+}
+
+/* OPTIONS SCREEN */
+
+#checkbox-container {
+  border-bottom: solid;
+}
+
+#checkbox-container,
+#radio-container {
+  padding: 1rem;
+}
+
+.options-choice-button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  cursor: pointer;
+  position: relative;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  padding: 0.5rem;
+}
+
+.options-choice-button > span {
+  color: #fff;
+}
+
+.options-choice-button > input {
+  height: 25px;
+  width: 25px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  border: 2px solid #fff;
+  border-radius: 5%;
+  outline: none;
+  -webkit-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  background-color: #001437;
+  cursor: default;
+  margin: 0 1rem 0 0;
+  pointer-events: auto;
+}
+
+.options-choice-button > input:checked {
+  border: 2px solid #fff;
+  background-color: #fff;
+}
+
+.options-choice-button > input:checked + span::before {
+  content: "";
+  display: block;
+  text-align: center;
+  color: #41b883;
+  position: absolute;
+}
+
+.options-choice-button > input:active {
+  border: 2px solid #34495e;
+}
+
+.options-choice-button > input:disabled {
+  border: dotted #fff;
+  cursor: default;
+}
+
+/* ANIMATIONS */
+
+/* https://www.w3schools.com/howto/howto_css_glowing_text.asp */
 @-webkit-keyframes glow {
   from {
     text-shadow: 0 0 0.1em #fff, 0 0 0.2em #e60073, 0 0 0.3em #e60073,
@@ -100,56 +249,6 @@ h1 {
       0 0 0.5rem #ff4da6, 0 0 0.6rem #ff4da6, 0 0 0.7rem #ff4da6,
       0 0 0.8rem #ff4da6;
   }
-}
-
-.desktop-controls-text {
-  color: #ffb329;
-}
-
-.mobile-controls-text {
-  color: #36da34;
-}
-
-.special-menu-text {
-  color: #ff31e6;
-  text-shadow: 0 0 1rem;
-}
-
-/* For possible change to layout on landscape orientation? */
-
-/* #score-award-container {
-    display: flex;
-} */
-
-#session-scores-container {
-  min-width: 20%;
-  /* border-left: solid; */
-}
-
-/* #score-award-text {
-    padding: 0 1rem;
-    text-align: left;
-    align-self: center;
-} */
-
-#session-scores-container ol {
-  list-style-type: none;
-  -webkit-padding-start: inherit;
-  padding-inline-start: inherit;
-}
-
-.hidden {
-  display: none;
-}
-
-.paused-effect {
-  -webkit-filter: opacity(0.3) blur(0.1rem);
-  filter: opacity(0.3) blur(0.1rem);
-}
-
-.blinking {
-  -webkit-animation: blink linear 1.5s 2s forwards infinite;
-  animation: blink linear 1.5s 2s forwards infinite;
 }
 
 @-webkit-keyframes blink {
@@ -236,121 +335,13 @@ h1 {
   }
 }
 
-/* MENU SCREEN */
-
-#menu-buttons-container {
-  padding: 0 0.5rem;
-}
-
-#menu-buttons-container button {
-  min-width: 6rem;
-  -webkit-touch-callout: none;
-  margin: 0.65rem;
-  background-color: #001437;
-  border: solid 1px #fff;
-  border-radius: 5%;
-  color: #fff;
-  font-size: 1.1rem;
-  font-family: "Orbitron", sans-serif;
-  padding: 0.5rem;
-  z-index: 1;
-  pointer-events: auto;
-}
-
-#menu-buttons-container button:hover {
-  background-color: #fff;
-  color: #001437;
-  border: solid 1px #fff;
-}
-
-/* OPTIONS SCREEN */
-
-#options-buttons-container {
-  display: -ms-inline-grid;
-  display: inline-grid;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-#checkbox-container {
-  border-bottom: solid;
-}
-
-#checkbox-container,
-#radio-container {
-  padding: 1rem;
-}
-
-.checkbox {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  cursor: pointer;
-  position: relative;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
-  padding: 0.5rem;
-}
-
-.checkbox > span {
-  color: #fff;
-}
-
-.checkbox > input {
-  height: 25px;
-  width: 25px;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  -o-appearance: none;
-  appearance: none;
-  border: 2px solid #fff;
-  border-radius: 5%;
-  outline: none;
-  -webkit-transition-duration: 0.3s;
-  -o-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-  background-color: #001437;
-  cursor: default;
-  margin: 0 1rem 0 0;
-  pointer-events: auto;
-}
-
-.checkbox > input:checked {
-  border: 2px solid #fff;
-  background-color: #fff;
-}
-
-.checkbox > input:checked + span::before {
-  content: "";
-  display: block;
-  text-align: center;
-  color: #41b883;
-  position: absolute;
-}
-
-.checkbox > input:active {
-  border: 2px solid #34495e;
-}
-
-.checkbox > input:disabled {
-  border: dotted #fff;
-  cursor: default;
-}
-
 /* MEDIA QUERIES */
 
 @media (orientation: landscape) and (min-width: 420px) {
   #checkbox-container {
     border: none;
   }
-  #options-buttons-container {
+  #options-container {
     display: -webkit-inline-box;
     display: -ms-inline-flexbox;
     display: inline-flex;
@@ -371,10 +362,8 @@ h1 {
     font-size: 2rem;
   }
   .menu-content-container {
+    min-height: 20rem;
     font-size: 1.1rem;
-  }
-  .menu-screen {
-    min-height: 25rem;
   }
 }
 
@@ -386,9 +375,9 @@ h1 {
 }
 
 @media (min-width: 768px) and (min-height: 375px) {
-  .menu-screen {
+  .menu-heading-container,
+  .menu-content-container {
     font-size: 1rem;
-    min-height: 19rem;
   }
   .menu-content-container {
     padding: 2.5rem;
@@ -398,18 +387,15 @@ h1 {
     margin: 0 1rem;
     font-size: 1.25rem;
   }
-  #checkbox-container,
-  #radio-container {
-    padding: 0 2rem;
-  }
 }
 
 @media (min-width: 1024px) and (min-height: 568px) {
-  .menu-screen {
+  .menu-heading-container,
+  .menu-content-container {
     font-size: 1.5rem;
-    min-height: 27rem;
   }
   .menu-content-container {
+    min-height: 18rem;
     padding: 3rem;
   }
   #menu-buttons-container button {
@@ -424,10 +410,15 @@ h1 {
 }
 
 @media (min-width: 1200px) and (min-height: 800px) {
-  .menu-screen {
+  .menu-heading-container,
+  .menu-content-container {
     font-size: 2.25rem;
-    min-height: 40rem;
   }
+
+.menu-content-container {
+    min-height: 29rem;
+}
+
   #menu-buttons-container button {
     padding: 1rem;
     min-width: 14rem;

@@ -57,6 +57,10 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arro
 Checkbox restyling:
 https://dev.to/proticm/styling-html-checkboxes-is-super-easy-302o
 
+Avoid clicks:
+https://css-tricks.com/almanac/properties/p/pointer-events/
+
+
 # Cyber Snake
 
 ![alt text](responsive.jpg "Responsive sample")
@@ -95,7 +99,7 @@ https://dev.to/proticm/styling-html-checkboxes-is-super-easy-302o
 
 ## Context
 
-Cyber Snake is an attempt to recreate the Nokia version of a game, which many will remember fondly from the advent of mobile gaming. While Nokia's monochrome version wasn't released until 1998, the Snake game concept dates back to 1976 when [Blockade](<https://en.wikipedia.org/wiki/Blockade_(video_game)>) first appeared in arcades. Since then there have been hundreds of versions released, and for good reason. It is considered a classic in terms of design and even appears in New York's Museum of Modern Art alongside the likes of Minecraft, Pong and Tetris.
+Cyber Snake is an attempt to recreate the Nokia version of the game, which many of us will remember fondly from the advent of mobile gaming. While Nokia's monochrome version wasn't released until 1998, the Snake game concept dates back to 1976 when [Blockade](<https://en.wikipedia.org/wiki/Blockade_(video_game)>) first appeared in arcades. Since then, there have been hundreds of versions released, and for good reason. It is considered a classic in terms of design and even appears in New York's Museum of Modern Art alongside the likes of Minecraft, Pong and Tetris.
 
 This version offers classic Snake gameplay, a clean interface, satisfying graphical feedback, and the kind of 'personality' typified by games of the 90s. If you feel any pangs of nostalgia then it has achieved its aim!
 
@@ -126,11 +130,11 @@ For ease of reference, the means by which a user's expectations have been met ar
 | As a **user** I want                                                          | How this is achieved                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
 | :---------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | To know how well I am doing                                                   | During play, the only information available is the current score and the all-time high score for the device/browser. The session scoreboard shows the five most recent scores since the browser was opened, while the all-time high score is saved to local storage. Assuming cookies are not deleted, players can return to try to beat their previous high-score. On the gameover/scores screen a message is displayed based on the most recent (and even previous) performance, offering words of 'encouragement'. |
-| To have some gameplay options                                                 | Enabling walls provides a more classic style of gameplay and doubles up as a 'hard mode'.                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| To have some gameplay options                                                 | Players can choose from three speed settings (slow, medium, fast) for very different playing experiences. Additionally, enabling walls provides a more classic style of gameplay and doubles up as a 'hard mode'.                                                                                                                                                                                                                                                                                                     |
 | Satisfying visual feedback                                                    | A simple particle effect system showers the game board with multi-coloured sparks each time food is eaten. As more food is eaten, the number and velocity of sparks increases until the screen is awash with colour. This serves as both a reward for good play and in the later stages a pleasant distraction from the job at hand.                                                                                                                                                                                  |
-| To have a reason to keep playing                                              | Beyond simply beating highscores, there are increasing particle effects for scoring higher and a catty 'commentary' at gameover, with a number of possible outcomes.                                                                                                                                                                                                                                                                                                                                                     |
-| To be able to play on any device with simple controls                         | Hammer js touch controls allow for responsive play on mobile, equal to (and perhaps even surpassing) the desktop control system. Both mobile and desktop can be controlled using only one hand, and the game can be paused mid-game.                                                                                                                                                                                                                                                                                  |
-| A clean, uncluttered interface with all aspects of the game within easy reach | The design approach is very simple, with four possible screens: instructions, options, score and the play state. Each menu screen is just one click away from the others, however only the options screen can be accessed directly from the play state (using space bar or double click/tap). The only options available are to toggle audio and in-game walls.                                                                                                                                                       |
+| To have a reason to keep playing                                              | Beyond beating highscores (which are saved to local storage), there are increasing particle effects for scoring higher and a catty 'commentary' at gameover, with a number of possible outcomes.                                                                                                                                                                                                                                                                                                                      |
+| To be able to play on any device with simple controls                         | Hammer js touch controls allow for responsive play on mobile, equal to (and perhaps even surpassing) the desktop control system. Both mobile and desktop can be controlled using only one hand, and the game can be paused.                                                                                                                                                                                                                                                                                           |
+| A clean, uncluttered interface with all aspects of the game within easy reach | The design approach is very simple, with four possible screens: instructions, options, score and the play state. Each menu screen is just one click away from the others, however only the options screen can be accessed directly from the play state (using space bar or two-finger tap). The only options available are to toggle audio, in-game walls and game speed. Walls and game speed cannot be changed from the pause menu to prevent confusion or 'cheating'.                                              |
 
 Several individuals contributed to testing the game and provided feedback on its gameplay, responsiveness and aesthetics at various points in development.
 
@@ -161,9 +165,9 @@ Neon
 
 ### Site-wide
 
-**1. Feature 1**
+**1. Responsive HTML canvas**
 
-- Text
+- The fundamental aspects of the game (including the current score and high score) are represented through an HTML canvas and could appear as a standalone element in another environment. The canvas itself adapts to fill the maximum possible screen area while preserving its graphical resolution and aspect ratio. Providing a strong mobile experience was an essential requirement, and every effort has been made to ensure the game scales as far as possible without the need for extensive CSS styling.
 
 <span id="features-future"></span>
 
@@ -201,14 +205,6 @@ Neon
 - [Color Scheme Designer](https://colorschemedesigner.com/csd-3.5/) - Complimentary color scheme for the site
 - [Google Fonts](https://fonts.google.com/) - Orbitron
 
-### Visual effects
-
-- [Title](https://#)
-
-### Image manipulation
-
-- [Title](https://#)
-
 ### Online resources
 
 - [Title](https://#)
@@ -223,7 +219,7 @@ Neon
 
 ### Automated testing
 
-- [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools) - ran an audit on all pages for both desktop and mobile.
+- [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools) - ran an audit for both desktop and mobile.
 
 Summary:
 
