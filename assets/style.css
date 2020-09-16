@@ -180,8 +180,8 @@ h1 {
 }
 
 .options-choice-button > input {
-  height: 25px;
-  width: 25px;
+  height: 1.5rem;
+  width: 1.5rem;
   -webkit-appearance: none;
   -moz-appearance: none;
   -o-appearance: none;
@@ -196,6 +196,10 @@ h1 {
   cursor: default;
   margin: 0 1rem 0 0;
   pointer-events: auto;
+}
+
+#radio-container > .options-choice-button > input {
+    border-radius: 50%;
 }
 
 .options-choice-button > input:checked {
