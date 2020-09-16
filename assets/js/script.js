@@ -33,10 +33,9 @@ const right = 1;
 const up = -2;
 const down = 2;
 const hammertime = new Hammer.Manager(document.querySelector("body"), {
-    prevent_default: true,
-    touchAction: "none"
+  prevent_default: true,
+  touchAction: "none",
 });
-
 
 // DOM Elements
 const mainButton = document.getElementById("main-button");
@@ -95,6 +94,28 @@ const colorArray = [
 
 // Random number generator
 const randomNumber = (min, max) => Math.random() * (max - min) + min;
+
+// Stopwatch
+const stopWatch = {
+  timer: undefined,
+  elapsed: 0,
+  tick() {
+    this.elapsed++;
+  },
+  start() {
+    this.timer = setInterval(() => {
+      this.tick();
+    }, 1000);
+  },
+  stop() {
+    clearInterval(this.timer);
+    this.timer = null;
+  },
+  reset() {
+    this.stop();
+    this.elapsed = 0;
+  },
+};
 
 // Time convertor
 const convertSecondsToHms = (d) => {
@@ -172,7 +193,8 @@ const newGame = () => {
   newSnake();
   newFood();
   game.play();
-  game.startTime = Date.now();
+  stopWatch.reset();
+  stopWatch.start();
   hammertime.add(
     new Hammer.Pan({ direction: Hammer.DIRECTION_ALL, threshold: 20 })
   );
@@ -201,7 +223,7 @@ const gameLoop = () => {
 // ANIMATION LOOP
 
 const animateLoop = () => {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);  
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   gameBoard.draw();
   scoreBoard.draw();
   food.draw();
@@ -554,7 +576,6 @@ let game = {
   collisionDetected: undefined,
   ateFood: undefined,
   lastMove: undefined,
-  startTime: undefined,
   state: undefined,
   wallsEnabled: undefined,
   audio: undefined,
@@ -574,7 +595,9 @@ let game = {
     ];
     if (state === "PLAY") {
       document
-        .querySelectorAll(".menu-heading-container, .menu-content-container, #menu-buttons-container, button")
+        .querySelectorAll(
+          ".menu-heading-container, .menu-content-container, #menu-buttons-container, button"
+        )
         .forEach((el) => el.classList.add("hidden"));
       canvas.classList.remove("hidden", "paused-effect");
     }
@@ -589,7 +612,9 @@ let game = {
     }
     if (state === "GAMEOVER") {
       document
-        .querySelectorAll(".menu-heading-container, .menu-content-container, button")
+        .querySelectorAll(
+          ".menu-heading-container, .menu-content-container, button"
+        )
         .forEach((el) => el.classList.add("hidden"));
       document
         .querySelectorAll(
@@ -600,7 +625,9 @@ let game = {
     }
     if (state === "OPTIONS") {
       document
-        .querySelectorAll(".menu-heading-container, .menu-content-container, button")
+        .querySelectorAll(
+          ".menu-heading-container, .menu-content-container, button"
+        )
         .forEach((el) => el.classList.add("hidden"));
       document
         .querySelectorAll(
@@ -612,7 +639,9 @@ let game = {
     }
     if (state === "MAIN") {
       document
-        .querySelectorAll(".menu-heading-container, .menu-content-container, button")
+        .querySelectorAll(
+          ".menu-heading-container, .menu-content-container, button"
+        )
         .forEach((el) => el.classList.add("hidden"));
       document
         .querySelectorAll(
@@ -656,9 +685,11 @@ let game = {
       gameLoop();
     }, this.speed);
     animateLoop();
+    stopWatch.start();
   },
   stop() {
     clearInterval(this.refreshInterval);
+    stopWatch.stop();
   },
   checkSnakeCollision() {
     for (let i = 0; i < snake.array.length; i++) {
@@ -765,7 +796,7 @@ let stats = {
     localStorage.setItem("games", this.gamesPlayedAllTime);
   },
   updateGameTimeInSeconds() {
-    this.gameTimeInSeconds = Math.round((Date.now() - game.startTime) / 1000);
+    this.gameTimeInSeconds = stopWatch.elapsed;
     this.gameTimeAllTime += this.gameTimeInSeconds;
     localStorage.setItem("time", this.gameTimeAllTime);
   },
