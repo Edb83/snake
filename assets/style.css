@@ -59,7 +59,7 @@ body {
   place-content: center;
   z-index: 1;
   min-height: 50%;
-  padding: 1.5rem;
+  padding: 1rem 2rem;
   color: #fff;
   font-family: "Orbitron", sans-serif;
   letter-spacing: 0.1rem;
@@ -407,7 +407,7 @@ h1 {
   }
   .menu-content-container {
     font-size: 1rem;
-    padding: 2.5rem;
+    /* padding: 2.5rem; */
     /* min-height: 35rem; */
   }
   #menu-buttons-container button {
@@ -423,7 +423,7 @@ h1 {
   }
   .menu-content-container {
     font-size: 2rem;
-    padding: 2.5rem;
+    /* padding: 2.5rem; */
   }
   #menu-buttons-container button {
     min-width: 10rem;
@@ -439,7 +439,7 @@ h1 {
   .menu-content-container {
     font-size: 1.5rem;
     /* min-height: 18rem; */
-    padding: 3rem;
+    /* padding: 3rem; */
   }
   #menu-buttons-container button {
     min-width: 10rem;
