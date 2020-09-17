@@ -4,6 +4,7 @@ let scoreBoard = {
   currentScore: undefined,
   currentHighScore: undefined,
   highScore: parseInt(localStorage.getItem("highScore")) || 0,
+  hasHitMilestone: false,
   update() {
     if (this.array.includes(this.currentScore) || this.currentScore === 0) {
       return;
@@ -14,6 +15,8 @@ let scoreBoard = {
   },
   getCurrentHighScore() {
     this.currentHighScore = parseInt(localStorage.getItem("highScore"));
+          if (this.currentHighScore >= 100) {
+          this.hasHitMilestone = true};
   },
   updateHighScore() {
     if (this.currentScore > parseInt(this.highScore)) {
@@ -161,7 +164,7 @@ let scoreBoard = {
         `Did you consider persevering and making it to 100? `
       );
     }
-    if (this.currentScore > 100 && isNewHighScore()) {
+    if (this.currentScore > 100 && !this.hasHitMilestone) {
       scoreAwardText.innerHTML = `<p>That's quite the milestone you've hit.</p><p>And it only took you ${stats.gamesPlayedAllTime} attempts!</p>`;
     } else if (scoreRange(100, 124)) {
       scoreAwardText.insertAdjacentHTML(
