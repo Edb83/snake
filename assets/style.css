@@ -154,19 +154,23 @@ h1 {
 }
 
 #scores-award-text {
-  margin-block-start: 0;
+  -webkit-margin-before: 0;
+          margin-block-start: 0;
 }
 
 #scores-award-text > p {
-  margin-block-start: 0;
+  -webkit-margin-before: 0;
+          margin-block-start: 0;
 }
 
 #session-scores-container ol {
   list-style-type: none;
   -webkit-padding-start: inherit;
   padding-inline-start: inherit;
-  margin-block-start: auto;
-  margin-block-end: auto;
+  -webkit-margin-before: auto;
+          margin-block-start: auto;
+  -webkit-margin-after: auto;
+          margin-block-end: auto;
 }
 
 /* OPTIONS SCREEN */
@@ -389,7 +393,6 @@ h1 {
     font-size: 2rem;
   }
   .menu-content-container {
-    /* min-height: 20rem; */
     font-size: 1.1rem;
   }
 }
@@ -407,8 +410,6 @@ h1 {
   }
   .menu-content-container {
     font-size: 1rem;
-    /* padding: 2.5rem; */
-    /* min-height: 35rem; */
   }
   #menu-buttons-container button {
     min-width: 7rem;
@@ -423,7 +424,6 @@ h1 {
   }
   .menu-content-container {
     font-size: 2rem;
-    /* padding: 2.5rem; */
   }
   #menu-buttons-container button {
     min-width: 10rem;
@@ -438,8 +438,6 @@ h1 {
   }
   .menu-content-container {
     font-size: 1.5rem;
-    /* min-height: 18rem; */
-    /* padding: 3rem; */
   }
   #menu-buttons-container button {
     min-width: 10rem;
@@ -458,7 +456,6 @@ h1 {
   }
   .menu-content-container {
     font-size: 3rem;
-    /* min-height: 50rem; */
     padding: 3rem;
   }
 
