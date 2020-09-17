@@ -1,4 +1,3 @@
-
 /*
 * Prefixed by https://autoprefixer.github.io
 * PostCSS: v7.0.29,
@@ -59,7 +58,7 @@ body {
   display: grid;
   place-content: center;
   z-index: 1;
-  min-height: 10rem;
+  min-height: 50%;
   padding: 1.5rem;
   color: #fff;
   font-family: "Orbitron", sans-serif;
@@ -143,9 +142,9 @@ h1 {
 
 #instructions-container > p {
   -webkit-margin-after: 0.5rem;
-          margin-block-end: 0.5rem;
+  margin-block-end: 0.5rem;
   -webkit-margin-before: 0.5rem;
-          margin-block-start: 0.5rem;
+  margin-block-start: 0.5rem;
 }
 
 /* SCORES SCREEN */
@@ -154,10 +153,20 @@ h1 {
   min-width: 20%;
 }
 
+#scores-award-text {
+  margin-block-start: 0;
+}
+
+#scores-award-text > p {
+  margin-block-start: 0;
+}
+
 #session-scores-container ol {
   list-style-type: none;
   -webkit-padding-start: inherit;
   padding-inline-start: inherit;
+  margin-block-start: auto;
+  margin-block-end: auto;
 }
 
 /* OPTIONS SCREEN */
@@ -234,7 +243,7 @@ h1 {
 
 .options-choice-button > input:disabled {
   /* border: dotted #fff; */
-      border-color: #3f4349;
+  border-color: #3f4349;
   cursor: default;
 }
 
@@ -380,7 +389,7 @@ h1 {
     font-size: 2rem;
   }
   .menu-content-container {
-    min-height: 20rem;
+    /* min-height: 20rem; */
     font-size: 1.1rem;
   }
 }
@@ -399,7 +408,7 @@ h1 {
   .menu-content-container {
     font-size: 1rem;
     padding: 2.5rem;
-    min-height: 35rem;
+    /* min-height: 35rem; */
   }
   #menu-buttons-container button {
     min-width: 7rem;
@@ -429,7 +438,7 @@ h1 {
   }
   .menu-content-container {
     font-size: 1.5rem;
-    min-height: 18rem;
+    /* min-height: 18rem; */
     padding: 3rem;
   }
   #menu-buttons-container button {
@@ -449,16 +458,16 @@ h1 {
   }
   .menu-content-container {
     font-size: 3rem;
-    min-height: 50rem;
+    /* min-height: 50rem; */
     padding: 3rem;
   }
 
-#instructions-container > p {
-  -webkit-margin-after: 1rem;
-          margin-block-end: 1rem;
-  -webkit-margin-before: 1rem;
-          margin-block-start: 1rem;
-}
+  #instructions-container > p {
+    -webkit-margin-after: 1rem;
+    margin-block-end: 1rem;
+    -webkit-margin-before: 1rem;
+    margin-block-start: 1rem;
+  }
 
   #menu-buttons-container button {
     min-width: 15rem;
@@ -476,16 +485,16 @@ h1 {
     font-size: 4rem;
   }
   .menu-content-container {
-    font-size: 2.25rem;
-    min-height: 29rem;
+    font-size: 2rem;
+    /* min-height: 29rem; */
   }
 
-#instructions-container > p {
-  -webkit-margin-after: 2rem;
-          margin-block-end: 2rem;
-  -webkit-margin-before: 2rem;
-          margin-block-start: 2rem;
-}
+  #instructions-container > p {
+    -webkit-margin-after: 2rem;
+    margin-block-end: 2rem;
+    -webkit-margin-before: 2rem;
+    margin-block-start: 2rem;
+  }
 
   #menu-buttons-container button {
     padding: 1rem;
