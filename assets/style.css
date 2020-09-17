@@ -49,11 +49,13 @@ body {
 
 .menu-content-container {
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -ms-flex-item-align: center;
-      -ms-grid-row-align: center;
-      align-self: center;
+  -ms-grid-row-align: center;
+  align-self: center;
+  display: grid;
+  place-content: center;
   z-index: 1;
   min-height: 10rem;
   padding: 1.5rem;
@@ -135,6 +137,13 @@ h1 {
   border: solid 1px #fff;
 }
 
+/* INSTRUCTIONS SCREEN */
+
+#instructions-container > p {
+  margin-block-end: 0.5rem;
+  margin-block-start: 0.5rem;
+}
+
 /* SCORES SCREEN */
 
 #session-scores-container {
@@ -199,7 +208,7 @@ h1 {
 }
 
 #radio-container > .options-choice-button > input {
-    border-radius: 50%;
+  border-radius: 50%;
 }
 
 .options-choice-button > input:checked {
@@ -379,12 +388,13 @@ h1 {
 }
 
 @media (min-width: 768px) and (min-height: 375px) {
-  .menu-heading-container,
-  .menu-content-container {
-    font-size: 1rem;
+  h1 {
+    font-size: 2rem;
   }
   .menu-content-container {
+    font-size: 1rem;
     padding: 2.5rem;
+    min-height: 35rem;
   }
   #menu-buttons-container button {
     min-width: 7rem;
@@ -393,12 +403,27 @@ h1 {
   }
 }
 
-@media (min-width: 1024px) and (min-height: 568px) {
-  .menu-heading-container,
-  .menu-content-container {
-    font-size: 1.5rem;
+@media (min-width: 768px) and (min-height: 1024px) {
+  h1 {
+    font-size: 3.5rem;
   }
   .menu-content-container {
+    font-size: 2rem;
+    padding: 2.5rem;
+  }
+  #menu-buttons-container button {
+    min-width: 10rem;
+    margin: 0 1rem;
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 1024px) and (min-height: 568px) {
+  h1 {
+    font-size: 3rem;
+  }
+  .menu-content-container {
+    font-size: 1.5rem;
     min-height: 18rem;
     padding: 3rem;
   }
@@ -413,14 +438,44 @@ h1 {
   }
 }
 
-@media (min-width: 1200px) and (min-height: 800px) {
-  .menu-heading-container,
+@media (min-width: 1024px) and (min-height: 1366px) {
+  h1 {
+    font-size: 5rem;
+  }
   .menu-content-container {
-    font-size: 2.25rem;
+    font-size: 3rem;
+    min-height: 50rem;
+    padding: 3rem;
   }
 
-.menu-content-container {
+#instructions-container > p {
+  margin-block-end: 1rem;
+  margin-block-start: 1rem;
+}
+
+  #menu-buttons-container button {
+    min-width: 15rem;
+    padding: 0.7rem;
+    font-size: 3rem;
+  }
+  #checkbox-container,
+  #radio-container {
+    padding: 0 3rem;
+  }
+}
+
+@media (min-width: 1200px) and (min-height: 800px) {
+  h1 {
+    font-size: 4rem;
+  }
+  .menu-content-container {
+    font-size: 2.25rem;
     min-height: 29rem;
+  }
+
+#instructions-container > p {
+  margin-block-end: 2rem;
+  margin-block-start: 2rem;
 }
 
   #menu-buttons-container button {
