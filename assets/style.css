@@ -1,3 +1,4 @@
+
 /*
 * Prefixed by https://autoprefixer.github.io
 * PostCSS: v7.0.29,
@@ -54,6 +55,7 @@ body {
   -ms-flex-item-align: center;
   -ms-grid-row-align: center;
   align-self: center;
+  display: -ms-grid;
   display: grid;
   place-content: center;
   z-index: 1;
@@ -140,8 +142,10 @@ h1 {
 /* INSTRUCTIONS SCREEN */
 
 #instructions-container > p {
-  margin-block-end: 0.5rem;
-  margin-block-start: 0.5rem;
+  -webkit-margin-after: 0.5rem;
+          margin-block-end: 0.5rem;
+  -webkit-margin-before: 0.5rem;
+          margin-block-start: 0.5rem;
 }
 
 /* SCORES SCREEN */
@@ -449,8 +453,10 @@ h1 {
   }
 
 #instructions-container > p {
-  margin-block-end: 1rem;
-  margin-block-start: 1rem;
+  -webkit-margin-after: 1rem;
+          margin-block-end: 1rem;
+  -webkit-margin-before: 1rem;
+          margin-block-start: 1rem;
 }
 
   #menu-buttons-container button {
@@ -474,8 +480,10 @@ h1 {
   }
 
 #instructions-container > p {
-  margin-block-end: 2rem;
-  margin-block-start: 2rem;
+  -webkit-margin-after: 2rem;
+          margin-block-end: 2rem;
+  -webkit-margin-before: 2rem;
+          margin-block-start: 2rem;
 }
 
   #menu-buttons-container button {
