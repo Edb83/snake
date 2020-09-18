@@ -49,7 +49,7 @@ This version offers classic Snake gameplay, a clean interface, satisfying graphi
 
 ### Overview
 
-The game has been designed with a mobile-first philosophy with no 'fluff' to distract from its purpose of providing short bursts of reliable entertainment. All design decisions have been made with the following goals in mind:
+The game has been designed with a mobile-first philosophy, with no 'fluff' to distract players from having some fun. All design decisions have been made with the following goals in mind:
 
 - Simplicity
 - Easy navigation
@@ -82,8 +82,8 @@ The game has been designed with a mobile-first philosophy with no 'fluff' to dis
 
 #### As a player I want:
 
-- To be able to jump straight into the game without needing to search for further instructions
-- A clean, uncluttered interface with all aspects of the game within easy reach
+- To be able to jump straight into the game without needing further instructions
+- A clean, uncluttered interface with all elements of the game within easy reach
 - To be able to play on any device with simple, responsive controls
 - To have options for both casual or more challenging gameplay
 - To know how well I am doing
@@ -100,9 +100,9 @@ The full suite of wireframes for **desktop**, **tablet** and **mobile** devices,
 
 Overall the wireframes were successfully converted into a functioning application, however there were some deviations from the plan. These were:
 
-1. Statistics menu - this felt like a step too far and instead became the basis for the text feedback given to players based on their score. Rather that being able to pull up a screen showing, for example, the average score per game, this information is instead provided with comments such as "Your average score per game is X" or "You have been playing for X minutes in total".
+1. Statistics menu - this was intended to live on a separate menu screen but was moved entirely to the scores menu. Rather that being able to pull up a screen showing, for example, the average score per game, this information is instead provided in comments such as "Your average score per game is X" or "You have been playing for X minutes in total"
 
-2. Advanced image manipulation - the initial idea was to have a more flashy landing screen which would respond to user mouse movements, and to have other visuals passing behind the game play area while playing the game, either using the HTML canvas or CSS animations. These elements were however beyond the scope of the project and would have ultimately been an unnecessary distraction if not handled elegantly.
+2. Advanced image manipulation - the initial idea was to have a more flashy landing screen which would respond to user mouse movements, and to have other visuals passing behind the game area during play, either using the HTML canvas or CSS animations. This feature was outside the scope of the project and would have ultimately been an unnecessary distraction if not handled elegantly
 
 <span id="ux-design"></span>
 
@@ -128,56 +128,59 @@ Neon
 
 **1. Responsive HTML canvas**
 
-- The core game (including the current score and high score) is represented through an HTML canvas and could appear as a standalone element in another environment.
-- Whatever the display size or screen orientation, the canvas adapts to fill the maximum possible screen area while preserving its graphical resolution and aspect ratio. Providing a strong mobile experience was an essential requirement, and every effort has been made to ensure the game scales as far as possible without the need for extensive CSS styling. This extends not just to the size of the snake and food, but to the font-size of the scoreboard and to the size, velocity and gravity of particle effects.
+- The core game (including the current score and high score) is represented through an HTML canvas and could appear as a standalone element in another environment
+- Whatever the display size or screen orientation, the canvas adapts to fill the maximum possible screen area while preserving its graphical resolution and aspect ratio. A strong mobile experience was an essential requirement, and every effort has been made to ensure the game scales as far as possible without the need for extensive CSS styling. This extends not just to the size of the snake and food, but to the font-size of the scoreboard and to the size, velocity and gravity of particle effects
 
 **2. Responsive controls**
 
-- The game can be controlled with either a keyboard (and mouse) or touch-screen swipe gestures.
-- Responses to player inputs are very crisp and reliable at any game speed.
-- On mobile, swipe gestures are recognised across the entire screen to prevent frustrating missed gestures.
-- Thanks to panning gesture recognition, sharp turns can be achieved with comparative ease, even on mobile.
-- The game can be paused by either hitting spacebar or tapping the screen with two fingers simultaneously.
+- The game can be controlled with either a keyboard (and mouse) or touch-screen swipe gestures
+- Player input responses are very crisp and reliable at any game speed
+- On mobile, swipe gestures are recognised across the entire screen to prevent missed gestures
+- Thanks to panning gesture recognition, sharp turns can be achieved with relative ease, even on mobile
+- The game can be paused by either hitting spacebar or tapping the screen with two fingers simultaneously
 
 **3. Menu screens**
 
-- Menus have been kept to the bare minimum while still providing a full and rewarding experience:
-  - Main: shows controls for both desktop and mobile, and explains the simple rules of the game. There is also a subtle hint of the game's 'personality', which is explored more fully in its commentary on player scores.
-  - Options: just the essentials for toggling sound, toggling walls and setting the game speed (slow, medium, fast). While paused, the only option which can be changed is game sound, with the others still visible but showing as disabled. This allows players to mute the game if they wish, but prevents them from changing fundamental settings mid-game and from possibly becoming confused by an 'extra' menu.
-  - Scores: shows the five top scores of the session plus some light-hearted encouragement based on the most recent score. If the last score was in the top five then a subtle animation effect indicates where the score ranks.
+- Menus have been kept to a bare minimum:
+  - Main: shows controls for both desktop and mobile, and briefly explains how to play. There is also a hint of the game's 'personality', which is realised more fully on the scores screen
+  - Options: sound toggle, walls toggle and choice of slow, medium or fast game speed. While paused, the only option which can be changed is game sound, with the others still visible but showing as disabled. This allows players to mute the game if they wish, but prevents them from changing other settings mid-game and from possibly becoming confused by an 'extra' menu
+  - Scores: shows the five top scores of the session plus some light-hearted encouragement based on the most recent score. If the last score was in the top five then a subtle animation effect indicates where the score ranks
 
 **4. Game personality**
 
-- In order to inject some personality in keeping with games from the 90s, text feedback is given to the player based on how well the 'narrator' deems they have performed. This is a collection of around 30 comments (which appear in various combinations on the scores menu) intended to amuse, encourage and ridicule players as they attempt to beat their high score. This approach was adopted rather than relying on dramatic music/audio or flashy visuals, with the aim of keeping players intruiged by what the game might say on reaching the next score milestone.
+- In order to inject some personality in keeping with games from the 90s, text feedback is given to the player based on how well the game deems they have performed. This is a collection of around 30 comments (which appear in various combinations on the scores menu) intended to amuse, encourage and ridicule players as they attempt to beat their high score. This approach was adopted rather than relying on dramatic music/audio or flashy visuals, with the aim of keeping players intruiged by what the game might say on reaching the next score milestone. The intended effect is that the game is judging the player's performance, giving them an incentive to prove it wrong
 
 **5. Playstyles**
 
-- A good mobile game is one which caters to both pickup-and-play and more engaged playstyles. The options of slow, medium and fast game speeds should suit all types of players, with the option of turning on walls providing an additional challenge and a more traditional Snake experience.
+- A good mobile game caters to both casual and more engaged playstyles. The various game speeds should cater to all types of players, with the option to turn on walls providing an additional challenge and a more traditional Snake experience
 
-**High scores saved**
+**Local high score save**
 
-- The high score is saved to the device's local storage and will remain between game sessions, providing cookies are not deleted.
+- The high score is saved to the device's local storage and will remain between game sessions, providing cookies are not deleted
 
 **Accessible layout**
 
-- Efforts have been made to improve the experience of playing, especially for mobile players.
 - In portrait mode the canvas is pushed to the top of the screen so that players do not obscure the view of the game with their fingers, while in landscape mode the canvas is centred to allow for a two-thumbed control style either side of the canvas.
-- The aim was to create something which felt like a standalone application rather than something appearing in a browser, insofar as this was possible. The game has been designed to always fit within a single screen, no matter its size or the menu content. There should never be an occasion where the player has to scroll or zoom, and for this reason these features have been disabled. Playing the game from a page saved to the homescreen (on iOS) provides the best experience.
+- The game has been designed to always fit within a single screen, no matter its size or the menu content, to give it the feeling of a standalone application. There should never be an occasion where the player has to scroll or zoom, and for this reason these features have been disabled
 
 
 <span id="features-future"></span>
 
 ### Future
 
-- Storing and displaying chosen options (i.e walls on/off and game speed) alongside scores
+- Descriptive scoring system
+
+   - Recording walls on/off and game speed alongside scores. After all, 200 points on slow with no walls is less of an achievement than 200 on fast with walls enabled
 
 - Online leaderboard
 
-  _A means of competing for a place on a global/regional leaderboard, with the ability to view existing records_
+   - A global/regional leaderboard to give a true sense of competition
 
 - Gameplay customisations
 
-  _Beyond the classic implementation: special food changing playstyle (e.g. change of speed, increasing points, spawning more food objects, reducing size of snake body), different game modes (e.g. obstacles or wall sections within the  play area, a maze), graphical options (e.g. choice of snake colour, themes and particle effects)_
+   - Special food changing playstyle - e.g. speed, points multiplier, extra food objects, altering size of snake body
+   - Different game modes - e.g. obstacles within the play area, a maze)
+   - Graphical options - e.g. choice of snake colour, themes, particle effects
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
