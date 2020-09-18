@@ -36,7 +36,7 @@
 
 ## Context
 
-Cyber Snake is an attempt to recreate the Nokia version of the game, which many of us will remember fondly from the advent of mobile gaming. While Nokia's monochrome version wasn't released until 1998, the Snake game concept dates back to 1976 when [Blockade](<https://en.wikipedia.org/wiki/Blockade_(video_game)>) first appeared in arcades. Since then, there have been hundreds of versions released, and for good reason. It is considered a classic in terms of design and even appears in New York's Museum of Modern Art alongside the likes of Minecraft, Pong and Tetris.
+Cyber Snake is an homage to the Nokia version of the game, which many of us will remember fondly from the advent of mobile gaming. While Nokia's monochrome version wasn't released until 1998, the Snake game concept dates back to 1976 when [Blockade](<https://en.wikipedia.org/wiki/Blockade_(video_game)>) first appeared in arcades. Since then, there have been hundreds of versions released, and for good reason. It is considered a classic in terms of design and even appears in New York's Museum of Modern Art alongside the likes of Minecraft, Pong and Tetris.
 
 This version offers classic Snake gameplay, a clean interface, satisfying graphical feedback, and the kind of 'personality' typified by games of the 90s. If you feel any pangs of nostalgia then it has achieved its aim!
 
@@ -48,6 +48,12 @@ This version offers classic Snake gameplay, a clean interface, satisfying graphi
 <span id="ux-overview"></span>
 
 ### Overview
+
+The game concept is simple:
+
+ - Guide your snake by changing its direction up, down, left or right in order to eat as many food blobs as you can
+ - Every time you eat some food you score one point, your snake grows by one segment and a new food spawns in a random location
+ - The game ends when your snake's head collides with its body or, if walls are enabled, you hit a wall.
 
 The game has been designed with a mobile-first philosophy, with no 'fluff' to distract players from having some fun. All design decisions have been made with the following goals in mind:
 
@@ -128,7 +134,7 @@ Neon
 
 **1. Responsive HTML canvas**
 
-- The core game (including the current score and high score) is represented through an HTML canvas and could appear as a standalone element in another environment
+- The core game (including the current score and high score) is exists entirely in an HTML canvas element and could appear as a standalone element in another environment
 - Whatever the display size or screen orientation, the canvas adapts to fill the maximum possible screen area while preserving its graphical resolution and aspect ratio. A strong mobile experience was an essential requirement, and every effort has been made to ensure the game scales as far as possible without the need for extensive CSS styling. This extends not just to the size of the snake and food, but to the font-size of the scoreboard and to the size, velocity and gravity of particle effects
 
 **2. Responsive controls**
