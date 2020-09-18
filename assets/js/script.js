@@ -127,11 +127,15 @@ const keyboardHandler = (e) => {
     snake.direction = right;
   }
 
-  if (e.keyCode == 32 && game.state === "PLAY") {
+  if (e.keyCode === 32 && game.state === "PLAY") {
     game.changeState("PAUSE");
     game.stop();
-  } else if (e.keyCode == 32 && game.state === "PAUSE") {
+  } else if (e.keyCode === 32 && game.state === "PAUSE") {
     game.play();
+  }
+
+  if (e.keyCode === 32 && game.state === "GAMEOVER") {
+      newGame();
   }
 };
 
