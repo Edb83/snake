@@ -163,19 +163,54 @@ Neon
 
 <span id="features-all"></span>
 
-### Site-wide
+### Current
 
 **1. Responsive HTML canvas**
 
-- The fundamental aspects of the game (including the current score and high score) are represented through an HTML canvas and could appear as a standalone element in another environment. The canvas itself adapts to fill the maximum possible screen area while preserving its graphical resolution and aspect ratio. Providing a strong mobile experience was an essential requirement, and every effort has been made to ensure the game scales as far as possible without the need for extensive CSS styling.
+- The fundamental aspects of the game (including the current score and high score) are represented through an HTML canvas and could appear as a standalone element in another environment.
+- Whatever the display size or screen orientation, the canvas itself adapts to fill the maximum possible screen area while preserving its graphical resolution and aspect ratio.
+- Providing a strong mobile experience was an essential requirement, and every effort has been made to ensure the game scales as far as possible without the need for extensive CSS styling. This extends not just to the size of the snake and food, but to the font-size of the scoreboard and to the size, velocity and gravity of particle effects.
+
+**2. Responsive controls**
+
+- The game can be controlled with either a keyboard (and mouse) or touch-screen swipe gestures.
+- One particular challenge was to prevent frustrating instances of the snake going back on itself due to rapid direction changes and ending the game unexpectedly (see BUGS below). With this issue resolved, responses to player inputs are very crisp and reliable at any game speed.
+- On mobile, swipe gestures are recognised across the entire screen to prevent frustrating missed gestures
+- In comparison to the  difficulty of controlling Nokia's Snake, the mobile experience of Cyber Snake is much improved. Thanks to its panning gesture recognition, sharp turns can be achieved with comparative ease.
+- The game can be paused by either hitting spacebar or tapping the screen with two fingers simultaneously.
+
+**3. Menu screens**
+
+- Menus have been kept to the bare minimum while still providing a full and rewarding experience:
+  - Main: shows the controls for both desktop and mobile, and explains the simple rules of the game. There is also a subtle hint of the game's tone/character (explored more fully in its commentary on player scores)
+  - Options: provides options for toggling game sound, toggling walls and setting the game speed (slow, medium, fast). While paused, the only option which can be changed is game sound, with the others still visible but showing as disabled. This allows players to toggle the sound but prevents them from changing fundamental settings mid-game and from possibly becoming confused by an 'extra' menu
+  - Scores: shows the five top scores of the session plus some light-hearted encouragement based on the most recent score. If the last score was in the top five then a subtle animation effect indicates where the score ranks
+
+**4. Game personality**
+
+- In order to inject some personality in keeping with games from the 90s, text feedback is given to the player based on how well the 'narrator' deems they have performed. This is a collection of around 30 comments (which appear in various combinations on the scores menu) intended to ridicule, encourage and amuse players as they attempt to beat their high score. This approach was adopted instead of relying on dramatic music/audio or flashy visuals, with the aim of keeping players intruiged by what the game might say on reaching the next score milestone.
+
+**5. Playstyles**
+
+- A good mobile game is one which caters to both pickup-and-play and more engaged playstyles. The options of slow, medium and fast game speeds should suit all types of players, with the option of turning on walls providing an additional challenge and a more traditional Snake experience.
+
+**High scores saved**
+
+**Accessible layout**
+
+- Efforts have been made to improve the experience of playing, especially for mobile players. In portrait mode the canvas is pushed to the top of the screen so that players do not obscure the view of the game with their fingers, while in landscape mode the canvas is centred to allow for a two-thumbed control style
+- The aim was to create something which felt like a standalone application rather than something appearing in a browser, insofar as this was possible. The game has been designed to always fit within a single screen, no matter its size or the menu content. There should never be an occasion where the player has to scroll or zoom, and for this reason these features have been disabled. While running in a mobile phone/tablet browser works very well, playing the game as a page saved to the homescreen (on iOS) provides by far the best experience
+
 
 <span id="features-future"></span>
 
-### Features left to implement
+### Future
 
-- Global leaderboard
+- Storing and displaying chosen options (i.e walls on/off and game speed) alongside scores
 
-  _Details_
+- Online leaderboard
+
+  _A means of competing for a place on a global/regional leaderboard, with the ability to view existing records_
 
 - Gameplay customisations
   _Beyond the classic implementation: Difficulty levels, special food, obstacles, graphical options_
@@ -191,7 +226,8 @@ Neon
 - HTML
 - CSS
 - Javascript
-  - [HammerJS](https://hammerjs.github.io/) - modal gallery
+  - [HammerJS](https://hammerjs.github.io/) - mobile gesture recognition for responsive controls
+  - [HowlerJS](https://howlerjs.com/) - handling of audio elements using Web Audio API
 
 ### Project management
 
