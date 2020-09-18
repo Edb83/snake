@@ -1,71 +1,8 @@
-Drawing canvas:
-https://developer.mozilla.org/en-US/docs/Games/Tutorials/2D_Breakout_game_pure_JavaScript/Create_the_Canvas_and_draw_on_it
-
-Detecting keypresses:
-https://stackoverflow.com/questions/5597060/detecting-arrow-key-presses-in-javascript
-
-BUG: rapid pressing of direction keys results in snake eating itself
-tried: setInterval on event listener
-setTimeout
-storing keypresses in queue
-measuring time since last keypress
-RESOLVED: moved keydownHandler into event listener and added if statement to check time since last keypress
-https://stackoverflow.com/questions/14667010/limit-how-many-times-an-event-listener-can-trigger-every-second
-
-Sound function:
-https://www.w3schools.com/graphics/game_sound.asp
-
-Free sounds:
-https://freesound.org/home/
-
-Canvas tutorial:
-https://www.youtube.com/watch?v=EO6OkltgudE&list=PLpPnRKq7eNW3We9VdCfx9fprhqXHwTPXL&index=1
-
-Color wheel:
-https://color.adobe.com/create/color-wheel
-
-Sorting scores:
-https://www.javascripttutorial.net/javascript-array-sort/
-
-Guidance on how to handle game loops:
-https://developer.mozilla.org/en-US/docs/Games/Anatomy
-
-Preventing setInterval repeating on game restart:
-https://stackoverflow.com/questions/29836686/code-in-setinterval-executing-more-than-once
-
-Random int (min, max):
-https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
-
-Dynamic canvas font size:
-https://stackoverflow.com/questions/22943186/html5-canvas-font-size-based-on-canvas-size
-
-Prevent scrolling on mobile:
-https://stackoverflow.com/questions/10592411/disable-scrolling-in-all-mobile-devices#:~:text=document.-,body.,behaviour%20prevented%20should%20be%20scrolling.
-
-Hammer.js:
-https://hammerjs.github.io/
-
-Glowing text:
-https://www.w3schools.com/howto/howto_css_glowing_text.asp
-
-Seconds to HMS converor:
-https://stackoverflow.com/questions/37096367/how-to-convert-seconds-to-minutes-and-hours-in-javascript/37096923
-
-Arrow functions and this:
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions#No_separate_this
-
-Checkbox restyling:
-https://dev.to/proticm/styling-html-checkboxes-is-super-easy-302o
-
-Avoid clicks:
-https://css-tricks.com/almanac/properties/p/pointer-events/
-
-
 # Cyber Snake
 
 ![alt text](responsive.jpg "Responsive sample")
 
-**[Live site](https://edb83.github.io/snake/)**
+**[Live demo](https://edb83.github.io/snake/)**
 
 ---
 
@@ -75,13 +12,13 @@ https://css-tricks.com/almanac/properties/p/pointer-events/
 
 - <a href="#context">Context</a>
 - <a href="#ux">UX</a>
+  - <a href="#ux-overview">Overview</a>
   - <a href="#ux-stories">User stories</a>
   - <a href="#ux-wireframes">Wireframes</a>
-  - <a href="#ux-theme">Theme</a>
+  - <a href="#ux-design">Design</a>
 - <a href="#features">Features</a>
-  - <a href="#features-all">Site wide</a>
-  - <a href="#features-pages">Pages</a>
-  - <a href="#features-future">Still to implement</a>
+  - <a href="#features-current">Current</a>
+  - <a href="#features-future">Future</a>
 - <a href="#technologies">Technologies Used</a>
 - <a href="#testing">Testing</a>
   - <a href="#testing-auto">Automated</a>
@@ -107,6 +44,8 @@ This version offers classic Snake gameplay, a clean interface, satisfying graphi
 <span id="ux"></span>
 
 ## UX
+
+<span id="ux-overview"></span>
 
 ### Overview
 
@@ -163,7 +102,9 @@ Overall the wireframes were successfully converted into a functioning applicatio
 
 1. Statistics menu - this felt like a step too far and instead became the basis for the text feedback given to players based on their score. Rather that being able to pull up a screen showing, for example, the average score per game, this information is instead provided with comments such as "Your average score per game is X" or "You have been playing for X minutes in total".
 
-2. Advanced image manipulation via the canvas - the initial idea was to have a more flashy landing screen which would respond to user mouse movements, and to have other visuals passing behind the game play area while playing the game, however this was both beyond the scope of the project and would have ultimately been an unnecessary distraction if not handled elegantly.
+2. Advanced image manipulation - the initial idea was to have a more flashy landing screen which would respond to user mouse movements, and to have other visuals passing behind the game play area while playing the game, either using the HTML canvas or CSS animations. These elements were however beyond the scope of the project and would have ultimately been an unnecessary distraction if not handled elegantly.
+
+<span id="ux-design"></span>
 
 ### Design choices
 
@@ -171,13 +112,17 @@ Retro
 Cyber
 Neon
 
+#### Colours
+
+#### Fonts
+
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
 <span id="features"></span>
 
 ## Features
 
-<span id="features-all"></span>
+<span id="features-current"></span>
 
 ### Current
 
@@ -438,15 +383,15 @@ Further reading and troubleshooting on cloning a repository from GitHub can be f
 
 ## Credits
 
-Code was either directly copied or modified from the following sources:
+Code was modified from the following sources:
 
 - [Title](https://#)
 
 ### Content
 
-Text
+All text within the game is original content.
 
-The Deployment section was based on Richard Wells' README ([Source](https://github.com/D0nni387/Luxury-Door-Solutions/blob/master/README.md)).
+The Deployment section was based on Richard Wells' README.md ([Source](https://github.com/D0nni387/Luxury-Door-Solutions/blob/master/README.md)).
 
 ### Acknowledgements
 
@@ -456,6 +401,70 @@ The Deployment section was based on Richard Wells' README ([Source](https://gith
 
 ### Disclaimer
 
-This application was developed for educational purposes.
+This game was developed for educational purposes.
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
+
+
+
+<!-- Drawing canvas:
+https://developer.mozilla.org/en-US/docs/Games/Tutorials/2D_Breakout_game_pure_JavaScript/Create_the_Canvas_and_draw_on_it
+
+Detecting keypresses:
+https://stackoverflow.com/questions/5597060/detecting-arrow-key-presses-in-javascript
+
+BUG: rapid pressing of direction keys results in snake eating itself
+tried: setInterval on event listener
+setTimeout
+storing keypresses in queue
+measuring time since last keypress
+RESOLVED: moved keydownHandler into event listener and added if statement to check time since last keypress
+https://stackoverflow.com/questions/14667010/limit-how-many-times-an-event-listener-can-trigger-every-second
+
+Sound function:
+https://www.w3schools.com/graphics/game_sound.asp
+
+Free sounds:
+https://freesound.org/home/
+
+Canvas tutorial:
+https://www.youtube.com/watch?v=EO6OkltgudE&list=PLpPnRKq7eNW3We9VdCfx9fprhqXHwTPXL&index=1
+
+Color wheel:
+https://color.adobe.com/create/color-wheel
+
+Sorting scores:
+https://www.javascripttutorial.net/javascript-array-sort/
+
+Guidance on how to handle game loops:
+https://developer.mozilla.org/en-US/docs/Games/Anatomy
+
+Preventing setInterval repeating on game restart:
+https://stackoverflow.com/questions/29836686/code-in-setinterval-executing-more-than-once
+
+Random int (min, max):
+https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
+
+Dynamic canvas font size:
+https://stackoverflow.com/questions/22943186/html5-canvas-font-size-based-on-canvas-size
+
+Prevent scrolling on mobile:
+https://stackoverflow.com/questions/10592411/disable-scrolling-in-all-mobile-devices#:~:text=document.-,body.,behaviour%20prevented%20should%20be%20scrolling.
+
+Hammer.js:
+https://hammerjs.github.io/
+
+Glowing text:
+https://www.w3schools.com/howto/howto_css_glowing_text.asp
+
+Seconds to HMS converor:
+https://stackoverflow.com/questions/37096367/how-to-convert-seconds-to-minutes-and-hours-in-javascript/37096923
+
+Arrow functions and this:
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions#No_separate_this
+
+Checkbox restyling:
+https://dev.to/proticm/styling-html-checkboxes-is-super-easy-302o
+
+Avoid clicks:
+https://css-tricks.com/almanac/properties/p/pointer-events/ -->
