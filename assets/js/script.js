@@ -37,6 +37,7 @@ const hammertime = new Hammer.Manager(document.querySelector("body"), {
   touchAction: "none",
 });
 
+
 // DOM Elements
 const mainButton = document.getElementById("main-button");
 const playButton = document.getElementById("play-button");
@@ -90,32 +91,11 @@ const colorArray = [
   "rgba(255,255,255,1)", // white
 ];
 
+
 // FUNCTIONS
 
 // Random number generator
 const randomNumber = (min, max) => Math.random() * (max - min) + min;
-
-// Stopwatch
-const stopWatch = {
-  timer: undefined,
-  elapsed: 0,
-  tick() {
-    this.elapsed++;
-  },
-  start() {
-    this.timer = setInterval(() => {
-      this.tick();
-    }, 1000);
-  },
-  stop() {
-    clearInterval(this.timer);
-    this.timer = null;
-  },
-  reset() {
-    this.stop();
-    this.elapsed = 0;
-  },
-};
 
 // Time convertor
 const convertSecondsToHms = (d) => {
@@ -131,6 +111,7 @@ const convertSecondsToHms = (d) => {
 
 // Spark calculator for direction and gravity (depending on window/tile size)
 const dynamicOutput = (ratio) => tile * ratio;
+
 
 // EVENT HANDLERS
 
@@ -174,6 +155,7 @@ hammertime.on(`panleft panright panup pandown twofingertap`, (e) => {
   }
 });
 
+
 // GAME INITIALISATION
 
 const newSnake = () => {
@@ -205,6 +187,7 @@ const newGame = () => {
   hammertime.get("twofingertap").set({ enable: true });
 };
 
+
 // GAME LOOP
 
 const gameLoop = () => {
@@ -219,6 +202,7 @@ const gameLoop = () => {
     game.stop();
   }
 };
+
 
 // ANIMATION LOOP
 
@@ -242,6 +226,7 @@ const animateLoop = () => {
     return;
   }
 };
+
 
 // OBJECTS
 
@@ -783,6 +768,28 @@ let game = {
   },
 };
 
+// Stopwatch
+const stopWatch = {
+  timer: undefined,
+  elapsed: 0,
+  tick() {
+    this.elapsed++;
+  },
+  start() {
+    this.timer = setInterval(() => {
+      this.tick();
+    }, 1000);
+  },
+  stop() {
+    clearInterval(this.timer);
+    this.timer = null;
+  },
+  reset() {
+    this.stop();
+    this.elapsed = 0;
+  },
+};
+
 // Stats
 let stats = {
   gamesPlayedThisSession: 0,
@@ -816,16 +823,17 @@ let stats = {
   },
 };
 
+
 // EVENT LISTENERS
 
 document.addEventListener("keydown", keyboardHandler);
 window.addEventListener("resize", gameBoard.recalculateAssets);
 window.addEventListener("orientationchange", gameBoard.recalculateAssets);
-window.addEventListener("blur", function () {
-  if (game.state === "PLAY") {
-    game.changeState("PAUSE");
-    game.stop();
-  }
+// window.addEventListener("blur", function () {
+//   if (game.state === "PLAY") {
+//     game.changeState("PAUSE");
+//     game.stop();
+//   }
 });
 playButton.addEventListener("click", function () {
   newGame();
