@@ -110,18 +110,19 @@ This version offers classic Snake gameplay, a clean interface, satisfying graphi
 
 ### Overview
 
-Simplicity
-Easy to navigate
-Crisp controls
-Visual feedback
-Replayability
-Engagement / dialogue
+The game has been designed with a mobile-first philosophy with no 'fluff' to distract from its purpose of providing short bursts of reliable entertainment. All design decisions have been made with the following goals in mind:
+
+- Simplicity
+- Easy navigation
+- Crisp controls
+- Satisfying feedback
+- Replayability
 
 <span id="ux-stories"></span>
 
 ### User stories
 
-For ease of reference, the means by which a user's expectations have been met are summarised in the tables below:
+<!-- For ease of reference, the means by which a user's expectations have been met are summarised in the tables below:
 
 | As a **site owner** I want                                   | How this is achieved                                                                                                    |
 | :----------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------- |
@@ -134,7 +135,21 @@ For ease of reference, the means by which a user's expectations have been met ar
 | Satisfying visual feedback                                                    | A simple particle effect system showers the game board with multi-coloured sparks each time food is eaten. As more food is eaten, the number and velocity of sparks increases until the screen is awash with colour. This serves as both a reward for good play and in the later stages a pleasant distraction from the job at hand.                                                                                                                                                                                  |
 | To have a reason to keep playing                                              | Beyond beating highscores (which are saved to local storage), there are increasing particle effects for scoring higher and a catty 'commentary' at gameover, with a number of possible outcomes.                                                                                                                                                                                                                                                                                                                      |
 | To be able to play on any device with simple controls                         | Hammer js touch controls allow for responsive play on mobile, equal to (and perhaps even surpassing) the desktop control system. Both mobile and desktop can be controlled using only one hand, and the game can be paused.                                                                                                                                                                                                                                                                                           |
-| A clean, uncluttered interface with all aspects of the game within easy reach | The design approach is very simple, with four possible screens: instructions, options, score and the play state. Each menu screen is just one click away from the others, however only the options screen can be accessed directly from the play state (using space bar or two-finger tap). The only options available are to toggle audio, in-game walls and game speed. Walls and game speed cannot be changed from the pause menu to prevent confusion or 'cheating'.                                              |
+| A clean, uncluttered interface with all aspects of the game within easy reach | The design approach is very simple, with four possible screens: instructions, options, score and the play state. Each menu screen is just one click away from the others, however only the options screen can be accessed directly from the play state (using space bar or two-finger tap). The only options available are to toggle audio, in-game walls and game speed. Walls and game speed cannot be changed from the pause menu to prevent confusion or 'cheating'.                                              | -->
+
+#### As a site owner I want:
+
+- To be able to customise the look and feel of the game easily
+
+#### As a player I want:
+
+- To be able to jump straight into the game without needing to search for further instructions
+- A clean, uncluttered interface with all aspects of the game within easy reach
+- To be able to play on any device with simple, responsive controls
+- To have options for both casual or more challenging gameplay
+- To know how well I am doing
+- Satisfying audio and visual feedback
+- To have a reason to keep playing
 
 Several individuals contributed to testing the game and provided feedback on its gameplay, responsiveness and aesthetics at various points in development.
 
@@ -142,14 +157,15 @@ Several individuals contributed to testing the game and provided feedback on its
 
 ### Wireframes
 
-Overall the wireframes were successfully converted into a functioning application, however there were some deviations from the plan. These were:
-
-1. Statistics menu
-2. Advanced image manipulation via the canvas
-
 The full suite of wireframes for **desktop**, **tablet** and **mobile** devices, plus a **sitemap**, can be accessed [here](wireframes/).
 
-### Theme
+Overall the wireframes were successfully converted into a functioning application, however there were some deviations from the plan. These were:
+
+1. Statistics menu - this felt like a step too far and instead became the basis for the text feedback given to players based on their score. Rather that being able to pull up a screen showing, for example, the average score per game, this information is instead provided with comments such as "Your average score per game is X" or "You have been playing for X minutes in total".
+
+2. Advanced image manipulation via the canvas - the initial idea was to have a more flashy landing screen which would respond to user mouse movements, and to have other visuals passing behind the game play area while playing the game, however this was both beyond the scope of the project and would have ultimately been an unnecessary distraction if not handled elegantly.
+
+### Design choices
 
 Retro
 Cyber
@@ -167,28 +183,27 @@ Neon
 
 **1. Responsive HTML canvas**
 
-- The fundamental aspects of the game (including the current score and high score) are represented through an HTML canvas and could appear as a standalone element in another environment.
-- Whatever the display size or screen orientation, the canvas itself adapts to fill the maximum possible screen area while preserving its graphical resolution and aspect ratio.
-- Providing a strong mobile experience was an essential requirement, and every effort has been made to ensure the game scales as far as possible without the need for extensive CSS styling. This extends not just to the size of the snake and food, but to the font-size of the scoreboard and to the size, velocity and gravity of particle effects.
+- The core game (including the current score and high score) is represented through an HTML canvas and could appear as a standalone element in another environment.
+- Whatever the display size or screen orientation, the canvas adapts to fill the maximum possible screen area while preserving its graphical resolution and aspect ratio. Providing a strong mobile experience was an essential requirement, and every effort has been made to ensure the game scales as far as possible without the need for extensive CSS styling. This extends not just to the size of the snake and food, but to the font-size of the scoreboard and to the size, velocity and gravity of particle effects.
 
 **2. Responsive controls**
 
 - The game can be controlled with either a keyboard (and mouse) or touch-screen swipe gestures.
-- One particular challenge was to prevent frustrating instances of the snake going back on itself due to rapid direction changes and ending the game unexpectedly (see BUGS below). With this issue resolved, responses to player inputs are very crisp and reliable at any game speed.
-- On mobile, swipe gestures are recognised across the entire screen to prevent frustrating missed gestures
-- In comparison to the  difficulty of controlling Nokia's Snake, the mobile experience of Cyber Snake is much improved. Thanks to its panning gesture recognition, sharp turns can be achieved with comparative ease.
+- Responses to player inputs are very crisp and reliable at any game speed.
+- On mobile, swipe gestures are recognised across the entire screen to prevent frustrating missed gestures.
+- Thanks to panning gesture recognition, sharp turns can be achieved with comparative ease, even on mobile.
 - The game can be paused by either hitting spacebar or tapping the screen with two fingers simultaneously.
 
 **3. Menu screens**
 
 - Menus have been kept to the bare minimum while still providing a full and rewarding experience:
-  - Main: shows the controls for both desktop and mobile, and explains the simple rules of the game. There is also a subtle hint of the game's tone/character (explored more fully in its commentary on player scores)
-  - Options: provides options for toggling game sound, toggling walls and setting the game speed (slow, medium, fast). While paused, the only option which can be changed is game sound, with the others still visible but showing as disabled. This allows players to toggle the sound but prevents them from changing fundamental settings mid-game and from possibly becoming confused by an 'extra' menu
-  - Scores: shows the five top scores of the session plus some light-hearted encouragement based on the most recent score. If the last score was in the top five then a subtle animation effect indicates where the score ranks
+  - Main: shows controls for both desktop and mobile, and explains the simple rules of the game. There is also a subtle hint of the game's 'personality', which is explored more fully in its commentary on player scores.
+  - Options: just the essentials for toggling sound, toggling walls and setting the game speed (slow, medium, fast). While paused, the only option which can be changed is game sound, with the others still visible but showing as disabled. This allows players to mute the game if they wish, but prevents them from changing fundamental settings mid-game and from possibly becoming confused by an 'extra' menu.
+  - Scores: shows the five top scores of the session plus some light-hearted encouragement based on the most recent score. If the last score was in the top five then a subtle animation effect indicates where the score ranks.
 
 **4. Game personality**
 
-- In order to inject some personality in keeping with games from the 90s, text feedback is given to the player based on how well the 'narrator' deems they have performed. This is a collection of around 30 comments (which appear in various combinations on the scores menu) intended to ridicule, encourage and amuse players as they attempt to beat their high score. This approach was adopted instead of relying on dramatic music/audio or flashy visuals, with the aim of keeping players intruiged by what the game might say on reaching the next score milestone.
+- In order to inject some personality in keeping with games from the 90s, text feedback is given to the player based on how well the 'narrator' deems they have performed. This is a collection of around 30 comments (which appear in various combinations on the scores menu) intended to amuse, encourage and ridicule players as they attempt to beat their high score. This approach was adopted rather than relying on dramatic music/audio or flashy visuals, with the aim of keeping players intruiged by what the game might say on reaching the next score milestone.
 
 **5. Playstyles**
 
@@ -196,10 +211,13 @@ Neon
 
 **High scores saved**
 
+- The high score is saved to the device's local storage and will remain between game sessions, providing cookies are not deleted.
+
 **Accessible layout**
 
-- Efforts have been made to improve the experience of playing, especially for mobile players. In portrait mode the canvas is pushed to the top of the screen so that players do not obscure the view of the game with their fingers, while in landscape mode the canvas is centred to allow for a two-thumbed control style
-- The aim was to create something which felt like a standalone application rather than something appearing in a browser, insofar as this was possible. The game has been designed to always fit within a single screen, no matter its size or the menu content. There should never be an occasion where the player has to scroll or zoom, and for this reason these features have been disabled. While running in a mobile phone/tablet browser works very well, playing the game as a page saved to the homescreen (on iOS) provides by far the best experience
+- Efforts have been made to improve the experience of playing, especially for mobile players.
+- In portrait mode the canvas is pushed to the top of the screen so that players do not obscure the view of the game with their fingers, while in landscape mode the canvas is centred to allow for a two-thumbed control style either side of the canvas.
+- The aim was to create something which felt like a standalone application rather than something appearing in a browser, insofar as this was possible. The game has been designed to always fit within a single screen, no matter its size or the menu content. There should never be an occasion where the player has to scroll or zoom, and for this reason these features have been disabled. Playing the game from a page saved to the homescreen (on iOS) provides the best experience.
 
 
 <span id="features-future"></span>
@@ -213,7 +231,8 @@ Neon
   _A means of competing for a place on a global/regional leaderboard, with the ability to view existing records_
 
 - Gameplay customisations
-  _Beyond the classic implementation: Difficulty levels, special food, obstacles, graphical options_
+
+  _Beyond the classic implementation: special food changing playstyle (e.g. change of speed, increasing points, spawning more food objects, reducing size of snake body), different game modes (e.g. obstacles or wall sections within the  play area, a maze), graphical options (e.g. choice of snake colour, themes and particle effects)_
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
