@@ -834,7 +834,7 @@ window.addEventListener("orientationchange", gameBoard.recalculateAssets);
 //     game.changeState("PAUSE");
 //     game.stop();
 //   }
-});
+// });
 playButton.addEventListener("click", function () {
   newGame();
   //   startAudio.play();
