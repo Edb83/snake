@@ -40,6 +40,12 @@ Cyber Snake is an homage to the Nokia version of the game, which many of us will
 
 This version offers classic Snake gameplay, a clean interface, satisfying graphical feedback, and the kind of 'personality' typified by games of the 90s. If you feel any pangs of nostalgia then it has achieved its aim!
 
+The game concept is simple:
+
+ - Guide your snake by changing its direction up, down, left or right in order to eat as many food blobs as you can
+ - Every time you eat some food you score one point, your snake grows by one segment and a new food spawns in a random location
+ - The game ends when your snake's head collides with its body or, if walls are enabled, you hit a wall.
+
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 <span id="ux"></span>
 
@@ -49,14 +55,9 @@ This version offers classic Snake gameplay, a clean interface, satisfying graphi
 
 ### Overview
 
-The game concept is simple:
+The game has been designed wih a motbile-first philosophy, with no 'fluff' to distract players from having some fun. All design decisions have been made with the following goals in mind:
 
- - Guide your snake by changing its direction up, down, left or right in order to eat as many food blobs as you can
- - Every time you eat some food you score one point, your snake grows by one segment and a new food spawns in a random location
- - The game ends when your snake's head collides with its body or, if walls are enabled, you hit a wall.
-
-The game has been designed with a mobile-first philosophy, with no 'fluff' to distract players from having some fun. All design decisions have been made with the following goals in mind:
-
+- Mobile-first
 - Simplicity
 - Easy navigation
 - Crisp controls
@@ -134,13 +135,13 @@ Neon
 
 **1. Responsive HTML canvas**
 
-- The core game (including the current score and high score) is exists entirely in an HTML canvas element and could appear as a standalone element in another environment
+- The core game (including the current score and high score) exists entirely in an HTML canvas element and could appear as a standalone element in another environment
 - Whatever the display size or screen orientation, the canvas adapts to fill the maximum possible screen area while preserving its graphical resolution and aspect ratio. A strong mobile experience was an essential requirement, and every effort has been made to ensure the game scales as far as possible without the need for extensive CSS styling. This extends not just to the size of the snake and food, but to the font-size of the scoreboard and to the size, velocity and gravity of particle effects
 
 **2. Responsive controls**
 
 - The game can be controlled with either a keyboard (and mouse) or touch-screen swipe gestures
-- Player input responses are very crisp and reliable at any game speed
+- Player input responses are crisp and reliable at any game speed
 - On mobile, swipe gestures are recognised across the entire screen to prevent missed gestures
 - Thanks to panning gesture recognition, sharp turns can be achieved with relative ease, even on mobile
 - The game can be paused by either hitting spacebar or tapping the screen with two fingers simultaneously
@@ -154,17 +155,18 @@ Neon
 
 **4. Game personality**
 
-- In order to inject some personality in keeping with games from the 90s, text feedback is given to the player based on how well the game deems they have performed. This is a collection of around 30 comments (which appear in various combinations on the scores menu) intended to amuse, encourage and ridicule players as they attempt to beat their high score. This approach was adopted rather than relying on dramatic music/audio or flashy visuals, with the aim of keeping players intruiged by what the game might say on reaching the next score milestone. The intended effect is that the game is judging the player's performance, giving them an incentive to prove it wrong
+- In order to inject some personality in keeping with games from the 90s, text feedback is given to the player based on how well the game deems they have performed. This is a collection of around 30 comments (which appear in various combinations on the scores menu) intended to amuse, encourage and ridicule players as they attempt to beat their high score
+- This approach was adopted rather than relying on dramatic music/audio or flashy visuals, with the aim of keeping players intruiged by what the game might say on reaching the next score milestone. The intended effect is that the game is judging the player's performance, giving them an incentive to prove it wrong
 
 **5. Playstyles**
 
 - A good mobile game caters to both casual and more engaged playstyles. The various game speeds should cater to all types of players, with the option to turn on walls providing an additional challenge and a more traditional Snake experience
 
-**Local high score save**
+**6. Local high score save**
 
 - The high score is saved to the device's local storage and will remain between game sessions, providing cookies are not deleted
 
-**Accessible layout**
+**7. Accessible layout**
 
 - In portrait mode the canvas is pushed to the top of the screen so that players do not obscure the view of the game with their fingers, while in landscape mode the canvas is centred to allow for a two-thumbed control style either side of the canvas.
 - The game has been designed to always fit within a single screen, no matter its size or the menu content, to give it the feeling of a standalone application. There should never be an occasion where the player has to scroll or zoom, and for this reason these features have been disabled
@@ -277,8 +279,6 @@ The following scenarios were tested to ensure that the site is functioning as ex
 <span id="testing-responsive"></span>
 
 ### Responsiveness
-
-The site has been designed with a mobile-first ph
 
 The following issues arose and have each been addressed:
 
