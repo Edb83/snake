@@ -121,7 +121,7 @@ Neon
 
 #### Colours
 
-![#001437](https://via.placeholder.com/15/001437/) #001437 (Very dark blue)
+![#001437](https://via.placeholder.com/40/001437/000000?Text=+) #001437 (Very dark blue)
 
 
 #### Fonts
