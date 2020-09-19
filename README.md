@@ -55,11 +55,11 @@ The game concept is simple:
 
 ### Overview
 
-The game has been designed wih a motbile-first philosophy, with no 'fluff' to distract players from having some fun. All design decisions have been made with the following goals in mind:
+The game has been designed with no 'fluff' to distract players from having some fun. All design decisions have been made with the following goals in mind:
 
 - Mobile-first
 - Simplicity
-- Easy navigation
+- Intuitive navigation
 - Crisp controls
 - Satisfying feedback
 - Replayability
@@ -115,22 +115,25 @@ Overall the wireframes were successfully converted into a functioning applicatio
 
 ### Design choices
 
-Retro
-Cyber
-Neon
-
 #### Colours
 
-In keeping with the theme of the game, the colour palatte is intended to illicit thoughts of a futuristic cityscape at dusk. The background dominates most of the screen and is punctuated by shocks of neon, fluorescent glows. 
+The theme of the game is a blend of retro, cyber and neon, with the colour palatte intended to illicit thoughts of a futuristic cityscape at dusk. The background dominates most of the screen and is punctuated by shocks of fluorescent glows. Web-safe colours have been chosen for the core elements of the game (as far as possible), while more leeway has been given to the supporting colours. 
 
 ##### Core
+
+The colours used for the core game aspects are easy on the eyes when concentrating but give sufficient contrast for easily identifying the game pieces. The snake (Phlox Purple) on the background (Cetacean Blue) is the most frequent combination and is highly evocative of the overall futuristic/neon theme. The pure white text is bright but not overpowering, and is further broken up by sparing use of Neon Carrot and Screamin' Green (used also in the sparks' palette) to differentiate desktop and mobile controls. The enigmatic "the messier things become" in Phlox matches the colour of the snake.
+
+The border of the game area is Deep Carmine Pink if walls are enabled, or Wageningen Green is they are not. This difference is intuitively suggesting green for safe and red for danger. Without this distinction it would be difficult to immediately convey whether or not walls were enabled, so the colours are as close to primary as possible.
 
 - ![#001440](https://via.placeholder.com/15/001440/000000?text=+) #001440 (Cetacean Blue)
 - ![#DF00FE](https://via.placeholder.com/15/DF00FE/000000?text=+) #DF00FE (Phlox)
 - ![#FF3333](https://via.placeholder.com/15/FF3333/000000?text=+) #FF3333 (Deep Carmine Pink)
 - ![#339933](https://via.placeholder.com/15/339933/000000?text=+) #339933 (Wageningen Green)
 
-##### Sparks
+##### Food & Sparks
+
+In keeping with the neon/cyber them, a fluorescent colour palette has been used which lends itself well to the glow effect on food and spark objects. A large number of colours has been used to amplify the spark effects, which can be quite dramatic in higher-scoring games. The temptation to include pink and purple hues (which are especially prominent in neon colour palettes), so as to distinguish the neon purple snake.
+
 - ![#ff355e](https://via.placeholder.com/15/ff355e/000000?text=+) #ff355e (Radical Red)
 - ![#fd5b78](https://via.placeholder.com/15/fd5b78/000000?text=+) #fd5b78 (Wild Watermelon)
 - ![#ff6037](https://via.placeholder.com/15/ff6037/000000?text=+) #ff6037 (Outrageous Orange)
@@ -143,7 +146,25 @@ In keeping with the theme of the game, the colour palatte is intended to illicit
 - ![#aaf0d1](https://via.placeholder.com/15/aaf0d1/000000?text=+) #aaf0d1 (Magic Mint)
 - ![#50bfe6](https://via.placeholder.com/15/50bfe6/000000?text=+) #50bfe6 (Blizzard Blue)
 
+##### Headings
+
+For the glowing headings a combination of brighter neon pink/purple to cement the feeling of a futuristic cyberscape.
+
+- ![#e60073](https://via.placeholder.com/15/e60073/000000?text=+) #e60073 (Red-Purple)
+- ![#ff4da6](https://via.placeholder.com/15/ff4da6/000000?text=+) #ff4da6 (Brilliant Rose)
+
+
 #### Fonts
+
+ - [Orbitron](https://fonts.google.com/specimen/Orbitron#about) - for consistency and simplicity this is the only font used. The blend of robotic straight lines and biologic curves is decidedly sci-fi and particularly fitting for Cyber Snake. This was chosen over more hard-edged retro typefaces because it hints at something more organic and less robotic, in the same way that the snake's hard edges are juxtaposed with the exploding food globs.
+
+#### Audio
+
+The balance between adding a touch of ambience and the very real posibility of irritating players is a fine one. There are only three sound used in the game: menu change, eat food and game over, and if the player is not won over then the game can be muted easily.
+
+- Menu change: a very subtle mechanical click gives a touch of physicality even when out of the game
+- Eat food: an ascending chirp to bring about a positive response in the player for scoring points
+- Game over: a sort of robotic chatter/glitch in keeping with the futuristic theme
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
@@ -194,6 +215,9 @@ In keeping with the theme of the game, the colour palatte is intended to illicit
 - In portrait mode the canvas is pushed to the top of the screen so that players do not obscure the view of the game with their fingers, while in landscape mode the canvas is centred to allow for a two-thumbed control style either side of the canvas
 - The game has been designed to always fit within a single screen, no matter its size or the menu content, to give it the feeling of a standalone application. There should never be an occasion where the player has to scroll or zoom, and for this reason these features have been disabled
 
+**8. Audio**
+
+- Web Audio provides lag-free sound effects on all devices
 
 <span id="features-future"></span>
 
@@ -499,4 +523,9 @@ Checkbox restyling:
 https://dev.to/proticm/styling-html-checkboxes-is-super-easy-302o
 
 Avoid clicks:
-https://css-tricks.com/almanac/properties/p/pointer-events/ -->
+https://css-tricks.com/almanac/properties/p/pointer-events/
+
+Crayola fluorescent color palette:
+https://colorswall.com/palette/360/
+
+-->
