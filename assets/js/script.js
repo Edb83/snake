@@ -71,26 +71,32 @@ const maxSparksPerEat = 150; // capped to prevent lag issues
 const sparkArray = [];
 
 // Colors
-const scoreBoardColor = "#001437"; // dark blue
+const scoreBoardColor = "#001440"; // dark blue
 const scoreBoardTextColor = "#FFF"; // white
-const gameBoardColor = "#001437"; // dark blue
-const wallsOnColor = "#FF0000"; // red
-const wallsOffColor = "#008000"; // green
-const snakeColor = "#DF00FE"; // psychedelic purple
-const snakeStrokeColor = "#001437"; // dark blue
+const gameBoardColor = "#001440"; // dark blue
+const wallsOnColor = "#FF3333"; // red
+const wallsOffColor = "#339933"; // green
+const snakeColor = "#DF00FE"; // purple
+const snakeStrokeColor = "#001440"; // dark blue
 const foodStrokeColor = "#000"; // black
 const colorArray = [
   // Food color is picked at random from this array & sparks have the same color as food eaten
   // RGB used so that alpha can be adjusted with each spark's time to live
-  "rgba(128,255,0,1)", // green
-  "rgba(252,243,64,1)", // yellow
-  "rgba(255,191,0,1)", // orange
-  "rgba(226,0,0,1)", // red
-  "rgba(125,249,255,1)", // blue
-  "rgba(254,1,154,1)", // pink
-  "rgba(255,255,255,1)", // white
+  "rgba(255, 53, 94, 1)", // Red
+  "rgba(253, 91, 120, 1)", // Watermelon
+  "rgba(255, 96, 55, 1)", // Orange
+  "rgba(255, 153, 102, 1)", // Tangerine
+  "rgba(255, 153, 51, 1)", // Carrot
+  "rgba(255, 204, 51, 1)", // Sun
+  "rgba(255, 255, 102, 1)", // Lemon
+  "rgba(204, 255, 0, 1)", // Lime
+  "rgba(102, 255, 102, 1)", // Green
+  "rgba(170, 240, 209, 1)", // Mint
+  "rgba(80, 191, 230, 1)", // Blue
+//   "rgba(255, 110, 255, 1)", // Pink
+//   "rgba(238, 52, 210, 1)", // Rose
+//   "rgba(255, 0, 204, 1)", // Purple
 ];
-
 
 // FUNCTIONS
 

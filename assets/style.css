@@ -16,7 +16,7 @@ body {
   padding: 0;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  background-color: #001437;
+  background-color: #001440;
   font-size: 13px;
 }
 
@@ -79,15 +79,15 @@ h1 {
 /* TEXT STYLES */
 
 .desktop-controls-text {
-  color: #ffb329;
+  color: #ff9933;
 }
 
 .mobile-controls-text {
-  color: #36da34;
+  color: #66ff66;
 }
 
 .special-menu-text {
-  color: #ff31e6;
+  color: #DF00FE;
   text-shadow: 0 0 1rem;
 }
 
@@ -121,7 +121,7 @@ h1 {
   min-width: 6rem;
   -webkit-touch-callout: none;
   margin: 0.65rem;
-  background-color: #001437;
+  background-color: #001440;
   border: solid 1px #fff;
   border-radius: 5%;
   color: #fff;
@@ -134,7 +134,7 @@ h1 {
 
 #menu-buttons-container button:hover {
   background-color: #fff;
-  color: #001437;
+  color: #001440;
   border: solid 1px #fff;
 }
 
@@ -218,7 +218,7 @@ h1 {
   -webkit-transition-duration: 0.3s;
   -o-transition-duration: 0.3s;
   transition-duration: 0.3s;
-  background-color: #001437;
+  background-color: #001440;
   cursor: default;
   margin: 0 1rem 0 0;
   pointer-events: auto;

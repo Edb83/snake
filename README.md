@@ -121,20 +121,27 @@ Neon
 
 #### Colours
 
+In keeping with the theme of the game, the colour palatte is intended to illicit thoughts of a futuristic cityscape at dusk. The background dominates most of the screen and is punctuated by shocks of neon, fluorescent glows. 
+
 ##### Core
-- ![#001437](https://via.placeholder.com/15/001437/000000?text=+) #001437 (Very dark blue)
-- ![#DF00FE](https://via.placeholder.com/15/DF00FE/000000?text=+) #DF00FE (Pure magenta)
-- ![#FF0000](https://via.placeholder.com/15/FF0000/000000?text=+) #FF0000 (Pure red)
-- ![#008000](https://via.placeholder.com/15/008000/000000?text=+) #008000 (Dark lime green)
+
+- ![#001440](https://via.placeholder.com/15/001440/000000?text=+) #001440 (Cetacean Blue)
+- ![#DF00FE](https://via.placeholder.com/15/DF00FE/000000?text=+) #DF00FE (Phlox)
+- ![#FF3333](https://via.placeholder.com/15/FF3333/000000?text=+) #FF3333 (Deep Carmine Pink)
+- ![#339933](https://via.placeholder.com/15/339933/000000?text=+) #339933 (Wageningen Green)
 
 ##### Sparks
-- ![#80ff00](https://via.placeholder.com/15/80ff00/000000?text=+) #80ff00 (Pure green)
-- ![#fcf340](https://via.placeholder.com/15/fcf340/000000?text=+) #fcf340 (Bright yellow)
-- ![#ffbf00](https://via.placeholder.com/15/ffbf00/000000?text=+) #ffbf00 (Pure orange)
-- ![#e20000](https://via.placeholder.com/15/e20000/000000?text=+) #e20000 (Pure red)
-- ![#7df9ff](https://via.placeholder.com/15/7df9ff/000000?text=+) #7df9ff (Very light cyan)
-- ![#fe019a](https://via.placeholder.com/15/fe019a/000000?text=+) #fe019a (Vivid pink)
-
+- ![#ff355e](https://via.placeholder.com/15/ff355e/000000?text=+) #ff355e (Radical Red)
+- ![#fd5b78](https://via.placeholder.com/15/fd5b78/000000?text=+) #fd5b78 (Wild Watermelon)
+- ![#ff6037](https://via.placeholder.com/15/ff6037/000000?text=+) #ff6037 (Outrageous Orange)
+- ![#ff9966](https://via.placeholder.com/15/ff9966/000000?text=+) #ff9966 (Atomic Tangerine)
+- ![#ff9933](https://via.placeholder.com/15/ff9933/000000?text=+) #ff9933 (Neon Carrot)
+- ![#ffcc33](https://via.placeholder.com/15/ffcc33/000000?text=+) #ffcc33 (Sunglow)
+- ![#ffff66](https://via.placeholder.com/15/ffff66/000000?text=+) #ffff66 (Laser Lemon)
+- ![#ccff00](https://via.placeholder.com/15/ccff00/000000?text=+) #ccff00 (Electric Lime)
+- ![#66ff66](https://via.placeholder.com/15/66ff66/000000?text=+) #66ff66 (Screamin' Green)
+- ![#aaf0d1](https://via.placeholder.com/15/aaf0d1/000000?text=+) #aaf0d1 (Magic Mint)
+- ![#50bfe6](https://via.placeholder.com/15/50bfe6/000000?text=+) #50bfe6 (Blizzard Blue)
 
 #### Fonts
 
