@@ -121,6 +121,9 @@ Neon
 
 #### Colours
 
+![#001437](https://via.placeholder.com/15/001437/) #001437 (Very dark blue)
+
+
 #### Fonts
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
@@ -136,22 +139,23 @@ Neon
 **1. Responsive HTML canvas**
 
 - The core game (including the current score and high score) exists entirely in an HTML canvas element and could appear as a standalone element in another environment
-- Whatever the display size or screen orientation, the canvas adapts to fill the maximum possible screen area while preserving its graphical resolution and aspect ratio. A strong mobile experience was an essential requirement, and every effort has been made to ensure the game scales as far as possible without the need for extensive CSS styling. This extends not just to the size of the snake and food, but to the font-size of the scoreboard and to the size, velocity and gravity of particle effects
+- Whatever the display size or screen orientation, the canvas adapts instantly to fill the maximum possible screen area while preserving its resolution and aspect ratio. This extends not just to the size of the snake and food, but to the font-size of the scoreboard and to the size, velocity and gravity of particle effects
 
-**2. Responsive controls**
+**2. Responsive input**
 
 - The game can be controlled with either a keyboard (and mouse) or touch-screen swipe gestures
-- Player input responses are crisp and reliable at any game speed
+- Player input responses are crisp and reliable at any game speed, thanks to direction changes being passed through a validator
 - On mobile, swipe gestures are recognised across the entire screen to prevent missed gestures
-- Thanks to panning gesture recognition, sharp turns can be achieved with relative ease, even on mobile
+- Thanks to panning gesture recognition, sharp turns can be achieved with ease, even on mobile
 - The game can be paused by either hitting spacebar or tapping the screen with two fingers simultaneously
+- On desktop a new game can intuitively be started from the scores menu by pressing spacebar 
 
 **3. Menu screens**
 
-- Menus have been kept to a bare minimum:
-  - Main: shows controls for both desktop and mobile, and briefly explains how to play. There is also a hint of the game's 'personality', which is realised more fully on the scores screen
-  - Options: sound toggle, walls toggle and choice of slow, medium or fast game speed. While paused, the only option which can be changed is game sound, with the others still visible but showing as disabled. This allows players to mute the game if they wish, but prevents them from changing other settings mid-game and from possibly becoming confused by an 'extra' menu
-  - Scores: shows the five top scores of the session plus some light-hearted encouragement based on the most recent score. If the last score was in the top five then a subtle animation effect indicates where the score ranks
+- **Main**: shows controls for both desktop and mobile, and briefly explains how to play. There is also a hint of the game's 'personality', which is realised more fully on the scores screen
+- **Options**: sound toggle, walls toggle and choice of slow, medium or fast game speed
+   - The options menu is also displayed while the game is paused but only game sound can be changed. The remaining options are still visible but appear disabled. This allows players to mute the game if they wish, but prevents them from changing other settings mid-game and from possibly becoming confused by an 'extra' menu
+- **Scores**: shows the five top scores of the session plus some light-hearted encouragement based on the most recent score. If the last score was in the top five then a subtle animation effect indicates where the score ranks
 
 **4. Game personality**
 
@@ -168,7 +172,7 @@ Neon
 
 **7. Accessible layout**
 
-- In portrait mode the canvas is pushed to the top of the screen so that players do not obscure the view of the game with their fingers, while in landscape mode the canvas is centred to allow for a two-thumbed control style either side of the canvas.
+- In portrait mode the canvas is pushed to the top of the screen so that players do not obscure the view of the game with their fingers, while in landscape mode the canvas is centred to allow for a two-thumbed control style either side of the canvas
 - The game has been designed to always fit within a single screen, no matter its size or the menu content, to give it the feeling of a standalone application. There should never be an occasion where the player has to scroll or zoom, and for this reason these features have been disabled
 
 
@@ -176,7 +180,7 @@ Neon
 
 ### Future
 
-- Descriptive scoring system
+- Improved score-keeping system
 
    - Recording walls on/off and game speed alongside scores. After all, 200 points on slow with no walls is less of an achievement than 200 on fast with walls enabled
 
@@ -184,10 +188,10 @@ Neon
 
    - A global/regional leaderboard to give a true sense of competition
 
-- Gameplay customisations
+- Gameplay modes/customisation
 
    - Special food changing playstyle - e.g. speed, points multiplier, extra food objects, altering size of snake body
-   - Different game modes - e.g. obstacles within the play area, a maze)
+   - Different game modes - e.g. obstacles within the play area, a maze
    - Graphical options - e.g. choice of snake colour, themes, particle effects
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
