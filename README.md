@@ -122,18 +122,18 @@ Neon
 #### Colours
 
 ##### Core
-- ![#001437](https://via.placeholder.com/15/001437/000000?Text=+) #001437 (Very dark blue)
-- ![#DF00FE](https://via.placeholder.com/15/DF00FE/000000?Text=+) #DF00FE (Pure magenta)
-- ![#FF0000](https://via.placeholder.com/15/FF0000/000000?Text=+) #FF0000 (Pure red)
-- ![#008000](https://via.placeholder.com/15/008000/000000?Text=+) #008000 (Dark lime green)
+- ![#001437](https://via.placeholder.com/15/001437/000000?text=+) #001437 (Very dark blue)
+- ![#DF00FE](https://via.placeholder.com/15/DF00FE/000000?text=+) #DF00FE (Pure magenta)
+- ![#FF0000](https://via.placeholder.com/15/FF0000/000000?text=+) #FF0000 (Pure red)
+- ![#008000](https://via.placeholder.com/15/008000/000000?text=+) #008000 (Dark lime green)
 
 ##### Sparks
-- ![#80ff00](https://via.placeholder.com/15/80ff00/000000?Text=+) #80ff00 (Pure green)
-- ![#fcf340](https://via.placeholder.com/15/fcf340/000000?Text=+) #fcf340 (Bright yellow)
-- ![#ffbf00](https://via.placeholder.com/15/ffbf00/000000?Text=+) #ffbf00 (Pure orange)
-- ![#e20000](https://via.placeholder.com/15/e20000/000000?Text=+) #e20000 (Pure red)
-- ![#7df9ff](https://via.placeholder.com/15/7df9ff/000000?Text=+) #7df9ff (Very light cyan)
-- ![#fe019a](https://via.placeholder.com/15/fe019a/000000?Text=+) #fe019a (Vivid pink)
+- ![#80ff00](https://via.placeholder.com/15/80ff00/000000?text=+) #80ff00 (Pure green)
+- ![#fcf340](https://via.placeholder.com/15/fcf340/000000?text=+) #fcf340 (Bright yellow)
+- ![#ffbf00](https://via.placeholder.com/15/ffbf00/000000?text=+) #ffbf00 (Pure orange)
+- ![#e20000](https://via.placeholder.com/15/e20000/000000?text=+) #e20000 (Pure red)
+- ![#7df9ff](https://via.placeholder.com/15/7df9ff/000000?text=+) #7df9ff (Very light cyan)
+- ![#fe019a](https://via.placeholder.com/15/fe019a/000000?text=+) #fe019a (Vivid pink)
 
 
 #### Fonts
