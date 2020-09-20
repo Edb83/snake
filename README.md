@@ -96,6 +96,8 @@ Overall the wireframes were successfully converted into a functioning applicatio
 
 2. Advanced image manipulation - the initial idea was to have a more flashy landing screen which would respond to user mouse movements, and to have other visuals passing behind the game area during play, either using the HTML canvas or CSS animations. This feature was outside the scope of the project and would have ultimately been an unnecessary distraction if not handled elegantly
 
+3. Mobile control pad - before HammerJS was discovered, this seemed like the most viable means of controlling the game on mobile
+
 <span id="ux-design"></span>
 
 ### Design choices
@@ -331,19 +333,19 @@ Countless hours were spent testing Cyber Snake throughout its development, which
 
 **2. Food behaviour**
 
-- Food always spawns within the game board boundaries at a random location and with a random colour from the colorArray
+- Food always spawns within the game board boundaries at a random location and with a random colour from the ```colorArray```
 - Food will respawn if it appears within the body of the snake
 
 **3. Spark behaviour**
 
 - Sparks spawn where food is eaten and travel in the direction that the snake is moving when it hits
 - Sparks spawn with the colour of the food the snake eats
-- Spawned sparks will not exceed the maximum number allowed (150) per sparkArray repopulation
+- Spawned sparks will not exceed the maximum number allowed (150) per ```sparkArray``` repopulation
 - Sparks bounce off the left, right and bottom border and do not clip into borders
 - Each spark spawns with a random size, direction, velocity and gravity (within set ranges)
 - As a spark falls, its gravity (and therefore speed) increases
 - When a spark collides with the left, right or bottom border, its speed decreases as friction is applied
-- After colliding with a border, each spark's time to live decreases, along with its opacity until it disappears (and is removed from the sparkArray)
+- After colliding with a border, each spark's time to live decreases, along with its opacity until it disappears (and is removed from the ```sparkArray```)
 
 **4. Collision detection**
 
