@@ -121,13 +121,14 @@ The theme of the game is a blend of retro, cyber and neon, with the colour palat
 
 ##### Core
 
-The colours used for the core game aspects are easy on the eyes when concentrating but give sufficient contrast for easily identifying the game pieces. The snake (Phlox Purple) on the background (Cetacean Blue) is the most frequent combination and is highly evocative of the overall futuristic/neon theme. The pure white text is bright but not overpowering, and is further broken up by sparing use of Neon Carrot and Screamin' Green (used also in the sparks' palette) to differentiate desktop and mobile controls. The enigmatic "the messier things become" in Phlox matches the colour of the snake.
+The colours used for the core game aspects are easy on the eyes when concentrating but give sufficient contrast for easily identifying the game pieces. The snake (Phlox) on the background (Cetacean Blue) is the most frequent combination and is highly evocative of the overall futuristic/neon theme. The pure white text is bright but not overpowering, and is further broken up by sparing use of Neon Carrot and Screamin' Green (used also in the sparks' palette) to differentiate desktop and mobile controls. The enigmatic "the messier things become" in Phlox matches the colour of the snake.
 
 The border of the game area is Deep Carmine Pink if walls are enabled, or Wageningen Green is they are not. This difference is intuitively suggesting green for safe and red for danger. Without this distinction it would be difficult to immediately convey whether or not walls were enabled, so the colours are as close to primary as possible.
 
 - ![#001440](https://via.placeholder.com/15/001440/000000?text=+) #001440 (Cetacean Blue)
-- ![#DF00FE](https://via.placeholder.com/15/DF00FE/000000?text=+) #DF00FE (Phlox)
-- ![#FF3333](https://via.placeholder.com/15/FF3333/000000?text=+) #FF3333 (Deep Carmine Pink)
+- ![#000000](https://via.placeholder.com/15/000000/000000?text=+) #000000 (White)
+- ![#DF00FE](https://via.placeholder.com/15/DF00FE/000000?text=+) #df00fe (Phlox)
+- ![#FF3333](https://via.placeholder.com/15/FF3333/000000?text=+) #ff3333 (Deep Carmine Pink)
 - ![#339933](https://via.placeholder.com/15/339933/000000?text=+) #339933 (Wageningen Green)
 
 ##### Food & Sparks
