@@ -26,7 +26,6 @@
   - <a href="#testing-responsive">Responsiveness</a>
   - <a href="#testing-resolved">Resolved issues</a>
   - <a href="#testing-unresolved">Unresolved issues</a>
-  - <a href="#testing-bugs">Known bugs</a>
 - <a href="#deployment">Deployment</a>
 - <a href="#credits">Credits</a>
 
@@ -58,6 +57,7 @@ The game concept is simple:
 The game has been designed with no 'fluff' to distract players from having some fun. All design decisions have been made with the following goals in mind:
 
 - Mobile-first
+- Customisable code
 - Simplicity
 - Intuitive navigation
 - Crisp controls
@@ -133,7 +133,7 @@ The border of the game area is Deep Carmine Pink if walls are enabled, or Wageni
 
 ##### Food & Sparks
 
-In keeping with the neon/cyber them, a fluorescent colour palette has been used which lends itself well to the glow effect on food and spark objects. A large number of colours has been used to amplify the spark effects, which can be quite dramatic in higher-scoring games. The temptation to include pink and purple hues (which are especially prominent in neon colour palettes), so as to distinguish the neon purple snake.
+In keeping with the neon/cyber them, a fluorescent colour palette has been used which lends itself well to the glow effect on food and spark objects. A large number of colours has been used to amplify the spark effects, which can be quite dramatic in higher-scoring games. The temptation to include pink and purple hues (which are especially prominent in neon colour palettes) was resisted, so as to distinguish the neon purple snake.
 
 - ![#ff355e](https://via.placeholder.com/15/ff355e/000000?text=+) #ff355e (Radical Red)
 - ![#fd5b78](https://via.placeholder.com/15/fd5b78/000000?text=+) #fd5b78 (Wild Watermelon)
@@ -149,7 +149,7 @@ In keeping with the neon/cyber them, a fluorescent colour palette has been used 
 
 ##### Headings
 
-For the glowing headings a combination of brighter neon pink/purple to cement the feeling of a futuristic cyberscape.
+For the glowing headings, a combination of brighter neon pink/purple is used to cement the feeling of a futuristic cyberscape.
 
 - ![#e60073](https://via.placeholder.com/15/e60073/000000?text=+) #e60073 (Red-Purple)
 - ![#ff4da6](https://via.placeholder.com/15/ff4da6/000000?text=+) #ff4da6 (Brilliant Rose)
@@ -161,11 +161,11 @@ For the glowing headings a combination of brighter neon pink/purple to cement th
 
 #### Audio
 
-The balance between adding a touch of ambience and the very real posibility of irritating players is a fine one. There are only three sound used in the game: menu change, eat food and game over, and if the player is not won over then the game can be muted easily.
+The balance between adding a touch of ambience and the very real posibility of irritating players is a fine one. There are only three sound used in the game: menu change, eat food and game over, and if the player is not won over then the game can easily be muted.
 
-- Menu change: a very subtle mechanical click gives a touch of physicality even when out of the game
-- Eat food: an ascending chirp to bring about a positive response in the player for scoring points
-- Game over: a sort of robotic chatter/glitch in keeping with the futuristic theme
+- Menu change: a subtle mechanical click gives a touch of physicality even when out of the game
+- Eat food: an retro pop/burst to bring about a positive response in the player for scoring points, with a suggestion of biological origins
+- Game over: a shuddering halt/mechanical glitch in keeping with the futuristic theme
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
@@ -176,6 +176,22 @@ The balance between adding a touch of ambience and the very real posibility of i
 <span id="features-current"></span>
 
 ### Current
+
+**1. Object Oriented Programming**
+
+- To improve the syntax of the code, Object Oriented Programming has been used as far as possible. The game is built with the following objects:
+  - **Gameboard**: handles the canvas and its resizing
+  - **Snake**: a constructor to handle the snake's location, trajectory and size
+  - **Food**: a constructor to handle the food's location
+  - **Spark**: a constructor to handle spark generation and randomisation (separate functions handle the spark array population and updates)
+  - **Game**: handles game state changes, DOM element styling, game settings, collision detection and updates
+  - **Stopwatch**: handles game time played (used only for stats updates)
+  - **Stats**: handles local storage of statistics
+  - **Scoreboard**: handles session scores and the score award text passed to the DOM
+
+**2. Customisation**
+
+- Rather than being hard-coded, visual and gameplay variables have been extracted to facilitate tweaks to the look and feel of the game. This enables much easier customisation on the developer's part
 
 **1. Responsive HTML canvas**
 
@@ -391,12 +407,6 @@ Real world testing on:
 - **Issue**
 
   - Resolution
-
-<span id="testing-bugs"></span>
-
-### Known bugs
-
-- None at present
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
