@@ -88,15 +88,15 @@ Several individuals contributed to testing the game and provided feedback on its
 
 ### Wireframes
 
-The full suite of wireframes for **desktop**, **tablet** and **mobile** devices, plus a **sitemap**, can be accessed [here](wireframes/).
+Wireframes for **mobile** and **desktop** can be accessed [here](wireframes/).
 
-Overall the wireframes were successfully converted into a functioning application, however there were some deviations from the plan. These were:
+Overall the wireframes were successfully followed when creating Cyber Snake, however there were some noteworthy deviations from the plan. These were:
 
-1. Statistics menu - this was intended to live on a separate menu screen but was moved entirely to the scores menu. Rather that being able to pull up a screen showing, for example, the average score per game, this information is instead provided in comments such as "Your average score per game is X" or "You have been playing for X minutes in total"
+1. Statistics menu - this was intended to live on a separate menu screen but was moved entirely to the scores menu. Rather that being able to pull up a screen showing, for example, the average score per game, this information is instead provided in comments such as "Your average score per game is X" or "You have been playing for Y minutes in total"
 
-2. Advanced image manipulation - the initial idea was to have a more flashy landing screen which would respond to user mouse movements, and to have other visuals passing behind the game area during play, either using the HTML canvas or CSS animations. This feature was outside the scope of the project and would have ultimately been an unnecessary distraction if not handled elegantly
+2. Advanced image manipulation - the initial idea was to have a more flashy landing screen which would respond to user mouse movements, and to have other visuals passing behind the game area during play, either using the HTML canvas or CSS animations. These features were outside the scope of the project and would have ultimately been an unnecessary distraction if not handled elegantly
 
-3. Mobile control pad - before HammerJS was discovered, this seemed like the most viable means of controlling the game on mobile
+3. Mobile control pad - the HammerJS library offers a much better solution to mobile control. Prior to discovering this, a directional pad/virtual joystick seemed like the most viable means of controlling the game on mobile 
 
 <span id="ux-design"></span>
 
@@ -104,7 +104,7 @@ Overall the wireframes were successfully converted into a functioning applicatio
 
 #### Colours
 
-The theme of the game is a blend of retro, cyber and neon, with the colour palatte intended to illicit thoughts of a futuristic cityscape at dusk. The background dominates most of the screen and is punctuated by shocks of fluorescent glows. Web-safe colours have been chosen for the core elements of the game (as far as possible), while more leeway has been given to the supporting colours.
+The theme of the game is a blend of retro, cyber and neon, with the colour palatte intended to illicit thoughts of a futuristic cityscape at dusk. The background dominates most of the screen and is punctuated by fluorescent embers. Web-safe colours have been chosen for the core elements of the game (as far as possible), while more leeway has been given to the supporting colours.
 
 ##### Core
 
