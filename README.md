@@ -41,9 +41,9 @@ This version offers classic Snake gameplay, a clean interface, satisfying graphi
 
 The game concept is simple:
 
- - Guide your snake by changing its direction up, down, left or right in order to eat as many food blobs as you can
- - Every time you eat some food you score one point, your snake grows by one segment and a new food spawns in a random location
- - The game ends when your snake's head collides with its body or, if walls are enabled, you hit a wall.
+- Guide your snake by changing its direction up, down, left or right in order to eat as many food blobs as you can
+- Every time you eat some food you score one point, your snake grows by one segment and a new food spawns in a random location
+- The game ends when your snake's head collides with its body or, if walls are enabled, you hit a wall.
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 <span id="ux"></span>
@@ -102,7 +102,7 @@ Overall the wireframes were successfully converted into a functioning applicatio
 
 #### Colours
 
-The theme of the game is a blend of retro, cyber and neon, with the colour palatte intended to illicit thoughts of a futuristic cityscape at dusk. The background dominates most of the screen and is punctuated by shocks of fluorescent glows. Web-safe colours have been chosen for the core elements of the game (as far as possible), while more leeway has been given to the supporting colours. 
+The theme of the game is a blend of retro, cyber and neon, with the colour palatte intended to illicit thoughts of a futuristic cityscape at dusk. The background dominates most of the screen and is punctuated by shocks of fluorescent glows. Web-safe colours have been chosen for the core elements of the game (as far as possible), while more leeway has been given to the supporting colours.
 
 ##### Core
 
@@ -139,7 +139,6 @@ For the glowing headings, a combination of brighter neon pink/purple is used to 
 - ![#e60073](https://via.placeholder.com/15/e60073/000000?text=+) #e60073 (Red-Purple)
 - ![#ff4da6](https://via.placeholder.com/15/ff4da6/000000?text=+) #ff4da6 (Brilliant Rose)
 
-
 #### Fonts
 
 [Orbitron](https://fonts.google.com/specimen/Orbitron#about) - for consistency and simplicity this is the only font used. The blend of robotic straight lines and biologic curves is decidedly sci-fi and particularly fitting for Cyber Snake. This was chosen over more hard-edged retro typefaces because it hints at something more organic and less robotic, in the same way that the snake's hard edges are juxtaposed with the exploding food globs.
@@ -164,16 +163,15 @@ The balance between adding a touch of ambience and the very real posibility of i
 
 **1. Menu screens**
 
-| Menu | Description |
-| :---- | :------- |
-| Main  | Shows controls for both desktop and mobile, and briefly explains how to play. There is also a hint of the game's 'personality', which is realised more fully on the scores screen     |
-| Options  | Sound toggle, walls toggle and choice of slow, medium or fast game speed
-   - The options menu is also displayed while the game is paused but only game sound can be changed. The remaining options are still visible but appear disabled. This allows players to mute the game if they wish, but prevents them from 'cheating' by changing other settings mid-game and from possibly becoming confused by an 'extra' menu     |
-| Scores  | Shows the five top scores of the session plus some light-hearted encouragement based on the most recent score. If the last score was in the top five then a subtle animation effect indicates where the score ranks     |
+| Menu    | Description                                                                                                                                                                                                         |
+| :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Main    | Shows controls for both desktop and mobile, and briefly explains how to play. There is also a hint of the game's 'personality', which is realised more fully on the scores screen                                   |
+| Options | Sound toggle, walls toggle and choice of slow, medium or fast game speed                                                                                                                                            |
+| Scores  | Shows the five top scores of the session plus some light-hearted encouragement based on the most recent score. If the last score was in the top five then a subtle animation effect indicates where the score ranks |
 
 - **Main**: shows controls for both desktop and mobile, and briefly explains how to play. There is also a hint of the game's 'personality', which is realised more fully on the scores screen
 - **Options**: sound toggle, walls toggle and choice of slow, medium or fast game speed
-   - The options menu is also displayed while the game is paused but only game sound can be changed. The remaining options are still visible but appear disabled. This allows players to mute the game if they wish, but prevents them from 'cheating' by changing other settings mid-game and from possibly becoming confused by an 'extra' menu
+  - The options menu is also displayed while the game is paused but only game sound can be changed. The remaining options are still visible but appear disabled. This allows players to mute the game if they wish, but prevents them from 'cheating' by changing other settings mid-game and from possibly becoming confused by an 'extra' menu
 - **Scores**: shows the five top scores of the session plus some light-hearted encouragement based on the most recent score. If the last score was in the top five then a subtle animation effect indicates where the score ranks
 
 **2. Accessible layout**
@@ -193,7 +191,7 @@ The balance between adding a touch of ambience and the very real posibility of i
 - Player input responses are crisp and reliable at any game speed, thanks to directional changes being passed through a validator
 - On mobile, panning gestures (via HammerJS) are recognised across the entire screen to prevent missed gestures
 - Thanks to panning gesture recognition, sharp turns can be achieved with ease, even on mobile
-- The game can be paused by either hitting spacebar or tapping the screen with two fingers simultaneously
+- The game can be paused by either hitting spacebar or tapping the screen with two fingers simultaneously. The options menu is displayed while the game is paused but only game sound can be changed. The remaining options are still visible but appear disabled. This allows players to mute the game if they wish, but prevents them from 'cheating' by changing other settings mid-game and from possibly becoming confused by an 'extra' menu
 - On desktop a new game can intuitively be started from the scores menu by pressing spacebar
 
 **5. Playstyles**
@@ -221,16 +219,16 @@ The high score is saved to the device's local storage and will remain between ga
 
 To improve the syntax of the code, Object Oriented Programming has been used as far as possible. The game is built with the following objects:
 
-| Object | Role |
-| :---- | :------- |
-| Gameboard  | Handles the canvas and its resizing     |
-| Snake  | Constructor to handle the snake's location, trajectory and size     |
-| Food  | Constructor to handle the food's location     |
-| Spark  | Constructor to handle spark generation and randomisation (separate functions handle the spark array population and updates)     |
-| Game  | Handles game state changes, DOM element styling, game settings, collision detection and updates     |
-| Stopwatch  | Handles game time played (used only for stats updates)     |
-| Stats  | Handles local storage of statistics     |
-| Scoreboard  | Handles session scores and the score award text passed to the DOM     |
+| Object     | Role                                                                                                                        |
+| :--------- | :-------------------------------------------------------------------------------------------------------------------------- |
+| Gameboard  | Handles the canvas and its resizing                                                                                         |
+| Snake      | Constructor to handle the snake's location, trajectory and size                                                             |
+| Food       | Constructor to handle the food's location                                                                                   |
+| Spark      | Constructor to handle spark generation and randomisation (separate functions handle the spark array population and updates) |
+| Game       | Handles game state changes, DOM element styling, game settings, collision detection and updates                             |
+| Stopwatch  | Handles game time played (used only for stats updates)                                                                      |
+| Stats      | Handles local storage of statistics                                                                                         |
+| Scoreboard | Handles session scores and the score award text passed to the DOM                                                           |
 
 - **Gameboard**: handles the canvas and its resizing
 - **Snake**: a constructor to handle the snake's location, trajectory and size
@@ -312,6 +310,7 @@ Rather than being hard-coded, visual and gameplay variables have been extracted 
 [W3C - HTML](https://validator.w3.org/) - Summary - **PASS**
 
 [W3C - CSS](https://jigsaw.w3.org/css-validator/) - Summary - **PASS**
+
 - [CSS Lint](http://csslint.net/) - 0 errors, 0 warnings - **PASS**
 - [Unicorn revealer - overflow](https://chrome.google.com/webstore/detail/unicorn-revealer/lmlkphhdlngaicolpmaakfmhplagoaln/related) - tested all pages and no evidence of overflow - **PASS**
 
@@ -468,8 +467,6 @@ Code was modified from the following sources:
 This game was developed for educational purposes.
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
-
-
 
 <!-- Drawing canvas:
 https://developer.mozilla.org/en-US/docs/Games/Tutorials/2D_Breakout_game_pure_JavaScript/Create_the_Canvas_and_draw_on_it
