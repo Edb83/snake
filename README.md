@@ -68,25 +68,6 @@ The game has been designed with no 'fluff' to distract players from having some 
 
 ### User stories
 
-<!-- For ease of reference, the means by which a user's expectations have been met are summarised in the tables below:
-
-| As a **site owner** I want                                   | How this is achieved                                                                                                    |
-| :----------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------- |
-| To be able to customise the look and feel of the game easily | Core variables can be manipulated easily to change both look and feel, e.g. colors, particle physics, speed, board size |
-
-| As a **user** I want                                                          | How this is achieved                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| :---------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| To know how well I am doing                                                   | During play, the only information available is the current score and the all-time high score for the device/browser. The session scoreboard shows the five most recent scores since the browser was opened, while the all-time high score is saved to local storage. Assuming cookies are not deleted, players can return to try to beat their previous high-score. On the gameover/scores screen a message is displayed based on the most recent (and even previous) performance, offering words of 'encouragement'. |
-| To have some gameplay options                                                 | Players can choose from three speed settings (slow, medium, fast) for very different playing experiences. Additionally, enabling walls provides a more classic style of gameplay and doubles up as a 'hard mode'.                                                                                                                                                                                                                                                                                                     |
-| Satisfying visual feedback                                                    | A simple particle effect system showers the game board with multi-coloured sparks each time food is eaten. As more food is eaten, the number and velocity of sparks increases until the screen is awash with colour. This serves as both a reward for good play and in the later stages a pleasant distraction from the job at hand.                                                                                                                                                                                  |
-| To have a reason to keep playing                                              | Beyond beating highscores (which are saved to local storage), there are increasing particle effects for scoring higher and a catty 'commentary' at gameover, with a number of possible outcomes.                                                                                                                                                                                                                                                                                                                      |
-| To be able to play on any device with simple controls                         | Hammer js touch controls allow for responsive play on mobile, equal to (and perhaps even surpassing) the desktop control system. Both mobile and desktop can be controlled using only one hand, and the game can be paused.                                                                                                                                                                                                                                                                                           |
-| A clean, uncluttered interface with all aspects of the game within easy reach | The design approach is very simple, with four possible screens: instructions, options, score and the play state. Each menu screen is just one click away from the others, however only the options screen can be accessed directly from the play state (using space bar or two-finger tap). The only options available are to toggle audio, in-game walls and game speed. Walls and game speed cannot be changed from the pause menu to prevent confusion or 'cheating'.                                              | -->
-
-#### As a site owner I want:
-
-- To be able to customise the look and feel of the game easily
-
 #### As a player I want:
 
 - To be able to jump straight into the game without needing further instructions
@@ -96,6 +77,10 @@ The game has been designed with no 'fluff' to distract players from having some 
 - To know how well I am doing
 - Satisfying audio and visual feedback
 - To have a reason to keep playing
+
+#### As a site owner I want:
+
+- To be able to customise the look and feel of the game easily
 
 Several individuals contributed to testing the game and provided feedback on its gameplay, responsiveness and aesthetics at various points in development.
 
@@ -157,7 +142,7 @@ For the glowing headings, a combination of brighter neon pink/purple is used to 
 
 #### Fonts
 
- - [Orbitron](https://fonts.google.com/specimen/Orbitron#about) - for consistency and simplicity this is the only font used. The blend of robotic straight lines and biologic curves is decidedly sci-fi and particularly fitting for Cyber Snake. This was chosen over more hard-edged retro typefaces because it hints at something more organic and less robotic, in the same way that the snake's hard edges are juxtaposed with the exploding food globs.
+[Orbitron](https://fonts.google.com/specimen/Orbitron#about) - for consistency and simplicity this is the only font used. The blend of robotic straight lines and biologic curves is decidedly sci-fi and particularly fitting for Cyber Snake. This was chosen over more hard-edged retro typefaces because it hints at something more organic and less robotic, in the same way that the snake's hard edges are juxtaposed with the exploding food globs.
 
 #### Audio
 
@@ -177,82 +162,87 @@ The balance between adding a touch of ambience and the very real posibility of i
 
 ### Current
 
-**1. Object Oriented Programming**
+**1. Menu screens**
 
-- To improve the syntax of the code, Object Oriented Programming has been used as far as possible. The game is built with the following objects:
-  - **Gameboard**: handles the canvas and its resizing
-  - **Snake**: a constructor to handle the snake's location, trajectory and size
-  - **Food**: a constructor to handle the food's location
-  - **Spark**: a constructor to handle spark generation and randomisation (separate functions handle the spark array population and updates)
-  - **Game**: handles game state changes, DOM element styling, game settings, collision detection and updates
-  - **Stopwatch**: handles game time played (used only for stats updates)
-  - **Stats**: handles local storage of statistics
-  - **Scoreboard**: handles session scores and the score award text passed to the DOM
+- **Main**: shows controls for both desktop and mobile, and briefly explains how to play. There is also a hint of the game's 'personality', which is realised more fully on the scores screen
+- **Options**: sound toggle, walls toggle and choice of slow, medium or fast game speed
+   - The options menu is also displayed while the game is paused but only game sound can be changed. The remaining options are still visible but appear disabled. This allows players to mute the game if they wish, but prevents them from 'cheating' by changing other settings mid-game and from possibly becoming confused by an 'extra' menu
+- **Scores**: shows the five top scores of the session plus some light-hearted encouragement based on the most recent score. If the last score was in the top five then a subtle animation effect indicates where the score ranks
 
-**2. Customisation**
+**2. Accessible layout**
 
-- Rather than being hard-coded, visual and gameplay variables have been extracted to facilitate tweaks to the look and feel of the game. This enables much easier customisation on the developer's part
+- In portrait mode the canvas is pushed to the top of the screen so that players do not obscure the view of the game with their fingers, while in landscape mode the canvas is centred to allow for a two-thumbed control style either side of the canvas
+- The game has been designed to always fit within a single screen, no matter its size or the menu content, to give it the feeling of a standalone application. There should never be an occasion where the player has to scroll or zoom, and for this reason these features have been disabled
+- The menu buttons allow any menu to be accessed with just one click/tap. They always appear in the same position to give a physicality to the menu, and to prevent the player from having to reposition their cursor/finger unnecessarily
 
-**1. Responsive HTML canvas**
+**3. Responsive HTML canvas**
 
 - The core game (including the current score and high score) exists entirely in an HTML canvas element and could appear as a standalone element in another environment
 - Whatever the display size or screen orientation, the canvas adapts instantly to fill the maximum possible screen area while preserving its resolution and aspect ratio. This extends not just to the size of the snake and food, but to the font-size of the scoreboard and to the size, velocity and gravity of particle effects
 
-**2. Responsive input**
+**4. Responsive/intuitive input**
 
-- The game can be controlled with either a keyboard (and mouse) or touch-screen swipe gestures
-- Player input responses are crisp and reliable at any game speed, thanks to direction changes being passed through a validator
-- On mobile, swipe gestures are recognised across the entire screen to prevent missed gestures
+- The game can be controlled with either a keyboard (and mouse) or touch-screen swipe gestures, using just one hand
+- Player input responses are crisp and reliable at any game speed, thanks to directional changes being passed through a validator
+- On mobile, panning gestures (via HammerJS) are recognised across the entire screen to prevent missed gestures
 - Thanks to panning gesture recognition, sharp turns can be achieved with ease, even on mobile
 - The game can be paused by either hitting spacebar or tapping the screen with two fingers simultaneously
-- On desktop a new game can intuitively be started from the scores menu by pressing spacebar 
+- On desktop a new game can intuitively be started from the scores menu by pressing spacebar
 
-**3. Menu screens**
+**5. Playstyles**
 
-- **Main**: shows controls for both desktop and mobile, and briefly explains how to play. There is also a hint of the game's 'personality', which is realised more fully on the scores screen
-- **Options**: sound toggle, walls toggle and choice of slow, medium or fast game speed
-   - The options menu is also displayed while the game is paused but only game sound can be changed. The remaining options are still visible but appear disabled. This allows players to mute the game if they wish, but prevents them from changing other settings mid-game and from possibly becoming confused by an 'extra' menu
-- **Scores**: shows the five top scores of the session plus some light-hearted encouragement based on the most recent score. If the last score was in the top five then a subtle animation effect indicates where the score ranks
+A good mobile game caters to both casual and more engaged playstyles. The various game speeds should cater to all types of players, with the option to turn on walls providing an additional challenge and a more traditional Snake experience
 
-**4. Game personality**
+**6. Game personality**
 
 - In order to inject some personality in keeping with games from the 90s, text feedback is given to the player based on how well the game deems they have performed. This is a collection of around 30 comments (which appear in various combinations on the scores menu) intended to amuse, encourage and ridicule players as they attempt to beat their high score
 - This approach was adopted rather than relying on dramatic music/audio or flashy visuals, with the aim of keeping players intruiged by what the game might say on reaching the next score milestone. The intended effect is that the game is judging the player's performance, giving them an incentive to prove it wrong
 
-**5. Playstyles**
+**7. Visual effects**
 
-- A good mobile game caters to both casual and more engaged playstyles. The various game speeds should cater to all types of players, with the option to turn on walls providing an additional challenge and a more traditional Snake experience
-
-**6. Local high score save**
-
-- The high score is saved to the device's local storage and will remain between game sessions, providing cookies are not deleted
-
-**7. Accessible layout**
-
-- In portrait mode the canvas is pushed to the top of the screen so that players do not obscure the view of the game with their fingers, while in landscape mode the canvas is centred to allow for a two-thumbed control style either side of the canvas
-- The game has been designed to always fit within a single screen, no matter its size or the menu content, to give it the feeling of a standalone application. There should never be an occasion where the player has to scroll or zoom, and for this reason these features have been disabled
+This is what the phrase "and the messier things become", refers to on the main menu screen. A simple physics particle effect showers the game board with multi-coloured sparks each time food is eaten. As more food is eaten, the number and velocity of sparks increases until the screen is awash with colour. This serves as both a reward for good play and in the later stages a pleasant distraction from the job at hand
 
 **8. Audio**
 
-- Web Audio provides lag-free sound effects on all devices
+The Web Audio API (via HowlerJS) provides reliable sound effects on all devices
+
+**9. Local high score save**
+
+The high score is saved to the device's local storage and will remain between game sessions, providing cookies are not deleted. This is a fundamental feature for giving players a reason to return
+
+**10. Object Oriented Programming**
+
+To improve the syntax of the code, Object Oriented Programming has been used as far as possible. The game is built with the following objects:
+- **Gameboard**: handles the canvas and its resizing
+- **Snake**: a constructor to handle the snake's location, trajectory and size
+- **Food**: a constructor to handle the food's location
+- **Spark**: a constructor to handle spark generation and randomisation (separate functions handle the spark array population and updates)
+- **Game**: handles game state changes, DOM element styling, game settings, collision detection and updates
+- **Stopwatch**: handles game time played (used only for stats updates)
+- **Stats**: handles local storage of statistics
+- **Scoreboard**: handles session scores and the score award text passed to the DOM
+
+**11. Customisation**
+
+Rather than being hard-coded, visual and gameplay variables have been extracted to facilitate tweaks to the look and feel of the game. This enables much easier customisation on the developer's part
 
 <span id="features-future"></span>
 
 ### Future
 
-- Improved score-keeping system
+**Improved score-keeping system**
 
-   - Recording walls on/off and game speed alongside scores. After all, 200 points on slow with no walls is less of an achievement than 200 on fast with walls enabled
+- Recording walls on/off and game speed alongside scores. After all, 200 points on slow with no walls is less of an achievement than 200 on fast with walls enabled
 
-- Online leaderboard
+**Online leaderboard**
 
-   - A global/regional leaderboard to give a true sense of competition
+- A global/regional leaderboard to give a true sense of competition
 
-- Gameplay modes/customisation
+**Gameplay modes/customisation**
 
-   - Special food changing playstyle - e.g. speed, points multiplier, extra food objects, altering size of snake body
-   - Different game modes - e.g. obstacles within the play area, a maze
-   - Graphical options - e.g. choice of snake colour, themes, particle effects
+- Special food changing playstyle - e.g. speed, points multiplier, extra food objects, altering size of snake body
+- Different game modes - e.g. obstacles within the play area, a maze
+- Graphical options - e.g. choice of snake colour, themes, particle effects
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
@@ -272,12 +262,11 @@ The balance between adding a touch of ambience and the very real posibility of i
 
 - [Balsamiq](https://balsamiq.com/wireframes/) - Wireframe creation tool
 - [GitHub](https://github.com/) - Version control and deployment
-- [GitPod](https://gitpod.io/) - IDE used to code the site
+- [GitPod](https://gitpod.io/) - IDE used to code the game
 
 ### Style and theme
 
-- [Autoprefixer](https://autoprefixer.github.io/) - Post CSS plugin which parses CSS and adds vendor prefixes
-- [Color Scheme Designer](https://colorschemedesigner.com/csd-3.5/) - Complimentary color scheme for the site
+- [Autoprefixer](https://autoprefixer.github.io/) - to add CSS vendor prefixes
 - [Google Fonts](https://fonts.google.com/) - Orbitron
 
 ### Online resources
@@ -294,31 +283,20 @@ The balance between adding a touch of ambience and the very real posibility of i
 
 ### Automated testing
 
-- [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools) - ran an audit for both desktop and mobile.
-
-Summary:
+[Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools) - audit summary for both desktop and mobile:
 
 - Performance = **Average**
-
-  - Details
-
 - Accessibility = **Good**
-  - Details
 - Best Practices = **Good**
-  - Details
 - SEO = **Good**
-  - Details
 
-Mobile scores:
+[W3C - HTML](https://validator.w3.org/) - Summary - **PASS**
 
-- [JS Hint](https://jshint.com/) - Summary - **PASS**
+[W3C - CSS](https://jigsaw.w3.org/css-validator/) - Summary - **PASS**
 - [CSS Lint](http://csslint.net/) - 0 errors, 0 warnings - **PASS**
-  - Details
-- [W3C - HTML](https://validator.w3.org/) - Summary - **PASS**
-  - Details
-- [W3C - CSS](https://jigsaw.w3.org/css-validator/) - Summary - **PASS**
-  - Details
 - [Unicorn revealer - overflow](https://chrome.google.com/webstore/detail/unicorn-revealer/lmlkphhdlngaicolpmaakfmhplagoaln/related) - tested all pages and no evidence of overflow - **PASS**
+
+[JS Hint](https://jshint.com/) - Summary - **PASS**
 
 <span id="testing-manual"></span>
 
@@ -328,7 +306,7 @@ Mobile scores:
 
 Text
 
-The following scenarios were tested to ensure that the site is functioning as expected:
+The following scenarios were tested to ensure that the game functions as expected:
 
 **1. Element 1**
 
@@ -456,9 +434,9 @@ Code was modified from the following sources:
 
 ### Content
 
-All text within the game is original content.
+- All text within the game is original content.
 
-The Deployment section was based on Richard Wells' README.md ([Source](https://github.com/D0nni387/Luxury-Door-Solutions/blob/master/README.md)).
+- The Deployment section was based on Richard Wells' README.md ([Source](https://github.com/D0nni387/Luxury-Door-Solutions/blob/master/README.md)).
 
 ### Acknowledgements
 
