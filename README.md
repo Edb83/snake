@@ -126,7 +126,7 @@ The colours used for the core game aspects are easy on the eyes when concentrati
 The border of the game area is Deep Carmine Pink if walls are enabled, or Wageningen Green is they are not. This difference is intuitively suggesting green for safe and red for danger. Without this distinction it would be difficult to immediately convey whether or not walls were enabled, so the colours are as close to primary as possible.
 
 - ![#001440](https://via.placeholder.com/15/001440/000000?text=+) #001440 (Cetacean Blue)
-- ![#ffffff](https://via.placeholder.com/15/000000/ffffff?text=+) #ffffff (White)
+- ![#ffffff](https://via.placeholder.com/15/ffffff/000000?text=+) #ffffff (White)
 - ![#DF00FE](https://via.placeholder.com/15/DF00FE/000000?text=+) #df00fe (Phlox)
 - ![#FF3333](https://via.placeholder.com/15/FF3333/000000?text=+) #ff3333 (Deep Carmine Pink)
 - ![#339933](https://via.placeholder.com/15/339933/000000?text=+) #339933 (Wageningen Green)
