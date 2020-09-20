@@ -164,6 +164,13 @@ The balance between adding a touch of ambience and the very real posibility of i
 
 **1. Menu screens**
 
+| Menu | Description |
+| :---- | :------- |
+| Main  | Shows controls for both desktop and mobile, and briefly explains how to play. There is also a hint of the game's 'personality', which is realised more fully on the scores screen     |
+| Options  | Sound toggle, walls toggle and choice of slow, medium or fast game speed
+   - The options menu is also displayed while the game is paused but only game sound can be changed. The remaining options are still visible but appear disabled. This allows players to mute the game if they wish, but prevents them from 'cheating' by changing other settings mid-game and from possibly becoming confused by an 'extra' menu     |
+| Scores  | Shows the five top scores of the session plus some light-hearted encouragement based on the most recent score. If the last score was in the top five then a subtle animation effect indicates where the score ranks     |
+
 - **Main**: shows controls for both desktop and mobile, and briefly explains how to play. There is also a hint of the game's 'personality', which is realised more fully on the scores screen
 - **Options**: sound toggle, walls toggle and choice of slow, medium or fast game speed
    - The options menu is also displayed while the game is paused but only game sound can be changed. The remaining options are still visible but appear disabled. This allows players to mute the game if they wish, but prevents them from 'cheating' by changing other settings mid-game and from possibly becoming confused by an 'extra' menu
@@ -213,6 +220,18 @@ The high score is saved to the device's local storage and will remain between ga
 **10. Object Oriented Programming**
 
 To improve the syntax of the code, Object Oriented Programming has been used as far as possible. The game is built with the following objects:
+
+| Object | Role |
+| :---- | :------- |
+| Gameboard  | Handles the canvas and its resizing     |
+| Snake  | Constructor to handle the snake's location, trajectory and size     |
+| Food  | Constructor to handle the food's location     |
+| Spark  | Constructor to handle spark generation and randomisation (separate functions handle the spark array population and updates)     |
+| Game  | Handles game state changes, DOM element styling, game settings, collision detection and updates     |
+| Stopwatch  | Handles game time played (used only for stats updates)     |
+| Stats  | Handles local storage of statistics     |
+| Scoreboard  | Handles session scores and the score award text passed to the DOM     |
+
 - **Gameboard**: handles the canvas and its resizing
 - **Snake**: a constructor to handle the snake's location, trajectory and size
 - **Food**: a constructor to handle the food's location
