@@ -165,14 +165,14 @@ The balance between adding a touch of ambience and the very real posibility of i
 
 | Menu    | Description                                                                                                                                                                                                         |
 | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Main    | Shows controls for both desktop and mobile, and briefly explains how to play. There is also a hint of the game's 'personality', which is realised more fully on the scores screen                                   |
+| Main    | Shows controls for both desktop and mobile, and briefly explains how to play                                                                                                                                        |
 | Options | Sound toggle, walls toggle and choice of slow, medium or fast game speed                                                                                                                                            |
 | Scores  | Shows the five top scores of the session plus some light-hearted encouragement based on the most recent score. If the last score was in the top five then a subtle animation effect indicates where the score ranks |
 
-- **Main**: shows controls for both desktop and mobile, and briefly explains how to play. There is also a hint of the game's 'personality', which is realised more fully on the scores screen
+<!-- - **Main**: shows controls for both desktop and mobile, and briefly explains how to play. There is also a hint of the game's 'personality', which is realised more fully on the scores screen
 - **Options**: sound toggle, walls toggle and choice of slow, medium or fast game speed
   - The options menu is also displayed while the game is paused but only game sound can be changed. The remaining options are still visible but appear disabled. This allows players to mute the game if they wish, but prevents them from 'cheating' by changing other settings mid-game and from possibly becoming confused by an 'extra' menu
-- **Scores**: shows the five top scores of the session plus some light-hearted encouragement based on the most recent score. If the last score was in the top five then a subtle animation effect indicates where the score ranks
+- **Scores**: shows the five top scores of the session plus some light-hearted encouragement based on the most recent score. If the last score was in the top five then a subtle animation effect indicates where the score ranks -->
 
 **2. Accessible layout**
 
@@ -205,7 +205,7 @@ A good mobile game caters to both casual and more engaged playstyles. The variou
 
 **7. Visual effects**
 
-This is what the phrase "and the messier things become", refers to on the main menu screen. A simple physics particle effect showers the game board with multi-coloured sparks each time food is eaten. As more food is eaten, the number and velocity of sparks increases until the screen is awash with colour. This serves as both a reward for good play and in the later stages a pleasant distraction from the job at hand
+This is what the phrase "and the messier things become", refers to on the main menu screen. A simple physics particle effect showers the game board with multi-coloured sparks each time food is eaten. As more food is eaten, the number and velocity of sparks increases until the screen is awash with colour. This serves as both a reward for good play and in the later stages a pleasant distraction from the job at hand. The colour of the sparks matches that of the food eaten, which helps to suggest that the food has been destroyed ('gibbed', if you will)
 
 **8. Audio**
 
@@ -230,14 +230,14 @@ To improve the syntax of the code, Object Oriented Programming has been used as 
 | Stats      | Handles local storage of statistics                                                                                         |
 | Scoreboard | Handles session scores and the score award text passed to the DOM                                                           |
 
-- **Gameboard**: handles the canvas and its resizing
+<!-- - **Gameboard**: handles the canvas and its resizing
 - **Snake**: a constructor to handle the snake's location, trajectory and size
 - **Food**: a constructor to handle the food's location
 - **Spark**: a constructor to handle spark generation and randomisation (separate functions handle the spark array population and updates)
 - **Game**: handles game state changes, DOM element styling, game settings, collision detection and updates
 - **Stopwatch**: handles game time played (used only for stats updates)
 - **Stats**: handles local storage of statistics
-- **Scoreboard**: handles session scores and the score award text passed to the DOM
+- **Scoreboard**: handles session scores and the score award text passed to the DOM -->
 
 **11. Customisation**
 
@@ -322,19 +322,71 @@ Rather than being hard-coded, visual and gameplay variables have been extracted 
 
 **Summary**:
 
-Text
+Countless hours were spent testing Cyber Snake throughout its development, which is either a testament to the quality of the game or the bloody-mindedness of its creator. Over several thousand games the following scenarios were successfully tested:
 
-The following scenarios were tested to ensure that the game functions as expected:
+**1. Snake behaviour**
 
-**1. Element 1**
+- The snake moves in the expected direction, staying the same size if it has not eaten any food
+- On eating food the snake grows by one segment
 
-- From each page
-  - check zxy - **PASS**
+**2. Food behaviour**
 
-**2. Element 2**
+- Food always spawns within the game board boundaries at a random location and with a random colour from the colorArray
+- Food will respawn if it appears within the body of the snake
 
-- From each page
-  - check zxy - **PASS**
+**3. Spark behaviour**
+
+- Sparks spawn where food is eaten and travel in the direction that the snake is moving when it hits
+- Sparks spawn with the colour of the food the snake eats
+- Spawned sparks will not exceed the maximum number allowed (150) per sparkArray repopulation
+- Sparks bounce off the left, right and bottom border and do not clip into borders
+- Each spark spawns with a random size, direction, velocity and gravity (within set ranges)
+- As a spark falls, its gravity (and therefore speed) increases
+- When a spark collides with the left, right or bottom border, its speed decreases as friction is applied
+- After colliding with a border, each spark's time to live decreases, along with its opacity until it disappears (and is removed from the sparkArray)
+
+**4. Collision detection**
+
+- The game ends when the snake collides with itself or a wall (if enabled)
+- Food respawns and points increase when eaten
+- Whatever the viewport (and therefore canvas) dimensions are, collision detection remains accurate and the snake never passes through food without eating it
+
+**5. Move validation**
+
+- It is impossible for the snake to 'go back on itself' or to 'eat its own neck' by rapidly attempting to change direction, no matter how slow the game speed is set. For example, if moving left and changing direction to up, the direction cannot be changed to right before the snake has first moved one tile upwards
+
+**6. Score & score board**
+
+- Each time food is eaten, the score increments by the correct amount (1) and is displayed on the canvas score area
+- The locally stored high score is successfully updated in real time and when the current score exceeds the previous high score, both the current score and high score increase incrementally
+- On gameover the score is added to the score board if it is in the top five scores for the session, and has the blink css style added to it
+
+**7. Stats system and Score awards text**
+
+Exhaustive testing was carried out to ensure that this system was robust. This involved wiping local storage and checking the various conditionals were working:
+
+- The stats collected and saved to local storage (games this session, games all time, last game length, total game length, points all time) are accurate and successfully passed into the score awards text
+- On game over, conditional clauses correctly rewrite HTML or append text based on numerous eventualities (score range, new high score, game length, games played, milestone previously hit, walls enabled, game speed, previous score, difference between scores)
+
+**8. Gameplay options**
+
+- When walls are disabled, the game border is the correct colour (green) and the snake can pass through each wall (top, bottom, left, right) to reappear on the opposite side of the board without the game ending
+- When walls are enabled, the game border is the correct colour (red) and the game ends when the snake hits any wall
+- The three game speed options (slow, medium, fast) each alter the speed of the game as expected
+
+**9. Options choices**
+
+- Each option (sound toggle, walls toggle, game speed) has the expected effect on the game from the relevant state (gameover, pause)
+- The options disabled during the pause state (toggle walls, game speed) cannot be changed
+
+**10. Event listeners**
+
+- Keyboard handler: each key (arrow keys, spacebar) performs the correct action (up, down, left, right, pause, resume, new game) from the relevant game states (play, pause, gameover)
+- Hammer manager: each gesture (pan, two-finger tap) performs the correct action (up, down, left, right, pause, resume) from the relevant game states (play, pause)
+- Resize / orientation change: both events perform a correct resizing of the game board assets
+- Menu selection: each button element (play, resume, main menu, options menu, scores menu) shows and hides the correct modal elements (heading, menu-content, buttons) when clicked
+- Menu sound: button elements play the correct sound when clicked (play has no audio attached to it)
+
 
 <span id="testing-responsive"></span>
 
