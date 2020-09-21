@@ -7,20 +7,35 @@ let snake;
 let food;
 let tile; // the base unit of measurement used (e.g. snake/food parts are tile * tile)
 
+// Gameplay
+const slow = 200;
+const medium = 140; // milliseconds per game update (higher is slower). Game was built on 140ms refresh rate
+const fast = 80;
+
 // Audio
 // https://howlerjs.com/
 const eatAudio = new Howl({
   src: ["assets/audio/eat.wav"],
-  html5: true,
+//   html5: true,
   volume: 0.1,
 });
 const gameOverAudio = new Howl({
   src: ["assets/audio/gameover.wav"],
-  html5: true,
+//   html5: true,
 });
 const clickAudio = new Howl({
   src: ["assets/audio/click.wav"],
-  html5: true,
+//   html5: true,
+});
+
+// Controls
+const left = -1; // directions have been converted to numbers so that conditional statements can be negated mathematically
+const right = 1;
+const up = -2;
+const down = 2;
+const hammertime = new Hammer.Manager(document.querySelector("body"), {
+  prevent_default: true,
+  touchAction: "none",
 });
 
 // DOM Elements
@@ -37,21 +52,6 @@ const mediumRadioButton = document.getElementById("medium-radio");
 const fastRadioButton = document.getElementById("fast-radio");
 
 const canvas = document.getElementById("canvas");
-
-// Controls
-const left = -1; // directions have been converted to numbers so that conditional statements can be negated mathematically
-const right = 1;
-const up = -2;
-const down = 2;
-const hammertime = new Hammer.Manager(document.querySelector("body"), {
-  prevent_default: true,
-  touchAction: "none",
-});
-
-// Gameplay
-const slow = 200;
-const medium = 140; // milliseconds per game update (higher is slower). Game was built on 140ms refresh rate
-const fast = 80;
 
 // Canvas
 const ctx = canvas.getContext("2d");
