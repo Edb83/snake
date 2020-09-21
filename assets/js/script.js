@@ -18,8 +18,8 @@ const gameOverAudio = new Howl({
 });
 const clickAudio = new Howl({
   src: ["assets/audio/click.wav"],
-  onload: function() {
-      alert("Loaded");
+  onloaderror: function(error) {
+      alert("Error:", error);
   }
 });
 
