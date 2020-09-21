@@ -11,13 +11,16 @@ let tile; // the base unit of measurement used (e.g. snake/food parts are tile *
 // https://howlerjs.com/
 const eatAudio = new Howl({
   src: ["assets/audio/eat.wav"],
-  volume: 0.075,
+  volume: 0.1,
 });
 const gameOverAudio = new Howl({
   src: ["assets/audio/gameover.wav"],
 });
-let clickAudio = new Howl({
+const clickAudio = new Howl({
   src: ["assets/audio/click.wav"],
+  onload: function() {
+      alert("Loaded");
+  }
 });
 
 // DOM Elements
