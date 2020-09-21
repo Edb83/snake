@@ -7,6 +7,19 @@ let snake;
 let food;
 let tile; // the base unit of measurement used (e.g. snake/food parts are tile * tile)
 
+// Audio
+// https://howlerjs.com/
+const eatAudio = new Howl({
+  src: ["assets/audio/eat.wav"],
+  volume: 0.075,
+});
+const gameOverAudio = new Howl({
+  src: ["assets/audio/gameover.wav"],
+});
+let clickAudio = new Howl({
+  src: ["assets/audio/click.wav"],
+});
+
 // DOM Elements
 const mainButton = document.getElementById("main-button");
 const playButton = document.getElementById("play-button");
@@ -21,19 +34,6 @@ const mediumRadioButton = document.getElementById("medium-radio");
 const fastRadioButton = document.getElementById("fast-radio");
 
 const canvas = document.getElementById("canvas");
-
-// Audio
-// https://howlerjs.com/
-let eatAudio = new Howl({
-  src: ["assets/audio/eat.wav"],
-  volume: 0.075,
-});
-let gameOverAudio = new Howl({
-  src: ["assets/audio/gameover.wav"],
-});
-let clickAudio = new Howl({
-  src: ["assets/audio/click.wav"],
-});
 
 // Controls
 const left = -1; // directions have been converted to numbers so that conditional statements can be negated mathematically
