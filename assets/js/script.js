@@ -11,13 +11,16 @@ let tile; // the base unit of measurement used (e.g. snake/food parts are tile *
 // https://howlerjs.com/
 const eatAudio = new Howl({
   src: ["assets/audio/eat.wav"],
+  html5: true,
   volume: 0.1,
 });
 const gameOverAudio = new Howl({
   src: ["assets/audio/gameover.wav"],
+  html5: true,
 });
 const clickAudio = new Howl({
   src: ["assets/audio/click.wav"],
+  html5: true,
 });
 
 // DOM Elements
@@ -115,7 +118,6 @@ const convertSecondsToHms = (d) => {
 // Spark calculator for direction and gravity (depending on window/tile size)
 const dynamicOutput = (ratio) => tile * ratio;
 
-
 // EVENT HANDLERS
 
 // Keydown
@@ -139,7 +141,7 @@ const keyboardHandler = (e) => {
   }
 
   if (e.keyCode === 32 && game.state === "GAMEOVER") {
-      newGame();
+    newGame();
   }
 };
 
@@ -162,7 +164,6 @@ hammertime.on(`panleft panright panup pandown twofingertap`, (e) => {
     game.play();
   }
 });
-
 
 // GAME INITIALISATION
 
@@ -195,7 +196,6 @@ const newGame = () => {
   hammertime.get("twofingertap").set({ enable: true });
 };
 
-
 // GAME LOOP
 
 const gameLoop = () => {
@@ -210,7 +210,6 @@ const gameLoop = () => {
     game.stop();
   }
 };
-
 
 // ANIMATION LOOP
 
@@ -234,7 +233,6 @@ const animateLoop = () => {
     return;
   }
 };
-
 
 // OBJECTS
 
@@ -830,7 +828,6 @@ let stats = {
     this.pointsAllTime = 0;
   },
 };
-
 
 // EVENT LISTENERS
 
