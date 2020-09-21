@@ -739,12 +739,10 @@ let game = {
     }
   },
   moveIsValid(newDir) {
-    if (this.lastMove === -newDir && snake.direction !== newDir) {
-      return false;
-    } else if (this.lastMove === newDir && snake.direction !== -newDir) {
-      return false;
-    } else {
+    if (this.lastMove !== -newDir) {
       return true;
+    } else {
+      return false;
     }
   },
   update() {
