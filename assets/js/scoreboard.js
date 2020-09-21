@@ -10,6 +10,7 @@ let scoreBoard = {
       return;
     } else {
       this.array.push(this.currentScore);
+    //   https://www.javascripttutorial.net/javascript-array-sort/
       this.array.sort((a, b) => b - a);
     }
   },
@@ -26,6 +27,7 @@ let scoreBoard = {
       return;
     }
   },
+  //   https://stackoverflow.com/questions/22943186/html5-canvas-font-size-based-on-canvas-size
   getFont() {
     let fontSize = canvas.width * fontRatio;
     return (fontSize || 0) + "px Orbitron";

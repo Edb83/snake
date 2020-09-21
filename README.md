@@ -286,6 +286,7 @@ Rather than being hard-coded, visual and gameplay variables have been extracted 
 ### Style and theme
 
 - [Autoprefixer](https://autoprefixer.github.io/) - to add CSS vendor prefixes
+- [Favicon & App Icon Generator](https://www.favicon-generator.org/) - to generate the game's favicons
 - [Google Fonts](https://fonts.google.com/) - Orbitron
 
 ### Online resources
@@ -536,17 +537,11 @@ measuring time since last keypress
 RESOLVED: moved keydownHandler into event listener and added if statement to check time since last keypress
 https://stackoverflow.com/questions/14667010/limit-how-many-times-an-event-listener-can-trigger-every-second
 
-Sound function:
-https://www.w3schools.com/graphics/game_sound.asp
-
 Free sounds:
 https://freesound.org/home/
 
 Canvas tutorial:
 https://www.youtube.com/watch?v=EO6OkltgudE&list=PLpPnRKq7eNW3We9VdCfx9fprhqXHwTPXL&index=1
-
-Color wheel:
-https://color.adobe.com/create/color-wheel
 
 Sorting scores:
 https://www.javascripttutorial.net/javascript-array-sort/
@@ -586,5 +581,8 @@ https://css-tricks.com/almanac/properties/p/pointer-events/
 
 Crayola fluorescent color palette:
 https://colorswall.com/palette/360/
+
+Favicon & App Icon Generator:
+https://www.favicon-generator.org/
 
 -->

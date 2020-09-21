@@ -58,7 +58,7 @@ body {
   display: grid;
   place-content: center;
   z-index: 1;
-  height: 55%;
+  height: 45%;
   padding: 1rem;
   color: #fff;
   font-family: "Orbitron", sans-serif;
@@ -99,6 +99,7 @@ h1 {
 /* DOM MANIPULATION */
 
 .avoid-clicks {
+/* https://css-tricks.com/almanac/properties/p/pointer-events/ */
   pointer-events: none;
 }
 
@@ -206,6 +207,7 @@ h1 {
 }
 
 .options-choice-button > input {
+/* https://dev.to/proticm/styling-html-checkboxes-is-super-easy-302o */
   height: 1.5rem;
   width: 1.5rem;
   -webkit-appearance: none;
@@ -246,15 +248,14 @@ h1 {
 }
 
 .options-choice-button > input:disabled {
-  /* border: dotted #fff; */
   border-color: #3f4349;
   cursor: default;
 }
 
 /* ANIMATIONS */
 
-/* https://www.w3schools.com/howto/howto_css_glowing_text.asp */
 @-webkit-keyframes glow {
+/* https://www.w3schools.com/howto/howto_css_glowing_text.asp */
   from {
     text-shadow: 0 0 0.1em #fff, 0 0 0.2em #e60073, 0 0 0.3em #e60073,
       0 0 0.4rem #e60073, 0 0 0.5rem #e60073, 0 0 0.6rem #e60073,
@@ -483,7 +484,6 @@ h1 {
   }
   .menu-content-container {
     font-size: 2rem;
-    /* min-height: 29rem; */
   }
 
   #instructions-container > p {

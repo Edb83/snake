@@ -5,38 +5,7 @@
 // Declarations
 let snake;
 let food;
-let tile; // the based unit of measurement used (e.g. snake/food parts are tile * tile)
-
-// Gameplay
-const slow = 200;
-const medium = 140; // milliseconds per game update (higher is slower). Game was built on 140ms refresh rate
-const fast = 80;
-
-// Audio
-let eatAudio = new Howl({
-  src: ["assets/audio/eat.wav"],
-  volume: 0.075,
-});
-let gameOverAudio = new Howl({
-  src: ["assets/audio/gameover.wav"],
-});
-let clickAudio = new Howl({
-  src: ["assets/audio/click.wav"],
-});
-// let startAudio = new Howl({
-//   src: ["assets/audio/start.wav"],
-// });
-
-// Controls
-const left = -1; // directions have been converted to numbers so that conditional statements can be negated mathematically
-const right = 1;
-const up = -2;
-const down = 2;
-const hammertime = new Hammer.Manager(document.querySelector("body"), {
-  prevent_default: true,
-  touchAction: "none",
-});
-
+let tile; // the base unit of measurement used (e.g. snake/food parts are tile * tile)
 
 // DOM Elements
 const mainButton = document.getElementById("main-button");
@@ -52,6 +21,34 @@ const mediumRadioButton = document.getElementById("medium-radio");
 const fastRadioButton = document.getElementById("fast-radio");
 
 const canvas = document.getElementById("canvas");
+
+// Audio
+// https://howlerjs.com/
+let eatAudio = new Howl({
+  src: ["assets/audio/eat.wav"],
+  volume: 0.075,
+});
+let gameOverAudio = new Howl({
+  src: ["assets/audio/gameover.wav"],
+});
+let clickAudio = new Howl({
+  src: ["assets/audio/click.wav"],
+});
+
+// Controls
+const left = -1; // directions have been converted to numbers so that conditional statements can be negated mathematically
+const right = 1;
+const up = -2;
+const down = 2;
+const hammertime = new Hammer.Manager(document.querySelector("body"), {
+  prevent_default: true,
+  touchAction: "none",
+});
+
+// Gameplay
+const slow = 200;
+const medium = 140; // milliseconds per game update (higher is slower). Game was built on 140ms refresh rate
+const fast = 80;
 
 // Canvas
 const ctx = canvas.getContext("2d");
@@ -82,6 +79,7 @@ const foodStrokeColor = "#000"; // black
 const colorArray = [
   // Food color is picked at random from this array & sparks have the same color as food eaten
   // RGB used so that alpha can be adjusted with each spark's time to live
+  // https://colorswall.com/palette/360/
   "rgba(255, 53, 94, 1)", // Red
   "rgba(253, 91, 120, 1)", // Watermelon
   "rgba(255, 96, 55, 1)", // Orange
@@ -93,17 +91,16 @@ const colorArray = [
   "rgba(102, 255, 102, 1)", // Green
   "rgba(170, 240, 209, 1)", // Mint
   "rgba(80, 191, 230, 1)", // Blue
-//   "rgba(255, 110, 255, 1)", // Pink
-//   "rgba(238, 52, 210, 1)", // Rose
-//   "rgba(255, 0, 204, 1)", // Purple
 ];
 
 // FUNCTIONS
 
 // Random number generator
+// https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
 const randomNumber = (min, max) => Math.random() * (max - min) + min;
 
 // Time convertor
+// https://stackoverflow.com/questions/37096367/how-to-convert-seconds-to-minutes-and-hours-in-javascript/37096923
 const convertSecondsToHms = (d) => {
   d = Number(d);
   var h = Math.floor(d / 3600);
@@ -122,6 +119,7 @@ const dynamicOutput = (ratio) => tile * ratio;
 // EVENT HANDLERS
 
 // Keydown
+// https://stackoverflow.com/questions/5597060/detecting-arrow-key-presses-in-javascript
 const keyboardHandler = (e) => {
   if (e.keyCode === 38 && game.moveIsValid(up)) {
     snake.direction = up;
@@ -146,7 +144,7 @@ const keyboardHandler = (e) => {
 };
 
 // Hammertime touch gestures
-
+// https://hammerjs.github.io/
 hammertime.on(`panleft panright panup pandown twofingertap`, (e) => {
   if (e.type === `panleft` && game.moveIsValid(left)) {
     snake.direction = left;
@@ -839,15 +837,14 @@ let stats = {
 document.addEventListener("keydown", keyboardHandler);
 window.addEventListener("resize", gameBoard.recalculateAssets);
 window.addEventListener("orientationchange", gameBoard.recalculateAssets);
-// window.addEventListener("blur", function () {
-//   if (game.state === "PLAY") {
-//     game.changeState("PAUSE");
-//     game.stop();
-//   }
-// });
+window.addEventListener("blur", function () {
+  if (game.state === "PLAY") {
+    game.changeState("PAUSE");
+    game.stop();
+  }
+});
 playButton.addEventListener("click", function () {
   newGame();
-  //   startAudio.play();
 });
 resumeButton.addEventListener("click", function () {
   game.play();
