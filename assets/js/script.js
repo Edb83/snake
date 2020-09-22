@@ -83,16 +83,16 @@ const fast = 80;
 // Audio
 // https://howlerjs.com/
 const eatAudio = new Howl({
-  src: ["assets/audio/eat.webm", "assets/audio/eat.wav"],
+  src: ["assets/audio/eat.webm", "assets/audio/eat.mp3"],
 //   html5: true,
   volume: 0.1,
 });
 const gameOverAudio = new Howl({
-  src: ["assets/audio/gameover.webm", "assets/audio/gameover.wav"],
+  src: ["assets/audio/gameover.webm", "assets/audio/gameover.mp3"],
 //   html5: true,
 });
 const clickAudio = new Howl({
-  src: ["assets/audio/click.webm", "assets/audio/click.wav"],
+  src: ["assets/audio/click.webm", "assets/audio/click.mp3"],
 //   html5: true,
 });
 

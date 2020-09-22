@@ -96,7 +96,7 @@ Overall the wireframes were successfully followed when creating Cyber Snake, how
 
 2. Advanced image manipulation - the initial idea was to have a more flashy landing screen which would respond to user mouse movements, and to have other visuals passing behind the game area during play, either using the HTML canvas or CSS animations. These features were outside the scope of the project and would have ultimately been an unnecessary distraction if not handled elegantly
 
-3. Mobile control pad - the HammerJS library offers a much better solution to mobile control. Prior to discovering this, a directional pad/virtual joystick seemed like the most viable means of controlling the game on mobile 
+3. Mobile control pad - the HammerJS library offers a much better solution to mobile control. Prior to discovering this, a directional pad/virtual joystick seemed like the most viable means of controlling the game on mobile
 
 <span id="ux-design"></span>
 
@@ -195,6 +195,7 @@ The balance between adding a touch of ambience and the very real posibility of i
 - Thanks to panning gesture recognition, sharp turns can be achieved with ease, even on mobile
 - The game can be paused by either hitting spacebar or tapping the screen with two fingers simultaneously. The options menu is displayed while the game is paused but only game sound can be changed. The remaining options are still visible but appear disabled. This allows players to mute the game if they wish, but prevents them from 'cheating' by changing other settings mid-game and from possibly becoming confused by an 'extra' menu
 - On desktop a new game can intuitively be started from the scores menu by pressing spacebar
+- When the game loses focus (e.g. when the player clicks on another browsing tab or switches apps), it will be paused to prevent a frustrating loss
 
 **5. Playstyles**
 
@@ -227,19 +228,10 @@ To improve the syntax of the code, Object Oriented Programming has been used as 
 | Snake      | Constructor to handle the snake's location, trajectory and size                                                             |
 | Food       | Constructor to handle the food's location                                                                                   |
 | Spark      | Constructor to handle spark generation and randomisation (separate functions handle the spark array population and updates) |
-| Game       | Handles game state changes, DOM element styling, game settings, collision detection and updates                             |
+| Game       | Handles game state changes, DOM element styling, game settings, collision detection, move validity and updates              |
 | Stopwatch  | Handles game time played (used only for stats updates)                                                                      |
 | Stats      | Handles local storage of statistics                                                                                         |
 | Scoreboard | Handles session scores and the score award text passed to the DOM                                                           |
-
-<!-- - **Gameboard**: handles the canvas and its resizing
-- **Snake**: a constructor to handle the snake's location, trajectory and size
-- **Food**: a constructor to handle the food's location
-- **Spark**: a constructor to handle spark generation and randomisation (separate functions handle the spark array population and updates)
-- **Game**: handles game state changes, DOM element styling, game settings, collision detection and updates
-- **Stopwatch**: handles game time played (used only for stats updates)
-- **Stats**: handles local storage of statistics
-- **Scoreboard**: handles session scores and the score award text passed to the DOM -->
 
 **11. Customisation**
 
@@ -334,19 +326,19 @@ Countless hours were spent testing Cyber Snake throughout its development, which
 
 **2. Food behaviour**
 
-- Food always spawns within the game board boundaries at a random location and with a random colour from the ```colorArray```
+- Food always spawns within the game board boundaries at a random location and with a random colour from the `colorArray`
 - Food will respawn if it appears within the body of the snake
 
 **3. Spark behaviour**
 
 - Sparks spawn where food is eaten and travel in the direction that the snake is moving when it hits
 - Sparks spawn with the colour of the food the snake eats
-- Spawned sparks will not exceed the maximum number allowed (150) per ```sparkArray``` repopulation
+- Spawned sparks will not exceed the maximum number allowed (150) per `sparkArray` repopulation
 - Sparks bounce off the left, right and bottom border and do not clip into borders
 - Each spark spawns with a random size, direction, velocity and gravity (within set ranges)
 - As a spark falls, its gravity (and therefore speed) increases
 - When a spark collides with the left, right or bottom border, its speed decreases as friction is applied
-- After colliding with a border, each spark's time to live decreases, along with its opacity until it disappears (and is removed from the ```sparkArray```)
+- After colliding with a border, each spark's time to live decreases, along with its opacity until it disappears (and is removed from the `sparkArray`)
 
 **4. Collision detection**
 
@@ -387,9 +379,9 @@ Exhaustive testing was carried out to ensure that this system was robust. This i
 - Keyboard handler: each key (arrow keys, spacebar) performs the correct action (up, down, left, right, pause, resume, new game) from the relevant game states (play, pause, gameover)
 - Hammer manager: each gesture (pan, two-finger tap) performs the correct action (up, down, left, right, pause, resume) from the relevant game states (play, pause)
 - Resize / orientation change: both events perform a correct resizing of the game board assets
+- Window loses focus: on switching windows or applications during a game, the game pauses and can be resumed by clicking the resume button
 - Menu selection: each button element (play, resume, main menu, options menu, scores menu) shows and hides the correct modal elements (heading, menu-content, buttons) when clicked
 - Menu sound: button elements play the correct sound when clicked (play has no audio attached to it)
-
 
 <span id="testing-responsive"></span>
 
@@ -447,9 +439,16 @@ Real world testing on:
 
 #### Resolved
 
-- **Issue**
+**Multiple key presses cause the game to end**
 
-  - Resolution
+- This was due to rapid directional changes allowing the snake to 'bite its own neck', its head colliding with `snake.array[1]` e.g. when moving left and the direction changed to up and then right before the game had completed the up move. Simply preventing a change to the opposite direction was not sufficient
+- The initial solution was to implement a 'safe delay' which prevented the keyboard event handler from firing more quickly than the game refresh rate. While this was an improvement, the issue would still appear too frequently unless the safe delay was so long that it detrimental to the input responsiveness, and furthermore made the game speed option nearly impossible to implement
+- This issue was finally resolved by adding direction change validation at each refresh interval. To do this relatively succinctly, each direction has been given a numerical value so that it can be easily negated during the check, and then the last direction moved must be calculated. The last move is calculated by comparing the ```snake.array.x``` or ```snake.array.y``` of the head and first segment of the snake. A move is valid when the last move is NOT equal to the negated new direction e.g. if the last snake move was left (-1), and the requested direction is down (+2), the move will be valid, however if the requested direction is right (+1) then the move is invalid and the event handler will not fire
+- While in the middle of the board the difference between ```snake.array[0]``` and ```snake.array[1]``` will always be ```+/-tile```, however further calculations are necessary to ensure the last move is calculated properly while the snake crosses a border
+
+**Canvas resizing causes collision detection issues**
+
+- 
 
 <span id="testing-unresolved"></span>
 

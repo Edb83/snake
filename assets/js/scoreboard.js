@@ -125,7 +125,7 @@ let scoreBoard = {
     if (scoreRange(30, 39)) {
       scoreAwardText.insertAdjacentHTML(
         "beforeend",
-        `Thrifty with the thrills, frugal with the finesse. `
+        `Thrifty with the thrills, frugal with the skills. `
       );
     }
     if (scoreRange(40, 49)) {
