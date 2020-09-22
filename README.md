@@ -450,6 +450,13 @@ Real world testing on:
 
 - 
 
+
+**Audio not working on iOS**
+
+- Initially used ```<audio>``` HTML element to play game audio, which worked fine on desktop but had lots of issues on iOS Safari - most noticably a lag in the sounds being played
+- The HowlerJS library was used to handle Web Audio API and allowed sounds to be played on iOS perfectly
+- The iOS 14 update introduced a new issue with sound on iOS Safari causing a play error. This was resolved by changing the audio file types from wav to webm, with mp3 used as a fallback. This appears to have again resolved the issue and greatly reduced the file size of the game
+
 <span id="testing-unresolved"></span>
 
 #### Unresolved
