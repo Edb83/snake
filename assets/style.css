@@ -484,6 +484,7 @@ h1 {
   }
   .menu-content-container {
     font-size: 2rem;
+    width: 75%;
   }
 
   #instructions-container > p {
