@@ -83,16 +83,16 @@ const fast = 80;
 // Audio
 // https://howlerjs.com/
 const eatAudio = new Howl({
-  src: ["assets/audio/eat.wav"],
+  src: ["assets/audio/eat.wav", "assets/audio/eat.webm"],
 //   html5: true,
   volume: 0.1,
 });
 const gameOverAudio = new Howl({
-  src: ["assets/audio/gameover.wav"],
+  src: ["assets/audio/gameover.wav", "assets/audio/gameover.webm"],
 //   html5: true,
 });
 const clickAudio = new Howl({
-  src: ["assets/audio/click.wav"],
+  src: ["assets/audio/click.wav", "assets/audio/click.webm"],
 //   html5: true,
 });
 
@@ -258,10 +258,12 @@ let gameBoard = {
     } else {
       canvas.height = window.innerHeight;
     }
+    // check that the canvas height is divisible by the total number of tiles along the y axis (including scoreboard)
     while (
       canvas.height % (numberOfTilesPerAxis + heightOfScoreBoardInTiles) >
       0
     ) {
+    // if not, reduce the canvas height until it is
       canvas.height--;
     }
     canvas.width = Math.ceil(canvas.height * canvasHeightToWidthRatio);
@@ -278,6 +280,7 @@ let gameBoard = {
   },
   recalculateAssets() {
     if (game.state === "PLAY" || stats.gamesPlayedThisSession > 0) {
+    // otherwise there will be no assets to reposition, but the changes should still be visible if not in PLAY state or they disappear on resize
       let formerTileSize = tile;
       let formerFoodCoordinates = food;
       let formerSnakeCoordinates = snake;
