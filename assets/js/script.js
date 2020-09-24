@@ -651,24 +651,9 @@ let game = {
     gameBoard.tileToSparkDRatio = initialTileToSparkDRatio;
   },
   checkSettings() {
-    if (wallsCheckBox.checked) {
-      this.wallsEnabled = true;
-    } else {
-      this.wallsEnabled = false;
-    }
-
-    if (audioCheckBox.checked) {
-      this.audio = true;
-    } else {
-      this.audio = false;
-    }
-    if (slowRadioButton.checked) {
-      this.speed = slow;
-    } else if (mediumRadioButton.checked) {
-      this.speed = medium;
-    } else if (fastRadioButton.checked) {
-      this.speed = fast;
-    }
+    this.wallsEnabled = wallsCheckBox.checked;
+    this.audio = audioCheckBox.checked;
+    this.speed = document.querySelector('input[name=difficulty]:checked').value;
   },
   play() {
     this.changeState("PLAY");
