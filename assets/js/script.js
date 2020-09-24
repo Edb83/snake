@@ -248,7 +248,7 @@ let gameBoard = {
     let canvasHeightToWidthRatio =
       numberOfTilesPerAxis / (numberOfTilesPerAxis + heightOfScoreBoardInTiles);
 
-    let innerHTMLHeightToWidthRatio = window.innerHeight / window.innerWidth;
+    // let innerHTMLHeightToWidthRatio = window.innerHeight / window.innerWidth;
 
     if (this.orientationPortrait) {
       canvas.height = window.innerWidth;
@@ -260,24 +260,24 @@ let gameBoard = {
       canvas.height % (numberOfTilesPerAxis + heightOfScoreBoardInTiles) >
       0
     ) {
-    // if not, reduce the canvas height until it is
+      // if not, reduce the canvas height until it is
       canvas.height--;
     }
     canvas.width = Math.ceil(canvas.height * canvasHeightToWidthRatio);
-    // this fixes an issue with near square innerHTML height/width by reducing the height of the canvas accordingly
-    if (
-      innerHTMLHeightToWidthRatio >= 1 &&
-      innerHTMLHeightToWidthRatio <= 1.1
-    ) {
-      canvas.height *= canvasHeightToWidthRatio;
-    }
+    // // this fixes an issue with near square innerHTML height/width by reducing the height of the canvas accordingly
+    // if (
+    //   innerHTMLHeightToWidthRatio >= 1 &&
+    //   innerHTMLHeightToWidthRatio <= 1.1
+    // ) {
+    //   canvas.height *= canvasHeightToWidthRatio;
+    // }
   },
   setTileSize() {
     tile = canvas.width / numberOfTilesPerAxis;
   },
   recalculateAssets() {
     if (game.state === "PLAY" || stats.gamesPlayedThisSession > 0) {
-    // otherwise there will be no assets to reposition, but the changes should still be visible if not in PLAY state or they disappear on resize
+      // otherwise there will be no assets to reposition, but the changes should still be visible if not in PLAY state or they disappear on resize
       let formerTileSize = tile;
       let formerFoodCoordinates = food;
       let formerSnakeCoordinates = snake;
@@ -857,6 +857,8 @@ document
   .querySelectorAll("#main-button, #scores-button, #options-button")
   .forEach((el) =>
     el.addEventListener("click", function () {
-      clickAudio.play();
+      if (game.audio) {
+        clickAudio.play();
+      }
     })
   );
