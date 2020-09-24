@@ -3,7 +3,6 @@ let scoreBoard = {
   previousScore: undefined,
   currentScore: undefined,
   currentHighScore: undefined,
-  highScore: parseInt(localStorage.getItem("highScore")) || 0,
   hasHitMilestone: false,
   update() {
     if (this.array.includes(this.currentScore) || this.currentScore === 0) {
@@ -20,9 +19,9 @@ let scoreBoard = {
           this.hasHitMilestone = true};
   },
   updateHighScore() {
-    if (this.currentScore > parseInt(this.highScore)) {
+    if (this.currentScore > parseInt(stats.highScore)) {
       localStorage.setItem("highScore", this.currentScore);
-      this.highScore = this.currentScore;
+      stats.highScore = this.currentScore;
     } else {
       return;
     }
@@ -41,7 +40,7 @@ let scoreBoard = {
       (tile / 2) * heightOfScoreBoardInTiles + tile / 2
     );
     ctx.fillText(
-      `High score: ${this.highScore}`,
+      `High score: ${stats.highScore}`,
       canvas.width * 0.45,
       (tile / 2) * heightOfScoreBoardInTiles + tile / 2
     );
