@@ -517,6 +517,7 @@ const populateSparkArray = () => {
     let dy;
     let x = snake.array[0].x + tile / 2;
     let y = snake.array[0].y + tile / 2;
+    // the results of these functions are actually all different
     if (snake.direction === up) {
       dx = randomNumber(
         -dynamicOutput(gameBoard.tileToSparkDRatio),
@@ -578,69 +579,24 @@ let game = {
     this.checkSettings();
   },
   setElementStyle(state) {
-    const optionsToDisable = [
-      wallsCheckBox,
-      slowRadioButton,
-      mediumRadioButton,
-      fastRadioButton,
-    ];
-    if (state === "PLAY") {
-      document
-        .querySelectorAll(
-          ".menu-heading-container, .menu-content-container, #menu-buttons-container, button"
-        )
-        .forEach((el) => el.classList.add("hidden"));
-      canvas.classList.remove("hidden", "paused-effect");
-    }
-    if (state === "PAUSE") {
-      document
-        .querySelectorAll(
-          "#options-heading, #options-container, #menu-buttons-container, #resume-button"
-        )
-        .forEach((el) => el.classList.remove("hidden"));
-      optionsToDisable.forEach((el) => (el.disabled = true));
-      canvas.classList.add("paused-effect");
-    }
-    if (state === "GAMEOVER") {
-      document
-        .querySelectorAll(
-          ".menu-heading-container, .menu-content-container, button"
-        )
-        .forEach((el) => el.classList.add("hidden"));
-      document
-        .querySelectorAll(
-          "#scores-heading, #scores-container, #session-scores-container, #menu-buttons-container, #play-button, #options-button, #main-button"
-        )
-        .forEach((el) => el.classList.remove("hidden"));
-      canvas.classList.add("paused-effect");
-    }
-    if (state === "OPTIONS") {
-      document
-        .querySelectorAll(
-          ".menu-heading-container, .menu-content-container, button"
-        )
-        .forEach((el) => el.classList.add("hidden"));
-      document
-        .querySelectorAll(
-          "#options-heading, #options-container, #play-button, #scores-button, #main-button"
-        )
-        .forEach((el) => el.classList.remove("hidden"));
-      optionsToDisable.forEach((el) => (el.disabled = false));
-      canvas.classList.add("paused-effect");
-    }
-    if (state === "MAIN") {
-      document
-        .querySelectorAll(
-          ".menu-heading-container, .menu-content-container, button"
-        )
-        .forEach((el) => el.classList.add("hidden"));
-      document
-        .querySelectorAll(
-          "#instructions-heading, #instructions-container, #play-button, #scores-button, #options-button"
-        )
-        .forEach((el) => el.classList.remove("hidden"));
-      canvas.classList.add("paused-effect");
-    }
+    document
+      .querySelectorAll(`[data-hide-on-state~=${state}]`)
+      .forEach((el) => el.classList.add("hidden"));
+    document
+      .querySelectorAll(`[data-show-on-state~=${state}]`)
+      .forEach((el) => el.classList.remove("hidden"));
+    document
+      .querySelectorAll(`[data-blur-on-state~=${state}]`)
+      .forEach((el) => el.classList.add("paused-effect"));
+    document
+      .querySelectorAll(`[data-unblur-on-state~=${state}]`)
+      .forEach((el) => el.classList.remove("paused-effect"));
+    document
+      .querySelectorAll(`[data-disable-on-state~=${state}]`)
+      .forEach((el) => (el.disabled = true));
+    document
+      .querySelectorAll(`[data-enable-on-state~=${state}]`)
+      .forEach((el) => (el.disabled = false));
   },
   loadDefaultSettings() {
     this.collisionDetected = false;

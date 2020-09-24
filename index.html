@@ -4,13 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale=1.0" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png" />
+    <meta
+      name="viewport"
+      content="user-scalable=yes, width=device-width, initial-scale=1.0"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/apple-icon-180x180.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/android-icon-192x192.png"
+    />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="assets/style.css" type="text/css" />
     <title>Cyber Snake</title>
   </head>
@@ -18,18 +33,38 @@
     <!-- Game container -->
     <div id="game-container" class="avoid-clicks">
       <!--  Headings -->
-      <div id="instructions-heading" class="menu-heading-container">
+      <div
+        id="instructions-heading"
+        class="menu-heading-container"
+        data-show-on-state="MAIN"
+        data-hide-on-state="PLAY PAUSE OPTIONS GAMEOVER"
+      >
         <h1>Cyber Snake</h1>
       </div>
-      <div id="scores-heading" class="menu-heading-container hidden">
+      <div
+        id="scores-heading"
+        class="menu-heading-container hidden"
+        data-show-on-state="GAMEOVER"
+        data-hide-on-state="PLAY PAUSE OPTIONS MAIN"
+      >
         <h1>Score Board</h1>
       </div>
-      <div id="options-heading" class="menu-heading-container hidden">
+      <div
+        id="options-heading"
+        class="menu-heading-container hidden"
+        data-show-on-state="OPTIONS PAUSE"
+        data-hide-on-state="PLAY MAIN GAMEOVER"
+      >
         <h1>Options</h1>
       </div>
 
       <!-- Instructions -->
-      <div id="instructions-container" class="menu-content-container">
+      <div
+        id="instructions-container"
+        class="menu-content-container"
+        data-show-on-state="MAIN"
+        data-hide-on-state="PLAY PAUSE OPTIONS GAMEOVER"
+      >
         <p>
           Use the <span class="desktop-controls-text">ARROW keys</span> or
           <span class="mobile-controls-text">SWIPE</span> anywhere to change
@@ -47,7 +82,12 @@
       </div>
 
       <!-- Scores -->
-      <div id="scores-container" class="menu-content-container hidden">
+      <div
+        id="scores-container"
+        class="menu-content-container hidden"
+        data-show-on-state="GAMEOVER"
+        data-hide-on-state="PLAY PAUSE OPTIONS MAIN"
+      >
         <p id="scores-award-text">
           You haven't achieved anything yet. Once you do, your top 5 scores of
           the session will be displayed here.
@@ -58,28 +98,57 @@
       </div>
 
       <!-- Options -->
-      <div id="options-container" class="menu-content-container hidden">
+      <div
+        id="options-container"
+        class="menu-content-container hidden"
+        data-show-on-state="OPTIONS PAUSE"
+        data-hide-on-state="PLAY MAIN GAMEOVER"
+      >
         <div id="checkbox-container">
           <label class="options-choice-button" for="audio-checkbox">
             <input id="audio-checkbox" type="checkbox" checked />
             <span>Sound</span>
           </label>
           <label class="options-choice-button" for="walls-checkbox">
-            <input id="walls-checkbox" type="checkbox" />
+            <input
+              id="walls-checkbox"
+              type="checkbox"
+              data-enable-on-state="OPTIONS"
+              data-disable-on-state="PAUSE"
+            />
             <span>Walls</span>
           </label>
         </div>
         <div id="radio-container">
           <label class="options-choice-button" for="slow-radio">
-            <input id="slow-radio" type="radio" name="difficulty" />
+            <input
+              id="slow-radio"
+              type="radio"
+              name="difficulty"
+              data-enable-on-state="OPTIONS"
+              data-disable-on-state="PAUSE"
+            />
             <span>Slow</span>
           </label>
           <label class="options-choice-button" for="medium-radio">
-            <input id="medium-radio" type="radio" name="difficulty" checked />
+            <input
+              id="medium-radio"
+              type="radio"
+              name="difficulty"
+              data-enable-on-state="OPTIONS"
+              data-disable-on-state="PAUSE"
+              checked
+            />
             <span>Medium</span>
           </label>
           <label class="options-choice-button" for="fast-radio">
-            <input id="fast-radio" type="radio" name="difficulty" />
+            <input
+              id="fast-radio"
+              type="radio"
+              name="difficulty"
+              data-enable-on-state="OPTIONS"
+              data-disable-on-state="PAUSE"
+            />
             <span>Fast</span>
           </label>
         </div>
@@ -87,16 +156,54 @@
 
       <!-- Menu buttons -->
       <div id="menu-buttons-container">
-        <button id="play-button">Play</button>
-        <button id="resume-button" class="hidden">Resume</button>
-        <button id="options-button">Options</button>
-        <button id="main-button" class="hidden">Main</button>
-        <button id="scores-button">Scores</button>
+        <button
+          id="play-button"
+          data-show-on-state="MAIN OPTIONS GAMEOVER"
+          data-hide-on-state="PLAY PAUSE"
+        >
+          Play
+        </button>
+        <button
+          id="resume-button"
+          class="hidden"
+          data-show-on-state="PAUSE"
+          data-hide-on-state="PLAY MAIN OPTIONS GAMEOVER"
+        >
+          Resume
+        </button>
+        <button
+          id="options-button"
+          data-show-on-state="MAIN GAMEOVER"
+          data-hide-on-state="PLAY PAUSE OPTIONS"
+        >
+          Options
+        </button>
+        <button
+          id="main-button"
+          class="hidden"
+          data-show-on-state="OPTIONS GAMEOVER"
+          data-hide-on-state="PLAY PAUSE MAIN"
+        >
+          Main
+        </button>
+        <button
+          id="scores-button"
+          data-show-on-state="MAIN OPTIONS"
+          data-hide-on-state="PLAY PAUSE GAMEOVER"
+        >
+          Scores
+        </button>
       </div>
     </div>
 
     <!-- Canvas -->
-    <canvas id="canvas" class="hidden paused-effect"></canvas>
+    <canvas
+      id="canvas"
+      class="hidden paused-effect"
+      data-show-on-state="PLAY"
+      data-blur-on-state="PAUSE MAIN OPTIONS GAMEOVER"
+      data-unblur-on-state="PLAY"
+    ></canvas>
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
