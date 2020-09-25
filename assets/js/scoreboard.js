@@ -48,9 +48,7 @@ let scoreBoard = {
   },
   print() {
     //   Score award text
-    let scoreAwardText = document.getElementById("scores-award-text"); // the DOM wrapper
-    let text; // the text used in scoreAwardText
-    let shouldReplace; // if true, rewrites all HTML in scoreAwardText rather than adding to end
+    let scoreAwardText = document.getElementById("scores-award-text");
     scoreAwardText.innerHTML = "";
 
     let scoreRange = (min, max) => {
@@ -63,28 +61,37 @@ let scoreBoard = {
         return true;
       }
     };
+    let content = (text, replaceExistingText) => {
+        // Determines whether text is written from scratch or added to existing text
+      if (replaceExistingText) {
+        scoreAwardText.innerHTML = text;
+      } else {
+        scoreAwardText.insertAdjacentHTML("beforeend", text);
+      }
+    };
 
     if (isNaN(this.currentHighScore) && this.currentScore !== 0) {
-      shouldReplace = true;
-      text = `<p>You're off the mark, so to speak.</p>`;
+      content(`<p>You're off the mark, so to speak.</p>`, true);
     }
     if (isNewHighScore()) {
-      shouldReplace = true;
-      text = `<p>Signs of improvement. You beat your previous high score by ${
-        this.currentScore - this.currentHighScore
-      }.</p>`;
+      content(
+        `<p>Signs of improvement. You beat your previous high score by ${
+          this.currentScore - this.currentHighScore
+        }.</p>`,
+        true
+      );
     }
     if (this.currentScore === 0) {
-      shouldReplace = true;
-      text = `<p>Oof.</p>`;
+      content(`<p>Oof.</p>`, true);
     }
     if (scoreRange(1, 4)) {
-      shouldReplace = false;
-      text = `${this.currentScore} is a fantastic score. `;
+      content(`${this.currentScore} is a fantastic score. `, false);
     }
     if (scoreRange(5, 9)) {
-      shouldReplace = false;
-      text = `Lamentably, the Galactic High Scores feature has yet to be implemented. `;
+      content(
+        `Lamentably, the Galactic High Scores feature has yet to be implemented. `,
+        false
+      );
     }
     if (
       scoreRange(5, 9) &&
@@ -92,132 +99,149 @@ let scoreBoard = {
       game.speed === fast &&
       game.wallsEnabled
     ) {
-      shouldReplace = true;
-      text = `<p>'Fast' and 'Walls' was a brave choice. Know your limits.</p>`;
+      content(
+        `<p>'Fast' and 'Walls' was a brave choice. Know your limits.</p>`,
+        true
+      );
     }
     if (scoreRange(10, 19) && this.currentScore !== 13) {
-      shouldReplace = false;
-      text = `Double digits. Magnificent. `;
+      content(`Double digits. Magnificent. `, false);
     }
     if (
       this.currentScore === 13 &&
       this.currentScore <= this.currentHighScore
     ) {
-      shouldReplace = false;
-      text = `If the cyberophidiophobia doesn't get you, the triskaidekaphobia will. `;
+      content(
+        `If the cyberophidiophobia doesn't get you, the triskaidekaphobia will. `,
+        false
+      );
     }
     if (scoreRange(20, 29)) {
-      shouldReplace = false;
-      text = `Over-promise, under-deliver. `;
+      content(`Over-promise, under-deliver. `, false);
     }
     if (scoreRange(20, 29) && stats.gamesPlayedAllTime > 100) {
-      shouldReplace = true;
-      text = `<p>They say practice makes perfect, and yet... here you are on attempt #${stats.gamesPlayedAllTime}.`;
+      content(
+        `<p>They say practice makes perfect, and yet... here you are on attempt #${stats.gamesPlayedAllTime}.`,
+        true
+      );
     }
     if (scoreRange(30, 39) && game.speed === slow) {
-      shouldReplace = false;
-      text = `FYI this is Cyber Snake, not Cyber Slow Worm. `;
+      content(`FYI this is Cyber Snake, not Cyber Slow Worm. `, false);
     }
     if (scoreRange(30, 39)) {
-      shouldReplace = false;
-      text = `Thrifty with the thrills, frugal with the skills. `;
+      content(
+        `Thrifty with the thrills, frugal with the skills. `,
+        false
+      );
     }
     if (scoreRange(40, 49)) {
-      shouldReplace = false;
-      text = `It only took you ${convertSecondsToHms(
-        stats.gameTimeInSeconds
-      )} to disappoint on this occasion. `;
+      content(
+        `It only took you ${convertSecondsToHms(
+          stats.gameTimeInSeconds
+        )} to disappoint on this occasion. `,
+        false
+      );
     }
     if (scoreRange(50, 59)) {
-      shouldReplace = false;
-      text = `Maybe getting to 50 was good enough for you. `;
+      content(`Maybe getting to 50 was good enough for you. `, false);
     }
     if (scoreRange(60, 69)) {
-      shouldReplace = false;
-      text = `This is what cybernetic dreams are made of. `;
+      content(`This is what cybernetic dreams are made of. `, false);
     }
     if (scoreRange(70, 79)) {
-      shouldReplace = false;
-      text = `"I was distracted by the pretty colors!", you wail. `;
+      content(
+        `"I was distracted by the pretty colors!", you wail. `,
+        false
+      );
     }
     if (scoreRange(80, 89)) {
-      shouldReplace = false;
-      text = `Next time, have a vague strategy. `;
+      content(`Next time, have a vague strategy. `, false);
     }
     if (scoreRange(90, 99)) {
-      shouldReplace = false;
-      text = `Did you consider persevering and making it to 100? `;
+      content(
+        `Did you consider persevering and making it to 100? `,
+        false
+      );
     }
     if (this.currentScore > 100 && !this.hasHitMilestone) {
-      shouldReplace = true;
-      text = `<p>That's quite the milestone you've hit.</p><p>And it only took you ${stats.gamesPlayedAllTime} attempts!</p>`;
+      content(
+        `<p>That's quite the milestone you've hit.</p><p>And it only took you ${stats.gamesPlayedAllTime} attempts!</p>`,
+        true
+      );
     } else if (scoreRange(100, 124)) {
-      shouldReplace = false;
-      text = `In total you have smashed ${stats.pointsAllTime} blobs to smithereens. The Nanite Narwhal would be proud. `;
+      content(
+        `In total you have smashed ${stats.pointsAllTime} blobs to smithereens. The Nanite Narwhal would be proud. `,
+        false
+      );
     }
     if (scoreRange(125, 149)) {
-      shouldReplace = false;
-      text = `Your average score per game is decidedly average: ${(
-        stats.pointsAllTime / stats.gamesPlayedAllTime
-      ).toFixed(2)}. `;
+      content(
+        `Your average score per game is decidedly average: ${(
+          stats.pointsAllTime / stats.gamesPlayedAllTime
+        ).toFixed(2)}. `,
+        false
+      );
     }
     if (scoreRange(150, 199)) {
-      shouldReplace = false;
-      text = `The Digital Mongoose has been informed of your progress. `;
+      content(
+        `The Digital Mongoose has been informed of your progress. `,
+        false
+      );
     }
     if (scoreRange(200, 299)) {
-      shouldReplace = false;
-      text = `<p>If not for your epic score of ${this.previousScore} last time, some might call shenanigans.</p>`;
+      content(
+        `<p>If not for your epic score of ${this.previousScore} last time, some might call shenanigans.</p>`,
+        false
+      );
     }
     if (scoreRange(300, 396)) {
-      shouldReplace = true;
-      text = `<p>Your commitment is admirable but your time (all ${convertSecondsToHms(
-        stats.gameTimeAllTime
-      )} of it), irretrievable.</p>`;
+      content(
+        `<p>Your commitment is admirable but your time (all ${convertSecondsToHms(
+          stats.gameTimeAllTime
+        )} of it), irretrievable.</p>`,
+        true
+      );
     }
     if (this.currentScore == 397) {
-      shouldReplace = true;
-      text = `<p>Congratulations. You have completed the tutorial of Cyber Snake.</p><p>In Level 001 the food is invisible. You have 3 lives remaining.</p><p>Good luck.</p>`;
+      content(
+        `<p>Congratulations. You have completed the tutorial of Cyber Snake.</p><p>In Level 001 the food is invisible. You have 3 lives remaining.</p><p>Good luck.</p>`,
+        true
+      );
     }
     if (this.currentScore > 397) {
-      shouldReplace = true;
-      text = `Is that even possible? `;
+      content(`Is that even possible? `, true);
     }
     if (this.currentScore === this.previousScore && this.currentScore !== 0) {
-      shouldReplace = true;
-      text = `Oops you did it again. `;
+      content(`Oops you did it again. `, true);
     }
     if (
       isNewHighScore() &&
       this.currentScore - this.currentHighScore <= 5 &&
       stats.gameTimeInSeconds > 300
     ) {
-      shouldReplace = true;
-      text = `<p>${convertSecondsToHms(
-        stats.gameTimeInSeconds
-      )} to add a measly ${
-        this.currentScore - this.currentHighScore
-      } to your PB.</p><p>Yikes.</p>`;
+      content(
+        `<p>${convertSecondsToHms(stats.gameTimeInSeconds)} to add a measly ${
+          this.currentScore - this.currentHighScore
+        } to your PB.</p><p>Yikes.</p>`,
+        true
+      );
     }
     if (this.currentScore > this.previousScore && this.previousScore === 0) {
-      shouldReplace = true;
-      text = `<p>Well, anything was an improvement on last time. </p>`;
+      content(
+        `<p>Well, anything was an improvement on last time. </p>`,
+        true
+      );
     }
     if (this.previousScore - this.currentScore > 50) {
-      shouldReplace = false;
-      text = `<p>Try to remember what you did on your previous attempt. That was better.</p>`;
+      content(
+        `<p>Try to remember what you did on your previous attempt. That was better.</p>`,
+        false
+      );
     }
 
-    // This puts together the results of conditionals above - either rewriting HTML or adding to what's already there
-    if (shouldReplace) {
-      scoreAwardText.innerHTML = text;
-    } else {
-      scoreAwardText.insertAdjacentHTML("beforeend", text);
-    }
-
-    // Scores underneath award text
+    // Scores
     let scoreOl = document.querySelector("ol");
-    scoreOl.innerHTML = ""; // start with a clean slate
+    scoreOl.innerHTML = "";
     for (let i = 0; i < 5; i++) {
       let newScoreLi = document.createElement("li");
       newScoreLi.textContent = this.array[i];
