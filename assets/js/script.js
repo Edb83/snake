@@ -276,7 +276,7 @@ let gameBoard = {
     tile = canvas.width / numberOfTilesPerAxis;
   },
   recalculateAssets() {
-    if (game.state === "PLAY" || stats.gamesPlayedThisSession > 0) {
+    if (stats.gamesPlayedThisSession > 0) {
       // otherwise there will be no assets to reposition
       let formerTileSize = tile;
       let formerFoodCoordinates = food;
