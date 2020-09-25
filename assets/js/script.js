@@ -210,7 +210,7 @@ const gameLoop = () => {
 
 // ANIMATION LOOP
 
-const animateLoop = () => {
+const animate = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   gameBoard.draw();
   scoreBoard.draw();
@@ -224,8 +224,8 @@ const animateLoop = () => {
   });
 
   if (game.state === "PLAY") {
-    // this conditional allows for a single frame to be displayed rather than looping through
-    requestAnimationFrame(animateLoop);
+    // this conditional loops the animation rather than displaying a single frame
+    requestAnimationFrame(animate);
   } else {
     return;
   }
@@ -304,7 +304,7 @@ let gameBoard = {
         sparkArray[i].y = (formerSparkArray[i].y / formerTileSize) * tile;
       }
       if (game.state !== "PLAY") {
-        animateLoop();
+        animate();
       }
     }
   },
@@ -624,7 +624,7 @@ let game = {
     this.refreshInterval = setInterval(() => {
       gameLoop();
     }, this.speed);
-    animateLoop();
+    animate();
     stopWatch.start();
   },
   stop() {
