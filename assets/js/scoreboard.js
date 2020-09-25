@@ -48,9 +48,9 @@ let scoreBoard = {
   },
   print() {
     //   Score award text
-    let scoreAwardText = document.getElementById("scores-award-text");
-    let text;
-    let shouldReplace;
+    let scoreAwardText = document.getElementById("scores-award-text"); // the DOM wrapper
+    let text; // the text used in scoreAwardText
+    let shouldReplace; // if true, rewrites all HTML in scoreAwardText rather than adding to end
     scoreAwardText.innerHTML = "";
 
     let scoreRange = (min, max) => {
@@ -83,7 +83,7 @@ let scoreBoard = {
       text = `${this.currentScore} is a fantastic score. `;
     }
     if (scoreRange(5, 9)) {
-      shouldReplace = true;
+      shouldReplace = false;
       text = `Lamentably, the Galactic High Scores feature has yet to be implemented. `;
     }
     if (
@@ -208,15 +208,16 @@ let scoreBoard = {
       text = `<p>Try to remember what you did on your previous attempt. That was better.</p>`;
     }
 
+    // This puts together the results of conditionals above - either rewriting HTML or adding to what's already there
     if (shouldReplace) {
       scoreAwardText.innerHTML = text;
     } else {
       scoreAwardText.insertAdjacentHTML("beforeend", text);
     }
 
-    // Scores
+    // Scores underneath award text
     let scoreOl = document.querySelector("ol");
-    scoreOl.innerHTML = "";
+    scoreOl.innerHTML = ""; // start with a clean slate
     for (let i = 0; i < 5; i++) {
       let newScoreLi = document.createElement("li");
       newScoreLi.textContent = this.array[i];
