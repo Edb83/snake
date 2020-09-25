@@ -282,8 +282,6 @@ Rather than being hard-coded, visual and gameplay variables have been extracted 
 - [FreeConvert](https://www.freeconvert.com/) - to convert audio file types
 - [AmIResponsive](http://ami.responsivedesign.is/) - to produce the README showcase image
 
-
-
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
 <span id="testing"></span>
@@ -513,77 +511,48 @@ Further reading and troubleshooting on cloning a repository from GitHub can be f
 
 ## Credits
 
-Code was modified from the following sources:
+#### Tutorials and inspiration
 
-- [Title](https://#)
+- [Youtube](https://youtu.be/9TcU2C1AACw) - fundamental snake game concepts
+- [Chris Courses](https://chriscourses.com/courses/canvas-for-beginners/resizing) - a really excellent canvas and OOP introduction
+- [Mozilla](https://developer.mozilla.org/en-US/docs/Games/Tutorials/2D_Breakout_game_pure_JavaScript/Create_the_Canvas_and_draw_on_it) - canvas and game tutorial
+- [Mozilla](https://developer.mozilla.org/en-US/docs/Games/Anatomy) - handling game loops
+- [Mozilla](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions#No_separate_this) - arrow functions and ```this```
+- [W3 Schools](https://www.w3schools.com/graphics/game_canvas.asp) - canvas game tutorial
+- [CSS Tricks](https://css-tricks.com/centering-css-complete-guide/) - centering CCS complete guide
+- [W3C](https://drafts.csswg.org/selectors-3/#attribute-selectors) - attribute selectors
+
+
+#### Code used/modified from other sources
+(also referenced within code files)
+
+- [Random number between (min, max)](https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript)
+- [Seconds to hours/minutes/seconds convertor](https://stackoverflow.com/questions/37096367/how-to-convert-seconds-to-minutes-and-hours-in-javascript/37096923)
+- [Sorting arrays](https://www.javascripttutorial.net/javascript-array-sort/)
+- [Dynamic canvas font size](https://stackoverflow.com/questions/22943186/html5-canvas-font-size-based-on-canvas-size)
+- [Glowing text](https://www.w3schools.com/howto/howto_css_glowing_text.asp)
+- [Checkbox restyling](https://dev.to/proticm/styling-html-checkboxes-is-super-easy-302o)
+- [Pointer events](https://css-tricks.com/almanac/properties/p/pointer-events/)
 
 ### Content
 
-- All text within the game is original content.
-
-- The Deployment section was based on Richard Wells' README.md ([Source](https://github.com/D0nni387/Luxury-Door-Solutions/blob/master/README.md)).
+- All text within the game is original content
+- The Deployment section was based on Richard Wells' README.md ([Source](https://github.com/D0nni387/Luxury-Door-Solutions/blob/master/README.md))
+- Audio files sourced from [Freesound.org](https://freesound.org/home/):
+ - Menu click [tahutoa](https://freesound.org/people/tahutoa/)
+ - Eat sound [jalastram](https://freesound.org/people/jalastram/)
+ - Gameover [jalastram](https://freesound.org/people/jalastram/)
 
 ### Acknowledgements
 
-- Jonathan Munz (Code Institute Mentor) - for his sage advice, prompts to find solutions, and calm reassurances during the project
+- Jonathan Munz (Code Institute Mentor) - for his reassurance, support and tips
 
-- The Code Institute Slack Community - for many tips and tricks discovered while browsing
+- Bim Williams (Code Institute Alumnus) - for taking the time to help on Slack
+
+- Robin Zigmond (Code Institute Alumnus) - specifically for pointers on arrow functions and ```this```
 
 ### Disclaimer
 
 This game was developed for educational purposes.
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
-
-
-<!-- Drawing canvas:
-https://developer.mozilla.org/en-US/docs/Games/Tutorials/2D_Breakout_game_pure_JavaScript/Create_the_Canvas_and_draw_on_it
-
-Canvas tutorial:
-https://www.youtube.com/watch?v=EO6OkltgudE&list=PLpPnRKq7eNW3We9VdCfx9fprhqXHwTPXL&index=1
-
-Sorting scores:
-https://www.javascripttutorial.net/javascript-array-sort/
-
-Guidance on how to handle game loops:
-https://developer.mozilla.org/en-US/docs/Games/Anatomy
-
-Prevent scrolling on mobile:
-https://stackoverflow.com/questions/10592411/disable-scrolling-in-all-mobile-devices#:~:text=document.-,body.,behaviour%20prevented%20should%20be%20scrolling
-
-
-
-Free sounds:
-https://freesound.org/home/
-
-
-Random int (min, max):
-https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
-
-Dynamic canvas font size:
-https://stackoverflow.com/questions/22943186/html5-canvas-font-size-based-on-canvas-size
-
-Glowing text:
-https://www.w3schools.com/howto/howto_css_glowing_text.asp
-
-Seconds to HMS converor:
-https://stackoverflow.com/questions/37096367/how-to-convert-seconds-to-minutes-and-hours-in-javascript/37096923
-
-Arrow functions and this:
-https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions#No_separate_this
-
-Checkbox restyling:
-https://dev.to/proticm/styling-html-checkboxes-is-super-easy-302o
-
-
-
-Avoid clicks:
-https://css-tricks.com/almanac/properties/p/pointer-events/
-
-CSS Centering Guide:
-https://css-tricks.com/centering-css-complete-guide/
-
-Selectors:
-https://drafts.csswg.org/selectors-3/#attribute-selectors
-
--->

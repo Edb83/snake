@@ -248,8 +248,6 @@ let gameBoard = {
     let canvasHeightToWidthRatio =
       numberOfTilesPerAxis / (numberOfTilesPerAxis + heightOfScoreBoardInTiles);
 
-    // let innerHTMLHeightToWidthRatio = window.innerHeight / window.innerWidth;
-
     if (this.orientationPortrait) {
       canvas.height = window.innerWidth;
     } else {
@@ -264,13 +262,6 @@ let gameBoard = {
       canvas.height--;
     }
     canvas.width = Math.ceil(canvas.height * canvasHeightToWidthRatio);
-    // // this fixes an issue with near square innerHTML height/width by reducing the height of the canvas accordingly
-    // if (
-    //   innerHTMLHeightToWidthRatio >= 1 &&
-    //   innerHTMLHeightToWidthRatio <= 1.1
-    // ) {
-    //   canvas.height *= canvasHeightToWidthRatio;
-    // }
   },
   setTileSize() {
     tile = canvas.width / numberOfTilesPerAxis;
@@ -443,7 +434,6 @@ class Food {
       false
     );
     ctx.fillStyle = this.color;
-
     ctx.shadowColor = this.color;
     ctx.strokeStyle = foodStrokeColor;
     ctx.shadowBlur = tile / 2;
@@ -461,13 +451,13 @@ class Spark {
     this.y = y;
     this.dx = dx;
     this.dy = dy;
-    this.radius = randomNumber(tile / 10, tile / 4); // convert to global variable?
+    this.radius = randomNumber(tile / 10, tile / 4);
     this.color = food.color;
     this.gravity = randomNumber(
       dynamicOutput(tileToSparkGravityRatio),
       dynamicOutput(tileToSparkGravityRatio) * dynmicSparkGravityMultiplier
     );
-    this.friction = randomNumber(0.4, 0.6); // convert to global variable?
+    this.friction = randomNumber(0.4, 0.6);
     this.ttl = sparkTimeToLive;
     this.opacity = 1;
   }
@@ -606,8 +596,6 @@ let game = {
   checkSettings() {
     this.wallsEnabled = wallsCheckBox.checked;
     this.audio = audioCheckBox.checked;
-
-    // this.speed = document.querySelector('input[name=difficulty]:checked').value;
     if (slowRadioButton.checked) {
       this.speed = slow;
     } else if (mediumRadioButton.checked) {
