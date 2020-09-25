@@ -171,11 +171,6 @@ The balance between adding a touch of ambience and the very real posibility of i
 | Options | Sound toggle, walls toggle and choice of slow, medium or fast game speed                                                                                                                                            |
 | Scores  | Shows the five top scores of the session plus some light-hearted encouragement based on the most recent score. If the last score was in the top five then a subtle animation effect indicates where the score ranks |
 
-<!-- - **Main**: shows controls for both desktop and mobile, and briefly explains how to play. There is also a hint of the game's 'personality', which is realised more fully on the scores screen
-- **Options**: sound toggle, walls toggle and choice of slow, medium or fast game speed
-  - The options menu is also displayed while the game is paused but only game sound can be changed. The remaining options are still visible but appear disabled. This allows players to mute the game if they wish, but prevents them from 'cheating' by changing other settings mid-game and from possibly becoming confused by an 'extra' menu
-- **Scores**: shows the five top scores of the session plus some light-hearted encouragement based on the most recent score. If the last score was in the top five then a subtle animation effect indicates where the score ranks -->
-
 **2. Accessible layout**
 
 - In portrait mode the canvas is pushed to the top of the screen so that players do not obscure the view of the game with their fingers, while in landscape mode the canvas is centred to allow for a two-thumbed control style either side of the canvas
@@ -278,12 +273,16 @@ Rather than being hard-coded, visual and gameplay variables have been extracted 
 ### Style and theme
 
 - [Autoprefixer](https://autoprefixer.github.io/) - to add CSS vendor prefixes
-- [Favicon & App Icon Generator](https://www.favicon-generator.org/) - to generate the game's favicons
+- [Favicon & App Icon Generator](https://www.favicon-generator.org/) - to generate the game's favicons for a variety of devices
 - [Google Fonts](https://fonts.google.com/) - Orbitron
+- [Colorswall](https://colorswall.com/palette/360/) - Crayola fluorescent color palette
 
 ### Online resources
 
-- [Title](https://#)
+- [FreeConvert](https://www.freeconvert.com/) - to convert audio file types
+- [AmIResponsive](http://ami.responsivedesign.is/) - to produce the README showcase image
+
+
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
@@ -306,8 +305,9 @@ Rather than being hard-coded, visual and gameplay variables have been extracted 
 
 [W3C - CSS](https://jigsaw.w3.org/css-validator/) - Summary - **PASS**
 
-- [CSS Lint](http://csslint.net/) - 0 errors, 0 warnings - **PASS**
-- [Unicorn revealer - overflow](https://chrome.google.com/webstore/detail/unicorn-revealer/lmlkphhdlngaicolpmaakfmhplagoaln/related) - tested all pages and no evidence of overflow - **PASS**
+[CSS Lint](http://csslint.net/) - 0 errors, 0 warnings - **PASS**
+
+[Unicorn revealer - overflow](https://chrome.google.com/webstore/detail/unicorn-revealer/lmlkphhdlngaicolpmaakfmhplagoaln/related) - no evidence of overflow - **PASS**
 
 [JS Hint](https://jshint.com/) - Summary - **PASS**
 
@@ -387,11 +387,11 @@ Exhaustive testing was carried out to ensure that this system was robust. This i
 
 ### Responsiveness
 
-The following issues arose and have each been addressed:
+The aim was to make a game which felt like a standalone app, but which would display in the browser and not force a particular orientation on the player. It was a challenge to achieve this without using some practices which are frowned upon in mobile web development, however they were necessary to achieve said goals.
 
-| Issue | Solution |
-| :---- | :------- |
-| Text  | Text     |
+To overcome the limitations of the mobile browser, a feature of HammerJS has been exploited via ```prevent_default: true, touchAction: "none"``` and used on the HTML ```body``` so that scrolling or clicking on DOM elements is not possible. Additionally ```pointer-events: none``` is used on the game container to prevent accidental zooming in on elements when playing on mobile, which happens very frequently on iOS Safari. 
+
+There may be some devices which cannot fit the content on screen and as a result push the menu buttons too close to the edge, however no examples came up in real-world or dev-tools testing.  
 
 #### Browsers
 
@@ -448,8 +448,14 @@ Real world testing on:
 
 **Canvas resizing causes collision detection issues**
 
-- 
-
+- To make the game as responsive as possible the canvas needs to be resized depending on the screen space available. If using a set canvas size and relying on CSS to fill the space there are issues with the image resolution when it is much different from the set canvas size
+- Game collisions between snake, food and walls are detected when their coordinates are _equal_ to one another. If these coordinates are multiplied up/down then it is very unlikely a collision will ever be detected as the coordinates will mostly be floating numbers
+- To solve this the ```gameBoard``` object has four key functions:
+  - ```checkOrientation```
+  - ```setCanvasSize``` checks that the canvas height is divisible by the total number of tiles along the y axis and, if not, reduces the canvas height until it is and sets the canvas width accordingly
+  - ```setTileSize``` uses the canvas width and set number of tiles to calculate
+  - ```recalculateAssets``` uses the former sizes and coordinates of game pieces and multiplies them up by the new tile size calculated using the three other key functions
+- This means the gameBoard can control the various coordinates of game pieces and ensure they are within safe ranges so that it can determine collisions
 
 **Audio not working on iOS**
 
@@ -461,9 +467,9 @@ Real world testing on:
 
 #### Unresolved
 
-- **Issue**
+- **Square viewports**
 
-  - Resolution
+  - On displays where the ratio between viewport width and height is 1.0 - 1.1, the ```canvas``` will exceed the viewable area and a scroll bar will appear
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
@@ -529,22 +535,9 @@ This game was developed for educational purposes.
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
+
 <!-- Drawing canvas:
 https://developer.mozilla.org/en-US/docs/Games/Tutorials/2D_Breakout_game_pure_JavaScript/Create_the_Canvas_and_draw_on_it
-
-Detecting keypresses:
-https://stackoverflow.com/questions/5597060/detecting-arrow-key-presses-in-javascript
-
-BUG: rapid pressing of direction keys results in snake eating itself
-tried: setInterval on event listener
-setTimeout
-storing keypresses in queue
-measuring time since last keypress
-RESOLVED: moved keydownHandler into event listener and added if statement to check time since last keypress
-https://stackoverflow.com/questions/14667010/limit-how-many-times-an-event-listener-can-trigger-every-second
-
-Free sounds:
-https://freesound.org/home/
 
 Canvas tutorial:
 https://www.youtube.com/watch?v=EO6OkltgudE&list=PLpPnRKq7eNW3We9VdCfx9fprhqXHwTPXL&index=1
@@ -555,20 +548,20 @@ https://www.javascripttutorial.net/javascript-array-sort/
 Guidance on how to handle game loops:
 https://developer.mozilla.org/en-US/docs/Games/Anatomy
 
-Preventing setInterval repeating on game restart:
-https://stackoverflow.com/questions/29836686/code-in-setinterval-executing-more-than-once
+Prevent scrolling on mobile:
+https://stackoverflow.com/questions/10592411/disable-scrolling-in-all-mobile-devices#:~:text=document.-,body.,behaviour%20prevented%20should%20be%20scrolling
+
+
+
+Free sounds:
+https://freesound.org/home/
+
 
 Random int (min, max):
 https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
 
 Dynamic canvas font size:
 https://stackoverflow.com/questions/22943186/html5-canvas-font-size-based-on-canvas-size
-
-Prevent scrolling on mobile:
-https://stackoverflow.com/questions/10592411/disable-scrolling-in-all-mobile-devices#:~:text=document.-,body.,behaviour%20prevented%20should%20be%20scrolling.
-
-Hammer.js:
-https://hammerjs.github.io/
 
 Glowing text:
 https://www.w3schools.com/howto/howto_css_glowing_text.asp
@@ -582,13 +575,15 @@ https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arro
 Checkbox restyling:
 https://dev.to/proticm/styling-html-checkboxes-is-super-easy-302o
 
+
+
 Avoid clicks:
 https://css-tricks.com/almanac/properties/p/pointer-events/
 
-Crayola fluorescent color palette:
-https://colorswall.com/palette/360/
+CSS Centering Guide:
+https://css-tricks.com/centering-css-complete-guide/
 
-Favicon & App Icon Generator:
-https://www.favicon-generator.org/
+Selectors:
+https://drafts.csswg.org/selectors-3/#attribute-selectors
 
 -->
