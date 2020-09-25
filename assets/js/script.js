@@ -277,7 +277,7 @@ let gameBoard = {
   },
   recalculateAssets() {
     if (game.state === "PLAY" || stats.gamesPlayedThisSession > 0) {
-      // otherwise there will be no assets to reposition, but the changes should still be visible if not in PLAY state or they disappear on resize
+      // otherwise there will be no assets to reposition
       let formerTileSize = tile;
       let formerFoodCoordinates = food;
       let formerSnakeCoordinates = snake;
@@ -302,9 +302,6 @@ let gameBoard = {
       for (i = 0; i < formerSparkArray.length; i++) {
         sparkArray[i].x = (formerSparkArray[i].x / formerTileSize) * tile;
         sparkArray[i].y = (formerSparkArray[i].y / formerTileSize) * tile;
-      }
-      if (game.state !== "PLAY") {
-        animate();
       }
     }
   },
