@@ -284,9 +284,9 @@ let gameBoard = {
       let formerSnakeArray = snake.array;
       let formerSparkArray = sparkArray;
 
-      gameBoard.checkOrientation();
-      gameBoard.setCanvasSize();
-      gameBoard.setTileSize();
+      this.checkOrientation();
+      this.setCanvasSize();
+      this.setTileSize();
 
       food.x = (formerFoodCoordinates.x / formerTileSize) * tile;
       food.y = (formerFoodCoordinates.y / formerTileSize) * tile;
@@ -517,7 +517,7 @@ const populateSparkArray = () => {
     let dy;
     let x = snake.array[0].x + tile / 2;
     let y = snake.array[0].y + tile / 2;
-    // the results of these functions are actually all different
+    // the actions taken on these conditionals are all different:
     if (snake.direction === up) {
       dx = randomNumber(
         -dynamicOutput(gameBoard.tileToSparkDRatio),
