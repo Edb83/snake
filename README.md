@@ -296,16 +296,16 @@ Rather than being hard-coded, visual and gameplay variables have been extracted 
 
 [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools) - audit summary for both desktop and mobile:
 
-- Performance = **Average**
-- Accessibility = **Good**
-- Best Practices = **Good**
-- SEO = **Good**
+- Performance = **96-99%**
+- Accessibility = **100%**
+- Best Practices = **100%**
+- SEO = **100%**
 
-[W3C - HTML](https://validator.w3.org/) - Summary - **PASS**
+[W3C - HTML](https://validator.w3.org/) - 0 errors - **PASS**
 
-[W3C - CSS](https://jigsaw.w3.org/css-validator/) - Summary - **PASS**
+[W3C - CSS](https://jigsaw.w3.org/css-validator/) - 11 errors - **FAIL**
 
-[CSS Lint](http://csslint.net/) - 0 errors, 0 warnings - **PASS**
+[CSS Lint](http://csslint.net/) - 0 errors, 80 warnings - **FAIL**
 
 [Unicorn revealer - overflow](https://chrome.google.com/webstore/detail/unicorn-revealer/lmlkphhdlngaicolpmaakfmhplagoaln/related) - no evidence of overflow - **PASS**
 
