@@ -9,14 +9,15 @@ let scoreBoard = {
       return;
     } else {
       this.array.push(this.currentScore);
-    //   https://www.javascripttutorial.net/javascript-array-sort/
+      //   https://www.javascripttutorial.net/javascript-array-sort/
       this.array.sort((a, b) => b - a);
     }
   },
   getCurrentHighScore() {
     this.currentHighScore = parseInt(localStorage.getItem("highScore"));
-          if (this.currentHighScore >= 100) {
-          this.hasHitMilestone = true};
+    if (this.currentHighScore >= 100) {
+      this.hasHitMilestone = true;
+    }
   },
   updateHighScore() {
     if (this.currentScore > parseInt(stats.highScore)) {
@@ -46,7 +47,10 @@ let scoreBoard = {
     );
   },
   print() {
+    //   Score award text
     let scoreAwardText = document.getElementById("scores-award-text");
+    let text;
+    let shouldReplace;
     scoreAwardText.innerHTML = "";
 
     let scoreRange = (min, max) => {
@@ -61,27 +65,26 @@ let scoreBoard = {
     };
 
     if (isNaN(this.currentHighScore) && this.currentScore !== 0) {
-      scoreAwardText.innerHTML = `<p>You're off the mark, so to speak.</p>`;
+      shouldReplace = true;
+      text = `<p>You're off the mark, so to speak.</p>`;
     }
     if (isNewHighScore()) {
-      scoreAwardText.innerHTML = `<p>Signs of improvement. You beat your previous high score by ${
+      shouldReplace = true;
+      text = `<p>Signs of improvement. You beat your previous high score by ${
         this.currentScore - this.currentHighScore
       }.</p>`;
     }
     if (this.currentScore === 0) {
-      scoreAwardText.innerHTML = `<p>Oof.</p>`;
+      shouldReplace = true;
+      text = `<p>Oof.</p>`;
     }
     if (scoreRange(1, 4)) {
-      scoreAwardText.insertAdjacentHTML(
-        "beforeend",
-        `${this.currentScore} is a fantastic score. `
-      );
+      shouldReplace = false;
+      text = `${this.currentScore} is a fantastic score. `;
     }
     if (scoreRange(5, 9)) {
-      scoreAwardText.insertAdjacentHTML(
-        "beforeend",
-        `Lamentably, the Galactic High Scores feature has yet to be implemented. `
-      );
+      shouldReplace = true;
+      text = `Lamentably, the Galactic High Scores feature has yet to be implemented. `;
     }
     if (
       scoreRange(5, 9) &&
@@ -89,137 +92,129 @@ let scoreBoard = {
       game.speed === fast &&
       game.wallsEnabled
     ) {
-      scoreAwardText.innerHTML = `<p>'Fast' and 'Walls' was a brave choice. Know your limits.</p>`;
+      shouldReplace = true;
+      text = `<p>'Fast' and 'Walls' was a brave choice. Know your limits.</p>`;
     }
     if (scoreRange(10, 19) && this.currentScore !== 13) {
-      scoreAwardText.insertAdjacentHTML(
-        "beforeend",
-        `Double digits. Magnificent. `
-      );
+      shouldReplace = false;
+      text = `Double digits. Magnificent. `;
     }
     if (
       this.currentScore === 13 &&
       this.currentScore <= this.currentHighScore
     ) {
-      scoreAwardText.insertAdjacentHTML(
-        "beforeend",
-        `If the cyberophidiophobia doesn't get you, the triskaidekaphobia will. `
-      );
+      shouldReplace = false;
+      text = `If the cyberophidiophobia doesn't get you, the triskaidekaphobia will. `;
     }
     if (scoreRange(20, 29)) {
-      scoreAwardText.insertAdjacentHTML(
-        "beforeend",
-        `Over-promise, under-deliver. `
-      );
+      shouldReplace = false;
+      text = `Over-promise, under-deliver. `;
     }
     if (scoreRange(20, 29) && stats.gamesPlayedAllTime > 100) {
-      scoreAwardText.innerHTML = `<p>They say practice makes perfect, and yet... here you are on attempt #${stats.gamesPlayedAllTime}.`;
+      shouldReplace = true;
+      text = `<p>They say practice makes perfect, and yet... here you are on attempt #${stats.gamesPlayedAllTime}.`;
     }
     if (scoreRange(30, 39) && game.speed === slow) {
-      scoreAwardText.insertAdjacentHTML(
-        "beforeend",
-        `FYI this is Cyber Snake, not Cyber Slow Worm. `
-      );
+      shouldReplace = false;
+      text = `FYI this is Cyber Snake, not Cyber Slow Worm. `;
     }
     if (scoreRange(30, 39)) {
-      scoreAwardText.insertAdjacentHTML(
-        "beforeend",
-        `Thrifty with the thrills, frugal with the skills. `
-      );
+      shouldReplace = false;
+      text = `Thrifty with the thrills, frugal with the skills. `;
     }
     if (scoreRange(40, 49)) {
-      scoreAwardText.insertAdjacentHTML(
-        "beforeend",
-        `It only took you ${convertSecondsToHms(
-          stats.gameTimeInSeconds
-        )} to disappoint on this occasion. `
-      );
+      shouldReplace = false;
+      text = `It only took you ${convertSecondsToHms(
+        stats.gameTimeInSeconds
+      )} to disappoint on this occasion. `;
     }
     if (scoreRange(50, 59)) {
-      scoreAwardText.insertAdjacentHTML(
-        "beforeend",
-        `Maybe getting to 50 was good enough for you. `
-      );
+      shouldReplace = false;
+      text = `Maybe getting to 50 was good enough for you. `;
     }
     if (scoreRange(60, 69)) {
-      scoreAwardText.insertAdjacentHTML(
-        "beforeend",
-        `This is what cybernetic dreams are made of. `
-      );
+      shouldReplace = false;
+      text = `This is what cybernetic dreams are made of. `;
     }
     if (scoreRange(70, 79)) {
-      scoreAwardText.insertAdjacentHTML(
-        "beforeend",
-        `"I was distracted by the pretty colors!", you wail. `
-      );
+      shouldReplace = false;
+      text = `"I was distracted by the pretty colors!", you wail. `;
     }
     if (scoreRange(80, 89)) {
-      scoreAwardText.insertAdjacentHTML(
-        "beforeend",
-        `Next time, have a vague strategy. `
-      );
+      shouldReplace = false;
+      text = `Next time, have a vague strategy. `;
     }
     if (scoreRange(90, 99)) {
-      scoreAwardText.insertAdjacentHTML(
-        "beforeend",
-        `Did you consider persevering and making it to 100? `
-      );
+      shouldReplace = false;
+      text = `Did you consider persevering and making it to 100? `;
     }
     if (this.currentScore > 100 && !this.hasHitMilestone) {
-      scoreAwardText.innerHTML = `<p>That's quite the milestone you've hit.</p><p>And it only took you ${stats.gamesPlayedAllTime} attempts!</p>`;
+      shouldReplace = true;
+      text = `<p>That's quite the milestone you've hit.</p><p>And it only took you ${stats.gamesPlayedAllTime} attempts!</p>`;
     } else if (scoreRange(100, 124)) {
-      scoreAwardText.insertAdjacentHTML(
-        "beforeend",
-        `In total you have smashed ${stats.pointsAllTime} blobs to smithereens. The Nanite Narwhal would be proud. `
-      );
+      shouldReplace = false;
+      text = `In total you have smashed ${stats.pointsAllTime} blobs to smithereens. The Nanite Narwhal would be proud. `;
     }
     if (scoreRange(125, 149)) {
-      scoreAwardText.insertAdjacentHTML(
-        "beforeend",
-        `Your average score per game is decidedly average: ${(stats.pointsAllTime / stats.gamesPlayedAllTime).toFixed(2)}. `
-      );
+      shouldReplace = false;
+      text = `Your average score per game is decidedly average: ${(
+        stats.pointsAllTime / stats.gamesPlayedAllTime
+      ).toFixed(2)}. `;
     }
     if (scoreRange(150, 199)) {
-      scoreAwardText.insertAdjacentHTML(
-        "beforeend",
-        `The Digital Mongoose has been informed of your progress. `
-      );
+      shouldReplace = false;
+      text = `The Digital Mongoose has been informed of your progress. `;
     }
     if (scoreRange(200, 299)) {
-      scoreAwardText.insertAdjacentHTML("beforeend", `<p>If not for your epic score of ${this.previousScore} last time, some might call shenanigans.</p>`);
+      shouldReplace = false;
+      text = `<p>If not for your epic score of ${this.previousScore} last time, some might call shenanigans.</p>`;
     }
     if (scoreRange(300, 396)) {
-      scoreAwardText.innerHTML = `<p>Your commitment is admirable but your time (all ${convertSecondsToHms(stats.gameTimeAllTime)} of it), irretrievable.</p>`;
+      shouldReplace = true;
+      text = `<p>Your commitment is admirable but your time (all ${convertSecondsToHms(
+        stats.gameTimeAllTime
+      )} of it), irretrievable.</p>`;
     }
     if (this.currentScore == 397) {
-      scoreAwardText.innerHTML = `<p>Congratulations. You have completed the tutorial of Cyber Snake.</p><p>In Level 001 the food is invisible. You have 3 lives remaining.</p><p>Good luck.</p>`;
+      shouldReplace = true;
+      text = `<p>Congratulations. You have completed the tutorial of Cyber Snake.</p><p>In Level 001 the food is invisible. You have 3 lives remaining.</p><p>Good luck.</p>`;
     }
     if (this.currentScore > 397) {
-      scoreAwardText.innerHTML = `Is that even possible? `;
+      shouldReplace = true;
+      text = `Is that even possible? `;
     }
     if (this.currentScore === this.previousScore && this.currentScore !== 0) {
-      scoreAwardText.innerHTML = `Oops you did it again. `;
+      shouldReplace = true;
+      text = `Oops you did it again. `;
     }
     if (
       isNewHighScore() &&
       this.currentScore - this.currentHighScore <= 5 &&
       stats.gameTimeInSeconds > 300
     ) {
-      scoreAwardText.innerHTML = `<p>${convertSecondsToHms(
+      shouldReplace = true;
+      text = `<p>${convertSecondsToHms(
         stats.gameTimeInSeconds
       )} to add a measly ${
         this.currentScore - this.currentHighScore
       } to your PB.</p><p>Yikes.</p>`;
     }
     if (this.currentScore > this.previousScore && this.previousScore === 0) {
-      scoreAwardText.innerHTML = `<p>Well, anything was an improvement on last time. </p>`;
+      shouldReplace = true;
+      text = `<p>Well, anything was an improvement on last time. </p>`;
     }
     if (this.previousScore - this.currentScore > 50) {
-      scoreAwardText.insertAdjacentHTML(
-        "beforeend",
-        `<p>Try to remember what you did on your previous attempt. That was better.</p>`
-      );
+      shouldReplace = false;
+      text = `<p>Try to remember what you did on your previous attempt. That was better.</p>`;
     }
+
+    if (shouldReplace) {
+      scoreAwardText.innerHTML = text;
+    } else {
+      scoreAwardText.insertAdjacentHTML("beforeend", text);
+    }
+
+    // Scores
     let scoreOl = document.querySelector("ol");
     scoreOl.innerHTML = "";
     for (let i = 0; i < 5; i++) {
