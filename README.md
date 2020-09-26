@@ -37,13 +37,15 @@
 
 Cyber Snake is an homage to the Nokia version of the game, which many of us will remember fondly from the advent of mobile gaming. While Nokia's monochrome version wasn't released until 1998, the Snake game concept dates back to 1976 when [Blockade](<https://en.wikipedia.org/wiki/Blockade_(video_game)>) first appeared in arcades. Since then, there have been hundreds of versions released, and for good reason. It is considered a classic in terms of design and even appears in New York's Museum of Modern Art alongside the likes of Minecraft, Pong and Tetris.
 
-This version offers classic Snake gameplay, a clean interface, satisfying graphical feedback, and the kind of 'personality' typified by games of the 90s. If you feel any pangs of nostalgia then it has achieved its aim!
-
 The game concept is simple:
 
 - Guide your snake by changing its direction up, down, left or right in order to eat as many food blobs as you can
 - Every time you eat some food you score one point, your snake grows by one segment and a new food spawns in a random location
-- The game ends when your snake's head collides with its body or, if walls are enabled, you hit a wall.
+- The game ends when your snake's head collides with its body or, if walls are enabled, you hit a wall
+
+This version offers classic Snake gameplay, a clean interface, satisfying graphical feedback, and the kind of 'personality' typified by games of the 90s. If you feel any pangs of nostalgia then it has achieved its aim!
+
+> Very smooth. Love the retro stuff. This game was as good as it got when I started gaming as a kid. Swipe controls amazingly responsive on my iPhone X, very playable and very enjoyable. Nice bit of wit at the end about how disappointing my performance was :laughing:
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 <span id="ux"></span>
@@ -539,9 +541,9 @@ Further reading and troubleshooting on cloning a repository from GitHub can be f
 - All text within the game is original content
 - The Deployment section was based on Richard Wells' README.md ([Source](https://github.com/D0nni387/Luxury-Door-Solutions/blob/master/README.md))
 - Audio files sourced from [Freesound.org](https://freesound.org/home/):
- - Menu click [tahutoa](https://freesound.org/people/tahutoa/)
- - Eat sound [jalastram](https://freesound.org/people/jalastram/)
- - Gameover [jalastram](https://freesound.org/people/jalastram/)
+  - Menu click [tahutoa](https://freesound.org/people/tahutoa/)
+  - Eat sound [jalastram](https://freesound.org/people/jalastram/)
+  - Gameover [jalastram](https://freesound.org/people/jalastram/)
 
 ### Acknowledgements
 
