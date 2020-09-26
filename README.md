@@ -94,11 +94,17 @@ Wireframes for **mobile** and **desktop** can be accessed [here](wireframes/).
 
 Overall the wireframes were successfully followed when creating Cyber Snake, however there were some noteworthy deviations from the plan. These were:
 
-1. Statistics menu - this was intended to live on a separate menu screen but was moved entirely to the scores menu. Rather that being able to pull up a screen showing, for example, the average score per game, this information is instead provided in comments such as "Your average score per game is X" or "You have been playing for Y minutes in total"
+1. Statistics menu
 
-2. Advanced image manipulation - the initial idea was to have a more flashy landing screen which would respond to user mouse movements, and to have other visuals passing behind the game area during play, either using the HTML canvas or CSS animations. These features were outside the scope of the project and would have ultimately been a distraction if not handled elegantly
+This was intended to live on a separate menu screen but was moved entirely to the scores menu. Rather that being able to pull up a screen showing, for example, the average score per game, this information is instead provided in comments such as "Your average score per game is X" or "You have been playing for Y minutes in total"
 
-3. Mobile control pad - HammerJS offers a much better solution to mobile control. Prior to discovering it, a directional pad/virtual joystick seemed like the most viable means of controlling the game on mobile
+2. Advanced image manipulation
+
+The initial idea was to have a more flashy landing screen which would respond to user mouse movements, and to have other visuals passing behind the game area during play, either using the HTML canvas or CSS animations. These features were outside the scope of the project and would have ultimately been a distraction if not handled elegantly
+
+3. Mobile control pad
+
+HammerJS offers a much better solution to mobile control. Prior to discovering it, a directional pad/virtual joystick seemed like the most viable means of controlling the game on mobile
 
 <span id="ux-design"></span>
 
@@ -112,7 +118,7 @@ The theme of the game is a blend of retro, cyber and neon, with the colour palat
 
 The colours used for the core game aspects are easy on the eyes when concentrating but give sufficient contrast for easily identifying the game pieces. The snake (Phlox) on the background (Cetacean Blue) is the most frequent combination and is highly evocative of the overall futuristic/neon theme. The pure white text is bright but not overpowering, and is further broken up by sparing use of Neon Carrot and Screamin' Green (used also in the sparks' palette) to differentiate desktop and mobile controls. The enigmatic "the messier things become" in Phlox matches the colour of the snake.
 
-The border of the game area is Deep Carmine Pink if walls are enabled, or Wageningen Green if they are not. This difference intuitively suggests green for safe and red for danger. Without this distinction it would be difficult to immediately convey whether or not walls were enabled, so the colours are as close to primary as possible.
+The border of the game area is Deep Carmine Pink if walls are enabled, or Wageningen Green if they are not. These colours intuitively suggests green for safe and red for danger. Without this distinction it would be difficult to immediately convey whether or not walls were enabled, so the colours are as close to primary as possible.
 
 - ![#001440](https://via.placeholder.com/15/001440/000000?text=+) #001440 (Cetacean Blue)
 - ![#ffffff](https://via.placeholder.com/15/ffffff/000000?text=+) #ffffff (White)
@@ -122,7 +128,7 @@ The border of the game area is Deep Carmine Pink if walls are enabled, or Wageni
 
 ##### Food & Sparks
 
-In keeping with the neon/cyber them, a fluorescent colour palette has been used which lends itself well to the glow effect on food and spark objects. A large number of colours has been used to amplify the spark effects, which can be quite dramatic in higher-scoring games. The temptation to include pink and purple hues (which are especially prominent in neon colour palettes) was resisted, so as to distinguish the neon purple snake.
+In keeping with the neon/cyber theme, a fluorescent colour palette has been used, which lends itself well to the glow effect on food and spark objects. A large number of colours has been used to amplify the spark effects, which can be quite dramatic in higher-scoring games. The temptation to include pink and purple hues (which are especially prominent in neon colour palettes) was resisted, so as to distinguish the neon purple snake.
 
 - ![#ff355e](https://via.placeholder.com/15/ff355e/000000?text=+) #ff355e (Radical Red)
 - ![#fd5b78](https://via.placeholder.com/15/fd5b78/000000?text=+) #fd5b78 (Wild Watermelon)
@@ -145,11 +151,13 @@ For the glowing headings, a combination of brighter neon pink/purple is used to 
 
 #### Fonts
 
-[Orbitron](https://fonts.google.com/specimen/Orbitron#about) - for consistency and simplicity this is the only font used. The blend of robotic straight lines and biologic curves is decidedly sci-fi and particularly fitting for Cyber Snake. This was chosen over more hard-edged retro typefaces because it hints at something more organic and less robotic, in the same way that the snake's hard edges are juxtaposed with the round food globs.
+[Orbitron](https://fonts.google.com/specimen/Orbitron#about)
+
+For consistency and simplicity this is the only font used. The blend of robotic straight lines and biologic curves is decidedly sci-fi and particularly fitting for Cyber Snake. This was chosen over more hard-edged retro typefaces because it hints at something more organic and less robotic, just as the snake's hard edges are juxtaposed with the round food globs.
 
 #### Audio
 
-The balance between adding a touch of ambience and the very real posibility of irritating players is a fine one. There are only three sound used in the game: menu change, eat food and game over, and if the player is not won over then the game can easily be muted.
+The balance between adding ambience and the possibility of irritating players is a fine one, so only three sound used in the game: menu change, eat food and game over. If the player is not won over then the game can easily be muted.
 
 - Menu change: a subtle mechanical click gives a touch of physicality even when out of the game
 - Eat food: an retro pop/burst to bring about a positive response in the player for scoring points, with a suggestion of biological origins
@@ -192,7 +200,7 @@ The balance between adding a touch of ambience and the very real posibility of i
 - Thanks to panning gesture recognition, sharp turns can be achieved with ease, even on mobile
 - The game can be paused by either hitting spacebar or tapping the screen with two fingers simultaneously. The options menu is displayed while the game is paused but only game sound can be changed. The remaining options are still visible but appear disabled. This allows players to mute the game if they wish, but prevents them from 'cheating' by changing other settings mid-game and from possibly becoming confused by an 'extra' menu
 - On desktop a new game can intuitively be started from the scores menu by pressing spacebar
-- When the game loses focus (e.g. when the player clicks on another browsing tab or switches apps), it will be paused to prevent a frustrating end to the game
+- When the game loses focus (e.g. when the player clicks on another browsing tab or switches apps), it pauses to prevent a frustrating end to the game
 
 **5. Playstyles**
 
@@ -309,7 +317,7 @@ Rather than being hard-coded, visual and gameplay variables have been extracted 
 
 [Unicorn revealer - overflow](https://chrome.google.com/webstore/detail/unicorn-revealer/lmlkphhdlngaicolpmaakfmhplagoaln/related) - no evidence of overflow - **PASS**
 
-[JS Hint](https://jshint.com/) - Summary - **PASS**
+[JS Hint](https://jshint.com/) - Summary: warnings about `use strict` outside of a function, and Hammer and Howl APIs not being defined - **PASS**
 
 <span id="testing-manual"></span>
 
@@ -482,6 +490,10 @@ Real world testing on:
 - **Square viewports**
 
   - On displays where the ratio between viewport width and height is 1.0 - 1.1, the `canvas` will exceed the viewable area and a scroll bar will appear
+
+- **Loss of sound**
+
+  - When the game is minimised on iOS Safari, sound effects may no longer play when focus resumes
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
