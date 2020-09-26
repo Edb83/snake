@@ -112,7 +112,7 @@ const convertSecondsToHms = (d) => {
   return hDisplay + mDisplay + sDisplay;
 };
 
-// Spark calculator for direction and gravity (depending on window/tile size)
+// Gravity and velocity calculator for sparks (depending on window/tile size)
 const dynamicOutput = (ratio) => tile * ratio;
 
 // EVENT HANDLERS
@@ -707,6 +707,7 @@ let game = {
 };
 
 // Stopwatch
+// https://code-boxx.com/simple-javascript-stopwatch/
 const stopWatch = {
   timer: undefined,
   elapsed: 0,
@@ -724,7 +725,7 @@ const stopWatch = {
   },
   reset() {
     this.stop();
-    this.elapsed = 0;
+    this.elapsed = -1;
   },
 };
 

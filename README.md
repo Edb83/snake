@@ -45,8 +45,6 @@ The game concept is simple:
 
 This version offers classic Snake gameplay, a clean interface, satisfying graphical feedback, and the kind of 'personality' typified by games of the 90s. If you feel any pangs of nostalgia then it has achieved its aim!
 
-> Very smooth. Love the retro stuff. This game was as good as it got when I started gaming as a kid. Swipe controls amazingly responsive on my iPhone X, very playable and very enjoyable. Nice bit of wit at the end about how disappointing my performance was :laughing:
-
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 <span id="ux"></span>
 
@@ -80,11 +78,13 @@ The game has been designed with no 'fluff' to distract players from having some 
 - Satisfying audio and visual feedback
 - To have a reason to keep playing
 
-#### As a site owner I want:
+#### As a developer/site owner I want:
 
 - To be able to customise the look and feel of the game easily
 
-Several individuals contributed to testing the game and provided feedback on its gameplay, responsiveness and aesthetics at various points in development.
+Several individuals contributed to testing the game and provided feedback on its gameplay, responsiveness and aesthetics at various points in development. A snippet of their feedback:
+
+> Very smooth. Love the retro stuff. This game was as good as it got when I started gaming as a kid. Swipe controls amazingly responsive on my iPhone X, very playable and very enjoyable. Nice bit of wit at the end about how disappointing my performance was :laughing:
 
 <span id="ux-wireframes"></span>
 
@@ -96,9 +96,9 @@ Overall the wireframes were successfully followed when creating Cyber Snake, how
 
 1. Statistics menu - this was intended to live on a separate menu screen but was moved entirely to the scores menu. Rather that being able to pull up a screen showing, for example, the average score per game, this information is instead provided in comments such as "Your average score per game is X" or "You have been playing for Y minutes in total"
 
-2. Advanced image manipulation - the initial idea was to have a more flashy landing screen which would respond to user mouse movements, and to have other visuals passing behind the game area during play, either using the HTML canvas or CSS animations. These features were outside the scope of the project and would have ultimately been an unnecessary distraction if not handled elegantly
+2. Advanced image manipulation - the initial idea was to have a more flashy landing screen which would respond to user mouse movements, and to have other visuals passing behind the game area during play, either using the HTML canvas or CSS animations. These features were outside the scope of the project and would have ultimately been a distraction if not handled elegantly
 
-3. Mobile control pad - the HammerJS library offers a much better solution to mobile control. Prior to discovering this, a directional pad/virtual joystick seemed like the most viable means of controlling the game on mobile
+3. Mobile control pad - HammerJS offers a much better solution to mobile control. Prior to discovering it, a directional pad/virtual joystick seemed like the most viable means of controlling the game on mobile
 
 <span id="ux-design"></span>
 
@@ -106,13 +106,13 @@ Overall the wireframes were successfully followed when creating Cyber Snake, how
 
 #### Colours
 
-The theme of the game is a blend of retro, cyber and neon, with the colour palatte intended to illicit thoughts of a futuristic cityscape at dusk. The background dominates most of the screen and is punctuated by fluorescent embers. Web-safe colours have been chosen for the core elements of the game (as far as possible), while more leeway has been given to the supporting colours.
+The theme of the game is a blend of retro, cyber and neon, with the colour palatte intended to elicit thoughts of a futuristic cityscape at dusk. The background dominates most of the screen and is punctuated by fluorescent embers. Web-safe colours have been chosen for the core elements of the game (as far as possible), while more leeway has been given to the supporting colours.
 
 ##### Core
 
 The colours used for the core game aspects are easy on the eyes when concentrating but give sufficient contrast for easily identifying the game pieces. The snake (Phlox) on the background (Cetacean Blue) is the most frequent combination and is highly evocative of the overall futuristic/neon theme. The pure white text is bright but not overpowering, and is further broken up by sparing use of Neon Carrot and Screamin' Green (used also in the sparks' palette) to differentiate desktop and mobile controls. The enigmatic "the messier things become" in Phlox matches the colour of the snake.
 
-The border of the game area is Deep Carmine Pink if walls are enabled, or Wageningen Green is they are not. This difference is intuitively suggesting green for safe and red for danger. Without this distinction it would be difficult to immediately convey whether or not walls were enabled, so the colours are as close to primary as possible.
+The border of the game area is Deep Carmine Pink if walls are enabled, or Wageningen Green if they are not. This difference intuitively suggests green for safe and red for danger. Without this distinction it would be difficult to immediately convey whether or not walls were enabled, so the colours are as close to primary as possible.
 
 - ![#001440](https://via.placeholder.com/15/001440/000000?text=+) #001440 (Cetacean Blue)
 - ![#ffffff](https://via.placeholder.com/15/ffffff/000000?text=+) #ffffff (White)
@@ -145,7 +145,7 @@ For the glowing headings, a combination of brighter neon pink/purple is used to 
 
 #### Fonts
 
-[Orbitron](https://fonts.google.com/specimen/Orbitron#about) - for consistency and simplicity this is the only font used. The blend of robotic straight lines and biologic curves is decidedly sci-fi and particularly fitting for Cyber Snake. This was chosen over more hard-edged retro typefaces because it hints at something more organic and less robotic, in the same way that the snake's hard edges are juxtaposed with the exploding food globs.
+[Orbitron](https://fonts.google.com/specimen/Orbitron#about) - for consistency and simplicity this is the only font used. The blend of robotic straight lines and biologic curves is decidedly sci-fi and particularly fitting for Cyber Snake. This was chosen over more hard-edged retro typefaces because it hints at something more organic and less robotic, in the same way that the snake's hard edges are juxtaposed with the round food globs.
 
 #### Audio
 
@@ -176,8 +176,8 @@ The balance between adding a touch of ambience and the very real posibility of i
 **2. Accessible layout**
 
 - In portrait mode the canvas is pushed to the top of the screen so that players do not obscure the view of the game with their fingers, while in landscape mode the canvas is centred to allow for a two-thumbed control style either side of the canvas
-- The game has been designed to always fit within a single screen, no matter its size or the menu content, to give it the feeling of a standalone application. There should never be an occasion where the player has to scroll or zoom, and for this reason these features have been disabled
-- The menu buttons allow any menu to be accessed with just one click/tap. They always appear in the same position to give a physicality to the menu, and to prevent the player from having to reposition their cursor/finger unnecessarily
+- The game has been designed to always fit within a single screen, no matter its size or the menu content, to give the feeling of a standalone application. There should never be an occasion where the player has to scroll or zoom, and for this reason these features have been disabled
+- The menu buttons allow any menu to be accessed with just one click/tap. They always appear in the same position to give a physicality to the menu, and to prevent the player from having to reposition their cursor/finger
 
 **3. Responsive HTML canvas**
 
@@ -192,11 +192,11 @@ The balance between adding a touch of ambience and the very real posibility of i
 - Thanks to panning gesture recognition, sharp turns can be achieved with ease, even on mobile
 - The game can be paused by either hitting spacebar or tapping the screen with two fingers simultaneously. The options menu is displayed while the game is paused but only game sound can be changed. The remaining options are still visible but appear disabled. This allows players to mute the game if they wish, but prevents them from 'cheating' by changing other settings mid-game and from possibly becoming confused by an 'extra' menu
 - On desktop a new game can intuitively be started from the scores menu by pressing spacebar
-- When the game loses focus (e.g. when the player clicks on another browsing tab or switches apps), it will be paused to prevent a frustrating loss
+- When the game loses focus (e.g. when the player clicks on another browsing tab or switches apps), it will be paused to prevent a frustrating end to the game
 
 **5. Playstyles**
 
-A good mobile game caters to both casual and more engaged playstyles. The various game speeds should cater to all types of players, with the option to turn on walls providing an additional challenge and a more traditional Snake experience
+A good mobile game caters to both casual and more engaged playstyles. The three game speeds should cater to all types of players, with the option to turn on walls providing an additional challenge and a more traditional Snake experience
 
 **6. Game personality**
 
@@ -205,15 +205,15 @@ A good mobile game caters to both casual and more engaged playstyles. The variou
 
 **7. Visual effects**
 
-This is what the phrase "and the messier things become", refers to on the main menu screen. A simple physics particle effect showers the game board with multi-coloured sparks each time food is eaten. As more food is eaten, the number and velocity of sparks increases until the screen is awash with colour. This serves as both a reward for good play and in the later stages a pleasant distraction from the job at hand. The colour of the sparks matches that of the food eaten, which helps to suggest that the food has been destroyed ('gibbed', if you will)
+This is what the phrase "and the messier things become", refers to on the main menu screen. A simple physics particle effect showers the game board with multi-coloured sparks each time food is eaten. As more food is eaten, the number and velocity of sparks increases until the screen is awash with colour. This serves as both a reward for good play and, in the later stages, a pleasant distraction from the job at hand. The colour of the sparks matches that of the food eaten, which helps to suggest that the food has been destroyed ('gibbed', if you will)
 
 **8. Audio**
 
-The Web Audio API (via HowlerJS) provides reliable sound effects on all devices
+The Web Audio API (via HowlerJS) provides reliable, lag-free sound effects on all devices
 
-**9. Local high score save**
+**9. Statistics saved to local storage**
 
-The high score is saved to the device's local storage and will remain between game sessions, providing cookies are not deleted. This is a fundamental feature for giving players a reason to return
+High scores (and other stats such as games played, total play time, total points scored) are saved to the device's local storage and will remain between game sessions, providing cookies are not deleted. This is a fundamental feature for giving players a reason to return
 
 **10. Object Oriented Programming**
 
@@ -274,7 +274,7 @@ Rather than being hard-coded, visual and gameplay variables have been extracted 
 
 ### Style and theme
 
-- [Autoprefixer](https://autoprefixer.github.io/) - to add CSS vendor prefixes
+- [Autoprefixer](https://autoprefixer.github.io/) - a PostCSS plugin which parses CSS and adds vendor prefixes
 - [Favicon & App Icon Generator](https://www.favicon-generator.org/) - to generate the game's favicons for a variety of devices
 - [Google Fonts](https://fonts.google.com/) - Orbitron
 - [Colorswall](https://colorswall.com/palette/360/) - Crayola fluorescent color palette
@@ -282,7 +282,7 @@ Rather than being hard-coded, visual and gameplay variables have been extracted 
 ### Online resources
 
 - [FreeConvert](https://www.freeconvert.com/) - to convert audio file types
-- [AmIResponsive](http://ami.responsivedesign.is/) - to produce the README showcase image
+- [Am I Responsive?](http://ami.responsivedesign.is/) - to produce the README showcase image
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
@@ -317,7 +317,7 @@ Rather than being hard-coded, visual and gameplay variables have been extracted 
 
 **Summary**:
 
-Countless hours were spent testing Cyber Snake throughout its development, which is either a testament to the quality of the game or the bloody-mindedness of its creator. Over several thousand games the following scenarios were successfully tested:
+Countless hours were spent testing Cyber Snake throughout its development, which is either a testament to the quality of the game or the bloody-mindedness of its creator. Over several thousand games, the following scenarios were successfully tested:
 
 **1. Snake behaviour**
 
@@ -378,7 +378,7 @@ Exhaustive testing was carried out to ensure that this system was robust. This i
 
 - Keyboard handler: each key (arrow keys, spacebar) performs the correct action (up, down, left, right, pause, resume, new game) from the relevant game states (play, pause, gameover)
 - Hammer manager: each gesture (pan, two-finger tap) performs the correct action (up, down, left, right, pause, resume) from the relevant game states (play, pause)
-- Resize / orientation change: both events perform a correct resizing of the game board assets
+- Resize / orientation change: both events correctly resize the game board and assets
 - Window loses focus: on switching windows or applications during a game, the game pauses and can be resumed by clicking the resume button
 - Menu selection: each button element (play, resume, main menu, options menu, scores menu) shows and hides the correct modal elements (heading, menu-content, buttons) when clicked
 - Menu sound: button elements play the correct sound when clicked (play has no audio attached to it)
@@ -389,9 +389,9 @@ Exhaustive testing was carried out to ensure that this system was robust. This i
 
 The aim was to make a game which felt like a standalone app, but which would display in the browser and not force a particular orientation on the player. It was a challenge to achieve this without using some practices which are frowned upon in mobile web development, however they were necessary to achieve said goals.
 
-To overcome the limitations of the mobile browser, a feature of HammerJS has been exploited via ```prevent_default: true, touchAction: "none"``` and used on the HTML ```body``` so that scrolling or clicking on DOM elements is not possible. Additionally ```pointer-events: none``` is used on the game container to prevent accidental zooming in on elements when playing on mobile, which happens very frequently on iOS Safari. 
+To overcome the limitations of the mobile browser, a feature of HammerJS has been exploited via `prevent_default: true, touchAction: "none"` and used on `body` so that scrolling or clicking on DOM elements is not possible. Additionally, `pointer-events: none` is used on `game-container` to prevent accidental zooming in on elements when playing on mobile, which happens very frequently on iOS Safari.
 
-There may be some devices which cannot fit the content on screen and as a result push the menu buttons too close to the edge, however no examples came up in real-world or dev-tools testing.  
+There may be some devices which cannot fit the content on screen and as a result push the menu buttons too close to the edge, however no examples came up in real-world or dev-tools testing.
 
 #### Browsers
 
@@ -443,23 +443,35 @@ Real world testing on:
 
 - This was due to rapid directional changes allowing the snake to 'bite its own neck', its head colliding with `snake.array[1]` e.g. when moving left and the direction changed to up and then right before the game had completed the up move. Simply preventing a change to the opposite direction was not sufficient
 - The initial solution was to implement a 'safe delay' which prevented the keyboard event handler from firing more quickly than the game refresh rate. While this was an improvement, the issue would still appear too frequently unless the safe delay was so long that it detrimental to the input responsiveness, and furthermore made the game speed option nearly impossible to implement
-- This issue was finally resolved by adding direction change validation at each refresh interval. To do this relatively succinctly, each direction has been given a numerical value so that it can be easily negated during the check, and then the last direction moved must be calculated. The last move is calculated by comparing the ```snake.array.x``` or ```snake.array.y``` of the head and first segment of the snake. A move is valid when the last move is NOT equal to the negated new direction e.g. if the last snake move was left (-1), and the requested direction is down (+2), the move will be valid, however if the requested direction is right (+1) then the move is invalid and the event handler will not fire
-- While in the middle of the board the difference between ```snake.array[0]``` and ```snake.array[1]``` will always be ```+/-tile```, however further calculations are necessary to ensure the last move is calculated properly while the snake crosses a border
+- This issue was finally resolved by adding direction change validation at each refresh interval. To do this relatively succinctly, each direction has been given a numerical value so that it can be easily negated during the check, and then the last direction moved must be calculated. The last move is calculated by comparing the `snake.array.x` or `snake.array.y` of the head and first segment of the snake. A move is valid when the last move is NOT equal to the negated new direction e.g. if the last snake move was left (-1), and the requested direction is down (+2), the move will be valid, however if the requested direction is right (+1) then the move is invalid and the event handler will not fire
+- While in the middle of the board the difference between `snake.array[0]` and `snake.array[1]` will always be `+/-tile`, however further calculations are necessary to ensure the last move is calculated properly while the snake crosses a border
 
 **Canvas resizing causes collision detection issues**
 
 - To make the game as responsive as possible the canvas needs to be resized depending on the screen space available. If using a set canvas size and relying on CSS to fill the space there are issues with the image resolution when it is much different from the set canvas size
 - Game collisions between snake, food and walls are detected when their coordinates are _equal_ to one another. If these coordinates are multiplied up/down then it is very unlikely a collision will ever be detected as the coordinates will mostly be floating numbers
-- To solve this the ```gameBoard``` object has four key functions:
-  - ```checkOrientation```
-  - ```setCanvasSize``` checks that the canvas height is divisible by the total number of tiles along the y axis and, if not, reduces the canvas height until it is and sets the canvas width accordingly
-  - ```setTileSize``` uses the canvas width and set number of tiles to calculate
-  - ```recalculateAssets``` uses the former sizes and coordinates of game pieces and multiplies them up by the new tile size calculated using the three other key functions
+- To solve this the `gameBoard` object has four key functions:
+  - `checkOrientation`
+  - `setCanvasSize` checks that the canvas height is divisible by the total number of tiles along the y axis and, if not, reduces the canvas height until it is and sets the canvas width accordingly
+  - `setTileSize` uses the canvas width and set number of tiles to calculate
+  - `recalculateAssets` uses the former sizes and coordinates of game pieces and multiplies them up by the new tile size calculated using the three other key functions
 - This means the gameBoard can control the various coordinates of game pieces and ensure they are within safe ranges so that it can determine collisions
+
+**Spark gravity and velocity not scaling to canvas size**
+
+- Once the canvas and game objects were responsive to the available viewport, a new issue became apparent where sparks would fall very quickly on a small screen and very slowly on a large screen. This was due to using static gravity and velocity
+- To resolve this the `dynamicOutput` function was used to adjust both spark gravity and velocity by multiplying the dynamic tile size (from `setTileSize`) with a set ratio (`tileToSparkGravityRatio` and `initialTileToSparkDRatio`)
+- To add a sense of progress, the `tileToSparkDRatio` increases by `tileToSparkDRatioIncrement` every time food is eaten
+- To add some randomness to spark behaviour, `dynmicSparkGravityMultiplier` and `dynamicOutputMultiplier` increase the upper ranges of these random calculations
+
+**Game time played not taking pause into account**
+
+- Discovered after leaving a game paused for several hours and returning to see a surprising message on gameover, it was clear that using `Date.now()` on start and end of game was not the best way of recording a game length
+- Resolved by adding the `stopWatch` object and starting the timer on `game.play()`, stopping on `game.stop()` and resetting on `newGame()`
 
 **Audio not working on iOS**
 
-- Initially used ```<audio>``` HTML element to play game audio, which worked fine on desktop but had lots of issues on iOS Safari - most noticably a lag in the sounds being played
+- Initially used `<audio>` HTML element to play game audio, which worked fine on desktop but had lots of issues on iOS Safari - most noticably a lag in the sounds being played
 - The HowlerJS library was used to handle Web Audio API and allowed sounds to be played on iOS perfectly
 - The iOS 14 update introduced a new issue with sound on iOS Safari causing a play error. This was resolved by changing the audio file types from wav to webm, with mp3 used as a fallback. This appears to have again resolved the issue and greatly reduced the file size of the game
 
@@ -469,7 +481,7 @@ Real world testing on:
 
 - **Square viewports**
 
-  - On displays where the ratio between viewport width and height is 1.0 - 1.1, the ```canvas``` will exceed the viewable area and a scroll bar will appear
+  - On displays where the ratio between viewport width and height is 1.0 - 1.1, the `canvas` will exceed the viewable area and a scroll bar will appear
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
@@ -515,23 +527,24 @@ Further reading and troubleshooting on cloning a repository from GitHub can be f
 
 #### Tutorials and inspiration
 
-- [Youtube](https://youtu.be/9TcU2C1AACw) - fundamental snake game concepts
-- [Chris Courses](https://chriscourses.com/courses/canvas-for-beginners/resizing) - a really excellent canvas and OOP introduction
-- [Mozilla](https://developer.mozilla.org/en-US/docs/Games/Tutorials/2D_Breakout_game_pure_JavaScript/Create_the_Canvas_and_draw_on_it) - canvas and game tutorial
-- [Mozilla](https://developer.mozilla.org/en-US/docs/Games/Anatomy) - handling game loops
-- [Mozilla](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions#No_separate_this) - arrow functions and ```this```
-- [W3 Schools](https://www.w3schools.com/graphics/game_canvas.asp) - canvas game tutorial
-- [CSS Tricks](https://css-tricks.com/centering-css-complete-guide/) - centering CCS complete guide
-- [W3C](https://drafts.csswg.org/selectors-3/#attribute-selectors) - attribute selectors
-
+- [Youtube: Code The Snake Game Using JavaScript and HTML5](https://youtu.be/9TcU2C1AACw)
+- [Chris Courses: Canvas for beginners](https://chriscourses.com/courses/canvas-for-beginners/resizing) - really excellent canvas and OOP tutorials
+- [Mozilla: Canvas and game tutorial](https://developer.mozilla.org/en-US/docs/Games/Tutorials/2D_Breakout_game_pure_JavaScript/Create_the_Canvas_and_draw_on_it)
+- [Mozilla: Handling game loops](https://developer.mozilla.org/en-US/docs/Games/Anatomy)
+- [Mozilla: Arrow functions and 'this'](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions#No_separate_this)
+- [W3 Schools: Canvas game tutorial](https://www.w3schools.com/graphics/game_canvas.asp)
+- [CSS Tricks: Centering CCS Complete Guide](https://css-tricks.com/centering-css-complete-guide/)
+- [W3C: Attribute selectors](https://drafts.csswg.org/selectors-3/#attribute-selectors)
 
 #### Code used/modified from other sources
+
 (also referenced within code files)
 
 - [Random number between (min, max)](https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript)
 - [Seconds to hours/minutes/seconds convertor](https://stackoverflow.com/questions/37096367/how-to-convert-seconds-to-minutes-and-hours-in-javascript/37096923)
 - [Sorting arrays](https://www.javascripttutorial.net/javascript-array-sort/)
 - [Dynamic canvas font size](https://stackoverflow.com/questions/22943186/html5-canvas-font-size-based-on-canvas-size)
+- [Simple stopwatch](https://code-boxx.com/simple-javascript-stopwatch/)
 - [Glowing text](https://www.w3schools.com/howto/howto_css_glowing_text.asp)
 - [Checkbox restyling](https://dev.to/proticm/styling-html-checkboxes-is-super-easy-302o)
 - [Pointer events](https://css-tricks.com/almanac/properties/p/pointer-events/)
@@ -551,7 +564,7 @@ Further reading and troubleshooting on cloning a repository from GitHub can be f
 
 - Bim Williams (Code Institute Alumnus) - for taking the time to help on Slack
 
-- Robin Zigmond (Code Institute Alumnus) - specifically for pointers on arrow functions and ```this```
+- Robin Zigmond (Code Institute Alumnus) - specifically for pointers on arrow functions and `this`
 
 ### Disclaimer
 
