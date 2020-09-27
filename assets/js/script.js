@@ -174,7 +174,7 @@ const newFood = () => {
 };
 
 const newGame = () => {
-  gameBoard.checkOrientation(); // could refactor?
+  gameBoard.checkOrientation();
   gameBoard.setCanvasSize();
   gameBoard.setTileSize();
   scoreBoard.getCurrentHighScore();
@@ -268,7 +268,7 @@ let gameBoard = {
     tile = canvas.width / numberOfTilesPerAxis;
   },
   recalculateAssets() {
-    if (stats.gamesPlayedThisSession > 0) {
+    if (game.state === "PLAY" || stats.gamesPlayedThisSession > 0) {
       // otherwise there will be no assets to reposition
       let formerTileSize = tile;
       let formerFoodCoordinates = food;
@@ -276,9 +276,9 @@ let gameBoard = {
       let formerSnakeArray = snake.array;
       let formerSparkArray = sparkArray;
 
-      this.checkOrientation();
-      this.setCanvasSize();
-      this.setTileSize();
+      gameBoard.checkOrientation();
+      gameBoard.setCanvasSize();
+      gameBoard.setTileSize();
 
       food.x = (formerFoodCoordinates.x / formerTileSize) * tile;
       food.y = (formerFoodCoordinates.y / formerTileSize) * tile;
