@@ -304,20 +304,33 @@ Rather than being hard-coded, visual and gameplay variables have been extracted 
 
 [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools) - audit summary for both desktop and mobile:
 
-- Performance = **96-99%**
-- Accessibility = **100%**
-- Best Practices = **100%**
-- SEO = **100%**
+- Performance: **96-99%**
+- Accessibility: **100%**
+- Best Practices: **100%**
+- SEO: **100%**
 
 [W3C - HTML](https://validator.w3.org/) - 0 errors - **PASS**
 
-[W3C - CSS](https://jigsaw.w3.org/css-validator/) - 11 errors - **FAIL**
+[W3C - CSS](https://jigsaw.w3.org/css-validator/) - 0 errors, 44 warnings - **PASS**
 
-[CSS Lint](http://csslint.net/) - 0 errors, 80 warnings - **FAIL**
+- Unknown vendor prefixes
+- Use of ```pointer-events: auto```
+
+[CSS Lint](http://csslint.net/) - 0 errors, 26 warnings - **PASS**
+
+- Use of ```box-sizing```
+- Use of IDs in selectors
+- Use of ```!important``` (to ensure ```display: none``` applied on DOM elements)
+- Use of ```place-content```
+
 
 [Unicorn revealer - overflow](https://chrome.google.com/webstore/detail/unicorn-revealer/lmlkphhdlngaicolpmaakfmhplagoaln/related) - no evidence of overflow - **PASS**
 
-[JS Hint](https://jshint.com/) - Summary: warnings about `use strict` outside of a function, and Hammer and Howl APIs not being defined - **PASS**
+[JS Hint](https://jshint.com/) - 0 errors, 8 warnings - **PASS**
+
+- ```use strict``` outside of a function
+- ```Hammer``` not defined
+- ```Howl``` not defined
 
 <span id="testing-manual"></span>
 
@@ -493,7 +506,7 @@ Real world testing on:
 
 - **Loss of sound**
 
-  - When the game is minimised on iOS Safari, sound effects may no longer play when focus resumes
+  - When the game is minimised on iOS Safari, sound effects may no longer play when focus regained
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
