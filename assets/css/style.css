@@ -19,7 +19,7 @@ body {
   -moz-box-sizing: border-box;
           box-sizing: border-box;
   background-color: #001440;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 #game-container {
@@ -69,11 +69,12 @@ body {
   display: grid;
   place-content: center;
   z-index: 1;
-  height: 50%;
-  padding: 1rem;
+  height: 55%;
+  padding: 1em;
   color: #fff;
+  font-size: 1em;
   font-family: "Orbitron", sans-serif;
-  letter-spacing: 0.1rem;
+  letter-spacing: 0.1em;
   -webkit-animation: fade-in ease-out 0.5s 1;
   -moz-animation: fade-in ease-out 0.5s 1;
           animation: fade-in ease-out 0.5s 1;
@@ -101,7 +102,7 @@ h1 {
 
 .special-menu-text {
   color: #df00fe;
-  text-shadow: 0 0 1rem;
+  text-shadow: 0 0 1em;
 }
 
 .blinking {
@@ -122,26 +123,26 @@ h1 {
 }
 
 .paused-effect {
-  -webkit-filter: opacity(0.3) blur(0.1rem);
-          filter: opacity(0.3) blur(0.1rem);
+  -webkit-filter: opacity(0.3) blur(0.1em);
+          filter: opacity(0.3) blur(0.1em);
 }
 
 /* MENU SELECTION BUTTONS */
 
 #menu-buttons-container {
-  padding: 0 0.5rem;
+  padding: 0 0.5em;
 }
 
 #menu-buttons-container button {
-  min-width: 6rem;
-  margin: 0.65rem;
+  min-width: 6em;
+  margin: 0.65em;
   background-color: #001440;
   border: solid 1px #fff;
   border-radius: 5%;
   color: #fff;
-  font-size: 1.1rem;
+  font-size: 1.1em;
   font-family: "Orbitron", sans-serif;
-  padding: 0.5rem;
+  padding: 0.5em;
   z-index: 1;
   pointer-events: auto;
 }
@@ -154,8 +155,8 @@ h1 {
 /* INSTRUCTIONS SCREEN */
 
 #instructions-container > p {
-  margin-bottom: 0.5rem;
-  margin-top: 0.5rem;
+  margin-bottom: 0.5em;
+  margin-top: 0.5em;
 }
 
 /* SCORES SCREEN */
@@ -168,9 +169,9 @@ h1 {
   margin-top: 0;
 }
 
-#scores-award-text > p {
+/* #scores-award-text > p {
   margin-top: 0;
-}
+} */
 
 #session-scores-container ol {
   list-style-type: none;
@@ -187,7 +188,7 @@ h1 {
 
 #checkbox-container,
 #radio-container {
-  padding: 1rem;
+  padding: 1em;
 }
 
 .options-choice-button {
@@ -204,7 +205,7 @@ h1 {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
-  padding: 0.6rem;
+  padding: 0.6em;
 }
 
 .options-choice-button > span {
@@ -213,8 +214,8 @@ h1 {
 
 .options-choice-button > input {
   /* https://dev.to/proticm/styling-html-checkboxes-is-super-easy-302o */
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 1.5em;
+  width: 1.5em;
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
@@ -227,7 +228,7 @@ h1 {
           transition-duration: 0.3s;
   background-color: #001440;
   cursor: default;
-  margin: 0 1rem 0 0;
+  margin: 0 1em 0 0;
   pointer-events: auto;
 }
 
@@ -259,13 +260,13 @@ h1 {
 
 @-webkit-keyframes glow {
   from {
-    text-shadow: 0 0 0.1em #fff, 0 0 0.2em #e60073, 0 0 0.3em #e60073,
+    text-shadow: 0 0 0.1rem #fff, 0 0 0.2rem #e60073, 0 0 0.3rem #e60073,
       0 0 0.4rem #e60073, 0 0 0.5rem #e60073, 0 0 0.6rem #e60073,
       0 0 0.7rem #e60073;
   }
 
   to {
-    text-shadow: 0 0 0.2em #fff, 0 0 0.3em #ff4da6, 0 0 0.4em #ff4da6,
+    text-shadow: 0 0 0.2rem #fff, 0 0 0.3rem #ff4da6, 0 0 0.4rem #ff4da6,
       0 0 0.5rem #ff4da6, 0 0 0.6rem #ff4da6, 0 0 0.7rem #ff4da6,
       0 0 0.8rem #ff4da6;
   }
@@ -273,13 +274,13 @@ h1 {
 
 @keyframes glow {
   from {
-    text-shadow: 0 0 0.1em #fff, 0 0 0.2em #e60073, 0 0 0.3em #e60073,
+    text-shadow: 0 0 0.1rem #fff, 0 0 0.2rem #e60073, 0 0 0.3rem #e60073,
       0 0 0.4rem #e60073, 0 0 0.5rem #e60073, 0 0 0.6rem #e60073,
       0 0 0.7rem #e60073;
   }
 
   to {
-    text-shadow: 0 0 0.2em #fff, 0 0 0.3em #ff4da6, 0 0 0.4em #ff4da6,
+    text-shadow: 0 0 0.2rem #fff, 0 0 0.3rem #ff4da6, 0 0 0.4rem #ff4da6,
       0 0 0.5rem #ff4da6, 0 0 0.6rem #ff4da6, 0 0 0.7rem #ff4da6,
       0 0 0.8rem #ff4da6;
   }
@@ -389,13 +390,11 @@ h1 {
     height: auto;
   }
 }
+
 @media (orientation: portrait) and (min-height: 568px) {
-  h1 {
-    font-size: 2rem;
-  }
-  .menu-content-container {
-    font-size: 1.1rem;
-  }
+body {
+    font-size: 1.1em;
+}
 }
 
 @media (orientation: landscape) {
@@ -405,98 +404,27 @@ h1 {
   }
 }
 
-@media (min-width: 768px) and (min-height: 375px) {
-  h1 {
-    font-size: 2rem;
-  }
-  .menu-content-container {
-    font-size: 1rem;
-  }
-  #menu-buttons-container button {
-    min-width: 7rem;
-    margin: 0 1rem;
-    font-size: 1.25rem;
-  }
+@media (min-width: 768px) and (min-height: 460px) {
+body {
+    font-size: 1.2em;
+}
 }
 
-@media (min-width: 768px) and (min-height: 1024px) {
-  h1 {
-    font-size: 3.5rem;
-  }
-  .menu-content-container {
-    font-size: 2rem;
-  }
-  #menu-buttons-container button {
-    min-width: 10rem;
-    margin: 0 1rem;
-    font-size: 2rem;
-  }
+@media (min-width: 992px) and (min-height: 470px) {
+body {
+    font-size: 1.4em;
+}
 }
 
-@media (min-width: 1024px) and (min-height: 568px) {
-  h1 {
-    font-size: 3rem;
-  }
-  .menu-content-container {
-    font-size: 1.5rem;
-  }
-  #menu-buttons-container button {
-    min-width: 10rem;
-    padding: 0.7rem;
-    font-size: 1.8rem;
-  }
-  #checkbox-container,
-  #radio-container {
-    padding: 0 3rem;
-  }
+@media (min-width: 1024px) and (min-height: 560px) {
+body {
+    font-size: 1.6em;
+}
 }
 
-@media (min-width: 1024px) and (min-height: 1366px) {
-  h1 {
-    font-size: 5rem;
-  }
-  .menu-content-container {
-    font-size: 3rem;
-    padding: 3rem;
-  }
+@media (min-width: 1200px) and (min-height: 640px) {
 
-  #instructions-container > p {
-    margin-bottom: 1rem;
-    margin-top: 1rem;
-  }
-
-  #menu-buttons-container button {
-    min-width: 15rem;
-    padding: 0.7rem;
-    font-size: 3rem;
-  }
-  #checkbox-container,
-  #radio-container {
-    padding: 0 3rem;
-  }
+body {
+    font-size: 1.8em;
 }
-
-@media (min-width: 1200px) and (min-height: 800px) {
-  h1 {
-    font-size: 4rem;
-  }
-  .menu-content-container {
-    font-size: 2rem;
-    padding: 5rem 3rem;
-  }
-
-  #instructions-container > p {
-    margin-bottom: 2rem;
-    margin-top: 2rem;
-  }
-
-  #menu-buttons-container button {
-    padding: 1rem;
-    min-width: 14rem;
-    font-size: 2.1rem;
-  }
-  #checkbox-container,
-  #radio-container {
-    padding: 0 4rem;
-  }
 }
