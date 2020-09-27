@@ -82,7 +82,7 @@ let scoreBoard = {
       );
     }
     if (this.currentScore === 0) {
-      content(`<p>Oof.</p>`, true);
+      content(`Oof.`, true);
     }
     if (scoreRange(1, 4)) {
       content(`${this.currentScore} is a fantastic score. `, false);
@@ -165,7 +165,7 @@ let scoreBoard = {
     }
     if (this.currentScore >= 100 && !this.hasHitMilestone) {
       content(
-        `That's quite the milestone you've hit.</p><p>And it only took you ${stats.gamesPlayedAllTime} attempts! `,
+        `That's quite the milestone you've hit.And it only took you ${stats.gamesPlayedAllTime} attempts! `,
         true
       );
     } else if (scoreRange(100, 124)) {
