@@ -9,12 +9,14 @@
 
 html {
   -webkit-text-size-adjust: none;
+  -ms-text-size-adjust: none;
 }
 
 body {
   margin: 0;
   padding: 0;
   -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
           box-sizing: border-box;
   background-color: #001440;
   font-size: 13px;
@@ -25,10 +27,16 @@ body {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
+  -ms-box-orient: vertical;
   -webkit-box-direction: normal;
+  -moz-box-direction: normal;
+  -ms-box-direction: normal;
       -ms-flex-flow: column;
           flex-flow: column;
   -webkit-box-pack: center;
+  -moz-box-pack: center;
+  -ms-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
   height: 100vh;
@@ -42,6 +50,8 @@ body {
   top: 0;
   left: 50%;
   -webkit-transform: translate(-50%, 0);
+  -moz-transform: translate(-50%, 0);;
+  -o-transform: translate(-50%, 0);
       -ms-transform: translate(-50%, 0);
           transform: translate(-50%, 0);
   z-index: -1;
@@ -49,6 +59,8 @@ body {
 
 .menu-content-container {
   -webkit-box-align: center;
+  -moz-box-align: center;
+  -ms-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   -ms-grid-row-align: center;
@@ -63,6 +75,7 @@ body {
   font-family: "Orbitron", sans-serif;
   letter-spacing: 0.1rem;
   -webkit-animation: fade-in ease-out 0.5s 1;
+  -moz-animation: fade-in ease-out 0.5s 1;
           animation: fade-in ease-out 0.5s 1;
 }
 
@@ -72,6 +85,7 @@ h1 {
   color: #fff;
   margin: 0;
   -webkit-animation: glow 1s ease-in-out infinite alternate;
+  -moz-animation: glow 1s ease-in-out infinite alternate;
           animation: glow 1s ease-in-out infinite alternate;
 }
 
@@ -92,6 +106,7 @@ h1 {
 
 .blinking {
   -webkit-animation: blink linear 1.5s 2s forwards infinite;
+  -moz-animation: blink linear 1.5s 2s forwards infinite;
           animation: blink linear 1.5s 2s forwards infinite;
 }
 
@@ -182,6 +197,8 @@ h1 {
   cursor: pointer;
   position: relative;
   -webkit-box-align: center;
+  -moz-box-align: center;
+  -ms-box-align: center;
       -ms-flex-align: center;
           align-items: center;
   width: -webkit-max-content;
@@ -205,6 +222,7 @@ h1 {
   border-radius: 5%;
   outline: none;
   -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
        -o-transition-duration: 0.3s;
           transition-duration: 0.3s;
   background-color: #001440;
