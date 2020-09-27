@@ -165,7 +165,7 @@ let scoreBoard = {
     }
     if (this.currentScore >= 100 && !this.hasHitMilestone) {
       content(
-        `That's quite the milestone you've hit.And it only took you ${stats.gamesPlayedAllTime} attempts! `,
+        `That's quite the milestone you've hit. And it only took you ${stats.gamesPlayedAllTime} attempts! `,
         true
       );
     } else if (scoreRange(100, 124)) {
