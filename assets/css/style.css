@@ -136,7 +136,7 @@ h1 {
 #menu-buttons-container button:hover {
   background-color: #fff;
   color: #001440;
-  border: solid 1px #fff;
+  /* border: solid 1px #fff; */
 }
 
 /* INSTRUCTIONS SCREEN */
@@ -159,10 +159,10 @@ h1 {
           margin-block-start: 0;
 }
 
-#scores-award-text > p {
+/* #scores-award-text > p {
   -webkit-margin-before: 0;
           margin-block-start: 0;
-}
+} */
 
 #session-scores-container ol {
   list-style-type: none;
@@ -231,7 +231,7 @@ h1 {
 }
 
 .options-choice-button > input:checked {
-  border: 2px solid #fff;
+  /* border: 2px solid #fff; */
   background-color: #fff;
 }
 
@@ -239,7 +239,7 @@ h1 {
   content: "";
   display: block;
   text-align: center;
-  color: #41b883;
+  /* color: #41b883; */
   position: absolute;
 }
 
