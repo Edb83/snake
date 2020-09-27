@@ -47,6 +47,7 @@ const wallsOnColor = "#FF3333"; // red
 const wallsOffColor = "#339933"; // green
 const snakeColor = "#DF00FE"; // purple
 const snakeStrokeColor = "#001440"; // dark blue
+const snakeHeadCollisionColor = "#FF3333"; // red
 const foodStrokeColor = "#000"; // black
 const colorArray = [
   // Food color is picked at random from this array & sparks have the same color as food eaten
@@ -405,6 +406,13 @@ class Snake {
       ctx.shadowBlur = tile / 2;
       ctx.fillRect(this.array[i].x, this.array[i].y, tile, tile); // fills tiles occupied by snake array's coordinates
       ctx.restore();
+      if (game.collisionDetected) { // changes the colour of the snake head on collision
+        ctx.save();
+        ctx.fillStyle = snakeHeadCollisionColor;
+        ctx.shadowColor = snakeHeadCollisionColor;
+        ctx.fillRect(this.array[0].x, this.array[0].y, tile, tile);
+        ctx.restore();
+      }
       ctx.strokeStyle = snakeStrokeColor;
       ctx.strokeRect(this.array[i].x, this.array[i].y, tile, tile);
     }
