@@ -64,20 +64,20 @@ let scoreBoard = {
     let content = (text, replaceExistingText) => {
         // Determines whether text is written from scratch or added to existing text
       if (replaceExistingText) {
-        scoreAwardText.innerHTML = text;
+        scoreAwardText.innerHTML = `<p>${text}</p>`;
       } else {
         scoreAwardText.insertAdjacentHTML("beforeend", text);
       }
     };
 
     if (isNaN(this.currentHighScore) && this.currentScore !== 0) {
-      content(`<p>You're off the mark, so to speak.</p>`, true);
+      content(`You're off the mark, so to speak. `, true);
     }
     if (isNewHighScore()) {
       content(
-        `<p>Signs of improvement. You beat your previous high score by ${
+        `Signs of improvement. You beat your previous high score by ${
           this.currentScore - this.currentHighScore
-        }.</p>`,
+        }. `,
         true
       );
     }
@@ -100,7 +100,7 @@ let scoreBoard = {
       game.wallsEnabled
     ) {
       content(
-        `<p>'Fast' and 'Walls' was a brave choice. Know your limits.</p>`,
+        `'Fast' and 'Walls' was a brave choice. Know your limits. `,
         true
       );
     }
@@ -121,7 +121,7 @@ let scoreBoard = {
     }
     if (scoreRange(20, 29) && stats.gamesPlayedAllTime > 100) {
       content(
-        `<p>They say practice makes perfect, and yet... here you are on attempt #${stats.gamesPlayedAllTime}.`,
+        `They say practice makes perfect, and yet... here you are on attempt #${stats.gamesPlayedAllTime}. `,
         true
       );
     }
@@ -163,15 +163,15 @@ let scoreBoard = {
         false
       );
     }
-    if (this.currentScore > 100 && !this.hasHitMilestone) {
+    if (this.currentScore >= 100 && !this.hasHitMilestone) {
       content(
-        `<p>That's quite the milestone you've hit.</p><p>And it only took you ${stats.gamesPlayedAllTime} attempts!</p>`,
+        `That's quite the milestone you've hit.</p><p>And it only took you ${stats.gamesPlayedAllTime} attempts! `,
         true
       );
     } else if (scoreRange(100, 124)) {
       content(
         `In total you have smashed ${stats.pointsAllTime} blobs to smithereens. The Nanite Narwhal would be proud. `,
-        false
+        true
       );
     }
     if (scoreRange(125, 149)) {
@@ -190,21 +190,21 @@ let scoreBoard = {
     }
     if (scoreRange(200, 299)) {
       content(
-        `<p>If not for your epic score of ${this.previousScore} last time, some might call shenanigans.</p>`,
+        `If not for your epic score of ${this.previousScore} last time, some might call shenanigans. `,
         false
       );
     }
     if (scoreRange(300, 396)) {
       content(
-        `<p>Your commitment is admirable but your time (all ${convertSecondsToHms(
+        `Your commitment is admirable but your time (all ${convertSecondsToHms(
           stats.gameTimeAllTime
-        )} of it), irretrievable.</p>`,
+        )} of it), irretrievable. `,
         true
       );
     }
     if (this.currentScore == 397) {
       content(
-        `<p>Congratulations. You have completed the tutorial of Cyber Snake.</p><p>In Level 001 the food is invisible. You have 3 lives remaining.</p><p>Good luck.</p>`,
+        `Congratulations. You have completed the tutorial of Cyber Snake. In Level 001 the food is invisible. You have 3 lives remaining. Good luck. `,
         true
       );
     }
@@ -220,21 +220,21 @@ let scoreBoard = {
       stats.gameTimeInSeconds > 300
     ) {
       content(
-        `<p>${convertSecondsToHms(stats.gameTimeInSeconds)} to add a measly ${
+        `${convertSecondsToHms(stats.gameTimeInSeconds)} to add a measly ${
           this.currentScore - this.currentHighScore
-        } to your PB.</p><p>Yikes.</p>`,
+        } to your PB. Yikes. `,
         true
       );
     }
     if (this.currentScore > this.previousScore && this.previousScore === 0) {
       content(
-        `<p>Well, anything was an improvement on last time. </p>`,
+        `Well, anything was an improvement on last time. `,
         true
       );
     }
     if (this.previousScore - this.currentScore > 50) {
       content(
-        `<p>Try to remember what you did on your previous attempt. That was better.</p>`,
+        `Try to remember what you did on your previous attempt. That was better. `,
         false
       );
     }
