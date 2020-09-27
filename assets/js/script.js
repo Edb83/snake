@@ -295,10 +295,8 @@ let gameBoard = {
         sparkArray[i].x = (formerSparkArray[i].x / formerTileSize) * tile;
         sparkArray[i].y = (formerSparkArray[i].y / formerTileSize) * tile;
       }
+    animate();
     }
-    if (game.state !== "PLAY") {
-        animateLoop();
-      }
   },
   draw() {
     // Score background
