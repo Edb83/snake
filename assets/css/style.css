@@ -69,7 +69,7 @@ body {
   display: grid;
   place-content: center;
   z-index: 1;
-  height: 55%;
+  height: 50%;
   padding: 1em;
   color: #fff;
   font-size: 1em;
@@ -134,13 +134,13 @@ h1 {
 }
 
 #menu-buttons-container button {
-  min-width: 6em;
-  margin: 0.65em;
+  min-width: 5.4em;
+  margin: 0.37em;
   background-color: #001440;
   border: solid 1px #fff;
   border-radius: 5%;
   color: #fff;
-  font-size: 1.1em;
+  font-size: 0.9em;
   font-family: "Orbitron", sans-serif;
   padding: 0.5em;
   z-index: 1;
@@ -168,10 +168,6 @@ h1 {
 #scores-award-text {
   margin-top: 0;
 }
-
-/* #scores-award-text > p {
-  margin-top: 0;
-} */
 
 #session-scores-container ol {
   list-style-type: none;
