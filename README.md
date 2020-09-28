@@ -304,7 +304,7 @@ Rather than being hard-coded, visual and gameplay variables have been extracted 
 
 [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools) - audit summary for both desktop and mobile:
 
-- Performance: **97%**
+- Performance: **96-99%**
 - Accessibility: **100%**
 - Best Practices: **100%**
 - SEO: **100%**
