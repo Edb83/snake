@@ -410,19 +410,19 @@ body {
 }
 }
 
-@media (min-width: 992px) and (min-height: 470px) {
+@media (min-width: 992px) and (min-height: 520px) {
 body {
     font-size: 1.4em;
 }
 }
 
-@media (min-width: 1024px) and (min-height: 560px) {
+@media (min-width: 1024px) and (min-height: 600px) {
 body {
     font-size: 1.6em;
 }
 }
 
-@media (min-width: 1200px) and (min-height: 640px) {
+@media (min-width: 1200px) and (min-height: 680px) {
 
 body {
     font-size: 1.8em;
