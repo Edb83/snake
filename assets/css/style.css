@@ -398,11 +398,21 @@ h1 {
     width: auto;
     height: 100%;
   }
+  #menu-buttons-container button {
+    min-width: 6em;
+    margin: 0.5em 2em;
+    font-size: 1.1em;
+  }
 }
 
 @media (min-width: 768px) and (min-height: 460px) {
   body {
     font-size: 1.2em;
+  }
+    #menu-buttons-container button {
+    min-width: 6em;
+    margin: 0.5em 2em;
+    font-size: 1.1em;
   }
 }
 
