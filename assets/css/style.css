@@ -388,9 +388,9 @@ h1 {
 }
 
 @media (orientation: portrait) and (min-height: 568px) {
-body {
+  body {
     font-size: 1.1em;
-}
+  }
 }
 
 @media (orientation: landscape) {
@@ -401,26 +401,29 @@ body {
 }
 
 @media (min-width: 768px) and (min-height: 460px) {
-body {
+  body {
     font-size: 1.2em;
-}
+  }
 }
 
 @media (min-width: 992px) and (min-height: 520px) {
-body {
+  body {
     font-size: 1.4em;
-}
+  }
 }
 
 @media (min-width: 1024px) and (min-height: 600px) {
-body {
+  body {
     font-size: 1.6em;
-}
+  }
 }
 
 @media (min-width: 1200px) and (min-height: 680px) {
-
-body {
+  body {
     font-size: 1.8em;
-}
+  }
+  .options-choice-button > input {
+  height: 2em;
+  width: 2em;
+  }
 }
