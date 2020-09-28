@@ -248,7 +248,6 @@ h1 {
 }
 
 .options-choice-button > input:disabled {
-  /* border-color: #3f4349; */
   border-style: dotted;
   cursor: default;
 }
