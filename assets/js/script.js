@@ -35,7 +35,7 @@ const dynmicSparkGravityMultiplier = 2; // used to increase upper range of rando
 const dynamicOutputMultiplier = 2; // used to increase upper range of random velocity assigned to individual sparks on creation
 const initialTileToSparkDRatio = 0.1; // the velocity of sparks at the start of each game
 const tileToSparkDRatioIncrement = 0.0025; // the increment to spark velocity each time food is eaten
-const sparkTimeToLive = 100; // reduced on hitting floor
+const sparkTimeToLive = 100; // ttl reduced on hitting floor
 const maxSparksPerEat = 150; // capped to prevent lag issues
 const sparkArray = [];
 
@@ -50,8 +50,9 @@ const snakeStrokeColor = "#001440"; // dark blue
 const snakeHeadCollisionColor = "#FF3333"; // red
 const foodStrokeColor = "#000"; // black
 const colorArray = [
-  // Food color is picked at random from this array & sparks have the same color as food eaten
-  // RGB used so that alpha can be adjusted with each spark's time to live
+  // Food color is picked at random from this array
+  // Sparks have the same color as the food eaten
+  // RGB used so that alpha can be adjusted according to each spark's time to live
   // https://colorswall.com/palette/360/
   "rgba(255, 53, 94, 1)", // Red
   "rgba(253, 91, 120, 1)", // Watermelon
@@ -67,18 +68,21 @@ const colorArray = [
 ];
 
 // Controls
-const left = -1; // directions have been converted to numbers so that conditional statements can be negated mathematically
+// directions have been converted to numbers so that conditional statements can be negated mathematically
+const left = -1;
 const right = 1;
 const up = -2;
 const down = 2;
+// gesture recognition is applied to all DOM elements in the body and any default click/tapping behaviour suspended
 const hammertime = new Hammer.Manager(document.querySelector("body"), {
   prevent_default: true,
   touchAction: "none",
 });
 
 // Gameplay
+// milliseconds per game update (higher is slower). Game was built on 140ms refresh rate
 const slow = 200;
-const medium = 140; // milliseconds per game update (higher is slower). Game was built on 140ms refresh rate
+const medium = 140;
 const fast = 80;
 
 // Audio
@@ -224,8 +228,8 @@ const animate = () => {
     }
   });
 
+  // this conditional loops the animation rather than displaying a single frame
   if (game.state === "PLAY") {
-    // this conditional loops the animation rather than displaying a single frame
     requestAnimationFrame(animate);
   } else {
     return;
@@ -268,18 +272,21 @@ let gameBoard = {
     tile = canvas.width / numberOfTilesPerAxis;
   },
   recalculateAssets() {
+    // if true, then we know that there are assets which can be resized
     if (game.state === "PLAY" || stats.gamesPlayedThisSession > 0) {
-      // otherwise there will be no assets to reposition
+      // record their current positions
       let formerTileSize = tile;
       let formerFoodCoordinates = food;
       let formerSnakeCoordinates = snake;
       let formerSnakeArray = snake.array;
       let formerSparkArray = sparkArray;
 
+      // run the necessary functions to find new possible board dimensions
       gameBoard.checkOrientation();
       gameBoard.setCanvasSize();
       gameBoard.setTileSize();
 
+      // multiply everything up to fit the new board dimensions
       food.x = (formerFoodCoordinates.x / formerTileSize) * tile;
       food.y = (formerFoodCoordinates.y / formerTileSize) * tile;
 
@@ -295,7 +302,9 @@ let gameBoard = {
         sparkArray[i].x = (formerSparkArray[i].x / formerTileSize) * tile;
         sparkArray[i].y = (formerSparkArray[i].y / formerTileSize) * tile;
       }
-    if (game.state !== "PLAY") {
+
+      // and if the game is paused/finished, draw everything in background or it will disappear
+      if (game.state !== "PLAY") {
         animate();
       }
     }
@@ -349,13 +358,14 @@ class Snake {
     this.y = y;
     this.color = color;
     this.direction = direction;
+    // this could be anything but a 3-tile snake works well
     this.array = [
       { x: this.x, y: this.y },
       { x: this.x + tile, y: this.y },
       { x: this.x + tile * 2, y: this.y },
     ];
   }
-
+  // finds the coordinates of the new snake.array[0] depending on direction, to check collisions
   get newHead() {
     if (this.direction === left) {
       return { x: this.x - tile, y: this.y };
@@ -409,7 +419,8 @@ class Snake {
       ctx.shadowBlur = tile / 2;
       ctx.fillRect(this.array[i].x, this.array[i].y, tile, tile); // fills tiles occupied by snake array's coordinates
       ctx.restore();
-      if (game.collisionDetected) { // changes the colour of the snake head on collision
+      if (game.collisionDetected) {
+        // changes the colour of the snake head on collision
         ctx.save();
         ctx.fillStyle = snakeHeadCollisionColor;
         ctx.shadowColor = snakeHeadCollisionColor;
@@ -509,13 +520,14 @@ Spark.prototype.update = function () {
 };
 
 const populateSparkArray = () => {
+  // spawns sparks equal to snake length
   for (let i = 0; i < snake.array.length && i < maxSparksPerEat; i++) {
-    // spawns sparks equal to snake length
     let dx;
     let dy;
     let x = snake.array[0].x + tile / 2;
     let y = snake.array[0].y + tile / 2;
-    // the actions taken on these conditionals are all different:
+    // these conditionals look the same but are all different
+    // they determine the random properties of each spark generated:
     if (snake.direction === up) {
       dx = randomNumber(
         -dynamicOutput(gameBoard.tileToSparkDRatio),
@@ -556,7 +568,7 @@ const populateSparkArray = () => {
         dynamicOutput(gameBoard.tileToSparkDRatio)
       );
     }
-
+    // add to the spark array
     sparkArray.push(new Spark(x, y, dx, dy));
   }
 };
@@ -577,6 +589,7 @@ let game = {
     this.checkSettings();
   },
   setElementStyle(state) {
+    //   to simplify the DOM manipulation, data variables have been added to the various elements in index.html
     document
       .querySelectorAll(`[data-hide-on-state~=${state}]`)
       .forEach((el) => el.classList.add("hidden"));
@@ -628,6 +641,7 @@ let game = {
     stopWatch.stop();
   },
   checkSnakeCollision() {
+    //   uses the predicted new position of the snake head to check for collisions
     for (let i = 0; i < snake.array.length; i++) {
       if (
         snake.newHead.x === snake.array[i].x &&
@@ -642,7 +656,6 @@ let game = {
           snake.x = -tile;
         }
       }
-
       if (snake.newHead.x < 0 && snake.direction === left) {
         if (this.wallsEnabled) {
           this.collisionDetected = true;
@@ -650,7 +663,6 @@ let game = {
           snake.x = canvas.width;
         }
       }
-
       if (snake.newHead.y > canvas.height - tile && snake.direction === down) {
         if (this.wallsEnabled) {
           this.collisionDetected = true;
@@ -658,7 +670,6 @@ let game = {
           snake.y = (heightOfScoreBoardInTiles - 1) * tile;
         }
       }
-
       if (
         snake.newHead.y < heightOfScoreBoardInTiles * tile &&
         snake.direction === up
@@ -674,7 +685,7 @@ let game = {
   checkAteFood() {
     for (let i = 0; i < snake.array.length; i++) {
       if (food.x === snake.array[i].x && food.y === snake.array[i].y) {
-        newFood(); // if food is within snake body, spawns new food
+        newFood(); // if food is within snake body, spawn new food
       }
     }
     if (snake.newHead.x === food.x && snake.newHead.y === food.y) {
@@ -683,6 +694,7 @@ let game = {
       this.ateFood = false;
     }
   },
+  // this is passed into the event handlers to prevent the snake going back on itself
   moveIsValid(newDir) {
     if (this.lastMove !== -newDir) {
       return true;
@@ -691,6 +703,7 @@ let game = {
     }
   },
   update() {
+    //   collision:
     if (this.collisionDetected) {
       if (this.audio) {
         gameOverAudio.play();
@@ -701,6 +714,7 @@ let game = {
       scoreBoard.update();
       scoreBoard.print();
       this.changeState("GAMEOVER");
+      //   eats food:
     } else if (this.ateFood) {
       if (this.audio) {
         eatAudio.play();
@@ -710,6 +724,7 @@ let game = {
       newFood();
       scoreBoard.currentScore++;
       gameBoard.tileToSparkDRatio += tileToSparkDRatioIncrement;
+      //   regular state of play:
     } else {
       snake.array.unshift(snake.newHead);
       snake.array.pop();
@@ -736,7 +751,7 @@ const stopWatch = {
   },
   reset() {
     this.stop();
-    this.elapsed = -1;
+    this.elapsed = -1; // prevents rapid pause/resume from cranking up the game time
   },
 };
 
@@ -779,6 +794,7 @@ let stats = {
 document.addEventListener("keydown", keyboardHandler);
 window.addEventListener("resize", gameBoard.recalculateAssets);
 window.addEventListener("orientationchange", gameBoard.recalculateAssets);
+// this listens for the window losing focus to prevent untimely death:
 window.addEventListener("blur", function () {
   if (game.state === "PLAY") {
     game.changeState("PAUSE");
@@ -800,6 +816,8 @@ mainButton.addEventListener("click", function () {
 optionsButton.addEventListener("click", function () {
   game.changeState("OPTIONS");
 });
+// click on newGame() sounded strange and although this could have been included in
+// event listeners above, this provides some flexibility for future changes
 document
   .querySelectorAll("#main-button, #scores-button, #options-button")
   .forEach((el) =>
