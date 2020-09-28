@@ -17,6 +17,8 @@ let scoreBoard = {
     this.currentHighScore = parseInt(localStorage.getItem("highScore"));
     if (this.currentHighScore >= 100) {
       this.hasHitMilestone = true;
+    } else {
+        this.hasHitMilestone = false;
     }
   },
   updateHighScore() {
@@ -113,7 +115,7 @@ let scoreBoard = {
     ) {
       content(
         `If the cyberophidiophobia doesn't get you, the triskaidekaphobia will. `,
-        false
+        true
       );
     }
     if (scoreRange(20, 29)) {
