@@ -3,13 +3,14 @@ let scoreBoard = {
   previousScore: undefined,
   currentScore: undefined,
   currentHighScore: undefined,
-  hasHitMilestone: false,
+  hasHitMilestone: false, // this is for hitting 100 as per getCurrentHighScore
   update() {
     if (this.array.includes(this.currentScore) || this.currentScore === 0) {
       return;
     } else {
       this.array.push(this.currentScore);
-      //   https://www.javascripttutorial.net/javascript-array-sort/
+      // https://www.javascripttutorial.net/javascript-array-sort/
+      // sorts high to low:
       this.array.sort((a, b) => b - a);
     }
   },
@@ -18,11 +19,12 @@ let scoreBoard = {
     if (this.currentHighScore >= 100) {
       this.hasHitMilestone = true;
     } else {
-        this.hasHitMilestone = false;
+      this.hasHitMilestone = false;
     }
   },
   updateHighScore() {
     if (this.currentScore > parseInt(stats.highScore)) {
+      // this could live in stats object but is more applicable to the constantly updating high score on screen:
       localStorage.setItem("highScore", this.currentScore);
       stats.highScore = this.currentScore;
     } else {
@@ -51,6 +53,7 @@ let scoreBoard = {
   print() {
     //   Score award text
     let scoreAwardText = document.getElementById("scores-award-text");
+    // clear the existing text in index.html
     scoreAwardText.innerHTML = "";
 
     let scoreRange = (min, max) => {
@@ -64,7 +67,7 @@ let scoreBoard = {
       }
     };
     let content = (text, replaceExistingText) => {
-        // Determines whether text is written from scratch or added to existing text
+      // Determines whether text is written from scratch or added to existing text
       if (replaceExistingText) {
         scoreAwardText.innerHTML = `<p>${text}</p>`;
       } else {
@@ -131,10 +134,7 @@ let scoreBoard = {
       content(`FYI this is Cyber Snake, not Cyber Slow Worm. `, false);
     }
     if (scoreRange(30, 39)) {
-      content(
-        `Thrifty with the thrills, frugal with the skills. `,
-        false
-      );
+      content(`Thrifty with the thrills, frugal with the skills. `, false);
     }
     if (scoreRange(40, 49)) {
       content(
@@ -151,19 +151,13 @@ let scoreBoard = {
       content(`This is what cybernetic dreams are made of. `, false);
     }
     if (scoreRange(70, 79)) {
-      content(
-        `"I was distracted by the pretty colors!", you wail. `,
-        false
-      );
+      content(`"I was distracted by the pretty colors!", you wail. `, false);
     }
     if (scoreRange(80, 89)) {
       content(`Next time, have a vague strategy. `, false);
     }
     if (scoreRange(90, 99)) {
-      content(
-        `Did you consider persevering and making it to 100? `,
-        false
-      );
+      content(`Did you consider persevering and making it to 100? `, false);
     }
     if (this.currentScore >= 100 && !this.hasHitMilestone) {
       content(
@@ -229,10 +223,7 @@ let scoreBoard = {
       );
     }
     if (this.currentScore > this.previousScore && this.previousScore === 0) {
-      content(
-        `Well, anything was an improvement on last time. `,
-        true
-      );
+      content(`Well, anything was an improvement on last time. `, true);
     }
     if (this.previousScore - this.currentScore > 50) {
       content(
