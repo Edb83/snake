@@ -412,7 +412,9 @@ The aim was to make a game which felt like a standalone app, but which would dis
 
 To overcome the limitations of the mobile browser, a feature of HammerJS has been exploited via `prevent_default: true, touchAction: "none"` and used on `body` so that scrolling or clicking on DOM elements is not possible. Additionally, `pointer-events: none` is used on `game-container` to prevent accidental zooming in on elements when playing on mobile, which happens very frequently on iOS Safari.
 
-There may be some devices which cannot fit the content on screen and as a result push the menu buttons too close to the edge, however no examples came up in real-world or dev-tools testing.
+`em` units have been used throughout the style sheet (apart from for the `glow` heading class), and incremented in media queries.
+
+There may be some devices which cannot fit the content on screen and as a result push the menu buttons too close to the bottom, however no examples came up in real-world or dev-tools testing.
 
 #### Browsers
 
