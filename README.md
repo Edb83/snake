@@ -35,7 +35,7 @@
 
 ## Context
 
-Cyber Snake is an homage to the Nokia version of the game, which many of us will remember fondly from the advent of mobile gaming. While Nokia's monochrome version wasn't released until 1998, the Snake game concept dates back to 1976 when [Blockade](<https://en.wikipedia.org/wiki/Blockade_(video_game)>) first appeared in arcades. Since then, there have been hundreds of versions released, and for good reason. It is considered a classic in terms of design and even appears in New York's Museum of Modern Art alongside the likes of Minecraft, Pong and Tetris.
+Cyber Snake is an homage to the Nokia version of the game, which many of us will remember fondly from the advent of mobile gaming. While Nokia's monochrome version of Snake wasn't released until 1998, the game concept dates back to 1976 when [Blockade](<https://en.wikipedia.org/wiki/Blockade_(video_game)>) first appeared in arcades. Since then, there have been hundreds of versions released, and for good reason. It is considered a classic in terms of design and even appears in New York's Museum of Modern Art alongside the likes of Minecraft, Pong and Tetris.
 
 The game concept is simple:
 
@@ -96,15 +96,15 @@ Overall the wireframes were successfully followed when creating Cyber Snake, how
 
 1. Statistics menu
 
-This was intended to live on a separate menu screen but was moved entirely to the scores menu. Rather that being able to pull up a screen showing, for example, the average score per game, this information is instead provided in comments such as "Your average score per game is X" or "You have been playing for Y minutes in total"
+This was intended to live on a separate menu screen but was moved entirely to the scores menu. Rather that being able to pull up a screen showing, for example, the average score per game, this information is instead provided in comments such as "Your average score per game is X" or "You have been playing for Y minutes in total".
 
 2. Advanced image manipulation
 
-The initial idea was to have a more flashy landing screen which would respond to user mouse movements, and to have other visuals passing behind the game area during play, either using the HTML canvas or CSS animations. These features were outside the scope of the project and would have ultimately been a distraction if not handled elegantly
+The initial idea was to have a more flashy landing screen which would respond to user mouse movements, and to have other visuals passing behind the game area during play, either using the HTML canvas or CSS animations. These features were outside the scope of the project and would have ultimately been a distraction if not handled elegantly.
 
 3. Mobile control pad
 
-HammerJS offers a much better solution to mobile control. Prior to discovering it, a directional pad/virtual joystick seemed like the most viable means of controlling the game on mobile
+HammerJS offers a much better solution to mobile control. Prior to discovering it, a directional pad/virtual joystick seemed like the most viable means of controlling the game on mobile.
 
 <span id="ux-design"></span>
 
@@ -213,15 +213,15 @@ A good mobile game caters to both casual and more engaged playstyles. The three 
 
 **7. Visual effects**
 
-This is what the phrase "and the messier things become", refers to on the main menu screen. A simple physics particle effect showers the game board with multi-coloured sparks each time food is eaten. As more food is eaten, the number and velocity of sparks increases until the screen is awash with colour. This serves as both a reward for good play and, in the later stages, a pleasant distraction from the job at hand. The colour of the sparks matches that of the food eaten, which helps to suggest that the food has been destroyed ('gibbed', if you will)
+This is what the phrase "and the messier things become", refers to on the main menu screen. A simple physics particle effect showers the game board with multi-coloured sparks each time food is eaten. As more food is eaten, the number and velocity of sparks increases until the screen is awash with colour. This serves as both a reward for good play and, in the later stages, a pleasant distraction from the job at hand. The colour of the sparks matches that of the food eaten, which helps to suggest that the food has been destroyed ('gibbed', if you will).
 
 **8. Audio**
 
-The Web Audio API (via HowlerJS) provides reliable, lag-free sound effects on all devices
+The Web Audio API (via HowlerJS) provides reliable, lag-free sound effects on all devices.
 
 **9. Statistics saved to local storage**
 
-High scores (and other stats such as games played, total play time, total points scored) are saved to the device's local storage and will remain between game sessions, providing cookies are not deleted. This is a fundamental feature for giving players a reason to return
+High scores (and other stats such as games played, total play time, total points scored) are saved to the device's local storage and will remain between game sessions, providing cookies are not deleted. This is a fundamental feature for giving players a reason to return.
 
 **10. Object Oriented Programming**
 
@@ -240,7 +240,7 @@ To improve the syntax of the code, Object Oriented Programming has been used as 
 
 **11. Customisation**
 
-Rather than being hard-coded, visual and gameplay variables have been extracted to facilitate tweaks to the look and feel of the game. This enables much easier customisation on the developer's part
+Rather than being hard-coded, visual and gameplay variables have been extracted to facilitate tweaks to the look and feel of the game. This enables much easier customisation on the developer's part.
 
 <span id="features-future"></span>
 
@@ -370,7 +370,7 @@ Countless hours were spent testing Cyber Snake throughout its development, which
 
 **5. Move validation**
 
-- It is impossible for the snake to 'go back on itself' or to 'eat its own neck' by rapidly attempting to change direction, no matter how slow the game speed is set. For example, if moving left and changing direction to up, the direction cannot be changed to right before the snake has first moved one tile upwards
+It is impossible for the snake to 'go back on itself' or to 'eat its own neck' by rapidly attempting to change direction, no matter how slow the game speed is set. For example, if moving left and changing direction to up, the direction cannot be changed to right before the snake has first moved one tile upwards.
 
 **6. Score & score board**
 
@@ -413,7 +413,7 @@ The aim was to make a game which felt like a standalone app, but which would dis
 
 To overcome the limitations of the mobile browser, a feature of HammerJS has been exploited via `prevent_default: true, touchAction: "none"` and used on `body` so that scrolling or clicking on DOM elements is not possible. Additionally, `pointer-events: none` is used on `game-container` to prevent accidental zooming in on elements when playing on mobile, which happens very frequently on iOS Safari.
 
-`em` units have been used throughout the style sheet (apart from for the `glow` heading class), and incremented in media queries.
+`em` units have been used throughout the style sheet (apart from in the `glow` heading class), and incremented in media queries.
 
 There may be some devices which cannot fit the content on screen and as a result push the menu buttons too close to the bottom, however no examples came up in real-world or dev-tools testing.
 
@@ -467,7 +467,7 @@ Real world testing on:
 
 - This was due to rapid directional changes allowing the snake to 'bite its own neck', its head colliding with `snake.array[1]` e.g. when moving left and the direction changed to up and then right before the game had completed the up move. Simply preventing a change to the opposite direction was not sufficient
 - The initial solution was to implement a 'safe delay' which prevented the keyboard event handler from firing more quickly than the game refresh rate. While this was an improvement, the issue would still appear too frequently unless the safe delay was so long that it detrimental to the input responsiveness, and furthermore made the game speed option nearly impossible to implement
-- This issue was finally resolved by adding direction change validation at each refresh interval. To do this relatively succinctly, each direction has been given a numerical value so that it can be easily negated during the check, and then the last direction moved must be calculated. The last move is calculated by comparing the `snake.array.x` or `snake.array.y` of the head and first segment of the snake. A move is valid when the last move is NOT equal to the negated new direction e.g. if the last snake move was left (-1), and the requested direction is down (+2), the move will be valid, however if the requested direction is right (+1) then the move is invalid and the event handler will not fire
+- This issue was resolved by adding direction change validation at each refresh interval. To do this relatively succinctly, each direction has been given a numerical value so that it can be easily negated during the check, and then the last direction moved must be calculated. The last move is calculated by comparing the `snake.array.x` or `snake.array.y` of the head and first segment of the snake. A move is valid when the last move is NOT equal to the negated new direction e.g. if the last snake move was left (-1), and the requested direction is down (+2), the move will be valid, however if the requested direction is right (+1) then the move is invalid and the event handler will not fire
 - While in the middle of the board the difference between `snake.array[0]` and `snake.array[1]` will always be `+/-tile`, however further calculations are necessary to ensure the last move is calculated properly while the snake crosses a border
 
 **Canvas resizing causes collision detection issues**
@@ -479,24 +479,24 @@ Real world testing on:
   - `setCanvasSize` checks that the canvas height is divisible by the total number of tiles along the y axis and, if not, reduces the canvas height until it is and sets the canvas width accordingly
   - `setTileSize` uses the canvas width and set number of tiles to calculate
   - `recalculateAssets` uses the former sizes and coordinates of game pieces and multiplies them up by the new tile size calculated using the three other key functions
-- This means the gameBoard can control the various coordinates of game pieces and ensure they are within safe ranges so that it can determine collisions
+- As a result, the `gameBoard` object can control the coordinates of the various game pieces and ensure they are within safe ranges for the `game` object to detect collisions
 
 **Spark gravity and velocity not scaling to canvas size**
 
-- Once the canvas and game objects were responsive to the available viewport, a new issue became apparent where sparks would fall very quickly on a small screen and very slowly on a large screen. This was due to using static gravity and velocity
-- To resolve this the `dynamicOutput` function was used to adjust both spark gravity and velocity by multiplying the dynamic tile size (from `setTileSize`) with a set ratio (`tileToSparkGravityRatio` and `initialTileToSparkDRatio`)
-- To add a sense of progress, the `tileToSparkDRatio` increases by `tileToSparkDRatioIncrement` every time food is eaten
+- With all game objects now responsive to the available viewport, a new issue arose whereby sparks would fall very quickly on a small screen and very slowly on a large screen. This was due to using static gravity and velocity variables
+- To resolve this, the `dynamicOutput` function was written to adjust both spark gravity and velocity by multiplying the dynamic tile size (from `setTileSize`) by a set ratio (`tileToSparkGravityRatio` or `initialTileToSparkDRatio`)
+- To add a sense of progression/achievement for the player, the `tileToSparkDRatio` increases by `tileToSparkDRatioIncrement` every time food is eaten
 - To add some randomness to spark behaviour, `dynmicSparkGravityMultiplier` and `dynamicOutputMultiplier` increase the upper ranges of these random calculations
 
 **Game time played not taking pause into account**
 
-- Discovered after leaving a game paused for several hours and returning to see a surprising message on gameover, it was clear that using `Date.now()` on start and end of game was not the best way of recording a game length
-- Resolved by adding the `stopWatch` object and starting the timer on `game.play()`, stopping on `game.stop()` and resetting on `newGame()`
+- Discovered after leaving a game paused for several hours and returning to see a surprising message on game over, it was clear that using `Date.now()` on start and end of game was not the best way of recording each game's length
+- This was resolved by adding the `stopWatch` object and starting its timer on `game.play()`, stopping on `game.stop()` and resetting on `newGame()`
 
 **Audio not working on iOS**
 
 - Initially used `<audio>` HTML element to play game audio, which worked fine on desktop but had lots of issues on iOS Safari - most noticably a lag in the sounds being played
-- The HowlerJS library was used to handle Web Audio API and allowed sounds to be played on iOS perfectly
+- The HowlerJS library was used to handle Web Audio API and allowed sounds to be played perfectly on iOS
 - The iOS 14 update introduced a new issue with sound on iOS Safari causing a play error. This was resolved by changing the audio file types from wav to webm, with mp3 used as a fallback. This appears to have again resolved the issue and greatly reduced the file size of the game
 
 <span id="testing-unresolved"></span>
@@ -505,11 +505,11 @@ Real world testing on:
 
 - **Square viewports**
 
-  - On displays where the ratio between viewport width and height is 1.0 - 1.1, the `canvas` will exceed the viewable area and a scroll bar will appear
+On displays where the ratio between viewport width and height is 1.0 - 1.1, the `canvas` will exceed the viewable area and a scroll bar will appear.
 
 - **Loss of sound**
 
-  - When the game is minimised on iOS Safari, sound effects may no longer play when focus regained
+When the game is minimised on iOS Safari, sound effects may no longer play when focus is regained.
 
 <div align="right"><a style="text-align:right" href="#top">Go to index :arrow_double_up:</a></div>
 
@@ -588,7 +588,7 @@ Further reading and troubleshooting on cloning a repository from GitHub can be f
 
 ### Acknowledgements
 
-- Jonathan Munz (Code Institute Mentor) - for his reassurance, support and tips
+- Jonathan Munz (Code Institute Mentor) - for his reassurance, support and invaluable suggestions
 
 - Bim Williams (Code Institute Alumnus) - for taking the time to help on Slack
 
