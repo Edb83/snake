@@ -108,12 +108,12 @@ const randomNumber = (min, max) => Math.random() * (max - min) + min;
 // https://stackoverflow.com/questions/37096367/how-to-convert-seconds-to-minutes-and-hours-in-javascript/37096923
 const convertSecondsToHms = (d) => {
   d = Number(d);
-  var h = Math.floor(d / 3600);
-  var m = Math.floor((d % 3600) / 60);
-  var s = Math.floor((d % 3600) % 60);
-  var hDisplay = h > 0 ? h + (h == 1 ? " hour " : " hours ") : "";
-  var mDisplay = m > 0 ? m + (m == 1 ? " minute " : " minutes ") : "";
-  var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
+  let h = Math.floor(d / 3600);
+  let m = Math.floor((d % 3600) / 60);
+  let s = Math.floor((d % 3600) % 60);
+  let hDisplay = h > 0 ? h + (h == 1 ? " hour " : " hours ") : "";
+  let mDisplay = m > 0 ? m + (m == 1 ? " minute " : " minutes ") : "";
+  let sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
   return hDisplay + mDisplay + sDisplay;
 };
 
