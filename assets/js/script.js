@@ -636,6 +636,12 @@ let game = {
     animate();
     stopWatch.start();
   },
+  pause() {
+    if (this.state == "PLAY") {
+      this.changeState("PAUSE");
+      this.stop();
+    }
+  },
   stop() {
     clearInterval(this.refreshInterval);
     stopWatch.stop();
@@ -730,6 +736,30 @@ let game = {
       snake.array.pop();
     }
   },
+  handleEvent(event) {
+    // click events
+    switch (event.target) {
+      case playButton:
+        newGame();
+        break;
+      case resumeButton:
+        this.play();
+        break;
+      case scoresButton:
+        this.changeState('GAMEOVER');
+        break;
+      case mainButton:
+        this.changeState('MAIN');
+        break;
+      case optionsButton:
+        this.changeState('OPTIONS');
+        break;
+    }
+    // focus or orientation events leading to pause
+    if (event.type === "blur" || event.type === "orientationchange") {
+        this.pause();
+    }
+  },
 };
 
 // Stopwatch
@@ -791,33 +821,23 @@ let stats = {
 
 // EVENT LISTENERS
 
+// Keyboard
 document.addEventListener("keydown", keyboardHandler);
+
+// Window
 window.addEventListener("resize", gameBoard.recalculateAssets);
 window.addEventListener("orientationchange", gameBoard.recalculateAssets);
-// this listens for the window losing focus to prevent untimely death:
-window.addEventListener("blur", function () {
-  if (game.state === "PLAY") {
-    game.changeState("PAUSE");
-    game.stop();
-  }
+
+const pauseEvents = ["blur", "orientationchange"];
+pauseEvents.forEach(event => {
+  window.addEventListener(event, game)
 });
-playButton.addEventListener("click", function () {
-  newGame();
+
+// Clicks
+document.querySelectorAll('.button').forEach(el => {
+  el.addEventListener("click", game)
 });
-resumeButton.addEventListener("click", function () {
-  game.play();
-});
-scoresButton.addEventListener("click", function () {
-  game.changeState("GAMEOVER");
-});
-mainButton.addEventListener("click", function () {
-  game.changeState("MAIN");
-});
-optionsButton.addEventListener("click", function () {
-  game.changeState("OPTIONS");
-});
-// click on newGame() sounded strange and although this could have been included in
-// event listeners above, this provides some flexibility for future changes
+
 document
   .querySelectorAll("#main-button, #scores-button, #options-button")
   .forEach((el) =>
