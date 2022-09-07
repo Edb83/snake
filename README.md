@@ -1,6 +1,6 @@
 # Cyber Snake
 
-![alt text](responsive.jpg "Responsive sample")
+![alt text](documentation/responsive.jpg "Responsive sample")
 
 **[Live demo](https://edb83.github.io/snake/)**
 
